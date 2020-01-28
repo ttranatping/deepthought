@@ -1,0 +1,161 @@
+package io.biza.deepthought.admin.api.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException.Reference;
+import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
+import io.biza.babelfish.cdr.exception.LabelValueEnumValueNotSupportedException;
+import io.biza.babelfish.cdr.support.LabelValueEnumInterface;
+import io.biza.deepthought.admin.exceptions.ValidationListException;
+import io.biza.deepthought.data.enumerations.DioExceptionType;
+import io.biza.deepthought.data.enumerations.DioValidationErrorType;
+import io.biza.deepthought.data.payload.ResponseValidationError;
+import io.biza.deepthought.data.payload.ValidationError;
+import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+
+@ControllerAdvice
+@Slf4j
+public class ExceptionController {
+
+  @ExceptionHandler(IllegalStateException.class)
+  public ResponseEntity<Object> handleIllegalStateException(HttpServletRequest req,
+      IllegalStateException ex) {
+
+    return ResponseEntity.unprocessableEntity()
+        .body(ResponseValidationError.builder().type(DioExceptionType.VALIDATION_ERROR)
+            .explanation("Received an illegal state exception").build());
+  }
+
+
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<Object> handleHttpMessageNotReadable(HttpServletRequest req,
+      HttpMessageNotReadableException ex) {
+
+    if (ex.getCause() != null && ex.getCause() instanceof ValueInstantiationException) {
+      ValueInstantiationException e = (ValueInstantiationException) ex.getCause();
+
+      List<String> fieldNames = new ArrayList<String>();
+
+      for (Reference reference : e.getPath()) {
+        fieldNames.add(reference.getFieldName());
+      }
+
+      if (e.getCause() instanceof LabelValueEnumValueNotSupportedException) {
+        LabelValueEnumValueNotSupportedException labelEx =
+            (LabelValueEnumValueNotSupportedException) e.getCause();
+
+        List<String> enumValuesList = new ArrayList<String>();
+        for (LabelValueEnumInterface enumValue : labelEx.getSourceEnum()) {
+          enumValuesList.add(enumValue.name());
+        }
+
+        String message = String.format(
+            "The value (%s) supplied for %s is not one of the valid options: [ %s ]",
+            labelEx.getSuppliedValue(), labelEx.getClassName(), String.join(", ", enumValuesList));
+
+        return ResponseEntity.unprocessableEntity()
+            .body(
+                ResponseValidationError.builder().type(DioExceptionType.INVALID_JSON)
+                    .explanation("The Supplied JSON Payload was unable to be parsed")
+                    .validationErrors(List.of(ValidationError.builder()
+                        .field(String.join(".", fieldNames)).message(message)
+                        .type(DioValidationErrorType.ATTRIBUTE_INVALID).build()))
+                    .build());
+      } else {
+
+        return ResponseEntity.unprocessableEntity()
+            .body(ResponseValidationError.builder().type(DioExceptionType.INVALID_JSON)
+                .explanation("The Supplied JSON Payload was unable to be parsed")
+                .validationErrors(
+                    List.of(ValidationError.builder().type(DioValidationErrorType.INVALID_JSON)
+                        .field("HTTP Body").message(ex.getMessage()).build()))
+                .build());
+      }
+    } else {
+      return ResponseEntity.unprocessableEntity()
+          .body(ResponseValidationError.builder().type(DioExceptionType.INVALID_JSON)
+              .explanation("The Supplied JSON Payload was unable to be parsed")
+              .validationErrors(
+                  List.of(ValidationError.builder().type(DioValidationErrorType.INVALID_JSON)
+                      .field("HTTP Body").message(ex.getMessage()).build()))
+              .build());
+    }
+  }
+
+
+  @ExceptionHandler(ValidationListException.class)
+  public ResponseEntity<Object> handleValidationException(HttpServletRequest req,
+      ValidationListException ex) {
+
+    return ResponseEntity.unprocessableEntity()
+        .body(ResponseValidationError.builder().type(ex.type()).explanation(ex.explanation())
+            .validationErrors(ex.validationErrors()).build());
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseEntity<Object> handleInvalidArguments(HttpServletRequest req,
+      MethodArgumentNotValidException ex) {
+
+    ResponseValidationError errors = ResponseValidationError.builder()
+        .type(DioExceptionType.VALIDATION_ERROR)
+        .explanation("Input has invalid parameters, see validationErrors for explanation").build();
+
+    ex.getBindingResult().getAllErrors().forEach(error -> {
+      ConstraintViolation<?> violation = error.unwrap(ConstraintViolation.class);
+      try {
+        errors.validationErrors()
+            .add(ValidationError.builder().field(violation.getPropertyPath().toString())
+                .message(StringUtils.capitalize(violation.getMessage()))
+                .type(DioValidationErrorType.ATTRIBUTE_INVALID).build());
+      } catch (IllegalArgumentException e) {
+        LOG.error("Attempted to unwrap an error which is not supported: {}", error);
+        errors.validationErrors()
+            .add(ValidationError.builder().field(error.getCode())
+                .message(StringUtils.capitalize(error.getDefaultMessage()))
+                .type(DioValidationErrorType.ATTRIBUTE_INVALID).build());
+      }
+    });
+
+    return ResponseEntity.unprocessableEntity().body(errors);
+  }
+
+  @ExceptionHandler(JsonParseException.class)
+  public ResponseEntity<Object> handleInvalidJsonParseException(HttpServletRequest req,
+      JsonParseException ex) {
+
+    ResponseValidationError errors =
+        ResponseValidationError.builder().type(DioExceptionType.INVALID_JSON)
+            .explanation("The Supplied JSON Payload was unable to be parsed")
+            .validationErrors(
+                List.of(ValidationError.builder().type(DioValidationErrorType.INVALID_JSON)
+                    .field("HTTP Body").message(ex.getMessage()).build()))
+            .build();
+
+    return ResponseEntity.unprocessableEntity().body(errors);
+  }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<Object> handleInvalidFieldTypeException(HttpServletRequest req,
+      MethodArgumentTypeMismatchException ex) {
+
+    ResponseValidationError errors = ResponseValidationError.builder()
+        .type(DioExceptionType.INVALID_PARAMETER_FORMAT)
+        .explanation("A path parameter of invalid format was supplied")
+        .validationErrors(List.of(ValidationError.builder()
+            .type(DioValidationErrorType.INVALID_FORMAT).field(ex.getParameter().getParameterName())
+            .message("Parameter should be a " + ex.getRequiredType().getSimpleName()).build()))
+        .build();
+
+    return ResponseEntity.unprocessableEntity().body(errors);
+  }
+}

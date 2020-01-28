@@ -1,0 +1,43 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+	<persistence-unit name="persistence">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>io.biza.deepthought.data.persistence.converter.CurrencyDataConverter</class>
+		<class>io.biza.deepthought.data.persistence.converter.LocaleDataConverter</class>
+		<class>io.biza.deepthought.data.persistence.converter.PeriodDataConverter</class>
+		<class>io.biza.deepthought.data.persistence.converter.URIDataConverter</class>
+		<class>io.biza.deepthought.data.persistence.model.BrandData</class>
+		<class>io.biza.deepthought.data.persistence.model.ProductBundleData</class>
+		<class>io.biza.deepthought.data.persistence.model.ProductData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingAdditionalInformationData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingCardArtData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingConstraintData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingEligibilityData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeatureData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeDiscountData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeDiscountEligibilityData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierApplicabilityData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingTierApplicabilityData</class>
+		<class>io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingTierData</class>
+
+		<properties>
+			<property name="hibernate.archive.autodetection"
+				value="class,hbm" />
+			<property name="hibernate.dialect"
+				value="org.hibernate.dialect.HSQLDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+		</properties>
+
+	</persistence-unit>
+
+</persistence>
