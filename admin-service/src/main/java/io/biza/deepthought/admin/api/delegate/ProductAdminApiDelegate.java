@@ -39,7 +39,7 @@ public interface ProductAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<List<DioProductBundle>> listProductBundles(@NotNull @Valid UUID brandId,
+  default ResponseEntity<List<DioProductBundle>> listBundlesForProduct(@NotNull @Valid UUID brandId,
       @NotNull @Valid UUID productId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }

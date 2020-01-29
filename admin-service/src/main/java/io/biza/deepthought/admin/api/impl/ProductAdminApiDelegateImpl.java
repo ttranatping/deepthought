@@ -123,7 +123,7 @@ public class ProductAdminApiDelegateImpl implements ProductAdminApiDelegate {
   }
   
   @Override
-  public ResponseEntity<List<DioProductBundle>> listProductBundles(UUID brandId,
+  public ResponseEntity<List<DioProductBundle>> listBundlesForProduct(UUID brandId,
       UUID productId) {
     Optional<ProductData> data = productRepository.findByIdAndBrandId(productId, brandId);
 

@@ -69,10 +69,10 @@ public interface ProductBundleAdminApi {
           array = @ArraySchema(schema = @Schema(implementation = DioProductBundle.class))))})
   @GetMapping(value = "/{bundleId}/product", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<List<DioProduct>> listProductBundleProducts(
+  default ResponseEntity<List<DioProduct>> listProductsForBundle(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("bundleId") UUID bundleId) {
-    return getDelegate().listProductBundleProducts(brandId, bundleId);
+    return getDelegate().listProductsForBundle(brandId, bundleId);
   }
 
   @Operation(summary = "Create a Product Bundle",
