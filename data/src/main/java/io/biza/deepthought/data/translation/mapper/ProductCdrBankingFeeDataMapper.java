@@ -1,7 +1,7 @@
 package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payload.DioProductFee;
+import io.biza.deepthought.data.payloads.DioProductFee;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeData;
 import ma.glasnost.orika.MapperFactory;
 

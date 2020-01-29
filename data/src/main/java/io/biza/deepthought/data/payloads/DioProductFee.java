@@ -1,10 +1,10 @@
-package io.biza.deepthought.data.payload;
+package io.biza.deepthought.data.payloads;
 
 import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductEligibility;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFee;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -24,8 +24,8 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Schema(description = "A Deep Thought Product Eligibility Container")
-public class DioProductEligibility {
+@Schema(description = "A Deep Thought Product Fee Container")
+public class DioProductFee {
 
   @JsonProperty("id")
   @NotNull
@@ -42,10 +42,10 @@ public class DioProductEligibility {
   public DioSchemeType schemeType;
 
   @JsonProperty("cdrBanking")
-  @Schema(description = "CDR Banking Product Eligibility")
+  @Schema(description = "CDR Banking Product Fee")
   @Valid
   @NotNull
   @NonNull
-  public BankingProductEligibility cdrBanking;
+  public BankingProductFee cdrBanking;
 
 }

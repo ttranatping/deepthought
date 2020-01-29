@@ -25,7 +25,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.biza.babelfish.cdr.v1.enumerations.BankingProductFeeType;
+import io.biza.babelfish.cdr.enumerations.BankingProductFeeType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.CurrencyDataConverter;
 import io.biza.deepthought.data.persistence.converter.PeriodDataConverter;

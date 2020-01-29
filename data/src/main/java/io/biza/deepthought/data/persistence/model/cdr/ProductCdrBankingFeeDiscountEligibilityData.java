@@ -17,7 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
-import io.biza.babelfish.cdr.v1.enumerations.BankingProductDiscountEligibilityType;
+import io.biza.babelfish.cdr.enumerations.BankingProductDiscountEligibilityType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;

@@ -5,8 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeDiscountData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingData;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingTierData;
 
 @Repository

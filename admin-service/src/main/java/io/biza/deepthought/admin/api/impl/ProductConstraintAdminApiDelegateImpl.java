@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payload.DioProductConstraint;
+import io.biza.deepthought.data.payloads.DioProductConstraint;
 import io.biza.deepthought.data.persistence.model.ProductData;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingConstraintData;
 import io.biza.deepthought.data.repository.ProductConstraintRepository;

@@ -3,7 +3,7 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductConstraintAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payload.DioProductConstraint;
+import io.biza.deepthought.data.payloads.DioProductConstraint;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

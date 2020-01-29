@@ -3,7 +3,8 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payload.DioProduct;
+import io.biza.deepthought.data.payloads.DioProduct;
+import io.biza.deepthought.data.payloads.DioProductBundle;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -40,6 +41,20 @@ public interface ProductAdminApi {
   default ResponseEntity<List<DioProduct>> listProducts(
       @NotNull @Valid @PathVariable("brandId") UUID brandId) {
     return getDelegate().listProducts(brandId);
+  }
+  
+  @Operation(summary = "List Bundles assigned to Product", description = "List Bundles assigned to Product",
+      security = {@SecurityRequirement(name = Labels.SECURITY_SCHEME_NAME,
+          scopes = {Labels.SECURITY_SCOPE_PRODUCT_READ})})
+  @ApiResponses(value = {@ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
+      description = Labels.RESPONSE_SUCCESSFUL_LIST, content = @Content(
+          array = @ArraySchema(schema = @Schema(implementation = DioProductBundle.class))))})
+  @GetMapping(value = "/{productId}/bundle", produces = {MediaType.APPLICATION_JSON_VALUE})
+  @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
+  default ResponseEntity<List<DioProductBundle>> listProductBundles(
+      @NotNull @Valid @PathVariable("brandId") UUID brandId,
+      @NotNull @Valid @PathVariable("productId") UUID productId) {
+    return getDelegate().listProductBundles(brandId, productId);
   }
 
   @Operation(summary = "Get a single Product", description = "Returns a single product entry",

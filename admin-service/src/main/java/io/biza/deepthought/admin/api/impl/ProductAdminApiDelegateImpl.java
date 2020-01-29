@@ -1,7 +1,9 @@
 package io.biza.deepthought.admin.api.impl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +17,10 @@ import io.biza.deepthought.admin.api.delegate.ProductAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payload.DioProduct;
+import io.biza.deepthought.data.payloads.DioProduct;
+import io.biza.deepthought.data.payloads.DioProductBundle;
 import io.biza.deepthought.data.persistence.model.BrandData;
+import io.biza.deepthought.data.persistence.model.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.ProductData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
@@ -114,6 +118,29 @@ public class ProductAdminApiDelegateImpl implements ProductAdminApiDelegate {
           productId, data);
       return getProduct(brandId, data.id());
     } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+  
+  @Override
+  public ResponseEntity<List<DioProductBundle>> listProductBundles(UUID brandId,
+      UUID productId) {
+    Optional<ProductData> data = productRepository.findByIdAndBrandId(productId, brandId);
+
+    if (data.isPresent()) {
+      LOG.info("Retrieving a single products bundles with brand of {} and id of {}",
+          brandId, productId, data.get());
+      
+      Set<ProductBundleData> bundles = new HashSet<ProductBundleData>();
+      if(data.get().bundle() != null) {
+        bundles.addAll(data.get().bundle());
+      }
+      
+      return ResponseEntity.ok(mapper.mapAsList(bundles, DioProductBundle.class));
+    } else {
+      LOG.warn(
+          "Attempted to retrieve a single product to return bundles but could not find with brand of {} and id of {}",
+          brandId, productId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }

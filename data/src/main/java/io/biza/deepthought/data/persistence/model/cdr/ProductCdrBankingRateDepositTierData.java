@@ -1,8 +1,6 @@
 package io.biza.deepthought.data.persistence.model.cdr;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,14 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
-import io.biza.babelfish.cdr.v1.enumerations.BankingProductRateTierApplicationMethod;
-import io.biza.babelfish.cdr.v1.enumerations.CommonUnitOfMeasureType;
+import io.biza.babelfish.cdr.enumerations.BankingProductRateTierApplicationMethod;
+import io.biza.babelfish.cdr.enumerations.CommonUnitOfMeasureType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

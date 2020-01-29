@@ -1,4 +1,4 @@
-package io.biza.deepthought.data.payload.cdr;
+package io.biza.deepthought.data.payloads.cdr;
 
 import java.net.URI;
 import java.time.OffsetDateTime;
@@ -10,8 +10,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
 import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
 import io.biza.babelfish.cdr.converters.UriToUriStringConverter;
-import io.biza.babelfish.cdr.v1.enumerations.BankingProductCategory;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductAdditionalInformation;
+import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAdditionalInformation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;

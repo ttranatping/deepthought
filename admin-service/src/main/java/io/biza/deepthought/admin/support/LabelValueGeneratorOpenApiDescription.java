@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import io.biza.deepthought.data.payload.FormLabelValue;
+import io.biza.deepthought.data.payloads.FormLabelValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 

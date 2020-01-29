@@ -1,7 +1,7 @@
 package io.biza.deepthought.admin;
 
 import java.util.Map;
-import io.biza.babelfish.cdr.v1.enumerations.*;
+import io.biza.babelfish.cdr.enumerations.*;
 import io.biza.deepthought.data.enumerations.FormFieldType;
 
 public class Constants {

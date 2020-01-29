@@ -4,17 +4,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductRateTier;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductRateTierApplicability;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTier;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicability;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payload.DioProductRateDeposit;
-import io.biza.deepthought.data.payload.DioProductRateLending;
+import io.biza.deepthought.data.payloads.DioProductRateDeposit;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositData;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierApplicabilityData;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingTierData;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
@@ -36,8 +32,8 @@ public class ProductCdrBankingRateDepositDataMapper implements OrikaFactoryConfi
           public void mapAtoB(ProductCdrBankingRateDepositData from, DioProductRateDeposit to,
               MappingContext context) {
 
-            List<io.biza.babelfish.cdr.model.banking.BankingProductRateTier<?>> tierList =
-                new ArrayList<io.biza.babelfish.cdr.model.banking.BankingProductRateTier<?>>();
+            List<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>> tierList =
+                new ArrayList<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>>();
 
             for (ProductCdrBankingRateDepositTierData tierData : from.tiers()) {
               BankingProductRateTier rateTier = new BankingProductRateTier();
@@ -65,7 +61,7 @@ public class ProductCdrBankingRateDepositDataMapper implements OrikaFactoryConfi
             Set<ProductCdrBankingRateDepositTierData> tierList =
                 new HashSet<ProductCdrBankingRateDepositTierData>();
 
-            for (io.biza.babelfish.cdr.model.banking.BankingProductRateTier<?> rateTier : from
+            for (io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?> rateTier : from
                 .cdrBanking().tiers()) {
               ProductCdrBankingRateDepositTierData tierData =
                   new ProductCdrBankingRateDepositTierData();

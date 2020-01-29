@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import io.biza.babelfish.cdr.v1.enumerations.BankingProductCategory;
+import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import io.biza.deepthought.data.persistence.model.ProductData;
 import lombok.AllArgsConstructor;

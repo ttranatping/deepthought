@@ -1,9 +1,9 @@
 package io.biza.deepthought.data.translation.mapper;
 
-import io.biza.babelfish.cdr.v2.model.banking.BankingProduct;
-import io.biza.babelfish.cdr.v2.model.banking.BankingProductDetail;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDetailV2;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductV2;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payload.DioProduct;
+import io.biza.deepthought.data.payloads.DioProduct;
 import io.biza.deepthought.data.persistence.model.ProductData;
 import ma.glasnost.orika.MapperFactory;
 
@@ -14,7 +14,7 @@ public class ProductDataMapper implements OrikaFactoryConfigurerInterface {
     orikaMapperFactory.classMap(ProductData.class, DioProduct.class).fieldAToB("id", "id")
         .byDefault().register();
 
-    orikaMapperFactory.classMap(ProductData.class, BankingProduct.class)
+    orikaMapperFactory.classMap(ProductData.class, BankingProductV2.class)
         .fieldAToB("id", "productId").fieldAToB("name", "name")
         .fieldAToB("description", "description")
         .fieldAToB("cdrBanking.effectiveFrom", "effectiveFrom")
@@ -27,7 +27,7 @@ public class ProductDataMapper implements OrikaFactoryConfigurerInterface {
         .fieldAToB("cdrBanking.additionalInformation", "additionalInformation").byDefault()
         .register();
 
-    orikaMapperFactory.classMap(ProductData.class, BankingProductDetail.class)
+    orikaMapperFactory.classMap(ProductData.class, BankingProductDetailV2.class)
         .fieldAToB("id", "productId").fieldAToB("name", "name")
         .fieldAToB("description", "description")
         .fieldAToB("cdrBanking.effectiveFrom", "effectiveFrom")

@@ -21,7 +21,7 @@ import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.biza.babelfish.cdr.v1.enumerations.BankingProductEligibilityType;
+import io.biza.babelfish.cdr.enumerations.BankingProductEligibilityType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;

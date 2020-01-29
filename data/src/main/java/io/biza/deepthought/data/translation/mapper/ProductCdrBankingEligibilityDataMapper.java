@@ -1,8 +1,8 @@
 package io.biza.deepthought.data.translation.mapper;
 
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductEligibility;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductEligibility;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payload.DioProductEligibility;
+import io.biza.deepthought.data.payloads.DioProductEligibility;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingEligibilityData;
 import ma.glasnost.orika.MapperFactory;
 

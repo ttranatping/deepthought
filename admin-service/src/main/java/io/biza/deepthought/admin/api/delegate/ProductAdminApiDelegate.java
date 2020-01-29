@@ -3,11 +3,14 @@ package io.biza.deepthought.admin.api.delegate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payload.DioProduct;
+import io.biza.deepthought.data.payloads.DioProduct;
+import io.biza.deepthought.data.payloads.DioProductBundle;
 
 public interface ProductAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
@@ -33,6 +36,11 @@ public interface ProductAdminApiDelegate {
 
   default ResponseEntity<DioProduct> updateProduct(UUID brandId, UUID productId,
       DioProduct product) throws ValidationListException {
+    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+  }
+
+  default ResponseEntity<List<DioProductBundle>> listProductBundles(@NotNull @Valid UUID brandId,
+      @NotNull @Valid UUID productId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

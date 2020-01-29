@@ -10,13 +10,13 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
-import io.biza.babelfish.cdr.exception.LabelValueEnumValueNotSupportedException;
+import io.biza.babelfish.cdr.exceptions.LabelValueEnumValueNotSupportedException;
 import io.biza.babelfish.cdr.support.LabelValueEnumInterface;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioValidationErrorType;
-import io.biza.deepthought.data.payload.ResponseValidationError;
-import io.biza.deepthought.data.payload.ValidationError;
+import io.biza.deepthought.data.payloads.ResponseValidationError;
+import io.biza.deepthought.data.payloads.ValidationError;
 import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;

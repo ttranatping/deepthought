@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.data.enumerations.FormFieldType;
-import io.biza.deepthought.data.payload.ResponseGetTypes;
+import io.biza.deepthought.data.payloads.ResponseGetTypes;
 
 public interface TypeApiDelegate {
   default Optional<NativeWebRequest> getRequest() {

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payload.DioProductRateLending;
+import io.biza.deepthought.data.payloads.DioProductRateLending;
 
 public interface ProductRateLendingAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {

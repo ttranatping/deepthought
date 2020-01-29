@@ -1,7 +1,9 @@
 package io.biza.deepthought.admin.api.impl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import javax.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,14 @@ import io.biza.deepthought.admin.api.delegate.ProductBundleAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payload.DioProductBundle;
+import io.biza.deepthought.data.payloads.DioProduct;
+import io.biza.deepthought.data.payloads.DioProductBundle;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.ProductBundleData;
+import io.biza.deepthought.data.persistence.model.ProductData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.repository.ProductBundleRepository;
+import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -35,7 +40,10 @@ public class ProductBundleAdminApiDelegateImpl implements ProductBundleAdminApiD
 
   @Autowired
   private BrandRepository brandRepository;
-  
+
+  @Autowired
+  private ProductRepository productRepository;
+
   @Autowired
   private Validator validator;
 
@@ -47,16 +55,16 @@ public class ProductBundleAdminApiDelegateImpl implements ProductBundleAdminApiD
   }
 
   @Override
-  public ResponseEntity<DioProductBundle> getProductBundle(UUID brandId, UUID productId) {
-    Optional<ProductBundleData> data = bundleRepository.findByIdAndBrandId(productId, brandId);
+  public ResponseEntity<DioProductBundle> getProductBundle(UUID brandId, UUID bundleId) {
+    Optional<ProductBundleData> data = bundleRepository.findByIdAndBrandId(bundleId, brandId);
 
     if (data.isPresent()) {
       LOG.debug("Retrieving product bundle with brand of {}, identifier of {} and content of {}",
-          brandId, productId, data.get());
+          brandId, bundleId, data.get());
       return ResponseEntity.ok(mapper.map(data.get(), DioProductBundle.class));
     } else {
       LOG.warn("Unable to locate product bundle with brand of {} and identifier of {}", brandId,
-          productId);
+          bundleId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
@@ -72,7 +80,7 @@ public class ProductBundleAdminApiDelegateImpl implements ProductBundleAdminApiD
       throw ValidationListException.builder().type(DioExceptionType.INVALID_BRAND)
           .explanation(Labels.ERROR_INVALID_BRAND).build();
     }
-    
+
     DeepThoughtValidator.validate(validator, createData);
 
     ProductBundleData data = mapper.map(createData, ProductBundleData.class);
@@ -96,25 +104,122 @@ public class ProductBundleAdminApiDelegateImpl implements ProductBundleAdminApiD
   }
 
   @Override
-  public ResponseEntity<DioProductBundle> updateProductBundle(UUID brandId, UUID productId,
+  public ResponseEntity<DioProductBundle> updateProductBundle(UUID brandId, UUID bundleId,
       DioProductBundle updateData) throws ValidationListException {
-    
+
     DeepThoughtValidator.validate(validator, updateData);
-    
+
     Optional<ProductBundleData> optionalData =
-        bundleRepository.findByIdAndBrandId(productId, brandId);
+        bundleRepository.findByIdAndBrandId(bundleId, brandId);
 
     if (optionalData.isPresent()) {
       ProductBundleData data = optionalData.get();
       mapper.map(updateData, data);
-      data.id(productId);
+      data.id(bundleId);
       bundleRepository.save(data);
       LOG.debug("Updated product bundle with brand {} and product {} containing data of {}",
-          brandId, productId, data);
+          brandId, bundleId, data);
       return getProductBundle(brandId, data.id());
     } else {
-      LOG.warn("Attempted to update product bundle that doesn't exist with brand {} and product {}",
-          brandId, productId);
+      LOG.warn("Attempted to update product bundle that doesn't exist with brand {} and bundle {}",
+          brandId, bundleId);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @Override
+  public ResponseEntity<DioProductBundle> addProductToProductBundle(UUID brandId,
+      UUID bundleId, UUID productId) {
+    Optional<ProductBundleData> optionalBundleData =
+        bundleRepository.findByIdAndBrandId(bundleId, brandId);
+
+    if (optionalBundleData.isPresent()) {
+      ProductBundleData bundleData = optionalBundleData.get();
+
+      Optional<ProductData> optionalProductData =
+          productRepository.findByIdAndBrandId(productId, brandId);
+
+      if (optionalProductData.isPresent()) {
+        ProductData productData = optionalProductData.get();
+        bundleData.products().add(productData);
+        productData.bundle().add(bundleData);
+
+        bundleRepository.save(bundleData);
+        productRepository.save(productData);
+
+        LOG.debug("Added product to bundle with brand {} and bundle {} for product id of {}",
+            brandId, bundleId, productId);
+        return getProductBundle(brandId, bundleData.id());
+      } else {
+        LOG.warn(
+            "Attempted to add a product to a bundle that doesn't exist with brand {} and bundle {} and product {}",
+            brandId, bundleId, productId);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+    } else {
+      LOG.warn(
+          "Attempted to add a product to a bundle that doesn't exist with brand {} and bundle {} and product {}",
+          brandId, bundleId, productId);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @Override
+  public ResponseEntity<Void> deleteProductFromProductBundle(UUID brandId,
+      UUID bundleId, UUID productId) {
+    Optional<ProductBundleData> optionalBundleData =
+        bundleRepository.findByIdAndBrandId(bundleId, brandId);
+
+    if (optionalBundleData.isPresent()) {
+      ProductBundleData bundleData = optionalBundleData.get();
+
+      Optional<ProductData> optionalProductData =
+          productRepository.findByIdAndBrandId(productId, brandId);
+
+      if (optionalProductData.isPresent()) {
+        ProductData productData = optionalProductData.get();
+        bundleData.products().remove(productData);
+        productData.bundle().remove(bundleData);
+
+        bundleRepository.save(bundleData);
+        productRepository.save(productData);
+
+        LOG.debug("Removed product from bundle with brand {} and bundle {} for product id of {}",
+            brandId, bundleId, productId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+      } else {
+        LOG.warn(
+            "Attempted to delete a product from a bundle that doesn't exist with brand {} and bundle {} and product {}",
+            brandId, bundleId, productId);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      }
+    } else {
+      LOG.warn(
+          "Attempted to delete a product from a bundle that doesn't exist with brand {} and bundle {} and product {}",
+          brandId, bundleId, productId);
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @Override
+  public ResponseEntity<List<DioProduct>> listProductBundleProducts(UUID brandId,
+      UUID bundleId) {
+    Optional<ProductBundleData> data = bundleRepository.findByIdAndBrandId(bundleId, brandId);
+
+    if (data.isPresent()) {
+      LOG.debug(
+          "Retrieving products belonging to product bundle with brand of {}, identifier of {}",
+          brandId, bundleId);
+
+      Set<ProductData> products = new HashSet<ProductData>();
+      if (data.get().products() != null) {
+        products.addAll(data.get().products());
+      }
+
+      return ResponseEntity.ok(mapper.mapAsList(products, DioProduct.class));
+    } else {
+      LOG.warn("Unable to locate product bundle with brand of {} and identifier of {}", brandId,
+          bundleId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }

@@ -10,29 +10,29 @@ import javax.annotation.Resource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import io.biza.babelfish.cdr.v1.enumerations.BankingProductDiscountType;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductAdditionalInformation;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductConstraint;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductDepositRate;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductDiscount;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductEligibility;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductFeature;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductFee;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductFeeDiscountEligibility;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductLendingRate;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductRateTier;
-import io.biza.babelfish.cdr.v1.model.banking.BankingProductRateTierApplicability;
-import io.biza.babelfish.cdr.v2.model.banking.BankingProductCardArt;
+import io.biza.babelfish.cdr.enumerations.BankingProductDiscountType;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAdditionalInformation;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductCardArtV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductConstraint;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRate;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDiscount;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductEligibility;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeature;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFee;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeeDiscountEligibility;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendingRate;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTier;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicability;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payload.DioProduct;
-import io.biza.deepthought.data.payload.DioProductCardArt;
-import io.biza.deepthought.data.payload.DioProductConstraint;
-import io.biza.deepthought.data.payload.DioProductEligibility;
-import io.biza.deepthought.data.payload.DioProductFeature;
-import io.biza.deepthought.data.payload.DioProductFee;
-import io.biza.deepthought.data.payload.DioProductRateDeposit;
-import io.biza.deepthought.data.payload.DioProductRateLending;
-import io.biza.deepthought.data.payload.cdr.CdrBankingProduct;
+import io.biza.deepthought.data.payloads.DioProduct;
+import io.biza.deepthought.data.payloads.DioProductCardArt;
+import io.biza.deepthought.data.payloads.DioProductConstraint;
+import io.biza.deepthought.data.payloads.DioProductEligibility;
+import io.biza.deepthought.data.payloads.DioProductFeature;
+import io.biza.deepthought.data.payloads.DioProductFee;
+import io.biza.deepthought.data.payloads.DioProductRateDeposit;
+import io.biza.deepthought.data.payloads.DioProductRateLending;
+import io.biza.deepthought.data.payloads.cdr.CdrBankingProduct;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.ProductData;
@@ -345,7 +345,7 @@ public class ProductTests extends TranslatorInitialisation {
 
       DioProductCardArt dioCardArtStatic =
           DioProductCardArt.builder().id(cardArt.id()).schemeType(DioSchemeType.CDR_BANKING)
-              .cdrBanking(new BankingProductCardArt().title(VariableConstants.PRODUCT_CARDART_TITLE)
+              .cdrBanking(new BankingProductCardArtV1().title(VariableConstants.PRODUCT_CARDART_TITLE)
                   .imageUri(VariableConstants.PRODUCT_CARDART_URI))
               .build();
 

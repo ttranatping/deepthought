@@ -3,7 +3,7 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.TypeApiDelegate;
 import io.biza.deepthought.data.enumerations.FormFieldType;
-import io.biza.deepthought.data.payload.ResponseGetTypes;
+import io.biza.deepthought.data.payloads.ResponseGetTypes;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;

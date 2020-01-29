@@ -3,7 +3,8 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductBundleAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payload.DioProductBundle;
+import io.biza.deepthought.data.payloads.DioProduct;
+import io.biza.deepthought.data.payloads.DioProductBundle;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -58,6 +59,20 @@ public interface ProductBundleAdminApi {
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("bundleId") UUID bundleId) {
     return getDelegate().getProductBundle(brandId, bundleId);
+  }
+  
+  @Operation(summary = "List Products assigned to Bundle", description = "List Products for a Bundle",
+      security = {@SecurityRequirement(name = Labels.SECURITY_SCHEME_NAME,
+          scopes = {Labels.SECURITY_SCOPE_PRODUCT_READ})})
+  @ApiResponses(value = {@ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
+      description = Labels.RESPONSE_SUCCESSFUL_LIST, content = @Content(
+          array = @ArraySchema(schema = @Schema(implementation = DioProductBundle.class))))})
+  @GetMapping(value = "/{bundleId}/product", produces = {MediaType.APPLICATION_JSON_VALUE})
+  @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
+  default ResponseEntity<List<DioProduct>> listProductBundleProducts(
+      @NotNull @Valid @PathVariable("brandId") UUID brandId,
+      @NotNull @Valid @PathVariable("bundleId") UUID bundleId) {
+    return getDelegate().listProductBundleProducts(brandId, bundleId);
   }
 
   @Operation(summary = "Create a Product Bundle",
@@ -116,6 +131,44 @@ public interface ProductBundleAdminApi {
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("bundleId") UUID bundleId) {
     return getDelegate().deleteProductBundle(brandId, bundleId);
+  }
+  
+  @Operation(summary = "Add a Product to a Bundle",
+      description = "Add a Product to a Product Bundle",
+      security = {@SecurityRequirement(name = Labels.SECURITY_SCHEME_NAME,
+          scopes = {Labels.SECURITY_SCOPE_PRODUCT_WRITE})})
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
+          description = Labels.RESPONSE_SUCCESSFUL_LIST,
+          content = @Content(schema = @Schema(implementation = DioProductBundle.class))),
+      @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
+          description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
+              array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
+  @PutMapping(path = "/{bundleId}/product/{productId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
+      produces = {MediaType.APPLICATION_JSON_VALUE})
+  @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
+  default ResponseEntity<DioProductBundle> addProductToProductBundle(
+      @NotNull @Valid @PathVariable("brandId") UUID brandId,
+      @NotNull @Valid @PathVariable("bundleId") UUID bundleId,
+      @NotNull @Valid @PathVariable("productId") UUID productId) throws ValidationListException {
+    return getDelegate().addProductToProductBundle(brandId, bundleId, productId);
+  }
+
+  @Operation(summary = "Remove a Product from a Bundle", description = "Removes a Product from a Bundle",
+      security = {@SecurityRequirement(name = Labels.SECURITY_SCHEME_NAME,
+          scopes = {Labels.SECURITY_SCOPE_PRODUCT_WRITE})})
+
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = Labels.RESPONSE_CODE_NO_CONTENT,
+          description = Labels.RESPONSE_SUCCESSFUL_LIST),
+      @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
+          description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
+  @DeleteMapping(path = "/{bundleId}/product/{productId}")
+  @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
+  default ResponseEntity<Void> deleteProductFromProductBundle(
+      @NotNull @Valid @PathVariable("brandId") UUID brandId,
+      @NotNull @Valid @PathVariable("bundleId") UUID bundleId, @NotNull @Valid @PathVariable("productId") UUID productId) {
+    return getDelegate().deleteProductFromProductBundle(brandId, bundleId, productId);
   }
 
 

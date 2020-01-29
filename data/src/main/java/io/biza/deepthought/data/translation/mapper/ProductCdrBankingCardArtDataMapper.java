@@ -1,8 +1,8 @@
 package io.biza.deepthought.data.translation.mapper;
 
-import io.biza.babelfish.cdr.v2.model.banking.BankingProductCardArt;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductCardArtV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payload.DioProductCardArt;
+import io.biza.deepthought.data.payloads.DioProductCardArt;
 import ma.glasnost.orika.MapperFactory;
 
 public class ProductCdrBankingCardArtDataMapper implements OrikaFactoryConfigurerInterface {
@@ -16,7 +16,7 @@ public class ProductCdrBankingCardArtDataMapper implements OrikaFactoryConfigure
 
     orikaMapperFactory
         .classMap(io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingCardArtData.class,
-            BankingProductCardArt.class)
+            BankingProductCardArtV1.class)
         .byDefault().register();
 
   }
