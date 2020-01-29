@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { DioProduct } from '../model/dioProduct';
+import { DioProductBundle } from '../model/dioProductBundle';
 import { DioProductConstraint } from '../model/dioProductConstraint';
 import { DioProductEligibility } from '../model/dioProductEligibility';
 import { DioProductFeature } from '../model/dioProductFeature';
@@ -1145,6 +1146,53 @@ export class ProductAdminService {
         ];
 
         return this.httpClient.request<DioProductRateLending>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}/lending-rate/${encodeURIComponent(String(rateId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * List Bundles assigned to Product
+     * List Bundles assigned to Product
+     * @param brandId 
+     * @param productId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public listBundlesForProduct(brandId: string, productId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<DioProductBundle>>;
+    public listBundlesForProduct(brandId: string, productId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<DioProductBundle>>>;
+    public listBundlesForProduct(brandId: string, productId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<DioProductBundle>>>;
+    public listBundlesForProduct(brandId: string, productId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling listBundlesForProduct.');
+        }
+
+        if (productId === null || productId === undefined) {
+            throw new Error('Required parameter productId was null or undefined when calling listBundlesForProduct.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<DioProductBundle>>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}/bundle`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

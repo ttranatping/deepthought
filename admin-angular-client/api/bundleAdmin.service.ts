@@ -57,6 +57,58 @@ export class BundleAdminService {
 
 
     /**
+     * Add a Product to a Bundle
+     * Add a Product to a Product Bundle
+     * @param brandId 
+     * @param bundleId 
+     * @param productId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addProductToProductBundle(brandId: string, bundleId: string, productId: string, observe?: 'body', reportProgress?: boolean): Observable<DioProductBundle>;
+    public addProductToProductBundle(brandId: string, bundleId: string, productId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DioProductBundle>>;
+    public addProductToProductBundle(brandId: string, bundleId: string, productId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DioProductBundle>>;
+    public addProductToProductBundle(brandId: string, bundleId: string, productId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling addProductToProductBundle.');
+        }
+
+        if (bundleId === null || bundleId === undefined) {
+            throw new Error('Required parameter bundleId was null or undefined when calling addProductToProductBundle.');
+        }
+
+        if (productId === null || productId === undefined) {
+            throw new Error('Required parameter productId was null or undefined when calling addProductToProductBundle.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<DioProductBundle>('put',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/bundle/${encodeURIComponent(String(bundleId))}/product/${encodeURIComponent(String(productId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Create a Product Bundle
      * Creates a new Product Bundle and returns it
      * @param brandId 
@@ -153,6 +205,57 @@ export class BundleAdminService {
     }
 
     /**
+     * Remove a Product from a Bundle
+     * Removes a Product from a Bundle
+     * @param brandId 
+     * @param bundleId 
+     * @param productId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteProductFromProductBundle(brandId: string, bundleId: string, productId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteProductFromProductBundle(brandId: string, bundleId: string, productId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteProductFromProductBundle(brandId: string, bundleId: string, productId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteProductFromProductBundle(brandId: string, bundleId: string, productId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling deleteProductFromProductBundle.');
+        }
+
+        if (bundleId === null || bundleId === undefined) {
+            throw new Error('Required parameter bundleId was null or undefined when calling deleteProductFromProductBundle.');
+        }
+
+        if (productId === null || productId === undefined) {
+            throw new Error('Required parameter productId was null or undefined when calling deleteProductFromProductBundle.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/bundle/${encodeURIComponent(String(bundleId))}/product/${encodeURIComponent(String(productId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Get a single Product Bundle
      * Returns a single product bundle entry
      * @param brandId 
@@ -232,6 +335,53 @@ export class BundleAdminService {
         ];
 
         return this.httpClient.request<Array<DioProductBundle>>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/bundle`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * List Products assigned to Bundle
+     * List Products for a Bundle
+     * @param brandId 
+     * @param bundleId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public listProductsForBundle(brandId: string, bundleId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<DioProductBundle>>;
+    public listProductsForBundle(brandId: string, bundleId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<DioProductBundle>>>;
+    public listProductsForBundle(brandId: string, bundleId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<DioProductBundle>>>;
+    public listProductsForBundle(brandId: string, bundleId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling listProductsForBundle.');
+        }
+
+        if (bundleId === null || bundleId === undefined) {
+            throw new Error('Required parameter bundleId was null or undefined when calling listProductsForBundle.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<DioProductBundle>>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/bundle/${encodeURIComponent(String(bundleId))}/product`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
