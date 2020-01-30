@@ -42,5 +42,6 @@ public class ProductDataMapper implements OrikaFactoryConfigurerInterface {
         .fieldAToB("cdrBanking.constraint", "constraints").fieldAToB("cdrBanking.fee", "fees")
         .fieldAToB("cdrBanking.depositRate", "depositRates")
         .fieldAToB("cdrBanking.lendingRate", "lendingRates").byDefault().register();
+    
   }
 }

@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRate;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFee;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTier;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicability;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.DioProductRateDeposit;
+import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeDiscountData;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositData;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierApplicabilityData;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierData;
@@ -19,6 +22,38 @@ public class ProductCdrBankingRateDepositDataMapper implements OrikaFactoryConfi
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
+
+    orikaMapperFactory
+        .classMap(ProductCdrBankingRateDepositData.class, BankingProductDepositRate.class)
+        .exclude("tiers").byDefault()
+        .customize(new CustomMapper<ProductCdrBankingRateDepositData, BankingProductDepositRate>() {
+          @Override
+          public void mapAtoB(ProductCdrBankingRateDepositData from, BankingProductDepositRate to,
+              MappingContext context) {
+
+            List<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>> tierList =
+                new ArrayList<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>>();
+
+            for (ProductCdrBankingRateDepositTierData tierData : from.tiers()) {
+              BankingProductRateTier rateTier = new BankingProductRateTier();
+              rateTier.setMaximumValue(tierData.maximumValue());
+              rateTier.setMinimumValue(tierData.minimumValue());
+              rateTier.setName(tierData.name());
+              rateTier.setRateApplicationMethod(tierData.rateApplicationMethod());
+              rateTier.setUnitOfMeasure(tierData.unitOfMeasure());
+              if (tierData.applicabilityConditions() != null) {
+                rateTier.applicabilityConditions(new BankingProductRateTierApplicability()
+                    .additionalInfo(tierData.applicabilityConditions().additionalInfo())
+                    .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
+              }
+
+              tierList.add(rateTier);
+            }
+
+            to.tiers(tierList);
+          }
+        }).register();
+
     orikaMapperFactory.classMap(ProductCdrBankingRateDepositData.class, DioProductRateDeposit.class)
         .fieldAToB("id", "id").field("schemeType", "schemeType")
         .field("depositRateType", "cdrBanking.depositRateType").field("rate", "cdrBanking.rate")
