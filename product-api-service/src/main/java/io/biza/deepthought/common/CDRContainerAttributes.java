@@ -25,7 +25,7 @@ public class CDRContainerAttributes {
     return new MetaPaginated().totalPages(inputPage.getTotalPages())
         .totalRecords(Long.valueOf(inputPage.getTotalElements()).intValue());
   }
-  
+
   public static Meta toMeta() {
     return new Meta();
   }
@@ -36,31 +36,33 @@ public class CDRContainerAttributes {
     links.self(uriComponents.build().toUri());
     return links;
   }
-  
+
   public static LinksPaginated toLinksPaginated(Page<?> inputPage) {
     LinksPaginated links = new LinksPaginated();
     ServletUriComponentsBuilder uriComponents = ServletUriComponentsBuilder.fromCurrentRequest();
-    
+
     links.self(uriComponents.build().toUri());
-    
+
     if (!inputPage.isFirst()) {
-      links.first(uriComponents.queryParam("page", 1)
-          .queryParam("page-size", inputPage.getNumberOfElements()).build().toUri());
+      links.first(uriComponents.replaceQueryParam("page", 1)
+          .replaceQueryParam("page-size", inputPage.getNumberOfElements()).build().toUri());
     }
 
     if (!inputPage.isLast()) {
-      links.last(uriComponents.queryParam("page", inputPage.getTotalPages() + 1)
-          .queryParam("page-size", inputPage.getNumberOfElements()).build().toUri());
+      links.last(uriComponents.replaceQueryParam("page", inputPage.getTotalPages() + 1)
+          .replaceQueryParam("page-size", inputPage.getNumberOfElements()).build().toUri());
     }
 
     if (inputPage.hasPrevious()) {
-      links.prev(uriComponents.queryParam("page", inputPage.previousPageable().getPageNumber() + 1)
-          .queryParam("page-size", inputPage.getNumberOfElements()).build().toUri());
+      links.prev(
+          uriComponents.replaceQueryParam("page", inputPage.previousPageable().getPageNumber() + 1)
+              .replaceQueryParam("page-size", inputPage.getNumberOfElements()).build().toUri());
     }
 
     if (inputPage.hasNext()) {
-      links.next(uriComponents.queryParam("page", inputPage.nextPageable().getPageNumber() + 1)
-          .queryParam("page-size", inputPage.getNumberOfElements()).build().toUri());
+      links.next(
+          uriComponents.replaceQueryParam("page", inputPage.nextPageable().getPageNumber() + 1)
+              .replaceQueryParam("page-size", inputPage.getNumberOfElements()).build().toUri());
     }
 
     return links;
