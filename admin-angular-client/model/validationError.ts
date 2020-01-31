@@ -17,9 +17,9 @@ import { DioValidationErrorType } from './dioValidationErrorType';
 export interface ValidationError { 
     type: DioValidationErrorType;
     /**
-     * Field which failed validation
+     * Fields which failed validation
      */
-    field?: string;
+    fields?: Array<string>;
     /**
      * Validation Error Message
      */

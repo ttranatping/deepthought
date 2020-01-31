@@ -1,4 +1,4 @@
-## @bizaoss/deepthought-admin-angular-client@1.0.0-SNAPSHOT.202001301000
+## @bizaoss/deepthought-admin-angular-client@1.0.0-SNAPSHOT.202001311400
 
 ### Building
 
@@ -19,7 +19,7 @@ Navigate to the folder of your consuming project and run one of next commands.
 _published:_
 
 ```
-npm install @bizaoss/deepthought-admin-angular-client@1.0.0-SNAPSHOT.202001301000 --save
+npm install @bizaoss/deepthought-admin-angular-client@1.0.0-SNAPSHOT.202001311400 --save
 ```
 
 _without publishing (not recommended):_
