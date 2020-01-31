@@ -1,5 +1,6 @@
 package io.biza.deepthought.data.payloads;
 
+import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -29,9 +30,9 @@ public class ValidationError {
   @Builder.Default
   DioValidationErrorType type = DioValidationErrorType.ATTRIBUTE_INVALID;
   
-  @JsonProperty("field")
-  @Schema(description = "Field which failed validation")
-  String field;
+  @JsonProperty("fields")
+  @Schema(description = "Fields which failed validation")
+  List<String> fields;
   
   @JsonProperty("message")
   @NotNull

@@ -68,7 +68,7 @@ public class ExceptionController {
                 ResponseValidationError.builder().type(DioExceptionType.INVALID_JSON)
                     .explanation("The Supplied JSON Payload was unable to be parsed")
                     .validationErrors(List.of(ValidationError.builder()
-                        .field(String.join(".", fieldNames)).message(message)
+                        .fields(List.of(String.join(".", fieldNames))).message(message)
                         .type(DioValidationErrorType.ATTRIBUTE_INVALID).build()))
                     .build());
       } else {
@@ -78,7 +78,7 @@ public class ExceptionController {
                 .explanation("The Supplied JSON Payload was unable to be parsed")
                 .validationErrors(
                     List.of(ValidationError.builder().type(DioValidationErrorType.INVALID_JSON)
-                        .field("HTTP Body").message(ex.getMessage()).build()))
+                        .fields(List.of("HTTP Body")).message(ex.getMessage()).build()))
                 .build());
       }
     } else {
@@ -87,7 +87,7 @@ public class ExceptionController {
               .explanation("The Supplied JSON Payload was unable to be parsed")
               .validationErrors(
                   List.of(ValidationError.builder().type(DioValidationErrorType.INVALID_JSON)
-                      .field("HTTP Body").message(ex.getMessage()).build()))
+                      .fields(List.of("HTTP Body")).message(ex.getMessage()).build()))
               .build());
     }
   }
@@ -114,13 +114,13 @@ public class ExceptionController {
       ConstraintViolation<?> violation = error.unwrap(ConstraintViolation.class);
       try {
         errors.validationErrors()
-            .add(ValidationError.builder().field(violation.getPropertyPath().toString())
+            .add(ValidationError.builder().fields(List.of(violation.getPropertyPath().toString()))
                 .message(StringUtils.capitalize(violation.getMessage()))
                 .type(DioValidationErrorType.ATTRIBUTE_INVALID).build());
       } catch (IllegalArgumentException e) {
         LOG.error("Attempted to unwrap an error which is not supported: {}", error);
         errors.validationErrors()
-            .add(ValidationError.builder().field(error.getCode())
+            .add(ValidationError.builder().fields(List.of(error.getCode()))
                 .message(StringUtils.capitalize(error.getDefaultMessage()))
                 .type(DioValidationErrorType.ATTRIBUTE_INVALID).build());
       }
@@ -138,7 +138,7 @@ public class ExceptionController {
             .explanation("The Supplied JSON Payload was unable to be parsed")
             .validationErrors(
                 List.of(ValidationError.builder().type(DioValidationErrorType.INVALID_JSON)
-                    .field("HTTP Body").message(ex.getMessage()).build()))
+                    .fields(List.of("HTTP Body")).message(ex.getMessage()).build()))
             .build();
 
     return ResponseEntity.unprocessableEntity().body(errors);
@@ -152,7 +152,7 @@ public class ExceptionController {
         .type(DioExceptionType.INVALID_PARAMETER_FORMAT)
         .explanation("A path parameter of invalid format was supplied")
         .validationErrors(List.of(ValidationError.builder()
-            .type(DioValidationErrorType.INVALID_FORMAT).field(ex.getParameter().getParameterName())
+            .type(DioValidationErrorType.INVALID_FORMAT).fields(List.of(ex.getParameter().getParameterName()))
             .message("Parameter should be a " + ex.getRequiredType().getSimpleName()).build()))
         .build();
 
