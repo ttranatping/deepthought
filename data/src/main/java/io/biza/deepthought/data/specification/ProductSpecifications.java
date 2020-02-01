@@ -2,7 +2,6 @@ package io.biza.deepthought.data.specification;
 
 import java.time.OffsetDateTime;
 import javax.persistence.criteria.Join;
-import javax.persistence.criteria.ListJoin;
 import javax.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
