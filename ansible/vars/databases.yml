@@ -1,0 +1,14 @@
+---
+mysql_root_password: solongandthanksforallthefish
+mysql_databases:
+  - name: keycloak
+  - name: deepthought
+mysql_user:
+  - name: keycloak
+    host: localhost
+    password: spaceisbigreallybig
+    priv: "keycloak.*:ALL"
+  - name: deepthought
+    host: localhost
+    password: inthebeginningtheuniversewascreated
+
