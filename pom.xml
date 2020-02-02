@@ -47,6 +47,7 @@
         <developerConnection>scm:git:git@github.com:bizaio/deepthought.git</developerConnection>
     </scm>
     <modules>
+	<module>keycloak-theme</module>
         <module>data</module>
         <module>admin-service</module>
         <module>product-api-service</module>
