@@ -1,8 +1,14 @@
 package io.biza.deepthought.data;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Set;
-import org.reflections.Reflections;
+import io.github.classgraph.AnnotationInfo;
+import io.github.classgraph.AnnotationParameterValue;
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfo;
+import io.github.classgraph.ClassInfoList;
+import io.github.classgraph.ScanResult;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.converter.BidirectionalConverter;
@@ -16,6 +22,7 @@ public class OrikaFactoryConfigurer {
 
   /**
    * Produce a local mapper factory
+   * 
    * @return MapperFactory with configuration
    */
   public MapperFactory getFactory() {
@@ -25,7 +32,7 @@ public class OrikaFactoryConfigurer {
 
     return localMapper;
   }
-  
+
   /**
    * Initialise the mapper, configure it and setup localMapper
    */
@@ -37,68 +44,78 @@ public class OrikaFactoryConfigurer {
     configureFactoryBuilder(builder);
     localMapper = builder.build();
     configureMapperFactory(localMapper);
-    
+
   }
-  
+
   /**
    * Setup the lombok resolver
+   * 
    * @param builder with lombok compatible resolver
    */
   public void configureFactoryBuilder(DefaultMapperFactory.Builder builder) {
     builder.propertyResolverStrategy(new OrikaFluentLombokResolver());
   }
-  
+
   /**
    * Reflect the converts and mappers and set them up
+   * 
    * @param mapper with deepthought mapper/converters setup
    */
   public void configureMapperFactory(MapperFactory mapper) {
 
-    /**
-     * Configure the factory with converters
-     */
-    Reflections converterReflections =
-        new Reflections("io.biza.deepthought.data.translation.converter");
     ConverterFactory converterFactory = mapper.getConverterFactory();
 
-    @SuppressWarnings("rawtypes")
-    Set<Class<? extends BidirectionalConverter>> converterClasses =
-        converterReflections.getSubTypesOf(BidirectionalConverter.class);
-    for (@SuppressWarnings("rawtypes")
-    Class<? extends BidirectionalConverter> clazz : converterClasses) {
-      try {
-        BidirectionalConverter<?, ?> converter = clazz.getConstructor().newInstance();
-        converterFactory.registerConverter(converter);
-      } catch (InstantiationException | IllegalAccessException | InvocationTargetException
-          | NoSuchMethodException | SecurityException e) {
-        LOG.error("Unable to find a declared constructor for class name of {} with exception of {}",
-            clazz.getName(), e.toString());
-      } catch (IllegalArgumentException e) {
-        LOG.error(
-            "Encountered issues when configuring downstream mapper for class name of {} with exception of {}",
-            clazz.getName(), e.toString());
-      }
-    }
-
     /**
-     * Configure the factory using configurers
+     * Configure bidirectional converters
      */
-    Reflections mapperReflections = new Reflections("io.biza.deepthought.data.translation.mapper");
+    try (ScanResult converterResult = new ClassGraph().enableAllInfo()
+        .whitelistPackages("io.biza.deepthought.data.translation.converter").scan()) {
+      ClassInfoList converterClasses =
+          converterResult.getSubclasses("ma.glasnost.orika.converter.BidirectionalConverter");
 
-    Set<Class<? extends OrikaFactoryConfigurerInterface>> mapperClasses =
-        mapperReflections.getSubTypesOf(OrikaFactoryConfigurerInterface.class);
-    for (Class<? extends OrikaFactoryConfigurerInterface> clazz : mapperClasses) {
-      try {
-        OrikaFactoryConfigurerInterface configurer = clazz.getConstructor().newInstance();
-        configurer.configure(mapper);
-      } catch (InstantiationException | IllegalAccessException | InvocationTargetException
-          | NoSuchMethodException | SecurityException e) {
-        LOG.error("Unable to find a declared constructor for class name of {} with exception of {}",
-            clazz.getName(), e.toString());
-      } catch (IllegalArgumentException e) {
-        LOG.error(
-            "Encountered issues when configuring downstream mapper for class name of {} with exception of {}",
-            clazz.getName(), e.toString());
+      for (Class<?> clazz : converterClasses.loadClasses()) {
+        try {
+          BidirectionalConverter<?, ?> converter =
+              (BidirectionalConverter<?, ?>) clazz.getConstructor().newInstance();
+          converterFactory.registerConverter(converter);
+          LOG.info("Registered converter for {} <-> {}", converter.getAType().getName(), converter.getBType().getName());
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException
+            | NoSuchMethodException | SecurityException e) {
+          LOG.error(
+              "Unable to find a declared constructor for class name of {} with exception of {}",
+              clazz.getName(), e.toString());
+        } catch (IllegalArgumentException e) {
+          LOG.error(
+              "Encountered issues when configuring downstream mapper for class name of {} with exception of {}",
+              clazz.getName(), e.toString());
+        }
+      }
+
+      /**
+       * Configure bidirectional configurers
+       */
+      try (ScanResult mapperResult = new ClassGraph().enableAllInfo()
+          .whitelistPackages("io.biza.deepthought.data.translation.mapper").scan()) {
+        ClassInfoList configurerClasses =
+            mapperResult.getClassesImplementing("io.biza.deepthought.data.OrikaFactoryConfigurerInterface");
+
+        for (Class<?> clazz : configurerClasses.loadClasses()) {
+          try {
+            OrikaFactoryConfigurerInterface configurer =
+                (OrikaFactoryConfigurerInterface) clazz.getConstructor().newInstance();
+            configurer.configure(mapper);
+            LOG.info("Registered mapper named {}", configurer.getClass().getName());
+          } catch (InstantiationException | IllegalAccessException | InvocationTargetException
+              | NoSuchMethodException | SecurityException e) {
+            LOG.error(
+                "Unable to find a declared constructor for class name of {} with exception of {}",
+                clazz.getName(), e.toString());
+          } catch (IllegalArgumentException e) {
+            LOG.error(
+                "Encountered issues when configuring downstream mapper for class name of {} with exception of {}",
+                clazz.getName(), e.toString());
+          }
+        }
       }
     }
   }

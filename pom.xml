@@ -37,8 +37,8 @@
         <hibernate-core.version>5.4.10.Final</hibernate-core.version>
         <orika.version>1.5.4</orika.version>
         <h2.version>1.4.200</h2.version>
-        <reflections.version>0.9.12</reflections.version>
         <spring-shell.version>2.0.1.RELEASE</spring-shell.version>
+        <classgraph.version>4.8.60</classgraph.version>
     </properties>
 
     <scm>
