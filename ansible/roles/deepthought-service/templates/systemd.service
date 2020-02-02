@@ -1,0 +1,23 @@
+[Unit]
+Description=Deep Thought Service: {{ deepthought_service_id }}
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=deepthought
+Group=deepthought
+ExecStart=/usr/bin/java -jar /opt/deepthought/{{ deepthought_service_id }}.jar --port {{ deepthought_service_port }}
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier={{ deepthought_service_id }}
+EnvironmentFile=/etc/deepthought.environment
+KillMode=process
+Restart=on-failure
+TimeoutSec=300s
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
+
+

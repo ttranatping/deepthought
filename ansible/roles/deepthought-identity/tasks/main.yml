@@ -1,0 +1,110 @@
+---
+- name: deploy java
+  apt:
+    name: openjdk-11-jre-headless
+    state: present
+
+- name: deploy unzip
+  apt:
+    name: unzip
+    state: present
+
+- name: create keycloak group
+  group:
+    name: keycloak
+    state: present
+
+- name: obtain keycloak binary
+  unarchive:
+    src: "{{ keycloak_server_distribution }}"
+    dest: /opt
+    remote_src: yes
+    creates: "/opt/keycloak-{{ keycloak_server_version }}/bin/standalone.sh"
+
+- name: create keycloak user
+  user:
+    name: keycloak
+    group: keycloak
+    system: yes
+    home: "/opt/keycloak-{{ keycloak_server_version }}"
+
+- name: create directory for mariadb connector
+  file:
+    state: directory
+    mode: 0755
+    path: "/opt/keycloak-{{ keycloak_server_version }}/modules/system/layers/keycloak/org/mariadb/main"
+
+- name: deploy mariadb connector
+  get_url:
+    url: "{{ mariadb_connector_distribution }}"
+    dest: "/opt/keycloak-{{ keycloak_server_version }}/modules/system/layers/keycloak/org/mariadb/main/mariadb-java-client-{{ mariadb_connector_version }}.jar"
+    checksum: "{{ mariadb_checksum }}"
+
+- name: template out database module.xml
+  template:
+    src: "mariadb-module.xml"
+    dest: "/opt/keycloak-{{ keycloak_server_version }}/modules/system/layers/keycloak/org/mariadb/main/module.xml"
+    owner: keycloak
+    group: keycloak
+    mode: 0644
+
+- name: template out standalone-ha.xml
+  template:
+    src: "standalone-ha.xml"
+    dest: "/opt/keycloak-{{ keycloak_server_version }}/standalone/configuration/standalone-ha.xml"
+    owner: keycloak
+    group: keycloak
+    mode: 0644
+
+- name: change ownership for keycloak user
+  file:
+    path: "/opt/keycloak-{{ keycloak_server_version }}"
+    owner: keycloak
+    group: keycloak
+    state: directory
+    recurse: yes
+
+- name: create runtime directory
+  file:
+    path: "/var/run/keycloak"
+    state: directory
+    owner: keycloak
+    group: keycloak
+    mode: 0755
+
+- name: Template out the systemd service
+  template:
+    src: templates/keycloak.systemd
+    dest: "/etc/systemd/system/keycloak.service"
+    mode: 0644
+    owner: root
+    group: root
+  register: systemd_changed
+
+- name: reload systemd and enable the keycloak service
+  systemd:
+    name: "keycloak"
+    daemon_reload: yes
+    enabled: yes
+    state: started
+  when: systemd_changed.changed
+
+- name: copy rsyslog config
+  copy:
+    src: files/rsyslog.conf
+    dest: /etc/rsyslog.d/61-keycloak.conf
+    mode: 0644
+  notify:
+    - restart rsyslog
+
+- name: copy logrotate config
+  copy:
+    src: files/logrotate.conf
+    dest: /etc/logrotate.d/keycloak
+
+- name: write nginx configuration
+  copy:
+    src: files/nginx.conf
+    dest: /etc/nginx/deepthought.d/keycloak.conf
+  notify:
+    - restart nginx

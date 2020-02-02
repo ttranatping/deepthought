@@ -1,0 +1,27 @@
+---
+# tasks/main.yml
+# Deploy and configure an nginx install with a certificate
+- name: deploy nginx package
+  package:
+    name: nginx
+
+- name: deploy certbot ppa
+  apt_repository:
+    repo: ppa:certbot/certbot
+
+- name: deploy certbot for nginx
+  apt:
+    name: python-certbot-nginx
+    update_cache: yes
+
+- name: copy deepthought configuration to default virtual host location
+  copy:
+    src: files/nginx.conf
+    dest: /etc/nginx/sites-available/default
+  notify:
+    - reload nginx
+
+- name: make deepthought nginx include directory available
+  file:
+    path: /etc/nginx/deepthought.d
+    state: directory
