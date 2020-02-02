@@ -43,7 +43,7 @@
     daemon_reload: yes
     enabled: yes
 
-- name: Template out the deepthought environment file
+- name: Template out the deepthought spring configuration
   template:
     src: templates/spring-config.yml
     dest: "/etc/{{ deepthought_service_id }}.yml"
@@ -64,3 +64,9 @@
     src: templates/logrotate.conf
     dest: "/etc/logrotate.d/{{ deepthought_service_id }}"
 
+- name: template out nginx configuration
+  template:
+    src: templates/nginx.conf
+    dest: /etc/nginx/deepthought.d/{{ deepthought_service_id }}.conf
+  notify:
+    - restart nginx

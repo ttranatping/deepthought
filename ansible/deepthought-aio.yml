@@ -47,6 +47,16 @@
         deepthought_service_id: deepthought-admin-service
         deepthought_service_jar: "{{ deepthought_admin_jar }}"
         deepthought_service_port: 8081
+        deepthought_service_base_path: "/dio-au"
+
+    - name: deploy deepthought-product-api-service
+      include_role:
+        name: deepthought-service
+      vars:
+        deepthought_service_id: deepthought-product-api
+        deepthought_service_jar: "{{ deepthought_product_api_jar }}"
+        deepthought_service_port: 8082
+        deepthought_service_base_path: "/cds-au"
 
     - name: Update all packages
       apt:

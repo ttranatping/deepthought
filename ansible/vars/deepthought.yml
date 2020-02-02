@@ -1,3 +1,4 @@
 ---
 cdr_zone_dns_mapper_endpoint: https://r6g49ktqh8.execute-api.ap-southeast-2.amazonaws.com/prod/cdr-zone-record
 deepthought_admin_jar: ../admin-service/target/deepthought-admin-service-0.1.0-SNAPSHOT.jar
+deepthought_product_api_jar: ../product-api-service/target/deepthought-product-api-service-0.1.0-SNAPSHOT.jar

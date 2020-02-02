@@ -108,3 +108,41 @@
     dest: /etc/nginx/deepthought.d/keycloak.conf
   notify:
     - restart nginx
+
+- name: create keycloak admin user
+  shell:
+    cmd: "/opt/keycloak-{{ keycloak_server_version }}/bin/add-user-keycloak.sh --roles admin -u admin -p {{ mysql_root_password }} && touch /opt/keycloak-{{ keycloak_server_version }}/.deepthought-admin-user"
+    creates: "/opt/keycloak-{{ keycloak_server_version }}/.deepthought-admin-user"
+  register: keycloak_add_user
+
+- name: restart keycloak service for new user
+  systemd:
+    name: "keycloak"
+    daemon_reload: yes
+    state: restarted
+  when: keycloak_add_user.changed
+
+- name: waiting 180 seconds for keycloak to start and load user
+  pause:
+    seconds: 180
+  when: keycloak_add_user.changed
+
+- name: copy realm configuration
+  copy:
+    src: files/deepthought-realm.json
+    dest: "/opt/keycloak-{{ keycloak_server_version }}/deepthought-realm.json"
+
+- name: import realm configuration once and only once
+  shell:
+    cmd: "/opt/keycloak-{{ keycloak_server_version }}/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password {{ mysql_root_password }} && /opt/keycloak-{{ keycloak_server_version }}/bin/kcadm.sh create realms -f /opt/keycloak-{{ keycloak_server_version }}/deepthought-realm.json  && touch /opt/keycloak-{{ keycloak_server_version }}/.deepthought-realm"
+    creates: "/opt/keycloak-{{ keycloak_server_version }}/.deepthought-realm"
+
+- name: create deepthought user on deepthought realm
+  shell:
+    cmd: "/opt/keycloak-{{ keycloak_server_version }}/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password {{ mysql_root_password }} && /opt/keycloak-{{ keycloak_server_version }}/bin/kcadm.sh create users -r deepthought -s username=deepthought -s enabled=true && touch /opt/keycloak-{{ keycloak_server_version }}/.deepthought-user"
+    creates: "/opt/keycloak-{{ keycloak_server_version }}/.deepthought-user"
+
+- name: reset passwords
+  shell:
+    cmd: "/opt/keycloak-{{ keycloak_server_version }}/bin/kcadm.sh config credentials --server http://localhost:8080/auth --realm master --user admin --password {{ mysql_root_password }} && /opt/keycloak-{{ keycloak_server_version }}/bin/kcadm.sh set-password -r deepthought --username deepthought --new-password {{ mysql_root_password }} --temporary && /opt/keycloak-{{ keycloak_server_version }}/bin/kcadm.sh set-password -r master --username admin --new-password {{ mysql_root_password }} --temporary && touch /opt/keycloak-{{ keycloak_server_version }}/.deepthought-passwords"
+    creates: "/opt/keycloak-{{ keycloak_server_version }}/.deepthought-passwords"

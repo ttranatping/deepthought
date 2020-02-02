@@ -7,7 +7,7 @@ After=network-online.target
 Type=simple
 User=deepthought
 Group=deepthought
-ExecStart=/usr/bin/java -jar /opt/deepthought/{{ deepthought_service_id }}.jar --port {{ deepthought_service_port }} --spring.config.location=/etc/{{ deepthought_service_id }}.yml
+ExecStart=/usr/bin/java -jar /opt/deepthought/{{ deepthought_service_id }}.jar --spring.config.location=classpath:/application.yml,/etc/{{ deepthought_service_id }}.yml
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier={{ deepthought_service_id }}
