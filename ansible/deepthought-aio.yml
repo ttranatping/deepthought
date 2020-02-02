@@ -14,6 +14,12 @@
       changed_when: false
     - setup: # aka gather_facts
   tasks:
+    - name: check admin-service jar
+      include_role:
+        name: deepthought-service
+        tasks_from: precheck.yml
+      vars:
+        deepthought_service_jar: "{{ deepthought_admin_jar }}"
     - name: Refresh apt cache
       apt:
         update_cache: yes
