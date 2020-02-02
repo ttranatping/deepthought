@@ -132,6 +132,10 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -189,7 +193,7 @@
                 <artifactId>springdoc-openapi-maven-plugin</artifactId>
                 <version>${springdoc-openapi-maven-plugin.version}</version>
                 <configuration>
-                    <apiDocsUrl>http://localhost:8080/cds-au/v3/api-docs</apiDocsUrl>
+                    <apiDocsUrl>http://localhost:8081/cds-au/v3/api-docs</apiDocsUrl>
                 </configuration>
                 <executions>
                     <execution>

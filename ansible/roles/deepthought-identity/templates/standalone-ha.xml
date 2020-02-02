@@ -141,7 +141,7 @@
                     </security>
                 </datasource>
                 <datasource jndi-name="java:/jboss/datasources/KeycloakDS" pool-name="KeycloakDS" enabled="true">
-                    <connection-url>jdbc:mysql://localhost:3306/{{ mysql_databases[0].name }}?useSSL=false&amp;characterEncoding=UTF-8</connection-url>
+                    <connection-url>jdbc:mysql://{{ mysql_hostname }}:3306/{{ mysql_databases[0].name }}?useSSL=false&amp;characterEncoding=UTF-8</connection-url>
                     <driver>mariadb</driver>
                     <pool>
                         <min-pool-size>5</min-pool-size>

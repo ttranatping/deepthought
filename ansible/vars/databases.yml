@@ -1,5 +1,6 @@
 ---
 mysql_root_password: solongandthanksforallthefish
+mysql_hostname: localhost
 mysql_databases:
   - name: keycloak
   - name: deepthought

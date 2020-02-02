@@ -45,8 +45,8 @@
 
 - name: Template out the deepthought environment file
   template:
-    src: templates/deepthought.environment
-    dest: /etc/deepthought.environment
+    src: templates/spring-config.yml
+    dest: "/etc/{{ deepthought_service_id }}.yml"
     mode: 0755
     owner: root
     group: root
