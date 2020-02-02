@@ -1,16 +1,11 @@
 package io.biza.deepthought.admin.support;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolation;
-import javax.validation.Payload;
 import javax.validation.Validator;
 import org.springframework.util.StringUtils;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.biza.babelfish.cdr.support.AssertTrueBabelfish;
-import io.biza.babelfish.cdr.support.BabelfishValidationPayload;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioValidationErrorType;

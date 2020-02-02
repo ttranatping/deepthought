@@ -201,6 +201,19 @@
                             <goal>stop</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <requiresUnpack>
+                                <dependency>
+                                    <groupId>io.biza</groupId>
+                                    <artifactId>deepthought</artifactId>
+                                </dependency>
+                            </requiresUnpack>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>

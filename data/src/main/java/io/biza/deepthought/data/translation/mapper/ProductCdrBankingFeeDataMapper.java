@@ -1,10 +1,8 @@
 package io.biza.deepthought.data.translation.mapper;
 
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductConstraint;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFee;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.DioProductFee;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingConstraintData;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeData;
 import ma.glasnost.orika.MapperFactory;
 

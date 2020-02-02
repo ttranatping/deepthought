@@ -1,7 +1,5 @@
 package io.biza.deepthought.product.api.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import javax.validation.Validator;
@@ -15,14 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDetailV2;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductV2;
-import io.biza.babelfish.cdr.models.payloads.common.LinksPaginated;
-import io.biza.babelfish.cdr.models.payloads.common.MetaPaginated;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductV2ById;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductV2List;
 import io.biza.babelfish.cdr.models.responses.container.ResponseBankingProductV2ListData;
 import io.biza.deepthought.common.CDRContainerAttributes;
 import io.biza.deepthought.data.persistence.model.ProductData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import io.biza.deepthought.data.specification.ProductSpecifications;

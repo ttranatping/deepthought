@@ -1,5 +1,6 @@
 package io.biza.deepthought.admin.api.controller;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.util.StringUtils;
@@ -139,6 +140,21 @@ public class ExceptionController {
             .validationErrors(
                 List.of(ValidationError.builder().type(DioValidationErrorType.INVALID_JSON)
                     .fields(List.of("HTTP Body")).message(ex.getMessage()).build()))
+            .build();
+
+    return ResponseEntity.unprocessableEntity().body(errors);
+  }
+  
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  public ResponseEntity<Object> handleJdbcIntegrityViolation(HttpServletRequest req,
+      DataIntegrityViolationException ex) {
+
+    ResponseValidationError errors =
+        ResponseValidationError.builder().type(DioExceptionType.DATABASE_ERROR)
+            .explanation("While attempting to write data to database the server encountered a data format violation error")
+            .validationErrors(
+                List.of(ValidationError.builder().type(DioValidationErrorType.DATABASE_ERROR)
+                    .fields(List.of("Database Exception")).message(ex.getMostSpecificCause().getMessage()).build()))
             .build();
 
     return ResponseEntity.unprocessableEntity().body(errors);

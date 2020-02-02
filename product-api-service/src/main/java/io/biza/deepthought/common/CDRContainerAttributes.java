@@ -1,17 +1,7 @@
 package io.biza.deepthought.common;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 import io.biza.babelfish.cdr.models.payloads.common.Links;
 import io.biza.babelfish.cdr.models.payloads.common.LinksPaginated;
 import io.biza.babelfish.cdr.models.payloads.common.Meta;
