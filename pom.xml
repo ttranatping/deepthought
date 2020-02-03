@@ -19,9 +19,15 @@
         <spring-boot.version>2.2.3.RELEASE</spring-boot.version>
         <spring-security-oauth2.version>${spring-boot.version}</spring-security-oauth2.version>
         <spring-security-oauth2-autoconfigure.version>${spring-boot.version}</spring-security-oauth2-autoconfigure.version>
+        <frontend-maven-plugin.version>1.9.1</frontend-maven-plugin.version>
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <node.version>v12.14.1</node.version>
+        <docker.image.prefix>bizaio</docker.image.prefix>
+        <npm.version>6.12.1</npm.version>
         <swagger-core.version>2.1.1</swagger-core.version>
         <springdoc-openapi-ui.version>1.2.25</springdoc-openapi-ui.version>
         <springdoc-openapi-maven-plugin.version>0.2</springdoc-openapi-maven-plugin.version>
+        <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
         <babelfish-cdr.version>0.1.0-SNAPSHOT</babelfish-cdr.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
         <lombok.version>1.18.10</lombok.version>
@@ -47,12 +53,13 @@
         <developerConnection>scm:git:git@github.com:bizaio/deepthought.git</developerConnection>
     </scm>
     <modules>
-	<module>keycloak-theme</module>
+        <module>keycloak-theme</module>
         <module>data</module>
         <module>admin-service</module>
         <module>product-api-service</module>
+        <module>admin-frontend</module>
     </modules>
-    
+
     <build>
         <defaultGoal>clean install</defaultGoal>
         <plugins>

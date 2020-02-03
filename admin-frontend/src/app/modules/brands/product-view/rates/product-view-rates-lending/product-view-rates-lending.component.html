@@ -1,0 +1,23 @@
+<h2>
+    Lending Rates
+    <p-button
+        label="Create rate"
+        (click)="createRate()"
+    ></p-button>
+</h2>
+
+<div *ngIf="notFixedRates && notFixedRates.length">
+    <div class="NotFixedRate" *ngFor="let rate of notFixedRates">
+        <div class="NotFixedRate-name">{{ getLendingDetail(rate, 'NAME') }}</div>
+        <div class="NotFixedRate-detail">{{ getLendingDetail(rate, 'DETAIL') }}</div>
+        <div class="NotFixedRate-info">{{ getLendingDetail(rate, 'INFO') }}</div>
+        <div class="NotFixedRate-actions">
+            <a void (click)="editRate(rate)">Edit</a>
+            <a void (click)="removeRate(rate)">Remove</a>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="fixedRates && fixedRates.length > 0">
+    <app-rates-table [fixedRates]="fixedRates"></app-rates-table>
+</div>
