@@ -9,7 +9,7 @@ import {
 import { DateFormatPipe } from '@app/shared/pipes/date-format.pipe';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ConfirmationService, DialogService } from 'primeng/api';
 import { ProductAddBundleComponent } from './product-add-bundle/product-add-bundle.component';
 
@@ -117,8 +117,10 @@ export class ProductViewDetailsComponent implements OnInit {
             header: 'Remove bundle',
             icon: null,
             accept: () => {
-                // TODO: remove bundle from product
-                //  .subscribe(() => this.fetchProductBundles().subscribe());
+                this.bundleApi
+                    .deleteProductFromProductBundle(this.brandId, bundle.id, this.productId)
+                    .pipe(switchMap(() => this.fetchProductBundles()))
+                    .subscribe();
             },
             reject: () => {}
         });

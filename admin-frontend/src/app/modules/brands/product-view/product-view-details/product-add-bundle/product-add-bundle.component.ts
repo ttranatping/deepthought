@@ -67,9 +67,9 @@ export class ProductAddBundleComponent implements OnInit {
             return;
         }
 
-        // TODO: add bundle to product
-        // this.bundleApi.addProductToProductBundle(this.brandId, this.productId, this.bundleForm.get('bundle').value)
-        //     .subscribe(() => this.ref.close(true));
+        this.bundleApi
+            .addProductToProductBundle(this.brandId, this.bundleForm.get('bundle').value, this.productId)
+            .subscribe(() => this.ref.close(true))
     }
 
 }
