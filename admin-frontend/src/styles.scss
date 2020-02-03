@@ -160,3 +160,16 @@ body .ui-accordion .ui-accordion-header.ui-state-active > a {
         color: white;
     }
 }
+
+body .ui-datepicker .ui-datepicker-header {
+    background: #051228;
+    border-color: #051228;
+}
+
+body .ui-datepicker thead tr {
+    background: #051228;
+}
+
+body .ui-datepicker tbody td.ui-datepicker-today a {
+    border-color: #051228;
+}

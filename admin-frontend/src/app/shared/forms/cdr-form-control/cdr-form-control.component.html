@@ -25,7 +25,7 @@
         <input *ngSwitchCase="'input'"          [id]="idForLabel" [formControl]="control" pInputText [type]=" control.subType || 'text'" />
         <textarea *ngSwitchCase="'textarea'"    [id]="idForLabel" [formControl]="control" pInputTextarea rows="5"></textarea>
         <p-dropdown *ngSwitchCase="'select'"    [inputId]="idForLabel" [formControl]="control" [options]="control.options" [autoWidth]="false" [style]="{'width':'100%'}"></p-dropdown>
-        <p-calendar *ngSwitchCase="'date'"      [inputId]="idForLabel" [formControl]="control"></p-calendar>
+        <p-calendar *ngSwitchCase="'date'"      [inputId]="idForLabel" [formControl]="control" appendTo="body"></p-calendar>
     </ng-container>
 
 </fieldset>
