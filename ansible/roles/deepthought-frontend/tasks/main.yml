@@ -2,9 +2,9 @@
 - name: synchronise frontend to html directory
   synchronize:
     src: "{{ deepthought_frontend_dist }}/"
-    dest: "/var/www/html/admin/"
+    dest: "/var/www/html/"
 
 - name: write deployment config
   template:
     src: config.json
-    dest: "/var/www/html/admin/assets/config.json"
+    dest: "/var/www/html/assets/config.json"

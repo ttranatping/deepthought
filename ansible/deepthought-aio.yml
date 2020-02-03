@@ -62,6 +62,6 @@
       include_role:
         name: deepthought-frontend
 
-    - name: Update all packages
-      apt:
-        upgrade: dist
+    - name: deploy deepthought-aio
+      include_role:
+        name: deepthought-aio

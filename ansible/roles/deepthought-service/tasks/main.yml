@@ -37,7 +37,7 @@
     group: root
   register: systemd_changed
 
-- name: reload systemd and enable the lab service
+- name: reload systemd and enable the deepthought service
   systemd:
     name: "{{ deepthought_service_id }}"
     daemon_reload: yes
