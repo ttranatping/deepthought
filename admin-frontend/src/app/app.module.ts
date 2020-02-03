@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {LocationStrategy, HashLocationStrategy, PercentPipe, CurrencyPipe} from '@angular/common';
+import {LocationStrategy, HashLocationStrategy, PercentPipe, CurrencyPipe, APP_BASE_HREF} from '@angular/common';
 import {OAuthModule} from 'angular-oauth2-oidc';
 
 import {environment} from '@env';
