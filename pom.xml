@@ -45,6 +45,7 @@
         <h2.version>1.4.200</h2.version>
         <spring-shell.version>2.0.1.RELEASE</spring-shell.version>
         <classgraph.version>4.8.60</classgraph.version>
+        <dockerfile.skip>true</dockerfile.skip>
     </properties>
 
     <scm>
