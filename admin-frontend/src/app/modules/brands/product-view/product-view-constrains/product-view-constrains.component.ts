@@ -87,7 +87,7 @@ export class ProductViewConstrainsComponent implements OnInit {
         if (fieldName === 'VALUE') {
             const value = this.typeUtility.convertValueString(constraint.cdrBanking.additionalValue);
 
-            switch (fieldName) {
+            switch (constraint.cdrBanking.constraintType) {
                 case BankingProductConstraintType.MAXBALANCE:     return `<= ${value}`;
                 case BankingProductConstraintType.OPENINGBALANCE: return `At least ${value}`;
                 case BankingProductConstraintType.MINBALANCE:     return `>= ${value}`;
