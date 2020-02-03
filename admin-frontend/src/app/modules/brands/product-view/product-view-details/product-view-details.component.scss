@@ -2,6 +2,10 @@
 h2 {
     color: #051228;
     margin-top: 0;
+
+    p-button {
+        float: right;
+    }
 }
 
 section {
@@ -36,6 +40,33 @@ section {
 
     &-tooltip {
         width: $tooltipWidth;
+    }
+
+}
+
+.ProductBundle {
+
+    &-bundle {
+        width: 50%;
+
+        h3 {
+            margin: 10px 0;
+        }
+    }
+
+    &-additionalInfo {
+        a {
+            display: block;
+        }
+    }
+
+    &-actions {
+        text-align: right;
+        white-space: nowrap;
+
+        p-button {
+            margin-left: 10px;
+        }
     }
 
 }

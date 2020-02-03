@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BrandAdminService, BundleAdminService, DioBrand, DioProductBundle } from '@bizaoss/deepthought-admin-angular-client';
-import { BundleCreateEditComponent } from '../bundle-create-edit/bundle-create-edit.component';
-import { map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ConfirmationService, DialogService } from 'primeng/api';
+import { BrandAdminService, BundleAdminService, DioBrand, DioProductBundle } from '@bizaoss/deepthought-admin-angular-client';
 import { BreadcrumbService } from '@app/layout/breadcrumb.service';
-import { zip } from 'rxjs';
 import { BundleAddProductComponent } from './bundle-add-product/bundle-add-product.component';
+import { BundleCreateEditComponent } from '../bundle-create-edit/bundle-create-edit.component';
+import { zip } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-bundle-view',
@@ -18,13 +18,6 @@ export class BundleViewComponent implements OnInit {
     brandId: string;
     bundleId: string;
 
-    sidebarMenu: Array<{ label: string; routerLink: string; }> = [
-        { routerLink: 'addProduct',     label: 'Add product' },
-        { routerLink: 'hr',             label: '' },
-        { routerLink: 'edit',           label: 'Edit bundle' },
-        { routerLink: 'remove',         label: 'Remove bundle' },
-    ];
-
     brand: DioBrand;
     bundle: DioProductBundle;
     products: DioProductBundle[];
@@ -33,9 +26,9 @@ export class BundleViewComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private bundleApi: BundleAdminService,
+        private brandsApi: BrandAdminService,
         private confirmationService: ConfirmationService,
         private dialogService: DialogService,
-        private brandsApi: BrandAdminService,
         private breadcrumbService: BreadcrumbService,
     ) { }
 
@@ -47,7 +40,10 @@ export class BundleViewComponent implements OnInit {
             this.brandsApi.getBrand(this.brandId)
                 .pipe(
                     map((brand) => this.brand = brand),
-                    switchMap(() => zip(this.fetchBundle(), this.fetchProducts()))
+                    switchMap(() => zip(
+                        this.fetchBundle(),
+                        this.fetchProducts()
+                    ))
                 )
                 .subscribe();
         });
@@ -136,8 +132,8 @@ export class BundleViewComponent implements OnInit {
 
     removeProductFromBundle(product: DioProductBundle) {
         this.confirmationService.confirm({
-            message: `Are you sure want to remove product "${product.name}" from bundle?`,
-            header: 'Remove bundle',
+            message: `Are you sure want to remove product "${product.name}" from this bundle?`,
+            header: 'Remove product',
             icon: null,
             accept: () => {
                 this.bundleApi

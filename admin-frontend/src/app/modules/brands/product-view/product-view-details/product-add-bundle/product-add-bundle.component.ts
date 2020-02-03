@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { BundleAdminService, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
 import { CdrFormGroup } from '@app/shared/forms/crd-form-group.class';
 import { CdrFormSelect } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 import { Validators } from '@angular/forms';
-import { map, switchMap, toArray } from 'rxjs/operators';
+import { BundleAdminService, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/api';
+import { map, switchMap, toArray } from 'rxjs/operators';
 import { from } from 'rxjs';
 
 @Component({
-  selector: 'app-bundle-add-product',
-  templateUrl: './bundle-add-product.component.html',
+    selector: 'app-product-add-bundle',
+    templateUrl: './product-add-bundle.component.html',
 })
-export class BundleAddProductComponent implements OnInit {
+export class ProductAddBundleComponent implements OnInit {
 
     brandId: string;
-    bundleId: string;
+    productId: string;
 
-    productForm = new CdrFormGroup({
-        product: new CdrFormSelect(null, 'Select product', [Validators.required], []),
+    bundleForm = new CdrFormGroup({
+        bundle: new CdrFormSelect(null, 'Select bundle', [Validators.required], []),
     });
 
     constructor(
@@ -29,20 +29,20 @@ export class BundleAddProductComponent implements OnInit {
 
     ngOnInit() {
         this.getConfigProp('brandId', true);
-        this.getConfigProp('bundleId', true);
+        this.getConfigProp('productId', true);
 
-        this.productsApi.listProducts(this.brandId)
+        this.bundleApi.listProductBundles(this.brandId)
             .pipe(
-                switchMap((products) => from(products)),
+                switchMap((bundles) => from(bundles)),
                 map(({ id, name }) => ({ value: id, label: name })),
                 toArray()
             )
-            .subscribe((productsOptions) => {
-                const productControl = this.productForm.get('product') as CdrFormSelect;
-                productControl.options = productsOptions;
+            .subscribe((bundlesOptions) => {
+                const bundleControl = this.bundleForm.get('bundle') as CdrFormSelect;
+                bundleControl.options = bundlesOptions;
 
-                if (productsOptions && productsOptions[0]) {
-                    productControl.setValue(productsOptions[0].value);
+                if (bundlesOptions && bundlesOptions[0]) {
+                    bundleControl.setValue(bundlesOptions[0].value);
                 }
             });
     }
@@ -61,14 +61,15 @@ export class BundleAddProductComponent implements OnInit {
     }
 
     onSave() {
-        this.productForm.setSubmitted(true);
+        this.bundleForm.setSubmitted(true);
 
-        if (this.productForm.invalid) {
+        if (this.bundleForm.invalid) {
             return;
         }
 
-        this.bundleApi.addProductToProductBundle(this.brandId, this.bundleId, this.productForm.get('product').value)
-            .subscribe(() => this.ref.close(true));
+        // TODO: add bundle to product
+        // this.bundleApi.addProductToProductBundle(this.brandId, this.productId, this.bundleForm.get('bundle').value)
+        //     .subscribe(() => this.ref.close(true));
     }
 
 }

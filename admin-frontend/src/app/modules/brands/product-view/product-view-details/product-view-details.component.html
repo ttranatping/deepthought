@@ -17,33 +17,33 @@
     <section>
         <h2>
             Bundles
-            <p-button
-                label="Add bundle"
-                (click)="addBundle()"
-                style="float: right;"
-            ></p-button>
+            <p-button label="Add bundle" (click)="addBundleToProduct()"></p-button>
         </h2>
         <p-table [value]="bundles">
             <ng-template pTemplate="header">
                 <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Additional Info</th>
-                    <th></th>
+                    <th class="ProductBundle-bundle">Bundle</th>
+                    <th class="ProductBundle-additionalInfo">Additional Info</th>
+                    <th class="ProductBundle-actions"></th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-item>
                 <tr>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.description }}</td>
-                    <td>
-                        {{ item.additionalInfo }}
-                        <a *ngIf="item.additionalInfoUri" [href]="item.additionalInfoUri" target="_blank">
-                            More Information
-                        </a>
+                    <td class="ProductBundle-bundle">
+                        <h3>{{ item.name }}</h3>
+                        <p>{{ item.description }}</p>
                     </td>
-                    <td>
-                        <p-button label="Remove" (click)="removeBundle(item)"></p-button>
+                    <td class="ProductBundle-additionalInfo">
+                        {{ item.additionalInfo }}
+
+                        <a *ngIf="item?.additionalInfoUri"
+                           [href]="item.additionalInfoUri"
+                           target="_blank"
+                        >See more...</a>
+                    </td>
+                    <td class="ProductBundle-actions">
+                        <p-button label="View" [routerLink]="['/brands', brandId, 'bundles', item.id]"></p-button>
+                        <p-button label="Remove" (click)="removeBundleFromProduct(item)"></p-button>
                     </td>
                 </tr>
             </ng-template>

@@ -28,6 +28,7 @@ import { ProductRateDepositCreateEditComponent } from './product-view/rates/prod
 import { ProductRateLendingCreateEditComponent } from './product-view/rates/product-view-rates-lending/product-rate-lending-create-edit/product-rate-lending-create-edit.component';
 import { BundleViewComponent } from './bundle-view/bundle-view.component';
 import { BundleAddProductComponent } from './bundle-view/bundle-add-product/bundle-add-product.component';
+import { ProductAddBundleComponent } from './product-view/product-view-details/product-add-bundle/product-add-bundle.component';
 
 @NgModule({
     declarations: [
@@ -53,7 +54,8 @@ import { BundleAddProductComponent } from './bundle-view/bundle-add-product/bund
         ProductRateDepositCreateEditComponent,
         ProductRateLendingCreateEditComponent,
         BundleViewComponent,
-        BundleAddProductComponent
+        BundleAddProductComponent,
+        ProductAddBundleComponent
     ],
     imports: [
         CommonModule,
@@ -70,7 +72,8 @@ import { BundleAddProductComponent } from './bundle-view/bundle-add-product/bund
         BundleCreateEditComponent,
         ProductRateDepositCreateEditComponent,
         ProductRateLendingCreateEditComponent,
-        BundleAddProductComponent
+        BundleAddProductComponent,
+        ProductAddBundleComponent
     ],
     providers: [
         DialogService

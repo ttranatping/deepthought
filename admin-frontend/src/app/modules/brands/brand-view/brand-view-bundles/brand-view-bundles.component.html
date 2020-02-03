@@ -12,8 +12,6 @@
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Additional info</th>
-            <th>Included products</th>
             <th></th>
         </tr>
     </ng-template>
@@ -22,17 +20,7 @@
         <tr>
             <td><strong>{{ dataRow.name }}</strong></td>
             <td>{{ dataRow.description }}</td>
-            <td>
-                {{ dataRow.additionalInfo }}
-                <a *ngIf="dataRow.additionalInfoUri"
-                   [href]="dataRow.additionalInfoUri"
-                   target="_blank"
-                   pButton
-                   label="More"
-                ></a>
-            </td>
-            <td>{{ dataRow.includedProducts }}</td>
-            <td style="white-space: nowrap;">
+            <td style="text-align: right; white-space: nowrap;">
                 <a [routerLink]="['/brands', brandId, 'bundles', dataRow.id]"
                    pButton
                    label="View"

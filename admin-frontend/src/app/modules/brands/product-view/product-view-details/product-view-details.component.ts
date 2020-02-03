@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { DioProduct, DioProductBundle, FormFieldType, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
+import {
+    BundleAdminService,
+    DioProduct,
+    DioProductBundle,
+    FormFieldType,
+    ProductAdminService
+} from '@bizaoss/deepthought-admin-angular-client';
 import { DateFormatPipe } from '@app/shared/pipes/date-format.pipe';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { ConfirmationService, DialogService } from 'primeng/api';
+import { ProductAddBundleComponent } from './product-add-bundle/product-add-bundle.component';
 
 interface IDetailsProp {
     key: string;
@@ -39,7 +47,10 @@ export class ProductViewDetailsComponent implements OnInit {
         private route: ActivatedRoute,
         private dateFormatPipe: DateFormatPipe,
         private typeManager: TypeManagementService,
-        private productAdminApi: ProductAdminService
+        private productApi: ProductAdminService,
+        private bundleApi: BundleAdminService,
+        private confirmationService: ConfirmationService,
+        private dialogService: DialogService,
     ) { }
 
     ngOnInit() {
@@ -47,12 +58,12 @@ export class ProductViewDetailsComponent implements OnInit {
             this.brandId = params.get('brandId');
             this.productId = params.get('productId');
 
-            this.fetchBundles().subscribe();
+            this.fetchProductBundles().subscribe();
         });
     }
 
-    fetchBundles() {
-        return this.productAdminApi.listBundlesForProduct(this.brandId, this.productId).pipe(
+    fetchProductBundles() {
+        return this.productApi.listBundlesForProduct(this.brandId, this.productId).pipe(
             map((bundles) => this.bundles = bundles)
         );
     }
@@ -75,8 +86,33 @@ export class ProductViewDetailsComponent implements OnInit {
         return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTCATEGORY, category);
     }
 
-    addBundle() {}
+    addBundleToProduct() {
+        const ref = this.dialogService.open(ProductAddBundleComponent, {
+            header: 'Add bundle to product',
+            width: '40%',
+            style: {
+                'overflow-y': 'auto',
+                'overflow-x': 'hidden',
+                'max-height': '80vh',
+                'min-height': '250px'
+            },
+            data: { brandId: this.brandId, productId: this.productId }
+        });
 
-    removeBundle(bundle: DioProductBundle) {}
+        ref.onClose.subscribe((isAdded) => isAdded ? this.fetchProductBundles().subscribe() : void(0));
+    }
+
+    removeBundleFromProduct(bundle: DioProductBundle) {
+        this.confirmationService.confirm({
+            message: `Are you sure want to remove bundle "${bundle.name}" from this product?`,
+            header: 'Remove bundle',
+            icon: null,
+            accept: () => {
+                // TODO: remove bundle from product
+                //  .subscribe(() => this.fetchProductBundles().subscribe());
+            },
+            reject: () => {}
+        });
+    }
 
 }
