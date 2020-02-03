@@ -144,7 +144,7 @@ public interface ProductBundleAdminApi {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
-  @PutMapping(path = "/{bundleId}/product/{productId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
+  @PutMapping(path = "/{bundleId}/product/{productId}",
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
   default ResponseEntity<DioProductBundle> addProductToProductBundle(
