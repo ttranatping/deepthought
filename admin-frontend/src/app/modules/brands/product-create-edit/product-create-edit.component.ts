@@ -75,8 +75,10 @@ export class ProductCreateEditComponent implements OnInit {
         const schemeTypeOptions = Object.keys(DioSchemeType)
             .map((key) => ({ value: DioSchemeType[key], label: DioSchemeType[key] }));
 
-        (this.productForm.controls.schemeType as CdrFormSelect).options = schemeTypeOptions;
-        this.productForm.controls.schemeType.setValue(schemeTypeOptions[0].value);
+        const schemeTypeControl = this.productForm.controls.schemeType as CdrFormSelect;
+        schemeTypeControl.isVisible = false;
+        schemeTypeControl.options = schemeTypeOptions;
+        schemeTypeControl.setValue(schemeTypeOptions[0].value);
 
         // Init product category options ***************************************************************************************************
 
