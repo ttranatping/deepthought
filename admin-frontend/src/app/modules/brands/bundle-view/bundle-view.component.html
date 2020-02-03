@@ -4,7 +4,7 @@
         <h2 class="Product-name">{{ bundle?.name }}</h2>
 
         <ul class="SidebarMenu">
-            <li *ngFor="let item of sidebarMenu; let i = index; trackBy i;"
+            <li *ngFor="let item of sidebarMenu; let i = index;"
                 class="SidebarMenu-item"
                 routerLinkActive="SidebarMenu-item--active"
                 [routerLinkActiveOptions]="{exact: true}"

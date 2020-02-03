@@ -32,20 +32,22 @@ public class ProductCdrBankingRateLendingDataMapper implements OrikaFactoryConfi
             List<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>> tierList =
                 new ArrayList<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>>();
 
-            for (ProductCdrBankingRateLendingTierData tierData : from.tiers()) {
-              BankingProductRateTier rateTier = new BankingProductRateTier();
-              rateTier.setMaximumValue(tierData.maximumValue());
-              rateTier.setMinimumValue(tierData.minimumValue());
-              rateTier.setName(tierData.name());
-              rateTier.setRateApplicationMethod(tierData.rateApplicationMethod());
-              rateTier.setUnitOfMeasure(tierData.unitOfMeasure());
-              if (tierData.applicabilityConditions() != null) {
-                rateTier.applicabilityConditions(new BankingProductRateTierApplicability()
-                    .additionalInfo(tierData.applicabilityConditions().additionalInfo())
-                    .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
-              }
+            if (from.tiers() != null) {
+              for (ProductCdrBankingRateLendingTierData tierData : from.tiers()) {
+                BankingProductRateTier rateTier = new BankingProductRateTier();
+                rateTier.setMaximumValue(tierData.maximumValue());
+                rateTier.setMinimumValue(tierData.minimumValue());
+                rateTier.setName(tierData.name());
+                rateTier.setRateApplicationMethod(tierData.rateApplicationMethod());
+                rateTier.setUnitOfMeasure(tierData.unitOfMeasure());
+                if (tierData.applicabilityConditions() != null) {
+                  rateTier.applicabilityConditions(new BankingProductRateTierApplicability()
+                      .additionalInfo(tierData.applicabilityConditions().additionalInfo())
+                      .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
+                }
 
-              tierList.add(rateTier);
+                tierList.add(rateTier);
+              }
             }
 
             to.tiers(tierList);
@@ -70,20 +72,23 @@ public class ProductCdrBankingRateLendingDataMapper implements OrikaFactoryConfi
             List<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>> tierList =
                 new ArrayList<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>>();
 
-            for (ProductCdrBankingRateLendingTierData tierData : from.tiers()) {
-              BankingProductRateTier rateTier = new BankingProductRateTier();
-              rateTier.setMaximumValue(tierData.maximumValue());
-              rateTier.setMinimumValue(tierData.minimumValue());
-              rateTier.setName(tierData.name());
-              rateTier.setRateApplicationMethod(tierData.rateApplicationMethod());
-              rateTier.setUnitOfMeasure(tierData.unitOfMeasure());
-              if (tierData.applicabilityConditions() != null) {
-                rateTier.applicabilityConditions(new BankingProductRateTierApplicability()
-                    .additionalInfo(tierData.applicabilityConditions().additionalInfo())
-                    .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
-              }
+            if (from.tiers() != null) {
 
-              tierList.add(rateTier);
+              for (ProductCdrBankingRateLendingTierData tierData : from.tiers()) {
+                BankingProductRateTier rateTier = new BankingProductRateTier();
+                rateTier.setMaximumValue(tierData.maximumValue());
+                rateTier.setMinimumValue(tierData.minimumValue());
+                rateTier.setName(tierData.name());
+                rateTier.setRateApplicationMethod(tierData.rateApplicationMethod());
+                rateTier.setUnitOfMeasure(tierData.unitOfMeasure());
+                if (tierData.applicabilityConditions() != null) {
+                  rateTier.applicabilityConditions(new BankingProductRateTierApplicability()
+                      .additionalInfo(tierData.applicabilityConditions().additionalInfo())
+                      .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
+                }
+
+                tierList.add(rateTier);
+              }
             }
 
             to.cdrBanking().tiers(tierList);
@@ -96,22 +101,25 @@ public class ProductCdrBankingRateLendingDataMapper implements OrikaFactoryConfi
             Set<ProductCdrBankingRateLendingTierData> tierList =
                 new HashSet<ProductCdrBankingRateLendingTierData>();
 
-            for (io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?> tierData : from
-                .cdrBanking().tiers()) {
-              ProductCdrBankingRateLendingTierData rateTier =
-                  new ProductCdrBankingRateLendingTierData();
-              rateTier.maximumValue(tierData.maximumValue());
-              rateTier.minimumValue(tierData.minimumValue());
-              rateTier.name(tierData.name());
-              rateTier.rateApplicationMethod(tierData.rateApplicationMethod());
-              rateTier.unitOfMeasure(tierData.unitOfMeasure());
-              if (tierData.applicabilityConditions() != null) {
-                rateTier
-                    .applicabilityConditions(new ProductCdrBankingRateLendingTierApplicabilityData()
-                        .additionalInfo(tierData.applicabilityConditions().additionalInfo())
-                        .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
+            if (from.cdrBanking().tiers() != null) {
+              for (io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?> tierData : from
+                  .cdrBanking().tiers()) {
+                ProductCdrBankingRateLendingTierData rateTier =
+                    new ProductCdrBankingRateLendingTierData();
+                rateTier.maximumValue(tierData.maximumValue());
+                rateTier.minimumValue(tierData.minimumValue());
+                rateTier.name(tierData.name());
+                rateTier.rateApplicationMethod(tierData.rateApplicationMethod());
+                rateTier.unitOfMeasure(tierData.unitOfMeasure());
+                if (tierData.applicabilityConditions() != null) {
+                  rateTier.applicabilityConditions(
+                      new ProductCdrBankingRateLendingTierApplicabilityData()
+                          .additionalInfo(tierData.applicabilityConditions().additionalInfo())
+                          .additionalInfoUri(
+                              tierData.applicabilityConditions().additionalInfoUri()));
+                }
+                tierList.add(rateTier);
               }
-              tierList.add(rateTier);
             }
             to.tiers(tierList);
           }
