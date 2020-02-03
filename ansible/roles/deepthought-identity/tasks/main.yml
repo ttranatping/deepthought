@@ -4,6 +4,11 @@
     name: openjdk-11-jre-headless
     state: present
 
+- name: rsync
+  apt:
+    name: rsync
+    state: present
+
 - name: deploy unzip
   apt:
     name: unzip
@@ -27,6 +32,11 @@
     group: keycloak
     system: yes
     home: "/opt/keycloak-{{ keycloak_server_version }}"
+
+- name: extract custom theme into keycloak directory
+  synchronize:
+    src: "{{ deepthought_keycloak_theme }}/"
+    dest: "/opt/keycloak-{{ keycloak_server_version }}/themes/deepthought/"
 
 - name: create directory for mariadb connector
   file:

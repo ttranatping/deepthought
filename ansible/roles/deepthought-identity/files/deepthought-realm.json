@@ -59,6 +59,9 @@
       "publicClient": true,
       "frontchannelLogout": false,
       "protocol": "openid-connect",
+      "attributes": {
+        "login_theme": "deepthought"
+      },
       "authenticationFlowBindingOverrides": {},
       "fullScopeAllowed": true,
       "nodeReRegistrationTimeout": -1,

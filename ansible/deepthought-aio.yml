@@ -58,6 +58,10 @@
         deepthought_service_port: 8082
         deepthought_service_base_path: "/cds-au"
 
+    - name: deploy deepthought-frontend
+      include_role:
+        name: deepthought-frontend
+
     - name: Update all packages
       apt:
         upgrade: dist
