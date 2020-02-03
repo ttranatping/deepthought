@@ -124,13 +124,9 @@ export class ProductEligibilityCreateEditComponent implements OnInit {
         if (type === 'VALIDATION_ERROR') {
 
             const mapErrorFieldControl: { [key: string]: AbstractControl } = {
-                'cdrBanking.valueAmount': this.cdrBankingForm.get('additionalValue'),
-                'cdrBanking.valuePositiveInteger': this.cdrBankingForm.get('additionalValue'),
-                'cdrBanking.valueString': this.cdrBankingForm.get('additionalValue'),
-                'cdrBanking.valueStringNull': this.cdrBankingForm.get('additionalValue'),
-                'cdrBanking.additionalValueString': this.cdrBankingForm.get('additionalValue'),
-                'cdrBanking.additionalInfoString': this.cdrBankingForm.get('additionalInfo'),
-                'cdrBanking.additionalInfoUriString': this.cdrBankingForm.get('additionalInfoUri'),
+                'cdrBanking.additionalValue': this.cdrBankingForm.get('additionalValue'),
+                'cdrBanking.additionalInfo': this.cdrBankingForm.get('additionalInfo'),
+                'cdrBanking.additionalInfoUri': this.cdrBankingForm.get('additionalInfoUri'),
             };
 
             for (const error of errors) {
