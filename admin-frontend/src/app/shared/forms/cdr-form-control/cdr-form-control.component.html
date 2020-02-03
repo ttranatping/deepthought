@@ -5,6 +5,7 @@
             [className]="_control.key"
             [control]="_control.value"
             [showErrors]="showErrors"
+            [showLabel]="showLabel"
         ></cdr-form-control>
     </form>
 </ng-container>
@@ -15,7 +16,9 @@
 >
     <p-checkbox *ngIf="control.type === 'checkbox'" [inputId]="idForLabel" binary="true" [formControl]="control"></p-checkbox>
 
-    <label [for]="idForLabel">{{ control.label }} {{ hasRequiredValidator(control) ? '*' : '' }}</label>
+    <label *ngIf="showLabel" [for]="idForLabel">
+        {{ control.label }} {{ hasRequiredValidator(control) ? '*' : '' }}
+    </label>
     <p class="error">{{ getFirstError(control) }}</p>
 
     <ng-container [ngSwitch]="control.type">

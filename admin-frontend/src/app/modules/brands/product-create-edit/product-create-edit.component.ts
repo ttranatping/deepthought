@@ -19,22 +19,6 @@ import {
     CdrFormTextarea
 } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 
-class MyFormControl extends FormControl {
-
-    label: string;
-    type: string;
-    options: SelectItem[];
-
-    constructor(defaultValue, validators = [], label?: string, type?: string, props: any = {}) {
-        super(defaultValue, validators);
-
-        this.label = label || '';
-        this.type = type || 'input';
-
-        this.options = props.options || [];
-    }
-}
-
 @Component({
   selector: 'app-product-create-edit',
   templateUrl: './product-create-edit.component.html',
@@ -91,7 +75,7 @@ export class ProductCreateEditComponent implements OnInit {
         const schemeTypeOptions = Object.keys(DioSchemeType)
             .map((key) => ({ value: DioSchemeType[key], label: DioSchemeType[key] }));
 
-        (this.productForm.controls.schemeType as MyFormControl).options = schemeTypeOptions;
+        (this.productForm.controls.schemeType as CdrFormSelect).options = schemeTypeOptions;
         this.productForm.controls.schemeType.setValue(schemeTypeOptions[0].value);
 
         // Init product category options ***************************************************************************************************
@@ -102,7 +86,7 @@ export class ProductCreateEditComponent implements OnInit {
                 label: this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTCATEGORY, BankingProductCategory[key])
             }));
 
-        (this.cdrBankingForm.controls.productCategory as MyFormControl).options = productCategoryOptions;
+        (this.cdrBankingForm.controls.productCategory as CdrFormSelect).options = productCategoryOptions;
         this.cdrBankingForm.controls.productCategory.setValue(productCategoryOptions[0].value);
 
         // Check brandId *******************************************************************************************************************

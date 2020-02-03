@@ -1,11 +1,22 @@
-<h2>
-    Products
-    <p-button
-        label="Create product"
-        (click)="createProduct()"
-        style="float: right;"
-    ></p-button>
-</h2>
+<div class="p-grid">
+    <div class="p-col-6">
+        <h2>Products</h2>
+    </div>
+
+    <div class="p-col-6 Filters">
+        <div class="Filters-category">
+            <cdr-form-control
+                [control]="filters.category"
+                [showLabel]="false"
+            ></cdr-form-control>
+        </div>
+
+        <p-button
+            label="Create product"
+            (click)="createProduct()"
+        ></p-button>
+    </div>
+</div>
 
 <p-table [value]="products" [scrollable]="true">
     <ng-template pTemplate="header">

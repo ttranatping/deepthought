@@ -1,11 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { DioProduct, FormFieldType, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
+import {
+    BankingProductCategory,
+    DioProduct,
+    FormFieldType,
+    ProductAdminService
+} from '@bizaoss/deepthought-admin-angular-client';
 import { map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { LayoutService } from '@app/layout/layout.service';
 import { DialogService } from 'primeng/api';
 import { ProductCreateEditComponent } from '../../product-create-edit/product-create-edit.component';
 import { TypeManagementService } from '@app/core/services/type-management.service';
+import { CdrFormSelect } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 
 @Component({
   selector: 'app-brand-view-products',
@@ -16,6 +22,10 @@ export class BrandViewProductsComponent implements OnInit {
 
     brandId: string;
     products: DioProduct[];
+
+    filters = {
+        category: new CdrFormSelect(null, '')
+    };
 
     constructor(
         private route: ActivatedRoute,
@@ -32,6 +42,19 @@ export class BrandViewProductsComponent implements OnInit {
             map((params: ParamMap) => this.brandId = params.get('brandId')),
             switchMap(() => this.fetchProducts()),
         ).subscribe(() => this.layoutService.togglePageLoader.emit(false));
+
+        this.filters.category.options = [
+            { value: null, label: 'All categories'},
+            ...Object.keys(BankingProductCategory)
+                .map((key) => ({
+                    value: BankingProductCategory[key],
+                    label: this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTCATEGORY, BankingProductCategory[key])
+                }))
+        ];
+
+        this.filters.category.valueChanges.pipe(
+            switchMap(() => this.fetchProducts())
+        ).subscribe();
     }
 
     fetchProducts() {
@@ -40,8 +63,12 @@ export class BrandViewProductsComponent implements OnInit {
         );
     }
 
-    onFetchProductsSuccess(products) {
-        this.products = products;
+    onFetchProductsSuccess(products: DioProduct[]) {
+        this.products = products
+            .filter((_product) => this.filters.category.value
+                ? _product.cdrBanking.productCategory === this.filters.category.value
+                : true
+            );
     }
 
     getProductCategory(category) {
@@ -61,6 +88,6 @@ export class BrandViewProductsComponent implements OnInit {
             data: { brandId: this.brandId }
         });
 
-        ref.onClose.subscribe((product) => product ? this.fetchProducts().subscribe() : void(0));
+        ref.onClose.subscribe((product) => product ? this.fetchProducts() : void(0));
     }
 }

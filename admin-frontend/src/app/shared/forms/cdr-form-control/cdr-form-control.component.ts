@@ -77,6 +77,9 @@ export class CdrFormControlComponent implements OnInit {
     @Input()
     public showErrors = false;
 
+    @Input()
+    public showLabel = true;
+
     public idForLabel = `${Date.now()}${Math.round(Math.random() * 10000)}`;
 
     public originalOrder = ((): number => 0);
