@@ -34,7 +34,7 @@
   copy:
     src: files/options-ssl-nginx.conf
     dest: /etc/letsencrypt/options-ssl-nginx.conf
-  where: letsencryptfiles,stat.exists == false
+  when: letsencryptfiles.stat.exists == false
   notify:
     - reload nginx
 
@@ -69,6 +69,6 @@
   when: certsexist.stat.exists == false
 
 - name: Generate Diffie-Hellman parameters with the default size (4096 bits)
-  openssl_dhparam:
-    path: /etc/letsencrypt/ssl-dhparams.pem
-  when: certsexist.stat.exists == false
+  shell:
+    cmd: openssl dhparam -dsaparam -out /etc/letsencrypt/ssl-dhparams.pem 4096
+    creates: /etc/letsencrypt/ssl-dhparams.pem
