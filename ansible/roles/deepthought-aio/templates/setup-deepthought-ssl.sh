@@ -12,7 +12,7 @@ HOSTNAME=$(curl -s {{ cdr_zone_dns_mapper_endpoint }})
 echo "Setting up for $HOSTNAME, sleeping 120 seconds for DNS propogation"
 sleep 120
 
-if ! certbot --nginx -n certonly --agree-tos --email dev@null.com -d "$HOSTNAME"
+if ! certbot --webroot -n certonly --agree-tos --email dev@null.com -d "$HOSTNAME" --webroot-path /var/www/html
 then
 	echo "Certbot failed retrieval, halting progress"
 	exit 1
