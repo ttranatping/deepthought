@@ -15,6 +15,14 @@
     </section>
 
     <section>
+        <h2>Additional information</h2>
+        <div class="Detail" *ngFor="let detail of additionalInformationDetails;">
+            <div class="Detail-label">{{ detail.label }}</div>
+            <div class="Detail-value">{{ (product | propPath: detail.key) || '-' }}</div>
+        </div>
+    </section>
+
+    <section>
         <h2>
             Bundles
             <p-button label="Add bundle" (click)="addBundleToProduct()"></p-button>

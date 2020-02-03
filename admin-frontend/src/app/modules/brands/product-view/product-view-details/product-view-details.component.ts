@@ -39,6 +39,15 @@ export class ProductViewDetailsComponent implements OnInit {
         { key: 'cdrBanking.isTailored', label: 'Tailored Product' },
         { key: 'cdrBanking.effective', label: 'Effective Date' },
         { key: 'cdrBanking.lastUpdated', label: 'Last Updated' },
+        { key: 'cdrBanking.applicationUri', label: 'Application URI' },
+    ];
+
+    additionalInformationDetails: IDetailsProp[] = [
+        { key: 'cdrBanking.additionalInformation.overviewUri', label: 'Overview URI' },
+        { key: 'cdrBanking.additionalInformation.termsUri', label: 'Terms URI' },
+        { key: 'cdrBanking.additionalInformation.eligibilityUri', label: 'Eligibility URI' },
+        { key: 'cdrBanking.additionalInformation.feesAndPricingUri', label: 'FeesAndPricing URI' },
+        { key: 'cdrBanking.additionalInformation.bundleUri', label: 'Bundle URI' },
     ];
 
     bundles: DioProductBundle[];
