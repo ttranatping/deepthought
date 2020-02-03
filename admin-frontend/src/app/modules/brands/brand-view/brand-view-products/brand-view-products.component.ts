@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { DioProduct, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
-import { map, retry, switchMap, timeout } from 'rxjs/operators';
+import { DioProduct, FormFieldType, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
+import { map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { LayoutService } from '@app/layout/layout.service';
 import { DialogService } from 'primeng/api';
-import { environment } from '@env';
 import { ProductCreateEditComponent } from '../../product-create-edit/product-create-edit.component';
+import { TypeManagementService } from '@app/core/services/type-management.service';
 
 @Component({
   selector: 'app-brand-view-products',
@@ -21,7 +21,8 @@ export class BrandViewProductsComponent implements OnInit {
         private route: ActivatedRoute,
         private layoutService: LayoutService,
         private dialogService: DialogService,
-        private productsApi: ProductAdminService
+        private productsApi: ProductAdminService,
+        private typeManager: TypeManagementService,
     ) { }
 
     ngOnInit() {
@@ -41,6 +42,10 @@ export class BrandViewProductsComponent implements OnInit {
 
     onFetchProductsSuccess(products) {
         this.products = products;
+    }
+
+    getProductCategory(category) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTCATEGORY, category);
     }
 
     createProduct() {

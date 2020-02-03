@@ -1,0 +1,19 @@
+
+.Product {
+    &-base {
+        width: 50%;
+
+        h3 {
+            margin: 10px 0;
+        }
+    }
+
+    &-category {
+
+    }
+
+    &-actions {
+        text-align: right;
+    }
+
+}
