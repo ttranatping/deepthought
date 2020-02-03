@@ -8,6 +8,7 @@ export enum CdrFormControlTypes {
     TEXTAREA = 'textarea',
     DATE = 'date',
     CHECKBOX = 'checkbox',
+    DURATION = 'duration',
 }
 
 export class CdrFormControl extends FormControl {
@@ -59,6 +60,12 @@ export class CdrFormCheckbox extends CdrFormControl {
 
     constructor(defaultValue, label: string, validators = [], asyncValidators = []) {
         super(CdrFormControlTypes.CHECKBOX, defaultValue, label, validators, asyncValidators);
+    }
+}
+export class CdrFormDuration extends CdrFormControl {
+
+    constructor(defaultValue, label: string, validators = [], asyncValidators = []) {
+        super(CdrFormControlTypes.DURATION, defaultValue, label, validators, asyncValidators);
     }
 }
 

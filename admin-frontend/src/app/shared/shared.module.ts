@@ -88,6 +88,8 @@ import { CdrFormControlComponent } from './forms/cdr-form-control/cdr-form-contr
 
 // Directives
 import { VoidDirective } from './directives/void.directive';
+import { DurationPickerModule } from 'ngx-duration-picker';
+import { DurationPickerComponent } from './components/duration-picker/duration-picker.component';
 
 @NgModule({
     declarations: [
@@ -101,6 +103,7 @@ import { VoidDirective } from './directives/void.directive';
         DateFormatPipe,
         ConvertFeatureCriteriaPipe,
         PropPathPipe,
+        DurationPickerComponent,
     ],
     providers: [
         ConfirmationService
@@ -177,6 +180,7 @@ import { VoidDirective } from './directives/void.directive';
         TreeModule,
         TreeTableModule,
         VirtualScrollerModule,
+        DurationPickerModule,
 
         RouterModule,
         NgxPermissionsModule.forRoot(),
@@ -198,6 +202,7 @@ import { VoidDirective } from './directives/void.directive';
         ListboxModule,
         MessageModule,
         MessagesModule,
+        OverlayPanelModule,
         PanelModule,
         ProgressBarModule,
         ProgressSpinnerModule,
@@ -216,8 +221,11 @@ import { VoidDirective } from './directives/void.directive';
         RouterModule,
         NgxPermissionsModule,
 
+        DurationPickerModule,
+
         // Components
         CdrFormControlComponent,
+        DurationPickerComponent,
 
         // Directives
         VoidDirective,

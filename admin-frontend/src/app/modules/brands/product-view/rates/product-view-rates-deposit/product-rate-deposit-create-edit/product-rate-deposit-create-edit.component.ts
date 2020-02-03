@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, Validators } from '@angular/forms';
-import { CdrFormInput, CdrFormSelect } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
+import {
+    CdrFormDuration,
+    CdrFormInput,
+    CdrFormSelect
+} from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 import { DynamicDialogConfig, DynamicDialogRef, SelectItem } from 'primeng/api';
 import {
     BankingProductDepositRate,
@@ -34,9 +38,8 @@ export class ProductRateDepositCreateEditComponent implements OnInit {
     cdrBankingForm = new CdrFormGroup({
         depositRateType:        new CdrFormSelect('', 'Rate type', [Validators.required]),
         rate:                   new CdrFormInput('', 'Rate'),
-        calculationFrequency:   new CdrFormInput('', 'Calculation frequency'),
-        applicationFrequency:   new CdrFormInput('', 'Application frequency'),
-        tiers:                  new CdrFormInput('', 'Tiers'),
+        calculationFrequency:   new CdrFormDuration('', 'Calculation frequency'),
+        applicationFrequency:   new CdrFormDuration('', 'Application frequency'),
         additionalValue:        new CdrFormInput('', 'Additional value'),
         additionalInfo:         new CdrFormInput('', 'Additional info'),
         additionalInfoUri:      new CdrFormInput('', 'Additional info URI'),
@@ -145,7 +148,6 @@ export class ProductRateDepositCreateEditComponent implements OnInit {
         this.cdrBankingForm.controls.rate.setValue(rate);
         this.cdrBankingForm.controls.calculationFrequency.setValue(calculationFrequency);
         this.cdrBankingForm.controls.applicationFrequency.setValue(applicationFrequency);
-        this.cdrBankingForm.controls.tiers.setValue(tiers);
         this.cdrBankingForm.controls.additionalValue.setValue(additionalValue);
         this.cdrBankingForm.controls.additionalInfo.setValue(additionalInfo);
         this.cdrBankingForm.controls.additionalInfoUri.setValue(additionalInfoUri);

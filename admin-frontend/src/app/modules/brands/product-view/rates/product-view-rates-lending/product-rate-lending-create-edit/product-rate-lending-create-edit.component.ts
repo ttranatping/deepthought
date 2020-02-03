@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormArray, Validators } from '@angular/forms';
-import { CdrFormInput, CdrFormSelect } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
+import {
+    CdrFormDuration,
+    CdrFormInput,
+    CdrFormSelect
+} from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 import {
     BankingProductLendingRate,
     BankingProductLendingRateType,
@@ -33,8 +37,8 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
     cdrBankingForm = new CdrFormGroup({
         lendingRateType:        new CdrFormSelect('', 'Rate type', [Validators.required]),
         rate:                   new CdrFormInput('', 'Rate'),
-        calculationFrequency:   new CdrFormInput('', 'Calculation frequency'),
-        applicationFrequency:   new CdrFormInput('', 'Application frequency'),
+        calculationFrequency:   new CdrFormDuration('', 'Calculation frequency'),
+        applicationFrequency:   new CdrFormDuration('', 'Application frequency'),
         additionalValue:        new CdrFormInput('', 'Additional value'),
         additionalInfo:         new CdrFormInput('', 'Additional info'),
         additionalInfoUri:      new CdrFormInput('', 'Additional info URI'),
