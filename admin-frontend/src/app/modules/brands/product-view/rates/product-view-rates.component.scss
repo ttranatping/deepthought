@@ -1,0 +1,29 @@
+h2  {
+    margin-top: 0;
+
+    p-button {
+        float: right;
+    }
+}
+
+.NotFixedRate {
+    border-bottom: 1px solid #c9d0d6;
+    font-size: 16px;
+    line-height: 22px;
+    padding: 10px 0;
+
+    &-name {
+        font-weight: bold;
+    }
+
+    &-detail {}
+
+    &-info {}
+
+    &-actions {
+        > a {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    }
+}

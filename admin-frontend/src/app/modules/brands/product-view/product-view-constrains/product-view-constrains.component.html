@@ -1,0 +1,42 @@
+<h2 class="Section-title">Eligibility & Constraints</h2>
+
+<section>
+    <h3>
+        Eligibility
+        <p-button label="Create eligibility" (click)="createEligibility()"></p-button>
+    </h3>
+    <div *ngIf="eligibilities.length; else emptyEligibility">
+        <div class="Eligibility" *ngFor="let eligibility of eligibilities">
+
+            <h4 class="Eligibility-label">{{ getEligibilityDetail(eligibility, 'LABEL') }}</h4>
+            <p class="Eligibility-value">{{ getEligibilityDetail(eligibility, 'VALUE') }}</p>
+            <div class="Eligibility-actions">
+                <a void (click)="editEligibility(eligibility)">Edit</a>
+                <a void (click)="removeEligibility(eligibility)">Remove</a>
+            </div>
+        </div>
+    </div>
+    <ng-template #emptyEligibility>
+        <p>No Eligibility criteria present.</p>
+    </ng-template>
+</section>
+
+<section>
+    <h3>
+        Constraints
+        <p-button label="Create constraint" (click)="createConstraint()"></p-button>
+    </h3>
+    <div *ngIf="constraints.length; else emptyConstraints">
+        <div class="Constraint" *ngFor="let constraint of constraints">
+            <h4 class="Constraint-label">{{ getConstraintDetail(constraint, 'LABEL') }}</h4>
+            <p class="Constraint-value">{{ getConstraintDetail(constraint, 'VALUE') }}</p>
+            <div class="Constraint-actions">
+                <a void (click)="editConstraint(constraint)">Edit</a>
+                <a void (click)="removeConstraint(constraint)">Remove</a>
+            </div>
+        </div>
+    </div>
+    <ng-template #emptyConstraints>
+        <p>No Constraint criteria present.</p>
+    </ng-template>
+</section>

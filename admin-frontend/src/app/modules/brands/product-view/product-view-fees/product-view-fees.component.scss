@@ -1,0 +1,40 @@
+h2  {
+    margin-top: 0;
+
+    p-button {
+        float: right;
+    }
+}
+
+.Fees {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Fee {
+    border-bottom: 1px solid #c9d0d6;
+    font-size: 16px;
+    margin-right: 20px;
+    padding: 10px 0;
+    width: calc(50% - 20px);
+
+    &-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    &-detail {
+        margin-bottom: 5px;
+    }
+
+    &-info {
+        margin-bottom: 5px;
+    }
+
+    &-actions {
+        > a {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    }
+}

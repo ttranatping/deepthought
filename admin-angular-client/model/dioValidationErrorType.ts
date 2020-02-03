@@ -13,10 +13,11 @@
 /**
  * Deep Thought Exception Type
  */
-export type DioValidationErrorType = 'ATTRIBUTE_INVALID' | 'INVALID_JSON' | 'INVALID_FORMAT';
+export type DioValidationErrorType = 'ATTRIBUTE_INVALID' | 'INVALID_JSON' | 'INVALID_FORMAT' | 'DATABASE_ERROR';
 
 export const DioValidationErrorType = {
     ATTRIBUTEINVALID: 'ATTRIBUTE_INVALID' as DioValidationErrorType,
     INVALIDJSON: 'INVALID_JSON' as DioValidationErrorType,
-    INVALIDFORMAT: 'INVALID_FORMAT' as DioValidationErrorType
+    INVALIDFORMAT: 'INVALID_FORMAT' as DioValidationErrorType,
+    DATABASEERROR: 'DATABASE_ERROR' as DioValidationErrorType
 };
