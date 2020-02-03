@@ -32,3 +32,6 @@ build/
 
 # File based database
 localdb/
+
+# maven versons backup
+*.versionsBackup
