@@ -84,6 +84,12 @@
     }
 }
 
+.Logout {
+    color: #051228;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 ::ng-deep .material-icons {
     &.account_circle:after { content: 'account_circle'; }
     &.cancel:after { content: 'cancel'; }
