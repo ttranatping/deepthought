@@ -18,7 +18,12 @@
         <h2>Additional information</h2>
         <div class="Detail" *ngFor="let detail of additionalInformationDetails;">
             <div class="Detail-label">{{ detail.label }}</div>
-            <div class="Detail-value">{{ (product | propPath: detail.key) || '-' }}</div>
+            <div class="Detail-value">
+                <a *ngIf="product.cdrBanking.additionalInformation[detail.key] as url" [href]="url" target="_blank">
+                    {{ url }}
+                </a>
+                <ng-container *ngIf="!product.cdrBanking.additionalInformation[detail.key]">-</ng-container>
+            </div>
         </div>
     </section>
 

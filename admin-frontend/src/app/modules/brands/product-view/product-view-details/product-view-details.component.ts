@@ -43,11 +43,11 @@ export class ProductViewDetailsComponent implements OnInit {
     ];
 
     additionalInformationDetails: IDetailsProp[] = [
-        { key: 'cdrBanking.additionalInformation.overviewUri', label: 'Overview URI' },
-        { key: 'cdrBanking.additionalInformation.termsUri', label: 'Terms URI' },
-        { key: 'cdrBanking.additionalInformation.eligibilityUri', label: 'Eligibility URI' },
-        { key: 'cdrBanking.additionalInformation.feesAndPricingUri', label: 'FeesAndPricing URI' },
-        { key: 'cdrBanking.additionalInformation.bundleUri', label: 'Bundle URI' },
+        { key: 'overviewUri', label: 'Overview URI' },
+        { key: 'termsUri', label: 'Terms URI' },
+        { key: 'eligibilityUri', label: 'Eligibility URI' },
+        { key: 'feesAndPricingUri', label: 'FeesAndPricing URI' },
+        { key: 'bundleUri', label: 'Bundle URI' },
     ];
 
     bundles: DioProductBundle[];
