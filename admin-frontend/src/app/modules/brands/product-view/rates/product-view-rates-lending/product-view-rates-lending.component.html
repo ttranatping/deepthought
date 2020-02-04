@@ -9,14 +9,15 @@
 <div *ngIf="notFixedRates && notFixedRates.length">
     <div class="NotFixedRate" *ngFor="let rate of notFixedRates">
         <div class="NotFixedRate-name">{{ getLendingDetail(rate, 'NAME') }}</div>
-        <div class="NotFixedRate-detail">{{ getLendingDetail(rate, 'DETAIL') }}</div>
-        <div class="NotFixedRate-info">{{ getLendingDetail(rate, 'INFO') }}</div>
         <div class="NotFixedRate-actions">
-            <a void (click)="editRate(rate)">Edit</a>
-            <a void (click)="removeRate(rate)">Remove</a>
+            <p-button (click)="editRate(rate)" label="Edit"></p-button>
+            <p-button (click)="removeRate(rate)" label="Remove"></p-button>
         </div>
 
-        <div class="NotFixedRate-tiers" *ngIf="rate.cdrBanking.tiers.length">
+        <div class="NotFixedRate-detail">{{ getLendingDetail(rate, 'DETAIL') }}</div>
+        <div class="NotFixedRate-info">{{ getLendingDetail(rate, 'INFO') }}</div>
+
+        <div class="NotFixedRate-tiers" *ngIf="rate.cdrBanking?.tiers?.length">
             <p-table [value]="rate.cdrBanking.tiers">
                 <ng-template pTemplate="header" let-columns>
                     <tr>

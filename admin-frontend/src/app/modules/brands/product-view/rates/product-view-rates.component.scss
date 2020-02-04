@@ -12,8 +12,12 @@ h2  {
     line-height: 22px;
     padding: 10px 0;
 
+    display: flex;
+    flex-wrap: wrap;
+
     &-name {
         font-weight: bold;
+        width: 80%;
     }
 
     &-detail {}
@@ -21,6 +25,13 @@ h2  {
     &-info {}
 
     &-actions {
+        text-align: right;
+        width: 20%;
+
+        p-button {
+            margin-left: 5px;
+        }
+
         > a {
             font-weight: bold;
             margin-right: 10px;
@@ -29,5 +40,11 @@ h2  {
 
     &-tiers {
         font-size: 14px;
+    }
+
+    &-detail,
+    &-info,
+    &-tiers {
+        width: 100%;
     }
 }
