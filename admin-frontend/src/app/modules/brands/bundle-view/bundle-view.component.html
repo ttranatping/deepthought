@@ -3,25 +3,7 @@
 
         <div class="Bundle">
             <h2 class="Bundle-name">{{ bundle?.name }}</h2>
-
-            <div class="Bundle-description">
-                <h4>Description</h4>
-                <p>{{ bundle?.description }}</p>
-            </div>
-
-            <div class="Bundle-additionalInfo" *ngIf="bundle?.additionalInfo">
-                <h4>Additional info</h4>
-                <p>
-                    {{ bundle?.additionalInfo }}
-                    <a *ngIf="bundle?.additionalInfoUri"
-                       [href]="bundle?.additionalInfoUri"
-                       target="_blank"
-                    >See more...</a>
-                </p>
-            </div>
         </div>
-
-        <hr />
 
         <ul class="SidebarMenu">
             <li class="SidebarMenu-item"><a void (click)="editBundle()">Edit bundle</a></li>
@@ -29,6 +11,28 @@
         </ul>
     </div>
     <div class="BundleContainer-content">
+        <section>
+            <h2>Summary</h2>
+            <div class="Detail">
+                <div class="Detail-label">Name</div>
+                <div class="Detail-value">{{ bundle?.name || '-' }}</div>
+            </div>
+            <div class="Detail">
+                <div class="Detail-label">Description</div>
+                <div class="Detail-value">{{ bundle?.description || '-' }}</div>
+            </div>
+            <div class="Detail">
+                <div class="Detail-label">Additional info</div>
+                <div class="Detail-value">
+                    {{ bundle?.description || '-' }}
+                    <a *ngIf="bundle?.additionalInfo && bundle?.additionalInfoUri"
+                       [href]="bundle?.additionalInfoUri"
+                       target="_blank"
+                    >See more...</a>
+                </div>
+            </div>
+        </section>
+
         <h2>
             Products
             <p-button label="Add product" (click)="addProductToBundle()"></p-button>
