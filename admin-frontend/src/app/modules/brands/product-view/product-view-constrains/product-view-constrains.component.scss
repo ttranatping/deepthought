@@ -2,9 +2,7 @@
 h2 {
     color: #051228;
     margin-top: 0;
-}
 
-h3 {
     p-button {
         float: right;
     }
@@ -22,24 +20,41 @@ section {
     line-height: 22px;
     padding: 10px 0;
 
+    display: flex;
+    flex-wrap: wrap;
+
     &:first-child {
         padding-top: 0;
     }
 
     &-label {
-        margin-top: 0;
-        margin-bottom: 5px;
+        margin: 0;
+        width: 50%;
     }
 
     &-value {
-        margin-top: 0;
-        margin-bottom: 5px;
+        margin: 0;
+        padding-left: 10px;
+        width: 30%;
+    }
+
+    &-additionalInfo {
+        margin: 0;
+        margin-right: 50%;
+        width: 50%;
+
+        &Url {
+            display: inline-block;
+            font-weight: bold;
+        }
     }
 
     &-actions {
-        > a {
-            font-weight: bold;
-            margin-right: 10px;
+        text-align: right;
+        width: 20%;
+
+        > p-button {
+            margin-right: 5px;
         }
     }
 
