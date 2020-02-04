@@ -5,11 +5,15 @@
         <div class="Detail" *ngFor="let detail of summaryDetails;">
             <div class="Detail-label">{{ detail.label }}</div>
             <div class="Detail-value" [ngSwitch]="detail.key">
-                <span *ngSwitchCase="'cdrBanking.productCategory'"> {{ getProductCategory(product | propPath: detail.key) }}</span>
-                <span *ngSwitchCase="'cdrBanking.isTailored'"> {{ (product | propPath: detail.key) ? 'Yes' : 'No' }}</span>
-                <span *ngSwitchCase="'cdrBanking.lastUpdated'">{{ (product | propPath: detail.key) | dateFormat }}</span>
-                <span *ngSwitchCase="'cdrBanking.effective'">{{ getEffectiveDate(product.cdrBanking['effectiveFrom'], product.cdrBanking['effectiveTo']) }}</span>
-                <span *ngSwitchDefault>{{ (product | propPath: detail.key) || '-' }}</span>
+                <ng-container *ngSwitchCase="'cdrBanking.productCategory'"> {{ getProductCategory(product | propPath: detail.key) }}</ng-container>
+                <ng-container *ngSwitchCase="'cdrBanking.isTailored'"> {{ (product | propPath: detail.key) ? 'Yes' : 'No' }}</ng-container>
+                <ng-container *ngSwitchCase="'cdrBanking.lastUpdated'">{{ (product | propPath: detail.key) | dateFormat }}</ng-container>
+                <ng-container *ngSwitchCase="'cdrBanking.effective'">{{ getEffectiveDate(product.cdrBanking['effectiveFrom'], product.cdrBanking['effectiveTo']) }}</ng-container>
+                <ng-container *ngSwitchCase="'cdrBanking.applicationUri'">
+                    <a *ngIf="(product | propPath: detail.key) as url" [href]="url" target="_blank">{{ url }}</a>
+                    <ng-container *ngIf="!(product | propPath: detail.key)">-</ng-container>
+                </ng-container>
+                <ng-container *ngSwitchDefault>{{ (product | propPath: detail.key) || '-' }}</ng-container>
             </div>
         </div>
     </section>
