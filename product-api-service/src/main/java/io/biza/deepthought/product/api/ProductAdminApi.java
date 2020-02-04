@@ -2,8 +2,8 @@ package io.biza.deepthought.product.api;
 
 import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.enumerations.BankingProductEffectiveWithAll;
-import io.biza.babelfish.cdr.models.responses.ResponseBankingProductV2ById;
-import io.biza.babelfish.cdr.models.responses.ResponseBankingProductV2List;
+import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV2;
+import io.biza.babelfish.cdr.models.responses.ResponseBankingProductListV2;
 import io.biza.deepthought.product.Labels;
 import io.biza.deepthought.product.api.delegate.ProductApiDelegate;
 import io.biza.deepthought.product.api.requests.RequestListProducts;
@@ -35,9 +35,9 @@ public interface ProductAdminApi {
       description = "Obtain a list of products available from the Data Holder")
   @ApiResponses(value = {@ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
       description = Labels.RESPONSE_SUCCESSFUL_LIST,
-      content = @Content(schema = @Schema(implementation = ResponseBankingProductV2List.class)))})
+      content = @Content(schema = @Schema(implementation = ResponseBankingProductListV2.class)))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-  default ResponseEntity<ResponseBankingProductV2List> listProducts(
+  default ResponseEntity<ResponseBankingProductListV2> listProducts(
       @Valid @RequestParam(name = "effective", required = false,
           defaultValue = "CURRENT") BankingProductEffectiveWithAll effective,
       @Valid @RequestParam(name = "updated-since", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime updatedSince,
@@ -59,11 +59,11 @@ public interface ProductAdminApi {
           @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
               description = Labels.RESPONSE_SUCCESSFUL_READ,
               content = @Content(
-                  schema = @Schema(implementation = ResponseBankingProductV2ById.class))),
+                  schema = @Schema(implementation = ResponseBankingProductByIdV2.class))),
           @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
               description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
   @GetMapping(value = "/{productId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-  default ResponseEntity<ResponseBankingProductV2ById> getProductDetail(
+  default ResponseEntity<ResponseBankingProductByIdV2> getProductDetail(
       @NotNull @Valid @PathVariable("productId") UUID productId) {
     return getDelegate().getProductDetail(productId);
   }

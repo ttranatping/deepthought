@@ -1,6 +1,6 @@
 package io.biza.deepthought.data.translation.mapper;
 
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeeDiscountEligibility;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeeDiscountEligibilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeDiscountEligibilityData;
 import ma.glasnost.orika.MapperFactory;
@@ -12,7 +12,7 @@ public class ProductCdrBankingFeeDiscountEligibilityDataMapper
   public void configure(MapperFactory orikaMapperFactory) {
     orikaMapperFactory
         .classMap(ProductCdrBankingFeeDiscountEligibilityData.class,
-            BankingProductFeeDiscountEligibility.class)
+            BankingProductFeeDiscountEligibilityV1.class)
         .field("discountEligibilityType", "discountEligibilityType").byDefault().register();
     
   }

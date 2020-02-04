@@ -2,33 +2,33 @@ package io.biza.deepthought.common;
 
 import org.springframework.data.domain.Page;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import io.biza.babelfish.cdr.models.payloads.common.Links;
-import io.biza.babelfish.cdr.models.payloads.common.LinksPaginated;
-import io.biza.babelfish.cdr.models.payloads.common.Meta;
-import io.biza.babelfish.cdr.models.payloads.common.MetaPaginated;
+import io.biza.babelfish.cdr.models.payloads.LinksPaginatedV1;
+import io.biza.babelfish.cdr.models.payloads.LinksV1;
+import io.biza.babelfish.cdr.models.payloads.MetaPaginatedV1;
+import io.biza.babelfish.cdr.models.payloads.MetaV1;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class CDRContainerAttributes {
 
-  public static MetaPaginated toMetaPaginated(Page<?> inputPage) {
-    return new MetaPaginated().totalPages(inputPage.getTotalPages())
+  public static MetaPaginatedV1 toMetaPaginated(Page<?> inputPage) {
+    return new MetaPaginatedV1().totalPages(inputPage.getTotalPages())
         .totalRecords(Long.valueOf(inputPage.getTotalElements()).intValue());
   }
 
-  public static Meta toMeta() {
-    return new Meta();
+  public static MetaV1 toMeta() {
+    return new MetaV1();
   }
 
-  public static Links toLinks() {
-    Links links = new Links();
+  public static LinksV1 toLinks() {
+    LinksV1 links = new LinksV1();
     ServletUriComponentsBuilder uriComponents = ServletUriComponentsBuilder.fromCurrentRequest();
     links.self(uriComponents.build().toUri());
     return links;
   }
 
-  public static LinksPaginated toLinksPaginated(Page<?> inputPage) {
-    LinksPaginated links = new LinksPaginated();
+  public static LinksPaginatedV1 toLinksPaginated(Page<?> inputPage) {
+    LinksPaginatedV1 links = new LinksPaginatedV1();
     ServletUriComponentsBuilder uriComponents = ServletUriComponentsBuilder.fromCurrentRequest();
 
     links.self(uriComponents.build().toUri());

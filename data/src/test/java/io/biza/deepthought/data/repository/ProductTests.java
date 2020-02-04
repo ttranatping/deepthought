@@ -11,18 +11,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import io.biza.babelfish.cdr.enumerations.BankingProductDiscountType;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAdditionalInformation;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAdditionalInformationV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductCardArtV1;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductConstraint;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRate;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDiscount;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductEligibility;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeature;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFee;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeeDiscountEligibility;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendingRate;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTier;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicability;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductConstraintV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRateV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDiscountV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductEligibilityV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeatureV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeeV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeeDiscountEligibilityV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendingRateV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.DioProduct;
 import io.biza.deepthought.data.payloads.DioProductCardArt;
@@ -240,7 +240,7 @@ public class ProductTests extends TranslatorInitialisation {
                 .productCategory(VariableConstants.PRODUCT_CATEGORY)
                 .applicationUri(VariableConstants.PRODUCT_APPLICATION_URI)
                 .tailored(VariableConstants.PRODUCT_ISTAILORED)
-                .additionalInformation(new BankingProductAdditionalInformation()
+                .additionalInformation(new BankingProductAdditionalInformationV1()
                     .overviewUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_OVERVIEW_URI)
                     .termsUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_TERMS_URI)
                     .eligibilityUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_ELIGIBILITY_URI)
@@ -267,7 +267,7 @@ public class ProductTests extends TranslatorInitialisation {
 
       DioProductConstraint dioConstraintStatic =
           DioProductConstraint.builder().id(constraint.id()).schemeType(DioSchemeType.CDR_BANKING)
-              .cdrBanking(new BankingProductConstraint()
+              .cdrBanking(new BankingProductConstraintV1()
                   .constraintType(VariableConstants.PRODUCT_CONSTRAINT_TYPE)
                   .additionalInfo(VariableConstants.PRODUCT_CONSTRAINT_ADDITIONAL_INFO)
                   .additionalInfoUri(VariableConstants.PRODUCT_CONSTRAINT_ADDITIONAL_INFO_URI)
@@ -294,7 +294,7 @@ public class ProductTests extends TranslatorInitialisation {
       DioProductFeature dioFeatureStatic =
           DioProductFeature.builder().id(feature.id()).schemeType(DioSchemeType.CDR_BANKING)
               .cdrBanking(
-                  new BankingProductFeature().featureType(VariableConstants.PRODUCT_FEATURE_TYPE)
+                  new BankingProductFeatureV1().featureType(VariableConstants.PRODUCT_FEATURE_TYPE)
                       .additionalInfo(VariableConstants.PRODUCT_FEATURE_ADDITIONAL_INFO)
                       .additionalInfoUri(VariableConstants.PRODUCT_FEATURE_ADDITIONAL_INFO_URI)
                       .additionalValue(VariableConstants.PRODUCT_FEATURE_ADDITIONAL_VALUE))
@@ -319,7 +319,7 @@ public class ProductTests extends TranslatorInitialisation {
 
       DioProductEligibility dioEligibilityStatic =
           DioProductEligibility.builder().id(eligibility.id()).schemeType(DioSchemeType.CDR_BANKING)
-              .cdrBanking(new BankingProductEligibility()
+              .cdrBanking(new BankingProductEligibilityV1()
                   .eligibilityType(VariableConstants.PRODUCT_ELIGIBILITY_TYPE)
                   .additionalInfo(VariableConstants.PRODUCT_ELIGIBILITY_ADDITIONAL_INFO)
                   .additionalInfoUri(VariableConstants.PRODUCT_ELIGIBILITY_ADDITIONAL_INFO_URI)
@@ -367,21 +367,21 @@ public class ProductTests extends TranslatorInitialisation {
 
       DioProductFee dioFeeStatic = DioProductFee.builder().id(fee.id())
           .schemeType(DioSchemeType.CDR_BANKING)
-          .cdrBanking(new BankingProductFee().name(VariableConstants.PRODUCT_FEE1_NAME)
+          .cdrBanking(new BankingProductFeeV1().name(VariableConstants.PRODUCT_FEE1_NAME)
               .feeType(VariableConstants.PRODUCT_FEE1_TYPE)
               .amount(VariableConstants.PRODUCT_FEE1_AMOUNT)
               .currency(VariableConstants.PRODUCT_FEE1_CURRENCY)
               .additionalValue(VariableConstants.PRODUCT_FEE1_ADDITIONAL_VALUE)
               .additionalInfo(VariableConstants.PRODUCT_FEE1_ADDITIONAL_INFO)
               .additionalInfoUri(VariableConstants.PRODUCT_FEE1_ADDITIONAL_INFO_URI)
-              .discounts(List.of(new BankingProductDiscount()
+              .discounts(List.of(new BankingProductDiscountV1()
                   .discountType(BankingProductDiscountType.ELIGIBILITY_ONLY)
                   .description(VariableConstants.PRODUCT_FEE1_DISCOUNT_DESCRIPTION)
                   .amount(VariableConstants.PRODUCT_FEE1_DISCOUNT_AMOUNT)
                   .additionalInfo(VariableConstants.PRODUCT_FEE1_DISCOUNT_ADDITIONAL_INFO)
                   .additionalValue(VariableConstants.PRODUCT_FEE1_DISCOUNT_ADDITIONAL_VALUE)
                   .additionalInfoUri(VariableConstants.PRODUCT_FEE1_DISCOUNT_ADDITIONAL_URI)
-                  .eligibility(List.of(new BankingProductFeeDiscountEligibility()
+                  .eligibility(List.of(new BankingProductFeeDiscountEligibilityV1()
                       .discountEligibilityType(
                           VariableConstants.PRODUCT_FEE1_DISCOUNT_ELIGIBILITY_TYPE)
                       .additionalValue(
@@ -411,7 +411,7 @@ public class ProductTests extends TranslatorInitialisation {
 
       DioProductRateDeposit dioDepositRateStatic = DioProductRateDeposit.builder()
           .id(depositRate.id()).schemeType(DioSchemeType.CDR_BANKING)
-          .cdrBanking(new BankingProductDepositRate()
+          .cdrBanking(new BankingProductDepositRateV1()
               .depositRateType(VariableConstants.PRODUCT_DEPOSIT_RATE_TYPE)
               .rate(VariableConstants.PRODUCT_DEPOSIT_RATE_RATE)
               .calculationFrequency(VariableConstants.PRODUCT_DEPOSIT_RATE_CALCULATION_FREQUENCY)
@@ -419,14 +419,14 @@ public class ProductTests extends TranslatorInitialisation {
               .additionalInfo(VariableConstants.PRODUCT_DEPOSIT_RATE_ADDITIONAL_INFO)
               .additionalValue(VariableConstants.PRODUCT_DEPOSIT_RATE_ADDITIONAL_VALUE)
               .additionalInfoUri(VariableConstants.PRODUCT_DEPOSIT_RATE_ADDITIONAL_URI)
-              .tiers(List.of(new BankingProductRateTier()
+              .tiers(List.of(new BankingProductRateTierV1()
                   .name(VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_NAME)
                   .unitOfMeasure(VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_UNITOFMEASURE)
                   .minimumValue(VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_MINIMUM_VALUE)
                   .maximumValue(VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_MAXIMUM_VALUE)
                   .rateApplicationMethod(
                       VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_RATE_APPLICATION_METHOD)
-                  .applicabilityConditions(new BankingProductRateTierApplicability()
+                  .applicabilityConditions(new BankingProductRateTierApplicabilityV1()
                       .additionalInfo(
                           VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_APPLICABILITY_INFO)
                       .additionalInfoUri(
@@ -452,7 +452,7 @@ public class ProductTests extends TranslatorInitialisation {
 
       DioProductRateLending dioLendingRateStatic = DioProductRateLending.builder()
           .id(lendingRate.id()).schemeType(DioSchemeType.CDR_BANKING)
-          .cdrBanking(new BankingProductLendingRate()
+          .cdrBanking(new BankingProductLendingRateV1()
               .lendingRateType(VariableConstants.PRODUCT_LENDING_RATE_TYPE)
               .interestPaymentDue(VariableConstants.PRODUCT_LENDING_INTEREST_PAYMENT_DUE)
               .rate(VariableConstants.PRODUCT_LENDING_RATE_RATE)
@@ -461,14 +461,14 @@ public class ProductTests extends TranslatorInitialisation {
               .additionalInfo(VariableConstants.PRODUCT_LENDING_RATE_ADDITIONAL_INFO)
               .additionalValue(VariableConstants.PRODUCT_LENDING_RATE_ADDITIONAL_VALUE)
               .additionalInfoUri(VariableConstants.PRODUCT_LENDING_RATE_ADDITIONAL_URI)
-              .tiers(List.of(new BankingProductRateTier()
+              .tiers(List.of(new BankingProductRateTierV1()
                   .name(VariableConstants.PRODUCT_LENDING_RATE_TIER1_NAME)
                   .unitOfMeasure(VariableConstants.PRODUCT_LENDING_RATE_TIER1_UNITOFMEASURE)
                   .minimumValue(VariableConstants.PRODUCT_LENDING_RATE_TIER1_MINIMUM_VALUE)
                   .maximumValue(VariableConstants.PRODUCT_LENDING_RATE_TIER1_MAXIMUM_VALUE)
                   .rateApplicationMethod(
                       VariableConstants.PRODUCT_LENDING_RATE_TIER1_RATE_APPLICATION_METHOD)
-                  .applicabilityConditions(new BankingProductRateTierApplicability()
+                  .applicabilityConditions(new BankingProductRateTierApplicabilityV1()
                       .additionalInfo(
                           VariableConstants.PRODUCT_LENDING_RATE_TIER1_APPLICABILITY_INFO)
                       .additionalInfoUri(
@@ -489,7 +489,7 @@ public class ProductTests extends TranslatorInitialisation {
 
     DioProductRateLending dioLendingRateStatic = DioProductRateLending.builder()
         .id(UUID.randomUUID()).schemeType(DioSchemeType.CDR_BANKING)
-        .cdrBanking(new BankingProductLendingRate()
+        .cdrBanking(new BankingProductLendingRateV1()
             .lendingRateType(VariableConstants.PRODUCT_LENDING_RATE_TYPE)
             .interestPaymentDue(VariableConstants.PRODUCT_LENDING_INTEREST_PAYMENT_DUE)
             .rate(VariableConstants.PRODUCT_LENDING_RATE_RATE)
@@ -498,14 +498,14 @@ public class ProductTests extends TranslatorInitialisation {
             .additionalInfo(VariableConstants.PRODUCT_LENDING_RATE_ADDITIONAL_INFO)
             .additionalValue(VariableConstants.PRODUCT_LENDING_RATE_ADDITIONAL_VALUE)
             .additionalInfoUri(VariableConstants.PRODUCT_LENDING_RATE_ADDITIONAL_URI)
-            .tiers(List.of(new BankingProductRateTier()
+            .tiers(List.of(new BankingProductRateTierV1()
                 .name(VariableConstants.PRODUCT_LENDING_RATE_TIER1_NAME)
                 .unitOfMeasure(VariableConstants.PRODUCT_LENDING_RATE_TIER1_UNITOFMEASURE)
                 .minimumValue(VariableConstants.PRODUCT_LENDING_RATE_TIER1_MINIMUM_VALUE)
                 .maximumValue(VariableConstants.PRODUCT_LENDING_RATE_TIER1_MAXIMUM_VALUE)
                 .rateApplicationMethod(
                     VariableConstants.PRODUCT_LENDING_RATE_TIER1_RATE_APPLICATION_METHOD)
-                .applicabilityConditions(new BankingProductRateTierApplicability()
+                .applicabilityConditions(new BankingProductRateTierApplicabilityV1()
                     .additionalInfo(VariableConstants.PRODUCT_LENDING_RATE_TIER1_APPLICABILITY_INFO)
                     .additionalInfoUri(
                         VariableConstants.PRODUCT_LENDING_RATE_TIER1_APPLICABILITY_URI)))))
