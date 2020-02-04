@@ -9,23 +9,18 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BankingProductLendingRateInterestPaymentType } from './bankingProductLendingRateInterestPaymentType';
-import { BankingProductLendingRateType } from './bankingProductLendingRateType';
-import { BankingProductRateTierObject } from './bankingProductRateTierObject';
+import { BankingProductDepositRateType } from './bankingProductDepositRateType';
+import { BankingProductRateTierV1 } from './bankingProductRateTierV1';
 
 /**
- * CDR Banking Product Lending Rate
+ * A Description of a Deposit Rate
  */
-export interface BankingProductLendingRate { 
-    lendingRateType: BankingProductLendingRateType;
+export interface BankingProductDepositRateV1 { 
+    depositRateType: BankingProductDepositRateType;
     /**
      * The rate to be applied
      */
-    rate: number;
-    /**
-     * A comparison rate equivalent for this rate
-     */
-    comparisonRate?: number;
+    rate: string;
     /**
      * The period after which the rate is applied to the balance to calculate the amount due for the period. Calculation of the amount is often daily (as balances may change) but accumulated until the total amount is 'applied' to the account (see applicationFrequency). Formatted according to [ISO 8601 Durations](https://en.wikipedia.org/wiki/ISO_8601#Durations)
      */
@@ -34,17 +29,16 @@ export interface BankingProductLendingRate {
      * The period after which the calculated amount(s) (see calculationFrequency) are 'applied' (i.e. debited or credited) to the account. Formatted according to [ISO 8601 Durations](https://en.wikipedia.org/wiki/ISO_8601#Durations)
      */
     applicationFrequency?: string;
-    interestPaymentDue?: BankingProductLendingRateInterestPaymentType;
     /**
      * Rate tiers applicable for this rate
      */
-    tiers?: Array<BankingProductRateTierObject>;
+    tiers?: Array<BankingProductRateTierV1>;
     /**
-     * Generic field containing additional information relevant to the [lendingRateType](#tocSproductlendingratetypedoc) specified. Whether mandatory or not is dependent on the value of [lendingRateType](#tocSproductlendingratetypedoc)
+     * Generic field containing additional information relevant to the [depositRateType](#tocSproductdepositratetypedoc) specified. Whether mandatory or not is dependent on the value of [depositRateType](#tocSproductdepositratetypedoc)
      */
     additionalValue?: string;
     /**
-     * Display text providing more information on the rate.
+     * Display text providing more information on the rate
      */
     additionalInfo?: string;
     /**

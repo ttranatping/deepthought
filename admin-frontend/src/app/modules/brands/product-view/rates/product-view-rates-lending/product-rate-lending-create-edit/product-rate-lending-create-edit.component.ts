@@ -6,10 +6,10 @@ import {
     CdrFormSelect
 } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 import {
-    BankingProductLendingRate,
+    BankingProductLendingRateV1,
     BankingProductLendingRateType,
     BankingProductRateTierApplicationMethod,
-    BankingProductRateTierObject,
+    BankingProductRateTierV1,
     CommonUnitOfMeasureType,
     DioProductRateLending,
     DioSchemeType, FormFieldType,
@@ -126,7 +126,7 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
         const {
             id,
             schemeType,
-            cdrBanking = {} as BankingProductLendingRate
+            cdrBanking = {} as BankingProductLendingRateV1
         } = lendingRate;
 
         this.rateForm.controls.id.setValue(id);
@@ -162,7 +162,7 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
         return this.cdrBankingForm.get('lendingRateType').value === BankingProductLendingRateType.FIXED;
     }
 
-    addTier(tier: BankingProductRateTierObject = {} as BankingProductRateTierObject) {
+    addTier(tier: BankingProductRateTierV1 = {} as BankingProductRateTierV1) {
         const {
             name = '',
             unitOfMeasure = this.unitOfMeasureOptions[0].value,

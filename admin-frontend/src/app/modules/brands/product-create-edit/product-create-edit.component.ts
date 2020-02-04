@@ -47,7 +47,7 @@ export class ProductCreateEditComponent implements OnInit {
         overviewUri:        new CdrFormInput('', 'Overview URI'),
         termsUri:           new CdrFormInput('', 'Terms URI'),
         eligibilityUri:     new CdrFormInput('', 'Eligibility URI'),
-        feesAndPricingUri:  new CdrFormInput('', 'Fees and pricing URI'),
+        feesAndPricingUri:  new CdrFormInput('', 'Fees and Pricing URI'),
         bundleUri:          new CdrFormInput('', 'Bundle URI'),
     });
 

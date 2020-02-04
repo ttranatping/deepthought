@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 import { BankingProductDiscountType } from './bankingProductDiscountType';
-import { BankingProductFeeDiscountEligibilityObject } from './bankingProductFeeDiscountEligibilityObject';
+import { BankingProductFeeDiscountEligibilityV1 } from './bankingProductFeeDiscountEligibilityV1';
 
 /**
  * Banking Product Discount Specification
  */
-export interface BankingProductDiscountObject { 
+export interface BankingProductDiscountV1 { 
     /**
      * Description of the discount
      */
@@ -56,5 +56,5 @@ export interface BankingProductDiscountObject {
     /**
      * Eligibility constraints that apply to this discount
      */
-    eligibility?: Array<BankingProductFeeDiscountEligibilityObject>;
+    eligibility?: Array<BankingProductFeeDiscountEligibilityV1>;
 }

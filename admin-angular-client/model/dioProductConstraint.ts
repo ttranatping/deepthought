@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BankingProductConstraint } from './bankingProductConstraint';
+import { BankingProductConstraintV1 } from './bankingProductConstraintV1';
 import { DioSchemeType } from './dioSchemeType';
 
 /**
@@ -21,5 +21,5 @@ export interface DioProductConstraint {
      */
     id: string;
     schemeType: DioSchemeType;
-    cdrBanking: BankingProductConstraint;
+    cdrBanking: BankingProductConstraintV1;
 }

@@ -12,9 +12,9 @@
 import { BankingProductEligibilityType } from './bankingProductEligibilityType';
 
 /**
- * CDR Banking Product Eligibility
+ * Eligibility criteria to obtain a particular banking product
  */
-export interface BankingProductEligibility { 
+export interface BankingProductEligibilityV1 { 
     eligibilityType: BankingProductEligibilityType;
     /**
      * Generic field containing additional information relevant to the [eligibilityType](#tocSproducteligibilitytypedoc) specified.  Whether mandatory or not is dependent on the value of [eligibilityType](#tocSproducteligibilitytypedoc)

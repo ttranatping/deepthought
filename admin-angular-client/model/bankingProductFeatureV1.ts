@@ -9,23 +9,23 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BankingProductDiscountEligibilityType } from './bankingProductDiscountEligibilityType';
+import { BankingProductFeatureType } from './bankingProductFeatureType';
 
 /**
- * Banking Product Discount Eligibility Details
+ * A Banking Product Feature
  */
-export interface BankingProductFeeDiscountEligibilityObject { 
-    discountEligibilityType: BankingProductDiscountEligibilityType;
+export interface BankingProductFeatureV1 { 
+    featureType: BankingProductFeatureType;
     /**
-     * Additional Value for Eligibility Constraint related to Discount
+     * Generic field containing additional information relevant to the [featureType](#tocSproductfeaturetypedoc) specified. Whether mandatory or not is dependent on the value of the [featureType.](#tocSproductfeaturetypedoc)
      */
     additionalValue?: string;
     /**
-     * Display text providing more information on this eligibility constraint
+     * Display text providing more information on the feature. Mandatory if the [feature type](#tocSproductfeaturetypedoc) is set to OTHER
      */
     additionalInfo?: string;
     /**
-     * Link to a web page with more information on this eligibility constraint
+     * Link to a web page with more information on this feature
      */
     additionalInfoUri?: string;
 }

@@ -9,13 +9,13 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BankingProductDiscountObject } from './bankingProductDiscountObject';
+import { BankingProductDiscountV1 } from './bankingProductDiscountV1';
 import { BankingProductFeeType } from './bankingProductFeeType';
 
 /**
- * CDR Banking Product Fee
+ * Banking Product Fee Definition
  */
-export interface BankingProductFee { 
+export interface BankingProductFeeV1 { 
     /**
      * Name of the fee
      */
@@ -60,5 +60,5 @@ export interface BankingProductFee {
     /**
      * An optional list of discounts to this fee that may be available
      */
-    discounts?: Array<BankingProductDiscountObject>;
+    discounts?: Array<BankingProductDiscountV1>;
 }

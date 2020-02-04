@@ -9,14 +9,14 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BankingProductRateTierApplicabilityObject } from './bankingProductRateTierApplicabilityObject';
 import { BankingProductRateTierApplicationMethod } from './bankingProductRateTierApplicationMethod';
+import { BankingRateTierApplicabilityV1 } from './bankingRateTierApplicabilityV1';
 import { CommonUnitOfMeasureType } from './commonUnitOfMeasureType';
 
 /**
  * Defines the criteria and conditions for which a rate applies
  */
-export interface BankingProductRateTierObject { 
+export interface BankingProductRateTierV1 { 
     /**
      * A display name for the tier
      */
@@ -31,5 +31,5 @@ export interface BankingProductRateTierObject {
      */
     maximumValue?: number;
     rateApplicationMethod?: BankingProductRateTierApplicationMethod;
-    applicabilityConditions?: BankingProductRateTierApplicabilityObject;
+    applicabilityConditions?: BankingRateTierApplicabilityV1;
 }

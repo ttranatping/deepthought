@@ -13,7 +13,7 @@
 /**
  * Defines a condition for the applicability of a tiered rate
  */
-export interface BankingProductRateTierApplicabilityObject { 
+export interface BankingRateTierApplicabilityV1 { 
     /**
      * Display text providing more information on the condition
      */

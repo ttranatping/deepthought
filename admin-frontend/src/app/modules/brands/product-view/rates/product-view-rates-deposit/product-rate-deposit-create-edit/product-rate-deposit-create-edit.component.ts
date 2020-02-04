@@ -7,10 +7,10 @@ import {
 } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 import { DynamicDialogConfig, DynamicDialogRef, SelectItem } from 'primeng/api';
 import {
-    BankingProductDepositRate,
+    BankingProductDepositRateV1,
     BankingProductDepositRateType,
     BankingProductRateTierApplicationMethod,
-    BankingProductRateTierObject,
+    BankingProductRateTierV1,
     CommonUnitOfMeasureType,
     DioProductRateDeposit,
     DioSchemeType,
@@ -127,7 +127,7 @@ export class ProductRateDepositCreateEditComponent implements OnInit {
         const {
             id,
             schemeType,
-            cdrBanking = {} as BankingProductDepositRate
+            cdrBanking = {} as BankingProductDepositRateV1
         } = depositRate;
 
         this.rateForm.controls.id.setValue(id);
@@ -163,7 +163,7 @@ export class ProductRateDepositCreateEditComponent implements OnInit {
         return this.cdrBankingForm.get('depositRateType').value === BankingProductDepositRateType.FIXED;
     }
 
-    addTier(tier: BankingProductRateTierObject = {} as BankingProductRateTierObject) {
+    addTier(tier: BankingProductRateTierV1 = {} as BankingProductRateTierV1) {
         const {
             name = '',
             unitOfMeasure = this.unitOfMeasureOptions[0].value,

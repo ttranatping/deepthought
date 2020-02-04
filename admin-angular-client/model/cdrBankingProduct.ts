@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BankingProductAdditionalInformation } from './bankingProductAdditionalInformation';
+import { BankingProductAdditionalInformationV1 } from './bankingProductAdditionalInformationV1';
 import { BankingProductCategory } from './bankingProductCategory';
 
 /**
@@ -37,5 +37,5 @@ export interface CdrBankingProduct {
      * Indicates whether the product is specifically tailored to a circumstance.  In this case fees and prices are significantly negotiated depending on context. While all products are open to a degree of tailoring this flag indicates that tailoring is expected and thus that the provision of specific fees and rates is not applicable
      */
     isTailored: boolean;
-    additionalInformation?: BankingProductAdditionalInformation;
+    additionalInformation?: BankingProductAdditionalInformationV1;
 }

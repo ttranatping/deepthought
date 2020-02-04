@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BankingProductLendingRate } from './bankingProductLendingRate';
+import { BankingProductLendingRateV1 } from './bankingProductLendingRateV1';
 import { DioSchemeType } from './dioSchemeType';
 
 /**
@@ -21,5 +21,5 @@ export interface DioProductRateLending {
      */
     id: string;
     schemeType: DioSchemeType;
-    cdrBanking: BankingProductLendingRate;
+    cdrBanking: BankingProductLendingRateV1;
 }

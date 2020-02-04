@@ -9,23 +9,29 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BankingProductConstraintType } from './bankingProductConstraintType';
 
 /**
- * CDR Banking Product Constraint
+ * Object that contains links to additional information on specific topics
  */
-export interface BankingProductConstraint { 
-    constraintType: BankingProductConstraintType;
+export interface BankingProductAdditionalInformationV1 { 
     /**
-     * Generic field containing additional information relevant to the [constraintType](#tocSproductconstrainttypedoc) specified.  Whether mandatory or not is dependent on the value of [constraintType](#tocSproductconstrainttypedoc)
+     * General overview of the product
      */
-    additionalValue?: string;
+    overviewUri?: string;
     /**
-     * Display text providing more information the constraint
+     * Terms and conditions for the product
      */
-    additionalInfo?: string;
+    termsUri?: string;
     /**
-     * Link to a web page with more information on the constraint
+     * Eligibility rules and criteria for the product
      */
-    additionalInfoUri?: string;
+    eligibilityUri?: string;
+    /**
+     * Description of fees, pricing, discounts, exemptions and bonuses for the product
+     */
+    feesAndPricingUri?: string;
+    /**
+     * Description of a bundle that this product can be part of
+     */
+    bundleUri?: string;
 }
