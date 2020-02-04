@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendingRate;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTier;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicability;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendingRateV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.DioProductRateLending;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingData;
@@ -22,26 +22,26 @@ public class ProductCdrBankingRateLendingDataMapper implements OrikaFactoryConfi
   public void configure(MapperFactory orikaMapperFactory) {
 
     orikaMapperFactory
-        .classMap(ProductCdrBankingRateLendingData.class, BankingProductLendingRate.class)
+        .classMap(ProductCdrBankingRateLendingData.class, BankingProductLendingRateV1.class)
         .exclude("tiers").byDefault()
-        .customize(new CustomMapper<ProductCdrBankingRateLendingData, BankingProductLendingRate>() {
+        .customize(new CustomMapper<ProductCdrBankingRateLendingData, BankingProductLendingRateV1>() {
           @Override
-          public void mapAtoB(ProductCdrBankingRateLendingData from, BankingProductLendingRate to,
+          public void mapAtoB(ProductCdrBankingRateLendingData from, BankingProductLendingRateV1 to,
               MappingContext context) {
 
-            List<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>> tierList =
-                new ArrayList<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>>();
+            List<BankingProductRateTierV1> tierList =
+                new ArrayList<BankingProductRateTierV1>();
 
             if (from.tiers() != null) {
               for (ProductCdrBankingRateLendingTierData tierData : from.tiers()) {
-                BankingProductRateTier rateTier = new BankingProductRateTier();
-                rateTier.setMaximumValue(tierData.maximumValue());
-                rateTier.setMinimumValue(tierData.minimumValue());
-                rateTier.setName(tierData.name());
-                rateTier.setRateApplicationMethod(tierData.rateApplicationMethod());
-                rateTier.setUnitOfMeasure(tierData.unitOfMeasure());
+                BankingProductRateTierV1 rateTier = new BankingProductRateTierV1();
+                rateTier.maximumValue(tierData.maximumValue());
+                rateTier.minimumValue(tierData.minimumValue());
+                rateTier.name(tierData.name());
+                rateTier.rateApplicationMethod(tierData.rateApplicationMethod());
+                rateTier.unitOfMeasure(tierData.unitOfMeasure());
                 if (tierData.applicabilityConditions() != null) {
-                  rateTier.applicabilityConditions(new BankingProductRateTierApplicability()
+                  rateTier.applicabilityConditions(new BankingProductRateTierApplicabilityV1()
                       .additionalInfo(tierData.applicabilityConditions().additionalInfo())
                       .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
                 }
@@ -69,20 +69,20 @@ public class ProductCdrBankingRateLendingDataMapper implements OrikaFactoryConfi
           public void mapAtoB(ProductCdrBankingRateLendingData from, DioProductRateLending to,
               MappingContext context) {
 
-            List<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>> tierList =
-                new ArrayList<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>>();
+            List<BankingProductRateTierV1> tierList =
+                new ArrayList<BankingProductRateTierV1>();
 
             if (from.tiers() != null) {
 
               for (ProductCdrBankingRateLendingTierData tierData : from.tiers()) {
-                BankingProductRateTier rateTier = new BankingProductRateTier();
-                rateTier.setMaximumValue(tierData.maximumValue());
-                rateTier.setMinimumValue(tierData.minimumValue());
-                rateTier.setName(tierData.name());
-                rateTier.setRateApplicationMethod(tierData.rateApplicationMethod());
-                rateTier.setUnitOfMeasure(tierData.unitOfMeasure());
+                BankingProductRateTierV1 rateTier = new BankingProductRateTierV1();
+                rateTier.maximumValue(tierData.maximumValue());
+                rateTier.minimumValue(tierData.minimumValue());
+                rateTier.name(tierData.name());
+                rateTier.rateApplicationMethod(tierData.rateApplicationMethod());
+                rateTier.unitOfMeasure(tierData.unitOfMeasure());
                 if (tierData.applicabilityConditions() != null) {
-                  rateTier.applicabilityConditions(new BankingProductRateTierApplicability()
+                  rateTier.applicabilityConditions(new BankingProductRateTierApplicabilityV1()
                       .additionalInfo(tierData.applicabilityConditions().additionalInfo())
                       .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
                 }
@@ -102,7 +102,7 @@ public class ProductCdrBankingRateLendingDataMapper implements OrikaFactoryConfi
                 new HashSet<ProductCdrBankingRateLendingTierData>();
 
             if (from.cdrBanking().tiers() != null) {
-              for (io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?> tierData : from
+              for (BankingProductRateTierV1 tierData : from
                   .cdrBanking().tiers()) {
                 ProductCdrBankingRateLendingTierData rateTier =
                     new ProductCdrBankingRateLendingTierData();

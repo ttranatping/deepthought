@@ -4,7 +4,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRate;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRateV1;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -46,7 +46,7 @@ public class DioProductRateDeposit {
   @Valid
   @NotNull
   @NonNull
-  public BankingProductDepositRate cdrBanking;
+  public BankingProductDepositRateV1 cdrBanking;
 
 
 }

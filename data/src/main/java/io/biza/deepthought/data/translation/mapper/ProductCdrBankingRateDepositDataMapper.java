@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRate;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTier;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicability;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRateV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.DioProductRateDeposit;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositData;
@@ -22,26 +22,26 @@ public class ProductCdrBankingRateDepositDataMapper implements OrikaFactoryConfi
   public void configure(MapperFactory orikaMapperFactory) {
 
     orikaMapperFactory
-        .classMap(ProductCdrBankingRateDepositData.class, BankingProductDepositRate.class)
+        .classMap(ProductCdrBankingRateDepositData.class, BankingProductDepositRateV1.class)
         .exclude("tiers").byDefault()
-        .customize(new CustomMapper<ProductCdrBankingRateDepositData, BankingProductDepositRate>() {
+        .customize(new CustomMapper<ProductCdrBankingRateDepositData, BankingProductDepositRateV1>() {
           @Override
-          public void mapAtoB(ProductCdrBankingRateDepositData from, BankingProductDepositRate to,
+          public void mapAtoB(ProductCdrBankingRateDepositData from, BankingProductDepositRateV1 to,
               MappingContext context) {
 
-            List<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>> tierList =
-                new ArrayList<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>>();
+            List<BankingProductRateTierV1> tierList =
+                new ArrayList<BankingProductRateTierV1>();
 
             if (from.tiers() != null) {
               for (ProductCdrBankingRateDepositTierData tierData : from.tiers()) {
-                BankingProductRateTier rateTier = new BankingProductRateTier();
-                rateTier.setMaximumValue(tierData.maximumValue());
-                rateTier.setMinimumValue(tierData.minimumValue());
-                rateTier.setName(tierData.name());
-                rateTier.setRateApplicationMethod(tierData.rateApplicationMethod());
-                rateTier.setUnitOfMeasure(tierData.unitOfMeasure());
+                BankingProductRateTierV1 rateTier = new BankingProductRateTierV1();
+                rateTier.maximumValue(tierData.maximumValue());
+                rateTier.minimumValue(tierData.minimumValue());
+                rateTier.name(tierData.name());
+                rateTier.rateApplicationMethod(tierData.rateApplicationMethod());
+                rateTier.unitOfMeasure(tierData.unitOfMeasure());
                 if (tierData.applicabilityConditions() != null) {
-                  rateTier.applicabilityConditions(new BankingProductRateTierApplicability()
+                  rateTier.applicabilityConditions(new BankingProductRateTierApplicabilityV1()
                       .additionalInfo(tierData.applicabilityConditions().additionalInfo())
                       .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
                 }
@@ -66,19 +66,19 @@ public class ProductCdrBankingRateDepositDataMapper implements OrikaFactoryConfi
           public void mapAtoB(ProductCdrBankingRateDepositData from, DioProductRateDeposit to,
               MappingContext context) {
 
-            List<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>> tierList =
-                new ArrayList<io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?>>();
+            List<BankingProductRateTierV1> tierList =
+                new ArrayList<BankingProductRateTierV1>();
 
             if (from.tiers() != null) {
               for (ProductCdrBankingRateDepositTierData tierData : from.tiers()) {
-                BankingProductRateTier rateTier = new BankingProductRateTier();
-                rateTier.setMaximumValue(tierData.maximumValue());
-                rateTier.setMinimumValue(tierData.minimumValue());
-                rateTier.setName(tierData.name());
-                rateTier.setRateApplicationMethod(tierData.rateApplicationMethod());
-                rateTier.setUnitOfMeasure(tierData.unitOfMeasure());
+                BankingProductRateTierV1 rateTier = new BankingProductRateTierV1();
+                rateTier.maximumValue(tierData.maximumValue());
+                rateTier.minimumValue(tierData.minimumValue());
+                rateTier.name(tierData.name());
+                rateTier.rateApplicationMethod(tierData.rateApplicationMethod());
+                rateTier.unitOfMeasure(tierData.unitOfMeasure());
                 if (tierData.applicabilityConditions() != null) {
-                  rateTier.applicabilityConditions(new BankingProductRateTierApplicability()
+                  rateTier.applicabilityConditions(new BankingProductRateTierApplicabilityV1()
                       .additionalInfo(tierData.applicabilityConditions().additionalInfo())
                       .additionalInfoUri(tierData.applicabilityConditions().additionalInfoUri()));
                 }
@@ -97,7 +97,7 @@ public class ProductCdrBankingRateDepositDataMapper implements OrikaFactoryConfi
                 new HashSet<ProductCdrBankingRateDepositTierData>();
 
             if (from.cdrBanking().tiers() != null) {
-              for (io.biza.babelfish.cdr.abstracts.payloads.banking.product.BankingProductRateTier<?> rateTier : from
+              for (BankingProductRateTierV1 rateTier : from
                   .cdrBanking().tiers()) {
                 ProductCdrBankingRateDepositTierData tierData =
                     new ProductCdrBankingRateDepositTierData();

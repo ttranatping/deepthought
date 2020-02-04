@@ -13,9 +13,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDetailV2;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductV2;
-import io.biza.babelfish.cdr.models.responses.ResponseBankingProductV2ById;
-import io.biza.babelfish.cdr.models.responses.ResponseBankingProductV2List;
-import io.biza.babelfish.cdr.models.responses.container.ResponseBankingProductV2ListData;
+import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV2;
+import io.biza.babelfish.cdr.models.responses.ResponseBankingProductListV2;
+import io.biza.babelfish.cdr.models.responses.container.ResponseBankingProductListDataV2;
 import io.biza.deepthought.common.CDRContainerAttributes;
 import io.biza.deepthought.data.persistence.model.ProductData;
 import io.biza.deepthought.data.repository.BrandRepository;
@@ -44,7 +44,7 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
   private Validator validator;
 
   @Override
-  public ResponseEntity<ResponseBankingProductV2List> listProducts(
+  public ResponseEntity<ResponseBankingProductListV2> listProducts(
       RequestListProducts requestList) {
     LOG.debug("Retrieving a list of products with input request of {}", requestList);
     
@@ -75,21 +75,21 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
     /**
      * Build response components
      */
-    ResponseBankingProductV2List listResponse = new ResponseBankingProductV2List();
+    ResponseBankingProductListV2 listResponse = new ResponseBankingProductListV2();
     listResponse.meta(CDRContainerAttributes.toMetaPaginated(productList));
     listResponse.links(CDRContainerAttributes.toLinksPaginated(productList));
-    listResponse.data(ResponseBankingProductV2ListData.builder()
+    listResponse.data(ResponseBankingProductListDataV2.builder()
         .products(mapper.mapAsList(productList.getContent(), BankingProductV2.class)).build());
     LOG.debug("List response came back with: {}", listResponse);
     return ResponseEntity.ok(listResponse);
   }
 
   @Override
-  public ResponseEntity<ResponseBankingProductV2ById> getProductDetail(UUID productId) {
+  public ResponseEntity<ResponseBankingProductByIdV2> getProductDetail(UUID productId) {
     LOG.debug("Retrieving product with identifier of {}", productId);
     Optional<ProductData> productResult = productRepository.findById(productId);
     if (productResult.isPresent()) {
-      ResponseBankingProductV2ById productResponse = new ResponseBankingProductV2ById();
+      ResponseBankingProductByIdV2 productResponse = new ResponseBankingProductByIdV2();
       productResponse.meta(CDRContainerAttributes.toMeta());
       productResponse.links(CDRContainerAttributes.toLinks());
       productResponse.data(mapper.map(productResult.get(), BankingProductDetailV2.class));

@@ -11,7 +11,7 @@ import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
 import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
 import io.biza.babelfish.cdr.converters.UriToUriStringConverter;
 import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAdditionalInformation;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAdditionalInformationV1;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
@@ -81,6 +81,6 @@ public class CdrBankingProduct {
 
   @Schema(description = "Additional Information for Banking Product")
   @JsonProperty("additionalInformation")
-  BankingProductAdditionalInformation additionalInformation;
+  BankingProductAdditionalInformationV1 additionalInformation;
 
 }

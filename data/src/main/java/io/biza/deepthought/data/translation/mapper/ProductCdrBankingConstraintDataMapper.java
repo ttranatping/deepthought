@@ -1,6 +1,6 @@
 package io.biza.deepthought.data.translation.mapper;
 
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductConstraint;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductConstraintV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.DioProductConstraint;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingConstraintData;
@@ -13,7 +13,7 @@ public class ProductCdrBankingConstraintDataMapper implements OrikaFactoryConfig
     orikaMapperFactory.classMap(ProductCdrBankingConstraintData.class, DioProductConstraint.class)
         .fieldAToB("id", "id").field("", "cdrBanking").byDefault().register();
     orikaMapperFactory
-        .classMap(ProductCdrBankingConstraintData.class, BankingProductConstraint.class).byDefault()
+        .classMap(ProductCdrBankingConstraintData.class, BankingProductConstraintV1.class).byDefault()
         .register();
   }
 

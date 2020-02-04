@@ -1,6 +1,6 @@
 package io.biza.deepthought.data.translation.mapper;
 
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductBundle;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductBundleV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.DioProductBundle;
 import io.biza.deepthought.data.persistence.model.ProductBundleData;
@@ -13,7 +13,7 @@ public class ProductBundleDataMapper implements OrikaFactoryConfigurerInterface 
     orikaMapperFactory.classMap(ProductBundleData.class, DioProductBundle.class).exclude("brand")
         .byDefault().fieldAToB("id", "id").register();
     // TODO: productIds conversion
-    orikaMapperFactory.classMap(ProductBundleData.class, BankingProductBundle.class)
+    orikaMapperFactory.classMap(ProductBundleData.class, BankingProductBundleV1.class)
         .exclude("brand").byDefault().register();
   }
 
