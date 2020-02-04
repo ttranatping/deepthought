@@ -6,4 +6,9 @@
     ></ngx-duration-picker>
 </p-overlayPanel>
 
-<input [id]="inputId" pInputText [value]="value" (click)="popover.toggle($event)" />
+<input [id]="inputId"
+       pInputText
+       [(ngModel)]="value"
+       (ngModelChange)="onChange()"
+       (click)="popover.toggle($event)"
+/>

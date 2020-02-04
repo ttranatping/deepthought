@@ -37,8 +37,8 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
     cdrBankingForm = new CdrFormGroup({
         lendingRateType:        new CdrFormSelect('', 'Rate type', [Validators.required]),
         rate:                   new CdrFormInput('', 'Rate'),
-        calculationFrequency:   new CdrFormDuration('', 'Calculation frequency'),
         applicationFrequency:   new CdrFormDuration('', 'Application frequency'),
+        calculationFrequency:   new CdrFormDuration('', 'Calculation frequency'),
         additionalValue:        new CdrFormInput('', 'Additional value'),
         additionalInfo:         new CdrFormInput('', 'Additional info'),
         additionalInfoUri:      new CdrFormInput('', 'Additional info URI'),

@@ -78,7 +78,7 @@ export class RatesTableComponent implements OnChanges {
 
                     const filteredTiers = (rate.tiers && rate.tiers.length)
                         ? rate.tiers
-                            // .filter((tier) => tier.unitOfMeasure === CommonUnitOfMeasureType.DOLLAR)
+                            .filter((tier) => tier.unitOfMeasure === CommonUnitOfMeasureType.DOLLAR)
                             .map((tier) => ({
                                 ...tier,
                                 name: `${this.typeUtilityService.convertValueString(tier.minimumValue)} - ${this.typeUtilityService.convertValueString(tier.maximumValue)}`,
@@ -87,7 +87,7 @@ export class RatesTableComponent implements OnChanges {
 
                     return {
                         rate: rate.rate,
-                        tier: (filteredTiers && filteredTiers.length) ? filteredTiers[0] : { name: 'Initial Tier', minimumValue: 0, maximumValue: 0 },
+                        tier: (filteredTiers && filteredTiers.length) ? filteredTiers[0] : { name: 'Rate without tier', minimumValue: 0, maximumValue: 0 },
                         additionalValue: rate.additionalValue
                     };
                 })

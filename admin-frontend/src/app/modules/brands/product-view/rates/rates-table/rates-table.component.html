@@ -1,52 +1,51 @@
 <div *ngIf="(rates$ | async) as rates">
     <div *ngIf="rates.length">
-        <p-fieldset legend="Conditions">
-            <div class="ui-g">
-                <div class="ui-g-6">
-                    Application Frequency:&nbsp;&nbsp;
-                    <p-dropdown
-                        [options]="conditionsOptions.applicationFrs"
-                        [(ngModel)]="conditions.applicationFrequency"
-                        (onChange)="handleConditionsChange()"
-                    ></p-dropdown>
-                </div>
-                <div class="ui-g-6">
-                    Calculation Frequency:&nbsp;&nbsp;
-                    <p-dropdown
-                        [options]="conditionsOptions.calculationFrs"
-                        [(ngModel)]="conditions.calculationFrequency"
-                        (onChange)="handleConditionsChange()"
-                    ></p-dropdown>
-                </div>
+        <h3>Conditions</h3>
+        <div class="ui-g">
+            <div class="ui-g-6" style="padding-left: 0;">
+                Application Frequency:&nbsp;&nbsp;
+                <p-dropdown
+                    [options]="conditionsOptions.applicationFrs"
+                    [(ngModel)]="conditions.applicationFrequency"
+                    (onChange)="handleConditionsChange()"
+                ></p-dropdown>
             </div>
-        </p-fieldset>
-        <p-fieldset legend="Rate Table">
-            <p-table [value]="rates"
-                     [columns]="(columns$ | async)"
-                     [scrollable]="true"
-                     [style]="{ width: 'auto' }"
-            >
-                <ng-template pTemplate="colgroup" let-columns>
-                    <colgroup>
-                        <col style="width:200px">
-                        <col style="width: 80px;" *ngFor="let _ of columns;">
-                    </colgroup>
-                </ng-template>
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th *ngFor="let column of columns;">{{ column.label }}</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-rate let-columns="columns">
-                    <tr>
-                        <td>{{ rate.tier }}</td>
-                        <td *ngFor="let column of columns">
-                            {{ rate.rates[column.value] ? (rate.rates[column.value] | percent: '1.2-4') : '-' }}
-                        </td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </p-fieldset>
+            <div class="ui-g-6" style="padding-left: 0;">
+                Calculation Frequency:&nbsp;&nbsp;
+                <p-dropdown
+                    [options]="conditionsOptions.calculationFrs"
+                    [(ngModel)]="conditions.calculationFrequency"
+                    (onChange)="handleConditionsChange()"
+                ></p-dropdown>
+            </div>
+        </div>
+
+        <h3>Rates Table</h3>
+        <p-table [value]="rates"
+                 [columns]="(columns$ | async)"
+                 [scrollable]="true"
+                 [style]="{ width: 'auto' }"
+        >
+            <ng-template pTemplate="colgroup" let-columns>
+                <colgroup>
+                    <col style="width:200px">
+                    <col style="width: 80px;" *ngFor="let _ of columns;">
+                </colgroup>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th *ngFor="let column of columns;">{{ column.label }}</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rate let-columns="columns">
+                <tr>
+                    <td>{{ rate.tier }}</td>
+                    <td *ngFor="let column of columns">
+                        {{ rate.rates[column.value] ? (rate.rates[column.value] | percent: '1.2-4') : '-' }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>
