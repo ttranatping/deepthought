@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
 import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
+import io.biza.babelfish.cdr.converters.UriStringToUriConverter;
 import io.biza.babelfish.cdr.converters.UriToUriStringConverter;
 import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAdditionalInformationV1;
@@ -67,6 +68,7 @@ public class CdrBankingProduct {
   @Schema(description = "A link to an application web page where this product can be applied for.",
       type = "string")
   @JsonSerialize(converter = UriToUriStringConverter.class)
+  @JsonDeserialize(converter = UriStringToUriConverter.class)
   @JsonProperty("applicationUri")
   @Valid
   URI applicationUri;

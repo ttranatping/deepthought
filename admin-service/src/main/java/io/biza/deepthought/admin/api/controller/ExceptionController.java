@@ -1,5 +1,6 @@
 package io.biza.deepthought.admin.api.controller;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -9,7 +10,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonMappingException.Reference;
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 import io.biza.babelfish.cdr.exceptions.LabelValueEnumValueNotSupportedException;
 import io.biza.babelfish.cdr.support.LabelValueEnumInterface;
@@ -19,6 +22,7 @@ import io.biza.deepthought.data.enumerations.DioValidationErrorType;
 import io.biza.deepthought.data.payloads.ResponseValidationError;
 import io.biza.deepthought.data.payloads.ValidationError;
 import lombok.extern.slf4j.Slf4j;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -51,6 +55,7 @@ public class ExceptionController {
         fieldNames.add(reference.getFieldName());
       }
 
+
       if (e.getCause() instanceof LabelValueEnumValueNotSupportedException) {
         LabelValueEnumValueNotSupportedException labelEx =
             (LabelValueEnumValueNotSupportedException) e.getCause();
@@ -82,6 +87,51 @@ public class ExceptionController {
                         .fields(List.of("HTTP Body")).message(ex.getMessage()).build()))
                 .build());
       }
+    } else if (ex.getCause() != null && ex.getCause() instanceof InvalidFormatException) {
+      InvalidFormatException e = (InvalidFormatException) ex.getCause();
+
+      ResponseValidationError errors =
+          ResponseValidationError.builder().type(DioExceptionType.VALIDATION_ERROR)
+              .explanation("Input has invalid parameters, see validationErrors for explanation")
+              .build();
+
+      /**
+       * Build path
+       */
+      List<String> pathList = new ArrayList<String>();
+      for (Reference reference : e.getPath()) {
+        pathList.add(reference.getFieldName());
+      }
+
+      errors.validationErrors()
+          .add(ValidationError.builder().fields(List.of(String.join(".", pathList)))
+              .message(StringUtils.capitalize(e.getCause().getMessage()))
+              .type(DioValidationErrorType.ATTRIBUTE_INVALID).build());
+
+      return ResponseEntity.unprocessableEntity().body(errors);
+    } else if (ex.getCause() != null && ex.getCause() instanceof JsonMappingException) {
+      JsonMappingException e = (JsonMappingException) ex.getCause();
+
+      ResponseValidationError errors =
+          ResponseValidationError.builder().type(DioExceptionType.VALIDATION_ERROR)
+              .explanation("Input has invalid parameters, see validationErrors for explanation")
+              .build();
+
+      /**
+       * Build path
+       */
+      List<String> pathList = new ArrayList<String>();
+      for (Reference reference : e.getPath()) {
+        pathList.add(reference.getFieldName());
+      }
+
+      errors.validationErrors()
+          .add(ValidationError.builder().fields(List.of(String.join(".", pathList)))
+              .message(StringUtils.capitalize(e.getCause().getMessage()))
+              .type(DioValidationErrorType.ATTRIBUTE_INVALID).build());
+
+      return ResponseEntity.unprocessableEntity().body(errors);
+
     } else {
       return ResponseEntity.unprocessableEntity()
           .body(ResponseValidationError.builder().type(DioExceptionType.INVALID_JSON)
@@ -144,18 +194,19 @@ public class ExceptionController {
 
     return ResponseEntity.unprocessableEntity().body(errors);
   }
-  
+
   @ExceptionHandler(DataIntegrityViolationException.class)
   public ResponseEntity<Object> handleJdbcIntegrityViolation(HttpServletRequest req,
       DataIntegrityViolationException ex) {
 
-    ResponseValidationError errors =
-        ResponseValidationError.builder().type(DioExceptionType.DATABASE_ERROR)
-            .explanation("While attempting to write data to database the server encountered a data format violation error")
-            .validationErrors(
-                List.of(ValidationError.builder().type(DioValidationErrorType.DATABASE_ERROR)
-                    .fields(List.of("Database Exception")).message(ex.getMostSpecificCause().getMessage()).build()))
-            .build();
+    ResponseValidationError errors = ResponseValidationError.builder()
+        .type(DioExceptionType.DATABASE_ERROR)
+        .explanation(
+            "While attempting to write data to database the server encountered a data format violation error")
+        .validationErrors(List.of(ValidationError.builder()
+            .type(DioValidationErrorType.DATABASE_ERROR).fields(List.of("Database Exception"))
+            .message(ex.getMostSpecificCause().getMessage()).build()))
+        .build();
 
     return ResponseEntity.unprocessableEntity().body(errors);
   }
@@ -164,13 +215,14 @@ public class ExceptionController {
   public ResponseEntity<Object> handleInvalidFieldTypeException(HttpServletRequest req,
       MethodArgumentTypeMismatchException ex) {
 
-    ResponseValidationError errors = ResponseValidationError.builder()
-        .type(DioExceptionType.INVALID_PARAMETER_FORMAT)
-        .explanation("A path parameter of invalid format was supplied")
-        .validationErrors(List.of(ValidationError.builder()
-            .type(DioValidationErrorType.INVALID_FORMAT).fields(List.of(ex.getParameter().getParameterName()))
-            .message("Parameter should be a " + ex.getRequiredType().getSimpleName()).build()))
-        .build();
+    ResponseValidationError errors =
+        ResponseValidationError.builder().type(DioExceptionType.INVALID_PARAMETER_FORMAT)
+            .explanation("A path parameter of invalid format was supplied")
+            .validationErrors(List.of(ValidationError.builder()
+                .type(DioValidationErrorType.INVALID_FORMAT)
+                .fields(List.of(ex.getParameter().getParameterName()))
+                .message("Parameter should be a " + ex.getRequiredType().getSimpleName()).build()))
+            .build();
 
     return ResponseEntity.unprocessableEntity().body(errors);
   }
