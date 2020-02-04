@@ -5,7 +5,7 @@ import { TypeUtilityService } from '@app/core/services/type-utility.service';
 import {
     BankingProductLendingRateType,
     DioProductRateDeposit,
-    DioProductRateLending,
+    DioProductRateLending, FormFieldType,
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
 import { ConfirmationService, DialogService } from 'primeng/api';
@@ -148,6 +148,14 @@ export class ProductViewRatesLendingComponent implements OnInit {
             },
             reject: () => {}
         });
+    }
+
+    getTierUnitOfMeasureText(value) {
+        return this.typeManager.getLabel(FormFieldType.COMMONUNITOFMEASURETYPE, value);
+    }
+
+    getTierApplicationMethod(value) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTRATETIERAPPLICATIONMETHOD, value);
     }
 
 }

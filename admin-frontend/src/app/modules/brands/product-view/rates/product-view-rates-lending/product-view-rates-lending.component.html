@@ -15,6 +15,33 @@
             <a void (click)="editRate(rate)">Edit</a>
             <a void (click)="removeRate(rate)">Remove</a>
         </div>
+
+        <div class="NotFixedRate-tiers" *ngIf="rate.cdrBanking.tiers.length">
+            <p-table [value]="rate.cdrBanking.tiers">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th>Name</th>
+                        <th>Unit of measure</th>
+                        <th>Minimum value</th>
+                        <th>Maximum value</th>
+                        <th>Rate application method</th>
+                        <th>Additional info</th>
+                        <th>Additional info URI</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-tier>
+                    <tr>
+                        <td>{{ tier.name }}</td>
+                        <td>{{ getTierUnitOfMeasureText(tier.unitOfMeasure) }}</td>
+                        <td>{{ tier.minimumValue }}</td>
+                        <td>{{ tier.maximumValue }}</td>
+                        <td>{{ getTierApplicationMethod(tier.rateApplicationMethod) }}</td>
+                        <td>{{ tier.applicabilityConditions.additionalInfo }}</td>
+                        <td>{{ tier.applicabilityConditions.additionalInfoUri }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
     </div>
 </div>
 

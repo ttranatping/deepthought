@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { TypeUtilityService } from '@app/core/services/type-utility.service';
-import { BankingProductDepositRateType, DioProductRateDeposit, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
+import {
+    BankingProductDepositRateType, BankingProductRateTierApplicationMethod,
+    CommonUnitOfMeasureType,
+    DioProductRateDeposit, FormFieldType,
+    ProductAdminService
+} from '@bizaoss/deepthought-admin-angular-client';
 import { ConfirmationService, DialogService } from 'primeng/api';
 import { ProductRateDepositCreateEditComponent } from './product-rate-deposit-create-edit/product-rate-deposit-create-edit.component';
 
@@ -141,6 +146,14 @@ export class ProductViewRatesDepositComponent implements OnInit {
             },
             reject: () => {}
         });
+    }
+
+    getTierUnitOfMeasureText(value) {
+        return this.typeManager.getLabel(FormFieldType.COMMONUNITOFMEASURETYPE, value);
+    }
+
+    getTierApplicationMethod(value) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTRATETIERAPPLICATIONMETHOD, value);
     }
 
 }

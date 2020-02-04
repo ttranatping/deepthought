@@ -39,7 +39,7 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
         rate:                   new CdrFormInput('', 'Rate'),
         applicationFrequency:   new CdrFormDuration('', 'Application frequency'),
         calculationFrequency:   new CdrFormDuration('', 'Calculation frequency'),
-        additionalValue:        new CdrFormInput('', 'Additional value'),
+        additionalValue:        new CdrFormInput(null, 'Additional value'),
         additionalInfo:         new CdrFormInput('', 'Additional info'),
         additionalInfoUri:      new CdrFormInput('', 'Additional info URI'),
     });

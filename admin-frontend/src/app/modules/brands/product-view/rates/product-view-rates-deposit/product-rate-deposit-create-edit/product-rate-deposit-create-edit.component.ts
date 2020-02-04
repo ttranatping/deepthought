@@ -40,7 +40,7 @@ export class ProductRateDepositCreateEditComponent implements OnInit {
         rate:                   new CdrFormInput('', 'Rate'),
         calculationFrequency:   new CdrFormDuration('', 'Calculation frequency'),
         applicationFrequency:   new CdrFormDuration('', 'Application frequency'),
-        additionalValue:        new CdrFormInput('', 'Additional value'),
+        additionalValue:        new CdrFormInput(null, 'Additional value'),
         additionalInfo:         new CdrFormInput('', 'Additional info'),
         additionalInfoUri:      new CdrFormInput('', 'Additional info URI'),
     });
