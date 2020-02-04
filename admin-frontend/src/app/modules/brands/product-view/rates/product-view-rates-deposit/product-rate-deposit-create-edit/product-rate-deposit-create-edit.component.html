@@ -10,9 +10,7 @@
         ></cdr-form-control>
     </div>
 
-    <div class="RateCreateEdit-tiers"
-         [class.RateCreateEdit-tiers--noAvailable]="!isTiersAvailable()"
-    >
+    <div class="RateCreateEdit-tiers">
         <h2>Tiers</h2>
 
         <div class="TierFormContainer"
@@ -30,7 +28,6 @@
         <p-button
             label="Add tier"
             (click)="addTier()"
-            [disabled]="!isTiersAvailable()"
         ></p-button>
     </div>
 </div>

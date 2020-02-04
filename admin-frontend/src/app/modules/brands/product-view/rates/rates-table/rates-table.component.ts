@@ -43,7 +43,8 @@ export class RatesTableComponent implements OnChanges {
                         asDays: moment.duration(value).asDays(),
                     })),
                     toArray(),
-                    map((values) => values.sort((a, b) => a.asDays - b.asDays))
+                    map((values) => values.sort((a, b) => a.asDays - b.asDays)),
+                    map((values) => [{ value: null, label: 'All' }, ...values])
                 );
             };
 
@@ -77,7 +78,7 @@ export class RatesTableComponent implements OnChanges {
 
                     const filteredTiers = (rate.tiers && rate.tiers.length)
                         ? rate.tiers
-                            .filter((tier) => tier.unitOfMeasure === CommonUnitOfMeasureType.DOLLAR)
+                            // .filter((tier) => tier.unitOfMeasure === CommonUnitOfMeasureType.DOLLAR)
                             .map((tier) => ({
                                 ...tier,
                                 name: `${this.typeUtilityService.convertValueString(tier.minimumValue)} - ${this.typeUtilityService.convertValueString(tier.maximumValue)}`,
@@ -85,7 +86,7 @@ export class RatesTableComponent implements OnChanges {
                         : null;
 
                     return {
-                        rate: rate.rate, // Math.round(parseFloat(dataRow.rate) * 10000) / 100
+                        rate: rate.rate,
                         tier: (filteredTiers && filteredTiers.length) ? filteredTiers[0] : { name: 'Initial Tier', minimumValue: 0, maximumValue: 0 },
                         additionalValue: rate.additionalValue
                     };

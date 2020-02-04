@@ -75,6 +75,7 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
         schemeTypeOptionsControl.options = schemeTypeOptions;
         schemeTypeOptionsControl.setValue(schemeTypeOptions[0].value);
         schemeTypeOptionsControl.disable();
+        schemeTypeOptionsControl.isVisible = false;
 
         // *********************************************************************************************************************************
 
@@ -109,7 +110,6 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
             this.fillForm(this.rate);
         } else {
             this.rateForm.removeControl('id');
-            this.addTier();
         }
     }
 
@@ -158,10 +158,6 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
         }
     }
 
-    isTiersAvailable(): boolean {
-        return this.cdrBankingForm.get('lendingRateType').value === BankingProductLendingRateType.FIXED;
-    }
-
     addTier(tier: BankingProductRateTierV1 = {} as BankingProductRateTierV1) {
         const {
             name = '',
@@ -205,9 +201,7 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
 
         const rateData = this.rateForm.getRawValue();
 
-        if (this.isTiersAvailable()) {
-            rateData.cdrBanking.tiers = this.tiersForm.value;
-        }
+        rateData.cdrBanking.tiers = this.tiersForm.value;
 
         const saving$ = this.rate
             ? this.productsApi.updateProductRateLending(this.brandId, this.productId, this.rate.id, rateData)
