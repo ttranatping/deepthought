@@ -88,6 +88,6 @@ export class BrandViewProductsComponent implements OnInit {
             data: { brandId: this.brandId }
         });
 
-        ref.onClose.subscribe((product) => product ? this.fetchProducts() : void(0));
+        ref.onClose.subscribe((product) => product ? this.fetchProducts().subscribe() : void(0));
     }
 }
