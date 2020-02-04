@@ -12,8 +12,8 @@
                 [ngSwitch]="item.routerLink"
             >
                 <hr *ngSwitchCase="'hr'">
-                <a *ngSwitchCase="'remove'" href="javascript: void(0);" (click)="onRemoveProduct()">{{ item.label }}</a>
-                <a *ngSwitchCase="'edit'" href="javascript: void(0);" (click)="onEditProduct()">{{ item.label }}</a>
+                <a *ngSwitchCase="'remove'" void (click)="onRemoveProduct()">{{ item.label }}</a>
+                <a *ngSwitchCase="'edit'"   void (click)="onEditProduct()">{{ item.label }}</a>
 
                 <a *ngSwitchDefault
                    [routerLink]="['/brands', brand.id, 'products', product.id, item.routerLink].slice(0, item.routerLink === '' ? 4 : 5)"

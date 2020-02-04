@@ -46,7 +46,7 @@ export class ProductViewDetailsComponent implements OnInit {
         { key: 'overviewUri', label: 'Overview URI' },
         { key: 'termsUri', label: 'Terms URI' },
         { key: 'eligibilityUri', label: 'Eligibility URI' },
-        { key: 'feesAndPricingUri', label: 'FeesAndPricing URI' },
+        { key: 'feesAndPricingUri', label: 'Fees and pricing URI' },
         { key: 'bundleUri', label: 'Bundle URI' },
     ];
 
