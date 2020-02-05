@@ -202,6 +202,7 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
         const rateData = this.rateForm.getRawValue();
 
         rateData.cdrBanking.tiers = this.tiersForm.value;
+        rateData.cdrBanking.additionalValue = rateData.cdrBanking.additionalValue || null;
 
         const saving$ = this.rate
             ? this.productsApi.updateProductRateLending(this.brandId, this.productId, this.rate.id, rateData)
