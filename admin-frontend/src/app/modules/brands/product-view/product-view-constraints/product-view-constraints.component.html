@@ -15,11 +15,13 @@
 
             <p class="Eligibility-additionalInfo">
                 {{ eligibility.cdrBanking.additionalInfo }}
+            </p>
 
-                <a *ngIf="eligibility.cdrBanking.additionalInfoUri"
-                   [href]="eligibility.cdrBanking.additionalInfoUri"
-                   class="Eligibility-additionalInfoUri"
-                   target="_blank"
+            <p class="Eligibility-additionalInfoUri" *ngIf="eligibility.cdrBanking.additionalInfoUri">
+                <a
+                    [href]="eligibility.cdrBanking.additionalInfoUri"
+                    class="Eligibility-additionalInfoUri"
+                    target="_blank"
                 >Link to Additional Information</a>
             </p>
         </div>
@@ -45,11 +47,12 @@
 
             <p class="Constraint-additionalInfo">
                 {{ constraint.cdrBanking.additionalInfo }}
-
-                <a *ngIf="constraint.cdrBanking.additionalInfoUri"
-                   [href]="constraint.cdrBanking.additionalInfoUri"
-                   class="Constraint-additionalInfoUri"
-                   target="_blank"
+            </p>
+            <p class="Constraint-additionalInfoUri" *ngIf="constraint.cdrBanking.additionalInfoUri">
+                <a
+                    [href]="constraint.cdrBanking.additionalInfoUri"
+                    class="Constraint-additionalInfoUri"
+                    target="_blank"
                 >Link to Additional Information</a>
             </p>
         </div>

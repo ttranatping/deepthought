@@ -22,7 +22,7 @@ export class CatalogueProductViewComponent implements OnInit {
     sidebarMenu: Array<{ label: string; routerLink: string; }> = [
         { routerLink: '',               label: 'Basic details' },
         { routerLink: 'features',       label: 'Features' },
-        { routerLink: 'constrains',     label: 'Eligibility & Constraints' },
+        { routerLink: 'constraints',     label: 'Eligibility & Constraints' },
         { routerLink: 'fees',           label: 'Fees' },
         { routerLink: 'lending-rates',  label: 'Lending rates' },
         { routerLink: 'deposit-rates',  label: 'Deposit rates' },

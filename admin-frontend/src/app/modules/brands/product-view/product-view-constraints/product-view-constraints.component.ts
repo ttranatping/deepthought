@@ -15,11 +15,11 @@ import {
 import { map, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-product-view-constrains',
-  templateUrl: './product-view-constrains.component.html',
-  styleUrls: ['./product-view-constrains.component.scss']
+  selector: 'app-product-view-constraints',
+  templateUrl: './product-view-constraints.component.html',
+  styleUrls: ['./product-view-constraints.component.scss']
 })
-export class ProductViewConstrainsComponent implements OnInit {
+export class ProductViewConstraintsComponent implements OnInit {
 
     brandId: string;
     productId: string;

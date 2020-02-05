@@ -6,7 +6,7 @@ import { ProductViewDetailsComponent } from './product-view/product-view-details
 import { ProductViewFeaturesComponent } from './product-view/product-view-features/product-view-features.component';
 import { BrandsListComponent } from './brands-list/brands-list.component';
 import { BrandViewComponent } from './brand-view/brand-view.component';
-import { ProductViewConstrainsComponent } from './product-view/product-view-constrains/product-view-constrains.component';
+import { ProductViewConstraintsComponent } from './product-view/product-view-constraints/product-view-constraints.component';
 import { ProductViewFeesComponent } from './product-view/product-view-fees/product-view-fees.component';
 import { ProductViewRatesLendingComponent } from './product-view/rates/product-view-rates-lending/product-view-rates-lending.component';
 import { ProductViewRatesDepositComponent } from './product-view/rates/product-view-rates-deposit/product-view-rates-deposit.component';
@@ -35,7 +35,7 @@ const routes: Routes = [
         children: [
             { path: '', component: ProductViewDetailsComponent},
             { path: 'features', component: ProductViewFeaturesComponent},
-            { path: 'constrains', component: ProductViewConstrainsComponent},
+            { path: 'constraints', component: ProductViewConstraintsComponent},
             { path: 'fees', component: ProductViewFeesComponent},
             { path: 'lending-rates', component: ProductViewRatesLendingComponent},
             { path: 'deposit-rates', component: ProductViewRatesDepositComponent},
