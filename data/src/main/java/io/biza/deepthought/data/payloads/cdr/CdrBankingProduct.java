@@ -75,10 +75,9 @@ public class CdrBankingProduct {
 
   @Schema(
       description = "Indicates whether the product is specifically tailored to a circumstance.  In this case fees and prices are significantly negotiated depending on context. While all products are open to a degree of tailoring this flag indicates that tailoring is expected and thus that the provision of specific fees and rates is not applicable",
-      required = true)
-  @NonNull
+      required = true, defaultValue = "false")
   @NotNull
-  @JsonProperty("isTailored")
+  @JsonProperty("tailored")
   Boolean isTailored;
 
   @Schema(description = "Additional Information for Banking Product")
