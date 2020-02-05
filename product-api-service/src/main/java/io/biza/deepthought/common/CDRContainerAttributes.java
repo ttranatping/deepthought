@@ -12,8 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 public class CDRContainerAttributes {
 
   public static MetaPaginatedV1 toMetaPaginated(Page<?> inputPage) {
-    return new MetaPaginatedV1().totalPages(inputPage.getTotalPages())
-        .totalRecords(Long.valueOf(inputPage.getTotalElements()).intValue());
+    return MetaPaginatedV1.builder().totalPages(inputPage.getTotalPages())
+        .totalRecords(Long.valueOf(inputPage.getTotalElements()).intValue()).build();
   }
 
   public static MetaV1 toMeta() {
@@ -28,7 +28,7 @@ public class CDRContainerAttributes {
   }
 
   public static LinksPaginatedV1 toLinksPaginated(Page<?> inputPage) {
-    LinksPaginatedV1 links = new LinksPaginatedV1();
+    LinksPaginatedV1 links = LinksPaginatedV1.builder().build();
     ServletUriComponentsBuilder uriComponents = ServletUriComponentsBuilder.fromCurrentRequest();
 
     links.self(uriComponents.build().toUri());

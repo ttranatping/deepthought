@@ -2,6 +2,7 @@ package io.biza.deepthought.product.api;
 
 import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.enumerations.BankingProductEffectiveWithAll;
+import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV2;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductListV2;
 import io.biza.deepthought.product.Labels;
@@ -40,16 +41,19 @@ public interface ProductAdminApi {
   default ResponseEntity<ResponseBankingProductListV2> listProducts(
       @Valid @RequestParam(name = "effective", required = false,
           defaultValue = "CURRENT") BankingProductEffectiveWithAll effective,
-      @Valid @RequestParam(name = "updated-since", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime updatedSince,
+      @Valid @RequestParam(name = "updated-since", required = false) @DateTimeFormat(
+          iso = DateTimeFormat.ISO.DATE_TIME) OffsetDateTime updatedSince,
       @Valid @RequestParam(name = "brand", required = false) String brand,
       @Valid @RequestParam(name = "product-category",
           required = false) BankingProductCategory productCategory,
-      @Valid @RequestParam(name = "page", required = false, defaultValue = "1") @Min(1) Integer page,
+      @Valid @RequestParam(name = "page", required = false,
+          defaultValue = "1") @Min(1) Integer page,
       @Valid @RequestParam(name = "page-size", required = false,
           defaultValue = "25") Integer pageSize) {
 
-    return getDelegate().listProducts(RequestListProducts.builder().effective(effective).updatedSince(updatedSince)
-        .brand(brand).productCategory(productCategory).page(page).pageSize(pageSize).build());
+    return getDelegate()
+        .listProducts(RequestListProducts.builder().effective(effective).updatedSince(updatedSince)
+            .brand(brand).productCategory(productCategory).page(page).pageSize(pageSize).build());
   }
 
   @Operation(summary = "Get Product Detail",
@@ -58,8 +62,8 @@ public interface ProductAdminApi {
       value = {
           @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
               description = Labels.RESPONSE_SUCCESSFUL_READ,
-              content = @Content(
-                  schema = @Schema(implementation = ResponseBankingProductByIdV2.class))),
+              content = @Content(schema = @Schema(oneOf = {ResponseBankingProductByIdV1.class,
+                  ResponseBankingProductByIdV2.class}))),
           @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
               description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
   @GetMapping(value = "/{productId}", produces = {MediaType.APPLICATION_JSON_VALUE})
