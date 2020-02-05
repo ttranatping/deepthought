@@ -29,8 +29,8 @@ export class ProductFeatureCreateEditComponent implements OnInit {
     cdrBankingForm = new CdrFormGroup({
         featureType:        new CdrFormSelect('', 'Feature type', [Validators.required]),
         additionalValue:    new CdrFormInput(null, 'Additional value'),
-        additionalInfo:     new CdrFormInput('', 'Additional info'),
-        additionalInfoUrl:  new CdrFormInput('', 'Additional info URI'),
+        additionalInfo:     new CdrFormInput('', 'Additional Info'),
+        additionalInfoUri:  new CdrFormInput('', 'Additional Info URI'),
     });
 
     feature: DioProductFeature;
@@ -95,7 +95,7 @@ export class ProductFeatureCreateEditComponent implements OnInit {
         this.cdrBankingForm.controls.featureType.setValue(feature.cdrBanking.featureType);
         this.cdrBankingForm.controls.additionalValue.setValue(feature.cdrBanking.additionalValue);
         this.cdrBankingForm.controls.additionalInfo.setValue(feature.cdrBanking.additionalInfo);
-        this.cdrBankingForm.controls.additionalInfoUrl.setValue(feature.cdrBanking.additionalInfoUri);
+        this.cdrBankingForm.controls.additionalInfoUri.setValue(feature.cdrBanking.additionalInfoUri);
     }
 
     onCancel() {
@@ -125,8 +125,8 @@ export class ProductFeatureCreateEditComponent implements OnInit {
 
             const mapErrorFieldControl: { [key: string]: AbstractControl } = {
                 'cdrBanking.additionalValue': this.cdrBankingForm.get('additionalValue'),
-                'cdrBanking.additionalInfoString': this.cdrBankingForm.get('additionalInfo'),
-                'cdrBanking.additionalInfoUrlString': this.cdrBankingForm.get('additionalInfoUrl'),
+                'cdrBanking.additionalInfo': this.cdrBankingForm.get('additionalInfo'),
+                'cdrBanking.additionalInfoUri': this.cdrBankingForm.get('additionalInfoUri'),
             };
 
             for (const error of errors) {
