@@ -8,41 +8,87 @@
 
 <div *ngIf="notFixedRates && notFixedRates.length">
     <div class="NotFixedRate" *ngFor="let rate of notFixedRates">
-        <div class="NotFixedRate-name">{{ getLendingDetail(rate, 'NAME') }}</div>
-        <div class="NotFixedRate-actions">
-            <p-button (click)="editRate(rate)" label="Edit"></p-button>
-            <p-button (click)="removeRate(rate)" label="Remove"></p-button>
-        </div>
 
-        <div class="NotFixedRate-detail">{{ getLendingDetail(rate, 'DETAIL') }}</div>
-        <div class="NotFixedRate-info">{{ getLendingDetail(rate, 'INFO') }}</div>
+        <p-table [value]="[1]">
+            <ng-template pTemplate="body">
+                <tr>
+                    <td style="font-weight: bold;">Rate definition</td>
+                    <td colspan="5">
+                        {{ getLendingDetail(rate, 'NAME') }}
+                        <div style="float: right;">
+                            <p-button (click)="editRate(rate)" label="Edit" style="margin-right: 5px;"></p-button>
+                            <p-button (click)="removeRate(rate)" label="Remove"></p-button>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="rate.cdrBanking.calculationFrequency">
+                    <td style="font-weight: bold;">Calculation frequency</td>
+                    <td colspan="5">{{ getFrequency(rate.cdrBanking.calculationFrequency) }}</td>
+                </tr>
+                <tr *ngIf="rate.cdrBanking.applicationFrequency">
+                    <td style="font-weight: bold;">Application frequency</td>
+                    <td colspan="5">{{ getFrequency(rate.cdrBanking.applicationFrequency) }}</td>
+                </tr>
+                <tr *ngIf="rate?.cdrBanking?.tiers">
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);" [rowSpan]="rate.cdrBanking.tiers.length + 1">Tier data</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Tier name</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Unit</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Minimum</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Maximum</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Additional info</td>
+                </tr>
+                <tr *ngFor="let tier of rate?.cdrBanking?.tiers; let i = index;">
+                    <td>{{ tier.name }}</td>
+                    <td>{{ getTierUnit(tier.unitOfMeasure) }}</td>
+                    <td>{{ tier.minimumValue }}</td>
+                    <td>{{ tier.maximumValue }}</td>
+                    <td>
+                        {{ tier.applicabilityConditions?.additionalInfo }}
+                        <a *ngIf="tier.applicabilityConditions?.additionalInfoUri as href"
+                           [href]="href"
+                           target="_blank"
+                           style="display: inline-block;"
+                        >Link to Additional Information</a>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
 
-        <div class="NotFixedRate-tiers" *ngIf="rate.cdrBanking?.tiers?.length">
-            <p-table [value]="rate.cdrBanking.tiers">
-                <ng-template pTemplate="header" let-columns>
-                    <tr>
-                        <th>Name</th>
-                        <th>Unit of measure</th>
-                        <th>Minimum value</th>
-                        <th>Maximum value</th>
-                        <th>Rate application method</th>
-                        <th>Additional info</th>
-                        <th>Additional info URI</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-tier>
-                    <tr>
-                        <td>{{ tier.name }}</td>
-                        <td>{{ getTierUnitOfMeasureText(tier.unitOfMeasure) }}</td>
-                        <td>{{ tier.minimumValue }}</td>
-                        <td>{{ tier.maximumValue }}</td>
-                        <td>{{ getTierApplicationMethod(tier.rateApplicationMethod) }}</td>
-                        <td>{{ tier.applicabilityConditions.additionalInfo }}</td>
-                        <td>{{ tier.applicabilityConditions.additionalInfoUri }}</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+        <!--<div class="NotFixedRate-name">{{ getLendingDetail(rate, 'NAME') }}</div>-->
+        <!--<div class="NotFixedRate-actions">-->
+            <!--<p-button (click)="editRate(rate)" label="Edit"></p-button>-->
+            <!--<p-button (click)="removeRate(rate)" label="Remove"></p-button>-->
+        <!--</div>-->
+
+        <!--<div class="NotFixedRate-detail">{{ getLendingDetail(rate, 'DETAIL') }}</div>-->
+        <!--<div class="NotFixedRate-info">{{ getLendingDetail(rate, 'INFO') }}</div>-->
+
+        <!--<div class="NotFixedRate-tiers" *ngIf="rate.cdrBanking?.tiers?.length">-->
+            <!--<p-table [value]="rate.cdrBanking.tiers">-->
+                <!--<ng-template pTemplate="header" let-columns>-->
+                    <!--<tr>-->
+                        <!--<th>Name</th>-->
+                        <!--<th>Unit of measure</th>-->
+                        <!--<th>Minimum value</th>-->
+                        <!--<th>Maximum value</th>-->
+                        <!--<th>Rate application method</th>-->
+                        <!--<th>Additional info</th>-->
+                        <!--<th>Additional info URI</th>-->
+                    <!--</tr>-->
+                <!--</ng-template>-->
+                <!--<ng-template pTemplate="body" let-tier>-->
+                    <!--<tr>-->
+                        <!--<td>{{ tier.name }}</td>-->
+                        <!--<td>{{ getTierUnitOfMeasureText(tier.unitOfMeasure) }}</td>-->
+                        <!--<td>{{ tier.minimumValue }}</td>-->
+                        <!--<td>{{ tier.maximumValue }}</td>-->
+                        <!--<td>{{ getTierApplicationMethod(tier.rateApplicationMethod) }}</td>-->
+                        <!--<td>{{ tier.applicabilityConditions.additionalInfo }}</td>-->
+                        <!--<td>{{ tier.applicabilityConditions.additionalInfoUri }}</td>-->
+                    <!--</tr>-->
+                <!--</ng-template>-->
+            <!--</p-table>-->
+        <!--</div>-->
     </div>
 </div>
 

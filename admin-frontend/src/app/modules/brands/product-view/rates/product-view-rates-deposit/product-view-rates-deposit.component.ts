@@ -31,6 +31,7 @@ export class ProductViewRatesDepositComponent implements OnInit {
         private productsApi: ProductAdminService,
         private confirmationService: ConfirmationService,
         private dialogService: DialogService,
+        public typeUtilityService: TypeUtilityService,
     ) { }
 
     ngOnInit() {
@@ -154,6 +155,17 @@ export class ProductViewRatesDepositComponent implements OnInit {
 
     getTierApplicationMethod(value) {
         return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTRATETIERAPPLICATIONMETHOD, value);
+    }
+
+    getTierUnit(value) {
+        return this.typeManager.getLabel(FormFieldType.COMMONUNITOFMEASURETYPE, value);
+    }
+
+    getFrequency(value) {
+        if (!value) {
+            return '';
+        }
+        return this.typeUtilityService.convertDuration(value);
     }
 
 }
