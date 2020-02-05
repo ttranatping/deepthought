@@ -25,7 +25,7 @@
     "@angular/platform-browser": "8.2.14",
     "@angular/platform-browser-dynamic": "8.2.14",
     "@angular/router": "8.2.14",
-    "@bizaoss/deepthought-admin-angular-client": "^1.0.0-SNAPSHOT.202002061016",
+    "@bizaoss/deepthought-admin-angular-client": "^1.0.0-SNAPSHOT.202002061041",
     "@fullcalendar/core": "^4.3.1",
     "@fullcalendar/daygrid": "^4.3.0",
     "@fullcalendar/interaction": "^4.3.0",
