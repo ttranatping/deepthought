@@ -23,7 +23,7 @@ public class ProductDataMapper implements OrikaFactoryConfigurerInterface {
         .fieldAToB("cdrBanking.productCategory", "productCategory").fieldAToB("brand.name", "brand")
         .fieldAToB("brand.displayName", "brandName")
         .fieldAToB("cdrBanking.applicationUri", "applicationUri")
-        .fieldAToB("cdrBanking.isTailored", "tailored")
+        .fieldAToB("cdrBanking.isTailored", "isTailored")
         .fieldAToB("cdrBanking.additionalInformation", "additionalInformation").byDefault()
         .register();
 
@@ -36,7 +36,7 @@ public class ProductDataMapper implements OrikaFactoryConfigurerInterface {
         .fieldAToB("cdrBanking.productCategory", "productCategory").fieldAToB("brand.name", "brand")
         .fieldAToB("brand.displayName", "brandName")
         .fieldAToB("cdrBanking.applicationUri", "applicationUri")
-        .fieldAToB("cdrBanking.isTailored", "tailored")
+        .fieldAToB("cdrBanking.isTailored", "isTailored")
         .fieldAToB("cdrBanking.additionalInformation", "additionalInformation")
         .fieldAToB("cdrBanking.feature", "features")
         .fieldAToB("cdrBanking.constraint", "constraints").fieldAToB("cdrBanking.fee", "fees")

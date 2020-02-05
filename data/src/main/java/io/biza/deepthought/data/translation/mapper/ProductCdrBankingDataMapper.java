@@ -15,7 +15,7 @@ public class ProductCdrBankingDataMapper implements OrikaFactoryConfigurerInterf
         .field("", "cdrBanking").byDefault().register();
 
     orikaMapperFactory.classMap(ProductCdrBankingData.class, CdrBankingProduct.class)
-        .field("isTailored", "tailored").byDefault().register();
+        .byDefault().register();
 
     /**
      * orikaMapperFactory.classMap(ProductCdrBankingData.class, BankingProduct.class).field("id",

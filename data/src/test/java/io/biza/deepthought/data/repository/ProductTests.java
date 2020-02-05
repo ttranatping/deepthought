@@ -15,11 +15,11 @@ import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAddit
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductCardArtV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductConstraintV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRateV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDiscountEligibilityV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDiscountV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductEligibilityV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeatureV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeeV1;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeeDiscountEligibilityV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendingRateV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
@@ -239,7 +239,7 @@ public class ProductTests extends TranslatorInitialisation {
                 .lastUpdated(VariableConstants.PRODUCT_LAST_UPDATED)
                 .productCategory(VariableConstants.PRODUCT_CATEGORY)
                 .applicationUri(VariableConstants.PRODUCT_APPLICATION_URI)
-                .tailored(VariableConstants.PRODUCT_ISTAILORED)
+                .isTailored(VariableConstants.PRODUCT_ISTAILORED)
                 .additionalInformation(new BankingProductAdditionalInformationV1()
                     .overviewUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_OVERVIEW_URI)
                     .termsUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_TERMS_URI)
@@ -381,7 +381,7 @@ public class ProductTests extends TranslatorInitialisation {
                   .additionalInfo(VariableConstants.PRODUCT_FEE1_DISCOUNT_ADDITIONAL_INFO)
                   .additionalValue(VariableConstants.PRODUCT_FEE1_DISCOUNT_ADDITIONAL_VALUE)
                   .additionalInfoUri(VariableConstants.PRODUCT_FEE1_DISCOUNT_ADDITIONAL_URI)
-                  .eligibility(List.of(new BankingProductFeeDiscountEligibilityV1()
+                  .eligibility(List.of(BankingProductDiscountEligibilityV1.builder()
                       .discountEligibilityType(
                           VariableConstants.PRODUCT_FEE1_DISCOUNT_ELIGIBILITY_TYPE)
                       .additionalValue(
@@ -389,7 +389,7 @@ public class ProductTests extends TranslatorInitialisation {
                       .additionalInfo(
                           VariableConstants.PRODUCT_FEE1_DISCOUNT_ELIGIBILITY_ADDITIONAL_INFO)
                       .additionalInfoUri(
-                          VariableConstants.PRODUCT_FEE1_DISCOUNT_ELIGIBILITY_ADDITIONAL_URI))))))
+                          VariableConstants.PRODUCT_FEE1_DISCOUNT_ELIGIBILITY_ADDITIONAL_URI).build())))))
           .build();
 
       LOG.info("\n\n{}\n\n", createComparisonTable(dioProductFee, dioFeeStatic));
