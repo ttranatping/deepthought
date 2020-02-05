@@ -16,7 +16,10 @@ import { BankingProductCategory } from './bankingProductCategory';
  * CDR Formatted Banking Product
  */
 export interface CdrBankingProduct { 
-    tailored?: boolean;
+    /**
+     * Indicates whether the product is specifically tailored to a circumstance.  In this case fees and prices are significantly negotiated depending on context. While all products are open to a degree of tailoring this flag indicates that tailoring is expected and thus that the provision of specific fees and rates is not applicable
+     */
+    tailored: boolean;
     /**
      * The date and time from which this product is effective (ie. is available for origination).  Used to enable the articulation of products to the regime before they are available for customers to originate
      */
@@ -34,9 +37,5 @@ export interface CdrBankingProduct {
      * A link to an application web page where this product can be applied for.
      */
     applicationUri?: string;
-    /**
-     * Indicates whether the product is specifically tailored to a circumstance.  In this case fees and prices are significantly negotiated depending on context. While all products are open to a degree of tailoring this flag indicates that tailoring is expected and thus that the provision of specific fees and rates is not applicable
-     */
-    isTailored: boolean;
     additionalInformation?: BankingProductAdditionalInformationV1;
 }
