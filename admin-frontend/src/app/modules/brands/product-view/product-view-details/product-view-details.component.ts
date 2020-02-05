@@ -36,7 +36,7 @@ export class ProductViewDetailsComponent implements OnInit {
         { key: 'name', label: 'Name' },
         { key: 'description', label: 'Description' },
         { key: 'cdrBanking.productCategory', label: 'Product Category' },
-        { key: 'cdrBanking.isTailored', label: 'Tailored Product' },
+        { key: 'cdrBanking.tailored', label: 'Tailored Product' },
         { key: 'cdrBanking.effective', label: 'Effective Date' },
         { key: 'cdrBanking.lastUpdated', label: 'Last Updated' },
         { key: 'cdrBanking.applicationUri', label: 'Application URI' },

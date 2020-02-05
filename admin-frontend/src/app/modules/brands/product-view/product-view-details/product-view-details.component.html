@@ -6,7 +6,7 @@
             <div class="Detail-label">{{ detail.label }}</div>
             <div class="Detail-value" [ngSwitch]="detail.key">
                 <ng-container *ngSwitchCase="'cdrBanking.productCategory'"> {{ getProductCategory(product | propPath: detail.key) }}</ng-container>
-                <ng-container *ngSwitchCase="'cdrBanking.isTailored'"> {{ (product | propPath: detail.key) ? 'Yes' : 'No' }}</ng-container>
+                <ng-container *ngSwitchCase="'cdrBanking.tailored'"> {{ (product | propPath: detail.key) ? 'Yes' : 'No' }}</ng-container>
                 <ng-container *ngSwitchCase="'cdrBanking.lastUpdated'">{{ (product | propPath: detail.key) | dateFormat }}</ng-container>
                 <ng-container *ngSwitchCase="'cdrBanking.effective'">{{ getEffectiveDate(product.cdrBanking['effectiveFrom'], product.cdrBanking['effectiveTo']) }}</ng-container>
                 <ng-container *ngSwitchCase="'cdrBanking.applicationUri'">
