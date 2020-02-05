@@ -16,6 +16,7 @@ import { BankingProductCategory } from './bankingProductCategory';
  * CDR Formatted Banking Product
  */
 export interface CdrBankingProduct { 
+    tailored?: boolean;
     /**
      * The date and time from which this product is effective (ie. is available for origination).  Used to enable the articulation of products to the regime before they are available for customers to originate
      */

@@ -31,5 +31,6 @@ export interface BankingProductRateTierV1 {
      */
     maximumValue?: number;
     rateApplicationMethod?: BankingProductRateTierApplicationMethod;
+    subTier?: BankingProductRateTierV1;
     applicabilityConditions?: BankingRateTierApplicabilityV1;
 }
