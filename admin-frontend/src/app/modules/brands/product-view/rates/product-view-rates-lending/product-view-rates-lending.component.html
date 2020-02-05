@@ -47,5 +47,5 @@
 </div>
 
 <div *ngIf="fixedRates && fixedRates.length > 0">
-    <app-rates-table [fixedRates]="fixedRates"></app-rates-table>
+    <app-rates-table [fixedRates]="fixedRates" (edit)="editRate($event)" (remove)="removeRate($event)"></app-rates-table>
 </div>

@@ -1,15 +1,8 @@
 <div *ngIf="(rates$ | async) as rates">
     <div *ngIf="rates.length">
-        <h3>Conditions</h3>
+        <h3>Fixed rates</h3>
+
         <div class="ui-g">
-            <div class="ui-g-6" style="padding-left: 0;">
-                Application Frequency:&nbsp;&nbsp;
-                <p-dropdown
-                    [options]="conditionsOptions.applicationFrs"
-                    [(ngModel)]="conditions.applicationFrequency"
-                    (onChange)="handleConditionsChange()"
-                ></p-dropdown>
-            </div>
             <div class="ui-g-6" style="padding-left: 0;">
                 Calculation Frequency:&nbsp;&nbsp;
                 <p-dropdown
@@ -18,34 +11,161 @@
                     (onChange)="handleConditionsChange()"
                 ></p-dropdown>
             </div>
+            <div class="ui-g-6" style="padding-left: 0;">
+                Application Frequency:&nbsp;&nbsp;
+                <p-dropdown
+                    [options]="conditionsOptions.applicationFrs"
+                    [(ngModel)]="conditions.applicationFrequency"
+                    (onChange)="handleConditionsChange()"
+                ></p-dropdown>
+            </div>
         </div>
 
-        <h3>Rates Table</h3>
+        <!--<p-table [value]="rates"-->
+                 <!--[columns]="(columns$ | async)"-->
+                 <!--[scrollable]="true"-->
+                 <!--[style]="{ width: 'auto' }"-->
+        <!--&gt;-->
+            <!--<ng-template pTemplate="colgroup" let-columns>-->
+                <!--<colgroup>-->
+                    <!--<col style="width:200px">-->
+                    <!--<col style="width: 80px;" *ngFor="let _ of columns;">-->
+                <!--</colgroup>-->
+            <!--</ng-template>-->
+            <!--<ng-template pTemplate="header" let-columns>-->
+                <!--<tr>-->
+                    <!--<th>&nbsp;</th>-->
+                    <!--<th *ngFor="let column of columns;">{{ column.label }}</th>-->
+                <!--</tr>-->
+            <!--</ng-template>-->
+            <!--<ng-template pTemplate="body" let-rate let-columns="columns">-->
+                <!--<tr>-->
+                    <!--<td>{{ rate.tier }}</td>-->
+                    <!--<td *ngFor="let column of columns"-->
+                        <!--class="Rate-cell"-->
+                        <!--(click)="selectRate($event, rate, op)"-->
+                    <!--&gt;-->
+                        <!--{{ rate.rates[column.value] ? (rate.rates[column.value] | percent: '1.2-4') : '-' }}-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</ng-template>-->
+        <!--</p-table>-->
+
+        <!--<p-table [value]="rates"-->
+                 <!--[scrollable]="true"-->
+                 <!--[style]="{ width: 'auto' }"-->
+        <!--&gt;-->
+            <!--<ng-template pTemplate="colgroup" let-columns>-->
+                <!--<colgroup>-->
+                    <!--<col style="width:200px">-->
+                    <!--<col style="width: 80px;" *ngFor="let _ of columns;">-->
+                <!--</colgroup>-->
+            <!--</ng-template>-->
+            <!--<ng-template pTemplate="header" let-columns>-->
+                <!--<tr>-->
+                    <!--<th [rowSpan]="2" valign="top">Rate detail</th>-->
+                    <!--<th [rowSpan]="2" valign="top">Calculation frequency</th>-->
+                    <!--<th [rowSpan]="2" valign="top">Application frequency</th>-->
+                    <!--<th [rowSpan]="2" valign="top">Additional info</th>-->
+                    <!--<th [colSpan]="5" valign="top" style="text-align: center;">Tier data</th>-->
+                    <!--<th [rowSpan]="2" valign="top">Actions</th>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                    <!--<th>Tier name</th>-->
+                    <!--<th>Unit</th>-->
+                    <!--<th>Minimum</th>-->
+                    <!--<th>Maximum</th>-->
+                    <!--<th>Additional info</th>-->
+                <!--</tr>-->
+            <!--</ng-template>-->
+            <!--<ng-template pTemplate="body" let-rate>-->
+                <!--<tr *ngFor="let tier of rate.cdrBanking.tiers; let i = index;">-->
+                    <!--<td *ngIf="i === 0" [rowSpan]="rate.cdrBanking.tiers.length">{{ rate.cdrBanking.rate }}</td>-->
+                    <!--<td *ngIf="i === 0" [rowSpan]="rate.cdrBanking.tiers.length">{{ rate.cdrBanking.calculationFrequency }}</td>-->
+                    <!--<td *ngIf="i === 0" [rowSpan]="rate.cdrBanking.tiers.length">{{ rate.cdrBanking.applicationFrequency }}</td>-->
+                    <!--<td *ngIf="i === 0" [rowSpan]="rate.cdrBanking.tiers.length">{{ rate.cdrBanking.additionalInfo }}</td>-->
+                    <!--<td>{{ tier.name }}</td>-->
+                    <!--<td>{{ tier.unitOfMeasure }}</td>-->
+                    <!--<td>{{ tier.minimumValue }}</td>-->
+                    <!--<td>{{ tier.maximumValue }}</td>-->
+                    <!--<td>{{ tier.applicabilityConditions?.additionalInfo }}</td>-->
+                    <!--<td *ngIf="i === 0" [rowSpan]="rate.cdrBanking.tiers.length" style="white-space: nowrap;">-->
+                        <!--<p-button (click)="editFixedRate()" label="Edit" style="margin-right: 5px;"></p-button>-->
+                        <!--<p-button (click)="removeFixedRate" label="Remove"></p-button>-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</ng-template>-->
+        <!--</p-table>-->
+
+
         <p-table [value]="rates"
-                 [columns]="(columns$ | async)"
                  [scrollable]="true"
                  [style]="{ width: 'auto' }"
         >
-            <ng-template pTemplate="colgroup" let-columns>
-                <colgroup>
-                    <col style="width:200px">
-                    <col style="width: 80px;" *ngFor="let _ of columns;">
-                </colgroup>
-            </ng-template>
+            <!--<ng-template pTemplate="colgroup" let-columns>-->
+                <!--<colgroup>-->
+                    <!--<col style="width: 100px">-->
+                    <!--<col style="width: 100px">-->
+                    <!--<col style="width: 100px">-->
+                    <!--<col style="width: 100px">-->
+                    <!--<col style="width: 100px">-->
+                <!--</colgroup>-->
+            <!--</ng-template>-->
             <ng-template pTemplate="header" let-columns>
                 <tr>
-                    <th>&nbsp;</th>
-                    <th *ngFor="let column of columns;">{{ column.label }}</th>
+                    <th>Rate detail</th>
+                    <th>Calculation frequency</th>
+                    <th>Application frequency</th>
+                    <th colspan="2">Additional info</th>
+                    <th>Actions</th>
                 </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-rate let-columns="columns">
-                <tr>
-                    <td>{{ rate.tier }}</td>
-                    <td *ngFor="let column of columns">
-                        {{ rate.rates[column.value] ? (rate.rates[column.value] | percent: '1.2-4') : '-' }}
+            <ng-template pTemplate="body" let-rate>
+                <tr *ngFor="let tier of rate.cdrBanking.tiers; let i = index;">
+                    <td>{{ rate.cdrBanking.rate | percent: '1.2-4' }}</td>
+                    <td>{{ getFrequency(rate.cdrBanking.calculationFrequency) }}</td>
+                    <td>{{ getFrequency(rate.cdrBanking.applicationFrequency) }}</td>
+                    <td colspan="2">
+                        {{ rate.cdrBanking.additionalInfo }}
+                        <a *ngIf="rate.cdrBanking.additionalInfoUri as href"
+                           [href]="href"
+                           target="_blank"
+                           style="display: inline-block;"
+                        >Link to Additional Information</a>
+                    </td>
+                    <td style="white-space: nowrap;">
+                        <p-button (click)="editFixedRate(rate)" label="Edit" style="margin-right: 5px;"></p-button>
+                        <p-button (click)="removeFixedRate(rate)" label="Remove"></p-button>
+                    </td>
+                </tr>
+                <tr *ngIf="rate?.cdrBanking?.tiers">
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);" [rowSpan]="rate.cdrBanking.tiers.length + 1">Tier data</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Tier name</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Unit</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Minimum</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Maximum</td>
+                    <td style="font-weight: bold; background: rgba(0, 0, 0, 0.1);">Additional info</td>
+                </tr>
+                <tr *ngFor="let tier of rate?.cdrBanking?.tiers; let i = index;">
+                    <td>{{ tier.name }}</td>
+                    <td>{{ getTierUnit(tier.unitOfMeasure) }}</td>
+                    <td>{{ tier.minimumValue }}</td>
+                    <td>{{ tier.maximumValue }}</td>
+                    <td>
+                        {{ tier.applicabilityConditions?.additionalInfo }}
+                        <a *ngIf="tier.applicabilityConditions?.additionalInfoUri as href"
+                           [href]="href"
+                           target="_blank"
+                           style="display: inline-block;"
+                        >Link to Additional Information</a>
                     </td>
                 </tr>
             </ng-template>
         </p-table>
     </div>
 </div>
+
+<!--<p-overlayPanel #op appendTo="body">-->
+    <!--<p-button (click)="editSelectedFixedRate()" label="Edit" style="margin-right: 5px;"></p-button>-->
+    <!--<p-button (click)="removeSelectedFixedRate" label="Remove"></p-button>-->
+<!--</p-overlayPanel>-->
