@@ -13,7 +13,7 @@ import {
     CommonUnitOfMeasureType,
     DioProductRateLending,
     DioSchemeType, FormFieldType,
-    ProductAdminService
+    ProductAdminService, BankingProductLendingRateInterestPaymentType
 } from '@bizaoss/deepthought-admin-angular-client';
 import { DynamicDialogConfig, DynamicDialogRef, SelectItem } from 'primeng/api';
 import { TypeManagementService } from '@app/core/services/type-management.service';
@@ -36,12 +36,14 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
 
     cdrBankingForm = new CdrFormGroup({
         lendingRateType:        new CdrFormSelect('', 'Rate type', [Validators.required]),
-        rate:                   new CdrFormInput('', 'Rate'),
-        applicationFrequency:   new CdrFormDuration('', 'Application frequency'),
-        calculationFrequency:   new CdrFormDuration('', 'Calculation frequency'),
+        rate:                   new CdrFormInput(null, 'Rate'),
+        comparisonRate:         new CdrFormInput(null, 'Comparison Rate'),
+        applicationFrequency:   new CdrFormDuration(null, 'Application frequency'),
+        calculationFrequency:   new CdrFormDuration(null, 'Calculation frequency'),
+        interestPaymentDue:     new CdrFormSelect(null, 'Interest Payment Due'),
         additionalValue:        new CdrFormInput(null, 'Additional value'),
-        additionalInfo:         new CdrFormInput('', 'Additional info'),
-        additionalInfoUri:      new CdrFormInput('', 'Additional info URI'),
+        additionalInfo:         new CdrFormInput(null, 'Additional info'),
+        additionalInfoUri:      new CdrFormInput(null, 'Additional info URI'),
     });
 
     tiersForm = new FormArray([]);
@@ -90,6 +92,16 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
 
         // *********************************************************************************************************************************
 
+        const interestPaymentDueOptions = Object.keys(BankingProductLendingRateInterestPaymentType).map((key) => ({
+            value: BankingProductLendingRateInterestPaymentType[key],
+            label: this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTLENDINGRATEINTERESTPAYMENTTYPE, BankingProductLendingRateInterestPaymentType[key]),
+        }));
+
+        const interestPaymentDueControl = this.cdrBankingForm.controls.interestPaymentDue as CdrFormSelect;
+        interestPaymentDueControl.options = interestPaymentDueOptions;
+
+        // *********************************************************************************************************************************
+
         this.unitOfMeasureOptions = Object.keys(CommonUnitOfMeasureType).map((key) => ({
             value: CommonUnitOfMeasureType[key],
             label: this.typeManager.getLabel(FormFieldType.COMMONUNITOFMEASURETYPE, CommonUnitOfMeasureType[key]),
@@ -133,20 +145,24 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
         this.rateForm.controls.schemeType.setValue(schemeType);
 
         const {
-            lendingRateType = '',
-            rate = '',
-            calculationFrequency = '',
-            applicationFrequency = '',
+            lendingRateType = null,
+            rate = null,
+            comparisonRate = null,
+            calculationFrequency = null,
+            applicationFrequency = null,
+            interestPaymentDue = null,
             tiers = [],
-            additionalValue = '',
-            additionalInfo = '',
-            additionalInfoUri = '',
+            additionalValue = null,
+            additionalInfo = null,
+            additionalInfoUri = null,
         } = cdrBanking;
 
         this.cdrBankingForm.controls.lendingRateType.setValue(lendingRateType);
         this.cdrBankingForm.controls.rate.setValue(rate);
+        this.cdrBankingForm.controls.comparisonRate.setValue(comparisonRate);
         this.cdrBankingForm.controls.calculationFrequency.setValue(calculationFrequency);
         this.cdrBankingForm.controls.applicationFrequency.setValue(applicationFrequency);
+        this.cdrBankingForm.controls.interestPaymentDue.setValue(interestPaymentDue);
         this.cdrBankingForm.controls.additionalValue.setValue(additionalValue);
         this.cdrBankingForm.controls.additionalInfo.setValue(additionalInfo);
         this.cdrBankingForm.controls.additionalInfoUri.setValue(additionalInfoUri);
@@ -160,14 +176,14 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
 
     addTier(tier: BankingProductRateTierV1 = {} as BankingProductRateTierV1) {
         const {
-            name = '',
+            name = null,
             unitOfMeasure = this.unitOfMeasureOptions[0].value,
             rateApplicationMethod = this.rateTierApplicationMethodOptions[0].value,
             minimumValue = 0,
             maximumValue = 0,
             applicabilityConditions: {
-                additionalInfo = '',
-                additionalInfoUri = ''
+                additionalInfo = null,
+                additionalInfoUri = null
             } = {}
         } = tier;
 
@@ -223,6 +239,7 @@ export class ProductRateLendingCreateEditComponent implements OnInit {
                 'cdrBanking.rate':                  this.cdrBankingForm.get('rate'),
                 'cdrBanking.calculationFrequency':  this.cdrBankingForm.get('calculationFrequency'),
                 'cdrBanking.applicationFrequency':  this.cdrBankingForm.get('applicationFrequency'),
+                'cdrBanking.interestPaymentDue':    this.cdrBankingForm.get('interestPaymentDue'),
                 'cdrBanking.additionalValue':       this.cdrBankingForm.get('additionalValue'),
                 'cdrBanking.additionalInfo':        this.cdrBankingForm.get('additionalInfo'),
                 'cdrBanking.additionalInfoUri':     this.cdrBankingForm.get('additionalInfoUri'),

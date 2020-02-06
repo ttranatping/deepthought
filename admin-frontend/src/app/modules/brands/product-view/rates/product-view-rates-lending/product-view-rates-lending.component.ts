@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { TypeManagementService } from '@app/core/services/type-management.service';
-import { TypeUtilityService } from '@app/core/services/type-utility.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {TypeManagementService} from '@app/core/services/type-management.service';
+import {TypeUtilityService} from '@app/core/services/type-utility.service';
 import {
+    BankingProductDepositRateType,
     BankingProductLendingRateType,
     DioProductRateDeposit,
     DioProductRateLending, FormFieldType,
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
-import { ConfirmationService, DialogService } from 'primeng/api';
-import { ProductRateLendingCreateEditComponent } from './product-rate-lending-create-edit/product-rate-lending-create-edit.component';
+import {ConfirmationService, DialogService} from 'primeng/api';
+import {ProductRateLendingCreateEditComponent} from './product-rate-lending-create-edit/product-rate-lending-create-edit.component';
 
 @Component({
     selector: 'app-product-view-rates-lending',
@@ -17,12 +18,12 @@ import { ProductRateLendingCreateEditComponent } from './product-rate-lending-cr
     styleUrls: ['./../product-view-rates.component.scss']
 })
 export class ProductViewRatesLendingComponent implements OnInit {
-
     brandId: string;
     productId: string;
 
-    fixedRates: DioProductRateLending[];
-    notFixedRates: DioProductRateLending[];
+    rateData: {
+        [key in keyof typeof BankingProductLendingRateType]: DioProductRateLending[];
+    };
 
     constructor(
         private route: ActivatedRoute,
@@ -32,12 +33,26 @@ export class ProductViewRatesLendingComponent implements OnInit {
         private confirmationService: ConfirmationService,
         private dialogService: DialogService,
         public typeUtilityService: TypeUtilityService,
-    ) { }
+    ) {
+    }
 
     ngOnInit() {
         this.route.parent.paramMap.subscribe((params: ParamMap) => {
             this.brandId = params.get('brandId');
             this.productId = params.get('productId');
+            this.rateData = {
+                'FIXED': [],
+                'VARIABLE': [],
+                'INTRODUCTORY': [],
+                'FLOATING': [],
+                'MARKETLINKED': [],
+                'DISCOUNT': [],
+                'PENALTY': [],
+                'CASHADVANCE': [],
+                'PURCHASE': [],
+                'BUNDLEDISCOUNTFIXED': [],
+                'BUNDLEDISCOUNTVARIABLE': [],
+            };
 
             this.fetchRates();
         });
@@ -45,28 +60,35 @@ export class ProductViewRatesLendingComponent implements OnInit {
 
     fetchRates() {
         this.productsApi.listProductRateLendings(this.brandId, this.productId).subscribe((rates) => {
-
-            const groupedRates = rates.reduce((acc, rate) => {
-                if (rate.cdrBanking.lendingRateType === BankingProductLendingRateType.FIXED) {
-                    acc.fixed.push(rate);
-                    return acc;
+            this.rateData = {
+                'FIXED': [],
+                'VARIABLE': [],
+                'INTRODUCTORY': [],
+                'FLOATING': [],
+                'MARKETLINKED': [],
+                'DISCOUNT': [],
+                'PENALTY': [],
+                'CASHADVANCE': [],
+                'PURCHASE': [],
+                'BUNDLEDISCOUNTFIXED': [],
+                'BUNDLEDISCOUNTVARIABLE': [],
+            };
+            rates.forEach((rate) => {
+                if(!this.rateData[rate.cdrBanking.lendingRateType]) {
+                    this.rateData[rate.cdrBanking.lendingRateType] = [];
                 }
-
-                acc.notFixed.push(rate);
-                return acc;
-            }, { fixed: [], notFixed: [] });
-
-            this.fixedRates = groupedRates.fixed;
-            this.notFixedRates = groupedRates.notFixed;
-
+                this.rateData[rate.cdrBanking.lendingRateType].push(rate);
+            });
         });
     }
 
     getLendingDetail(lendingRate: DioProductRateLending, fieldName: string) {
 
         switch (fieldName) {
-            case 'NAME': return this.typeManager.getLabel('BANKING_PRODUCT_LENDING_RATE_TYPE', lendingRate.cdrBanking.lendingRateType);
-            case 'DETAIL': return `${this.typeUtility.convertRateString(lendingRate.cdrBanking.rate)} per annum.`;
+            case 'NAME':
+                return this.typeManager.getLabel('BANKING_PRODUCT_LENDING_RATE_TYPE', lendingRate.cdrBanking.lendingRateType);
+            case 'DETAIL':
+                return `${this.typeUtility.convertRateString(lendingRate.cdrBanking.rate)} per annum.`;
             case 'INFO':
                 const detail = [];
 
@@ -101,7 +123,8 @@ export class ProductViewRatesLendingComponent implements OnInit {
                 }
 
                 return detail.join(' ');
-            default: return '';
+            default:
+                return '';
         }
     }
 
@@ -115,13 +138,13 @@ export class ProductViewRatesLendingComponent implements OnInit {
                 'max-height': '80vh',
                 'min-height': '250px'
             },
-            data: { brandId: this.brandId, productId: this.productId }
+            data: {brandId: this.brandId, productId: this.productId}
         });
 
-        ref.onClose.subscribe((newRate) => newRate ? this.fetchRates() : void(0));
+        ref.onClose.subscribe((newRate) => newRate ? this.fetchRates() : void (0));
     }
 
-    editRate(depositRate: DioProductRateDeposit) {
+    editRate(depositRate: DioProductRateLending) {
         const ref = this.dialogService.open(ProductRateLendingCreateEditComponent, {
             header: 'Edit rate',
             width: '70%',
@@ -131,13 +154,13 @@ export class ProductViewRatesLendingComponent implements OnInit {
                 'max-height': '80vh',
                 'min-height': '250px'
             },
-            data: { brandId: this.brandId, productId: this.productId, rate: depositRate }
+            data: {brandId: this.brandId, productId: this.productId, rate: depositRate}
         });
 
-        ref.onClose.subscribe((editedRate) => editedRate ? this.fetchRates() : void(0));
+        ref.onClose.subscribe((editedRate) => editedRate ? this.fetchRates() : void (0));
     }
 
-    removeRate(depositRate: DioProductRateDeposit) {
+    removeRate(depositRate: DioProductRateLending) {
         this.confirmationService.confirm({
             message: `Are you sure want to remove rate?`,
             header: 'Remove rate',
@@ -147,7 +170,8 @@ export class ProductViewRatesLendingComponent implements OnInit {
                     .deleteProductRateLending(this.brandId, this.productId, depositRate.id)
                     .subscribe(() => this.fetchRates());
             },
-            reject: () => {}
+            reject: () => {
+            }
         });
     }
 
@@ -163,11 +187,38 @@ export class ProductViewRatesLendingComponent implements OnInit {
         return this.typeManager.getLabel(FormFieldType.COMMONUNITOFMEASURETYPE, value);
     }
 
+    getInterestPaymentDue(value) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTLENDINGRATEINTERESTPAYMENTTYPE, value);
+    }
+
+    getRateType(value) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTLENDINGRATETYPE, value);
+    }
+
     getFrequency(value) {
         if (!value) {
-            return '';
+            return 'Not Defined';
         }
         return this.typeUtilityService.convertDuration(value);
+    }
+
+    getRateDescription(rate: DioProductRateLending) {
+        if(rate.cdrBanking.lendingRateType == BankingProductLendingRateType.FIXED || rate.cdrBanking.lendingRateType == BankingProductLendingRateType.INTRODUCTORY) {
+            return 'for ' + this.getFrequency(rate.cdrBanking.additionalValue);
+        } else {
+            return '';
+        }
+    }
+
+    hasAdditionalValue(rate: DioProductRateLending) {
+        if(rate.cdrBanking.lendingRateType != BankingProductLendingRateType.FIXED && rate.cdrBanking.lendingRateType != BankingProductLendingRateType.INTRODUCTORY) {
+            if(rate.cdrBanking.additionalValue != null && rate.cdrBanking.additionalValue != '') {
+                return true;
+            }
+            return false;
+        } else {
+            return false;
+        }
     }
 
 }

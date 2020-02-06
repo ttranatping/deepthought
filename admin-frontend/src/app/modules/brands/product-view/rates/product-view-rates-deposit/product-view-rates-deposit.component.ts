@@ -3,13 +3,14 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { TypeUtilityService } from '@app/core/services/type-utility.service';
 import {
-    BankingProductDepositRateType, BankingProductRateTierApplicationMethod,
+    BankingProductDepositRateType, BankingProductLendingRateType, BankingProductRateTierApplicationMethod,
     CommonUnitOfMeasureType,
-    DioProductRateDeposit, FormFieldType,
+    DioProductRateDeposit, DioProductRateLending, FormFieldType,
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
 import { ConfirmationService, DialogService } from 'primeng/api';
 import { ProductRateDepositCreateEditComponent } from './product-rate-deposit-create-edit/product-rate-deposit-create-edit.component';
+import {falseIfMissing} from 'protractor/built/util';
 
 @Component({
   selector: 'app-product-view-rates-deposit',
@@ -21,8 +22,10 @@ export class ProductViewRatesDepositComponent implements OnInit {
     brandId: string;
     productId: string;
 
-    fixedRates: DioProductRateDeposit[];
-    notFixedRates: DioProductRateDeposit[];
+
+    rateData: {
+        [key in keyof typeof BankingProductDepositRateType]: DioProductRateDeposit[];
+    };
 
     constructor(
         private route: ActivatedRoute,
@@ -38,27 +41,36 @@ export class ProductViewRatesDepositComponent implements OnInit {
         this.route.parent.paramMap.subscribe((params: ParamMap) => {
             this.brandId = params.get('brandId');
             this.productId = params.get('productId');
-
+            this.rateData = {
+                'FIXED': [],
+                'VARIABLE': [],
+                'INTRODUCTORY': [],
+                'FLOATING': [],
+                'MARKETLINKED': [],
+                'BONUS': [],
+                'BUNDLEBONUS': [],
+            };
             this.fetchRates();
         });
     }
 
     fetchRates() {
         this.productsApi.listProductRateDeposits(this.brandId, this.productId).subscribe((rates) => {
-
-            const groupedRates = rates.reduce((acc, rate) => {
-                if (rate.cdrBanking.depositRateType === BankingProductDepositRateType.FIXED) {
-                    acc.fixed.push(rate);
-                    return acc;
+            this.rateData = {
+                'FIXED': [],
+                'VARIABLE': [],
+                'INTRODUCTORY': [],
+                'FLOATING': [],
+                'MARKETLINKED': [],
+                'BONUS': [],
+                'BUNDLEBONUS': [],
+            };
+            rates.forEach((rate) => {
+                if(!this.rateData[rate.cdrBanking.depositRateType]) {
+                    this.rateData[rate.cdrBanking.depositRateType] = [];
                 }
-
-                acc.notFixed.push(rate);
-                return acc;
-            }, { fixed: [], notFixed: [] });
-
-            this.fixedRates = groupedRates.fixed;
-            this.notFixedRates = groupedRates.notFixed;
-
+                this.rateData[rate.cdrBanking.depositRateType].push(rate);
+            });
         });
     }
 
@@ -161,11 +173,34 @@ export class ProductViewRatesDepositComponent implements OnInit {
         return this.typeManager.getLabel(FormFieldType.COMMONUNITOFMEASURETYPE, value);
     }
 
+    getRateType(value) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTDEPOSITRATETYPE, value);
+    }
+
+
     getFrequency(value) {
         if (!value) {
-            return '';
+            return 'N/A';
         }
         return this.typeUtilityService.convertDuration(value);
     }
 
+    getRateDescription(rate: DioProductRateDeposit) {
+      if(rate.cdrBanking.depositRateType == BankingProductDepositRateType.FIXED || rate.cdrBanking.depositRateType == BankingProductDepositRateType.INTRODUCTORY) {
+          return 'for ' + this.getFrequency(rate.cdrBanking.additionalValue);
+      } else {
+          return '';
+      }
+    }
+
+    hasAdditionalValue(rate: DioProductRateDeposit) {
+        if(rate.cdrBanking.depositRateType != BankingProductDepositRateType.FIXED && rate.cdrBanking.depositRateType != BankingProductDepositRateType.INTRODUCTORY) {
+            if(rate.cdrBanking.additionalValue != null && rate.cdrBanking.additionalValue != '') {
+                return true;
+            }
+            return false;
+        } else {
+            return false;
+        }
+    }
 }

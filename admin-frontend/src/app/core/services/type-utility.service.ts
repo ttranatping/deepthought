@@ -16,18 +16,18 @@ export class TypeUtilityService {
 
     convertDuration(period: string) {
         if (period === null || period === '') {
-            return void(0);
+            return 'N/A';
         }
 
         if (period.match(/^P(\d+)D$/)) {
             const days = period.match(/^P(\d+)D$/)[1];
-            return days === '1' ? 'day' : days + ' days';
+            return days === '1' ? '1 Day' : days + ' days';
         } else if (period.match(/^P(\d+)M$/)) {
             const months = period.match(/^P(\d+)M$/)[1];
-            return months === '1' ? 'month' : months + ' months';
+            return months === '1' ? '1 Month' : months + ' months';
         } else if (period.match(/^P(\d+)Y$/)) {
             const years = period.match(/^P(\d+)Y$/)[1];
-            return years === '1' ? 'year' : years + ' years';
+            return years === '1' ? '1 Year' : years + ' years';
         }
 
         return moment.duration(period).humanize(false);

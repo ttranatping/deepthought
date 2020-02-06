@@ -176,9 +176,16 @@ export class RatesTableComponent implements OnChanges {
 
     getFrequency(value) {
         if (!value) {
-            return '';
+            return 'Undefined';
         }
         return this.typeUtilityService.convertDuration(value);
+    }
+
+    getInterestPaymentDue(value) {
+        if(!value || value == '') {
+            return 'Undefined';
+        }
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTLENDINGRATEINTERESTPAYMENTTYPE, value);
     }
 
     editFixedRate(rate) {
