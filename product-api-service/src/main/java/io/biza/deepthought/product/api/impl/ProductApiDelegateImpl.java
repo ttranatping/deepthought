@@ -37,49 +37,48 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
   @Autowired
   private ProductRepository productRepository;
 
-  @Autowired
-  private BrandRepository brandRepository;
-
-  @Autowired
-  private Validator validator;
-
   @Override
   public ResponseEntity<ResponseBankingProductListV2> listProducts(
       RequestListProducts requestList) {
     LOG.debug("Retrieving a list of products with input request of {}", requestList);
-    
+
     Specification<ProductData> filterSpecifications = Specification.where(null);
-    
-    if(requestList.effective() != null) {
-      filterSpecifications = filterSpecifications.and(ProductSpecifications.effective(requestList.effective()));
+
+    if (requestList.effective() != null) {
+      filterSpecifications =
+          filterSpecifications.and(ProductSpecifications.effective(requestList.effective()));
     }
-    
-    if(requestList.updatedSince() != null) {
-      filterSpecifications = filterSpecifications.and(ProductSpecifications.updatedSince(requestList.updatedSince()));
+
+    if (requestList.updatedSince() != null) {
+      filterSpecifications =
+          filterSpecifications.and(ProductSpecifications.updatedSince(requestList.updatedSince()));
     }
-    
-    if(requestList.productCategory() != null) {
-      filterSpecifications = filterSpecifications.and(ProductSpecifications.productCategory(requestList.productCategory()));
+
+    if (requestList.productCategory() != null) {
+      filterSpecifications = filterSpecifications
+          .and(ProductSpecifications.productCategory(requestList.productCategory()));
     }
-    
-    if(StringUtils.isNotBlank(requestList.brand())) {
-      filterSpecifications = filterSpecifications.and(ProductSpecifications.brand(requestList.brand()));
+
+    if (StringUtils.isNotBlank(requestList.brand())) {
+      filterSpecifications =
+          filterSpecifications.and(ProductSpecifications.brand(requestList.brand()));
     }
-    
+
     /**
      * Paginated Result
      */
-    Page<ProductData> productList =
-        productRepository.findAll(filterSpecifications, PageRequest.of(requestList.page() - 1, requestList.pageSize()));
+    Page<ProductData> productList = productRepository.findAll(filterSpecifications,
+        PageRequest.of(requestList.page() - 1, requestList.pageSize()));
 
     /**
      * Build response components
      */
-    ResponseBankingProductListV2 listResponse = new ResponseBankingProductListV2();
-    listResponse.meta(CDRContainerAttributes.toMetaPaginated(productList));
-    listResponse.links(CDRContainerAttributes.toLinksPaginated(productList));
-    listResponse.data(ResponseBankingProductListDataV2.builder()
-        .products(mapper.mapAsList(productList.getContent(), BankingProductV2.class)).build());
+    ResponseBankingProductListV2 listResponse = ResponseBankingProductListV2.builder()
+        .meta(CDRContainerAttributes.toMetaPaginated(productList))
+        .links(CDRContainerAttributes.toLinksPaginated(productList))
+        .data(ResponseBankingProductListDataV2.builder()
+            .products(mapper.mapAsList(productList.getContent(), BankingProductV2.class)).build())
+        .build();
     LOG.debug("List response came back with: {}", listResponse);
     return ResponseEntity.ok(listResponse);
   }
