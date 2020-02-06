@@ -13,7 +13,6 @@ import { ProductViewConstraintsComponent } from './product-view/product-view-con
 import { ProductViewFeesComponent } from './product-view/product-view-fees/product-view-fees.component';
 import { ProductViewRatesLendingComponent } from './product-view/rates/product-view-rates-lending/product-view-rates-lending.component';
 import { ProductViewRatesDepositComponent } from './product-view/rates/product-view-rates-deposit/product-view-rates-deposit.component';
-import { RatesTableComponent } from './product-view/rates/rates-table/rates-table.component';
 import { ProductCreateEditComponent } from './product-create-edit/product-create-edit.component';
 import { DialogService } from 'primeng/api';
 import { ProductFeatureCreateEditComponent } from './product-view/product-view-features/product-feature-create-edit/product-feature-create-edit.component';
@@ -34,7 +33,6 @@ import { ProductAddBundleComponent } from './product-view/product-view-details/p
     declarations: [
         BrandsListComponent,
         CatalogueProductViewComponent,
-        RatesTableComponent,
         ProductViewDetailsComponent,
         ProductViewFeaturesComponent,
         BrandViewComponent,
