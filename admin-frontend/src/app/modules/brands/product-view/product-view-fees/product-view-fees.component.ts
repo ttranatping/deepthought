@@ -54,14 +54,14 @@ export class ProductViewFeesComponent implements OnInit {
                 if (fee.cdrBanking.amount != null) {
                     feeDescription.push(
                         fee.cdrBanking.feeType === BankingProductFeeType.PERIODIC
-                            ? this.typeUtility.convertValueString(fee.cdrBanking.amount) + ' per ' + this.typeUtility.convertDuration(fee.cdrBanking.additionalValue)
+                            ? this.typeUtility.convertValueString(fee.cdrBanking.amount) + ' per ' + (fee.cdrBanking.additionalValue ? this.typeUtility.convertDuration(fee.cdrBanking.additionalValue) : '')
                             : this.typeUtility.convertValueString(fee.cdrBanking.amount)
                     );
                 }
 
                 if (fee.cdrBanking.balanceRate != null) {
                     feeDescription.push(
-                        this.typeUtility.convertRateString(fee.cdrBanking.balanceRate) + ' charged on the account balance per ' + this.typeUtility.convertDuration(fee.cdrBanking.accrualFrequency)
+                        this.typeUtility.convertRateString(fee.cdrBanking.balanceRate) + ' charged on the account balance per ' + (fee.cdrBanking.accrualFrequency ? this.typeUtility.convertDuration(fee.cdrBanking.accrualFrequency) : '')
                     );
                 }
 
@@ -73,7 +73,7 @@ export class ProductViewFeesComponent implements OnInit {
 
                 if (fee.cdrBanking.accruedRate != null) {
                     feeDescription.push(
-                        this.typeUtility.convertRateString(fee.cdrBanking.accruedRate) + ' charged on interest charged per ' + this.typeUtility.convertDuration(fee.cdrBanking.accrualFrequency)
+                        this.typeUtility.convertRateString(fee.cdrBanking.accruedRate) + ' charged on interest charged per ' + (fee.cdrBanking.accrualFrequency ? this.typeUtility.convertDuration(fee.cdrBanking.accrualFrequency) : '')
                     );
                 }
 
