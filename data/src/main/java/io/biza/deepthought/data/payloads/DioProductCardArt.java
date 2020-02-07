@@ -28,13 +28,12 @@ import lombok.ToString;
 public class DioProductCardArt {
 
   @JsonProperty("id")
-  @NotNull
-  @NonNull
-  @Schema(description = "Deep Thought Card Art Identifier", defaultValue = "")
+  @Schema(description = "Deep Thought Card Art Identifier",
+      defaultValue = "00000000-0000-0000-0000-000000000000")
   public UUID id;
 
 
-  @JsonProperty("type")
+  @JsonProperty("schemeType")
   @NotNull
   @NonNull
   @Schema(description = "Deep Thought Scheme Type", defaultValue = "CDR_BANKING")

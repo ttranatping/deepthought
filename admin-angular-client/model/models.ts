@@ -1,4 +1,5 @@
 export * from './bankingProductAdditionalInformationV1';
+export * from './bankingProductCardArtV1';
 export * from './bankingProductCategory';
 export * from './bankingProductConstraintType';
 export * from './bankingProductConstraintV1';
@@ -26,6 +27,7 @@ export * from './dioBrand';
 export * from './dioExceptionType';
 export * from './dioProduct';
 export * from './dioProductBundle';
+export * from './dioProductCardArt';
 export * from './dioProductConstraint';
 export * from './dioProductEligibility';
 export * from './dioProductFeature';

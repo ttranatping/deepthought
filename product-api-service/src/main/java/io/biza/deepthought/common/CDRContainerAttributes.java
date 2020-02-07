@@ -13,12 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CDRContainerAttributes {
   
-  public static <T> ResponseEntity<T> toCdrResponse(ResponseEntity<T> responseEntity) {
-    //responseEntity.getHeaders().add("x-v", responseEntity.getBody().version().toString());
-    
-    return responseEntity;
-  }
-
   public static MetaPaginatedV1 toMetaPaginated(Page<?> inputPage) {
     return MetaPaginatedV1.builder().totalPages(inputPage.getTotalPages())
         .totalRecords(Long.valueOf(inputPage.getTotalElements()).intValue()).build();

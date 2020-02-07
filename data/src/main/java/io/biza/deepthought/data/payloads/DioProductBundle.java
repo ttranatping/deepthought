@@ -31,7 +31,8 @@ import lombok.ToString;
 @Schema(description = "A Deep Thought Product Bundle")
 public class DioProductBundle {
 
-  @Schema(description = "Bundle Identifier", required = true)
+  @Schema(description = "Bundle Identifier", required = true,
+      defaultValue = "00000000-0000-0000-0000-000000000000")
   @JsonProperty("id")
   UUID id;
 

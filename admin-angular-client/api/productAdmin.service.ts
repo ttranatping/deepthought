@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { DioProduct } from '../model/dioProduct';
 import { DioProductBundle } from '../model/dioProductBundle';
+import { DioProductCardArt } from '../model/dioProductCardArt';
 import { DioProductConstraint } from '../model/dioProductConstraint';
 import { DioProductEligibility } from '../model/dioProductEligibility';
 import { DioProductFeature } from '../model/dioProductFeature';
@@ -103,6 +104,61 @@ export class ProductAdminService {
         }
 
         return this.httpClient.request<DioProduct>('post',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Create a Product Card Art
+     * Creates and Returns a new Product Card Art
+     * @param brandId 
+     * @param productId 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createProductCardArt(brandId: string, productId: string, body?: DioProductCardArt, observe?: 'body', reportProgress?: boolean): Observable<DioProductCardArt>;
+    public createProductCardArt(brandId: string, productId: string, body?: DioProductCardArt, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DioProductCardArt>>;
+    public createProductCardArt(brandId: string, productId: string, body?: DioProductCardArt, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DioProductCardArt>>;
+    public createProductCardArt(brandId: string, productId: string, body?: DioProductCardArt, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling createProductCardArt.');
+        }
+
+        if (productId === null || productId === undefined) {
+            throw new Error('Required parameter productId was null or undefined when calling createProductCardArt.');
+        }
+
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<DioProductCardArt>('post',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}/card-art`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -491,6 +547,57 @@ export class ProductAdminService {
     }
 
     /**
+     * Delete a single Product Card Art
+     * Deletes a Product Card Art
+     * @param brandId 
+     * @param productId 
+     * @param cardArtId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteProductCardArt(brandId: string, productId: string, cardArtId: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteProductCardArt(brandId: string, productId: string, cardArtId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteProductCardArt(brandId: string, productId: string, cardArtId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteProductCardArt(brandId: string, productId: string, cardArtId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling deleteProductCardArt.');
+        }
+
+        if (productId === null || productId === undefined) {
+            throw new Error('Required parameter productId was null or undefined when calling deleteProductCardArt.');
+        }
+
+        if (cardArtId === null || cardArtId === undefined) {
+            throw new Error('Required parameter cardArtId was null or undefined when calling deleteProductCardArt.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('delete',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}/card-art/${encodeURIComponent(String(cardArtId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Delete a single Product Constraint
      * Deletes a Product Constraint
      * @param brandId 
@@ -834,6 +941,58 @@ export class ProductAdminService {
         ];
 
         return this.httpClient.request<DioProduct>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get a single Product Card Art
+     * Returns a single product Card Art entry
+     * @param brandId 
+     * @param productId 
+     * @param cardArtId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getProductCardArt(brandId: string, productId: string, cardArtId: string, observe?: 'body', reportProgress?: boolean): Observable<DioProductCardArt>;
+    public getProductCardArt(brandId: string, productId: string, cardArtId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DioProductCardArt>>;
+    public getProductCardArt(brandId: string, productId: string, cardArtId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DioProductCardArt>>;
+    public getProductCardArt(brandId: string, productId: string, cardArtId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling getProductCardArt.');
+        }
+
+        if (productId === null || productId === undefined) {
+            throw new Error('Required parameter productId was null or undefined when calling getProductCardArt.');
+        }
+
+        if (cardArtId === null || cardArtId === undefined) {
+            throw new Error('Required parameter cardArtId was null or undefined when calling getProductCardArt.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<DioProductCardArt>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}/card-art/${encodeURIComponent(String(cardArtId))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -1193,6 +1352,53 @@ export class ProductAdminService {
         ];
 
         return this.httpClient.request<Array<DioProductBundle>>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}/bundle`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * List all Product Card Arts
+     * List all Product Card Arts
+     * @param brandId 
+     * @param productId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public listProductCardArts(brandId: string, productId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<DioProductCardArt>>;
+    public listProductCardArts(brandId: string, productId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<DioProductCardArt>>>;
+    public listProductCardArts(brandId: string, productId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<DioProductCardArt>>>;
+    public listProductCardArts(brandId: string, productId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling listProductCardArts.');
+        }
+
+        if (productId === null || productId === undefined) {
+            throw new Error('Required parameter productId was null or undefined when calling listProductCardArts.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<DioProductCardArt>>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}/card-art`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -1571,6 +1777,66 @@ export class ProductAdminService {
         }
 
         return this.httpClient.request<DioProduct>('put',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Update a single Product Card Art
+     * Updates and Returns an existing Product Card Art
+     * @param brandId 
+     * @param productId 
+     * @param cardArtId 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateProductCardArt(brandId: string, productId: string, cardArtId: string, body?: DioProductCardArt, observe?: 'body', reportProgress?: boolean): Observable<DioProductCardArt>;
+    public updateProductCardArt(brandId: string, productId: string, cardArtId: string, body?: DioProductCardArt, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DioProductCardArt>>;
+    public updateProductCardArt(brandId: string, productId: string, cardArtId: string, body?: DioProductCardArt, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DioProductCardArt>>;
+    public updateProductCardArt(brandId: string, productId: string, cardArtId: string, body?: DioProductCardArt, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling updateProductCardArt.');
+        }
+
+        if (productId === null || productId === undefined) {
+            throw new Error('Required parameter productId was null or undefined when calling updateProductCardArt.');
+        }
+
+        if (cardArtId === null || cardArtId === undefined) {
+            throw new Error('Required parameter cardArtId was null or undefined when calling updateProductCardArt.');
+        }
+
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<DioProductCardArt>('put',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/product/${encodeURIComponent(String(productId))}/card-art/${encodeURIComponent(String(cardArtId))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
