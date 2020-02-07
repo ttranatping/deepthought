@@ -24,6 +24,8 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import io.biza.babelfish.cdr.abstracts.responses.CDRResponsePaginatedV1;
+import io.biza.babelfish.cdr.exceptions.PayloadConversionException;
 import io.biza.babelfish.cdr.exceptions.UnsupportedPayloadException;
 import io.biza.babelfish.cdr.models.payloads.ErrorV1;
 import io.biza.babelfish.cdr.models.responses.ResponseErrorListV1;
@@ -35,15 +37,15 @@ import lombok.extern.slf4j.Slf4j;
 public class CDRController implements ResponseBodyAdvice<Object> {
 
   @Override
-  public boolean supports(MethodParameter returnType,
-      Class<? extends HttpMessageConverter<?>> converterType) {
+  public boolean supports(MethodParameter returnType, Class converterType) {
+    LOG.info("CDR Controller called for type of: {}", returnType.getMethod().getReturnType());
     return true;
   }
-
+  
   @Override
   public Object beforeBodyWrite(Object inputBody, MethodParameter returnType,
-      MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
-      ServerHttpRequest request, ServerHttpResponse response) {
+      MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request,
+      ServerHttpResponse response) {
 
     Integer version;
     try {
@@ -75,7 +77,9 @@ public class CDRController implements ResponseBodyAdvice<Object> {
         LOG.error(
             "Identified destination type but was then unable to obtain version again for type of {}",
             destinationType.getName());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        throw new PayloadConversionException(String.format(
+            "Identified destination type but was then unable to obtain version again for type of %s",
+            destinationType.getName()));
       }
       /**
        * Add Interaction Id
@@ -83,7 +87,19 @@ public class CDRController implements ResponseBodyAdvice<Object> {
       response.getHeaders().put("x-fapi-interaction-id", request.getHeaders()
           .getOrDefault("x-fapi-interaction-id", List.of(UUID.randomUUID().toString())));
 
-      return BabelfishVersioner.convert(inputBody, destinationType);
+      if (destinationType.equals(inputBody.getClass())) {
+        return inputBody;
+      } else {
+        try {
+          return BabelfishVersioner.convert(inputBody, destinationType);
+        } catch (Exception e) {
+          e.printStackTrace();
+          LOG.error(
+              "Encountered payload conversion exception (and returning original object unmodified) while attempting to converter {} to a version between {} <= {}: {}",
+              inputBody.getClass().getName(), minimumVersion, version, e.getMessage());
+          return inputBody;
+        }
+      }
     } catch (Exception e) {
       e.printStackTrace();
       LOG.error(
@@ -92,5 +108,6 @@ public class CDRController implements ResponseBodyAdvice<Object> {
       return inputBody;
     }
   }
+
 
 }
