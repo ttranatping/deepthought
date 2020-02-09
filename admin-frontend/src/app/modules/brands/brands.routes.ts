@@ -13,6 +13,7 @@ import { ProductViewRatesDepositComponent } from './product-view/rates/product-v
 import { BrandViewBundlesComponent } from './brand-view/brand-view-bundles/brand-view-bundles.component';
 import { BrandViewProductsComponent } from './brand-view/brand-view-products/brand-view-products.component';
 import { BundleViewComponent } from './bundle-view/bundle-view.component';
+import { ProductViewCardArtComponent } from './product-view/product-view-card-art/product-view-card-art.component';
 
 const routes: Routes = [
 
@@ -33,12 +34,13 @@ const routes: Routes = [
         path: ':brandId/products/:productId',
         component: CatalogueProductViewComponent,
         children: [
-            { path: '', component: ProductViewDetailsComponent},
-            { path: 'features', component: ProductViewFeaturesComponent},
-            { path: 'constraints', component: ProductViewConstraintsComponent},
-            { path: 'fees', component: ProductViewFeesComponent},
-            { path: 'lending-rates', component: ProductViewRatesLendingComponent},
-            { path: 'deposit-rates', component: ProductViewRatesDepositComponent},
+            { path: '',                 component: ProductViewDetailsComponent },
+            { path: 'features',         component: ProductViewFeaturesComponent },
+            { path: 'constraints',      component: ProductViewConstraintsComponent },
+            { path: 'fees',             component: ProductViewFeesComponent },
+            { path: 'lending-rates',    component: ProductViewRatesLendingComponent },
+            { path: 'deposit-rates',    component: ProductViewRatesDepositComponent },
+            { path: 'card-arts',        component: ProductViewCardArtComponent },
         ]
     },
     {
