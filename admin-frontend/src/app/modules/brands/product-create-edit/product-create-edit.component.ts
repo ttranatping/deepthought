@@ -40,7 +40,7 @@ export class ProductCreateEditComponent implements OnInit {
         effectiveTo:        new CdrFormDate(null, 'Effective to'),
         productCategory:    new CdrFormSelect('', 'Product category', [Validators.required]),
         applicationUri:     new CdrFormInput('', 'Application URI'),
-        isTailored:         new CdrFormCheckbox(false, 'Tailored'),
+        tailored:         new CdrFormCheckbox(false, 'Tailored'),
     });
 
     additionalInformationForm: CdrFormGroup = new CdrFormGroup({
@@ -123,7 +123,7 @@ export class ProductCreateEditComponent implements OnInit {
             this.cdrBankingForm.controls.effectiveTo.setValue(effectiveTo);
             this.cdrBankingForm.controls.productCategory.setValue(product.cdrBanking.productCategory);
             this.cdrBankingForm.controls.applicationUri.setValue(product.cdrBanking.applicationUri);
-            this.cdrBankingForm.controls.isTailored.setValue(product.cdrBanking.isTailored);
+            this.cdrBankingForm.controls.tailored.setValue(product.cdrBanking.tailored);
 
             if (product.cdrBanking.additionalInformation) {
                 this.additionalInformationForm.controls.overviewUri.setValue(product.cdrBanking.additionalInformation.overviewUri);
@@ -168,7 +168,7 @@ export class ProductCreateEditComponent implements OnInit {
                 'cdrBanking.effectiveTo': this.cdrBankingForm.get('effectiveTo'),
                 'cdrBanking.productCategory': this.cdrBankingForm.get('productCategory'),
                 'cdrBanking.applicationUri': this.cdrBankingForm.get('applicationUri'),
-                'cdrBanking.isTailored': this.cdrBankingForm.get('isTailored'),
+                'cdrBanking.tailored': this.cdrBankingForm.get('tailored'),
                 'cdrBanking.additionalInformation.overviewUri': this.additionalInformationForm.get('overviewUri'),
                 'cdrBanking.additionalInformation.termsUri': this.additionalInformationForm.get('termsUri'),
                 'cdrBanking.additionalInformation.eligibilityUri': this.additionalInformationForm.get('eligibilityUri'),
