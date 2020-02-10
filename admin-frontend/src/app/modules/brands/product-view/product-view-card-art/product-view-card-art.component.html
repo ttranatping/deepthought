@@ -9,7 +9,7 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>Title</th>
-                <th>Image</th>
+                <th width="513px">Image</th>
                 <th></th>
             </tr>
         </ng-template>
@@ -19,10 +19,8 @@
                 <td>
                     <strong>{{ cardArt.cdrBanking.title }}</strong>
                 </td>
-                <td>
-                    <a [href]="cardArt.cdrBanking.imageUri" target="_blank">
-                        {{ cardArt.cdrBanking.imageUri }}
-                    </a>
+                <td width="513px">
+                    <img src="{{ cardArt.cdrBanking.imageUri }}" style="width: 512px; height: 315.3px;" />
                 </td>
                 <td class="actions">
                     <p-button label="Edit" (click)="editCardArt(cardArt)"></p-button>
