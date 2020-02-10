@@ -3,6 +3,7 @@ import { AbstractControl, FormArray, Validators } from '@angular/forms';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import {
     BankingProductDiscountType,
+    BankingProductFeeV1,
     BankingProductDiscountV1,
     BankingProductFeeType,
     DioProductFee,
@@ -14,7 +15,6 @@ import { CdrFormGroup } from '@app/shared/forms/crd-form-group.class';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { finalize, map, mergeMap, switchMap } from 'rxjs/operators';
 import { iif, of, Subject } from 'rxjs';
-import { BankingProductFeeV1 } from '../../../../../../../../admin-angular-client';
 import { LayoutService } from '@app/layout/layout.service';
 import { BreadcrumbService } from '@app/layout/breadcrumb.service';
 import { ProductEligibilityCreateEditComponent } from '../../product-view-constraints/product-eligibility-create-edit/product-eligibility-create-edit.component';

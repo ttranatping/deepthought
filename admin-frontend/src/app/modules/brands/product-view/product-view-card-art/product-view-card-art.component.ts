@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DioProductCardArt } from '../../../../../../../admin-angular-client';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ConfirmationService, DialogService } from 'primeng/api';
-import { ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
+import { ProductAdminService, DioProductCardArt } from '@bizaoss/deepthought-admin-angular-client';
 import { map, switchMap } from 'rxjs/operators';
 import { ProductEligibilityCreateEditComponent } from '../product-view-constraints/product-eligibility-create-edit/product-eligibility-create-edit.component';
 import { ProductCardArtCreateEditComponent } from './product-card-art-create-edit/product-card-art-create-edit.component';
