@@ -23,7 +23,7 @@
                                     *ngIf="rate.cdrBanking.comparisonRate">{{ rate.cdrBanking.comparisonRate | percent: '1.2-4' }}</div>
                                 <div *ngIf="!rate.cdrBanking.comparisonRate">N/A</div>
                             </td>
-                            <td colspan="1">
+                            <td colspan="1" [width]="170">
                                 <div style="float: right;">
                                     <p-button (click)="editRate(rate)" label="Edit"
                                               style="margin-right: 5px;"></p-button>
@@ -35,7 +35,7 @@
                             <td style="font-weight: bold;">Calculation frequency</td>
                             <td colspan="2">{{ getFrequency(rate.cdrBanking.calculationFrequency) }}</td>
                             <td style="font-weight: bold;">Application frequency</td>
-                            <td>{{ getFrequency(rate.cdrBanking.applicationFrequency) }}</td>
+                            <td colspan="2">{{ getFrequency(rate.cdrBanking.applicationFrequency) }}</td>
                         </tr>
                         <tr *ngIf="rate.cdrBanking.interestPaymentDue">
                             <td style="font-weight: bold;">Interest Payment Due</td>
