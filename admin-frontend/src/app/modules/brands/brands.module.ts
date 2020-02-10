@@ -28,6 +28,8 @@ import { ProductRateLendingCreateEditComponent } from './product-view/rates/prod
 import { BundleViewComponent } from './bundle-view/bundle-view.component';
 import { BundleAddProductComponent } from './bundle-view/bundle-add-product/bundle-add-product.component';
 import { ProductAddBundleComponent } from './product-view/product-view-details/product-add-bundle/product-add-bundle.component';
+import { ProductViewCardArtComponent } from './product-view/product-view-card-art/product-view-card-art.component';
+import { ProductCardArtCreateEditComponent } from './product-view/product-view-card-art/product-card-art-create-edit/product-card-art-create-edit.component';
 
 @NgModule({
     declarations: [
@@ -53,7 +55,9 @@ import { ProductAddBundleComponent } from './product-view/product-view-details/p
         ProductRateLendingCreateEditComponent,
         BundleViewComponent,
         BundleAddProductComponent,
-        ProductAddBundleComponent
+        ProductAddBundleComponent,
+        ProductViewCardArtComponent,
+        ProductCardArtCreateEditComponent
     ],
     imports: [
         CommonModule,
@@ -71,7 +75,8 @@ import { ProductAddBundleComponent } from './product-view/product-view-details/p
         ProductRateDepositCreateEditComponent,
         ProductRateLendingCreateEditComponent,
         BundleAddProductComponent,
-        ProductAddBundleComponent
+        ProductAddBundleComponent,
+        ProductCardArtCreateEditComponent
     ],
     providers: [
         DialogService

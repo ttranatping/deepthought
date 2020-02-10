@@ -22,10 +22,11 @@ export class CatalogueProductViewComponent implements OnInit {
     sidebarMenu: Array<{ label: string; routerLink: string; }> = [
         { routerLink: '',               label: 'Basic details' },
         { routerLink: 'features',       label: 'Features' },
-        { routerLink: 'constraints',     label: 'Eligibility & Constraints' },
+        { routerLink: 'constraints',    label: 'Eligibility & Constraints' },
         { routerLink: 'fees',           label: 'Fees' },
         { routerLink: 'lending-rates',  label: 'Lending rates' },
         { routerLink: 'deposit-rates',  label: 'Deposit rates' },
+        { routerLink: 'card-arts',      label: 'Card arts' },
         { routerLink: 'hr',             label: '' },
         { routerLink: 'edit',           label: 'Edit product' },
         { routerLink: 'remove',         label: 'Remove product' },

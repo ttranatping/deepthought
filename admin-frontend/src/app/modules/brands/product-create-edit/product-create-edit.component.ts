@@ -40,7 +40,7 @@ export class ProductCreateEditComponent implements OnInit {
         effectiveTo:        new CdrFormDate(null, 'Effective to'),
         productCategory:    new CdrFormSelect('', 'Product category', [Validators.required]),
         applicationUri:     new CdrFormInput('', 'Application URI'),
-        tailored:         new CdrFormCheckbox(false, 'Tailored'),
+        tailored:           new CdrFormCheckbox(false, 'Tailored'),
     });
 
     additionalInformationForm: CdrFormGroup = new CdrFormGroup({
