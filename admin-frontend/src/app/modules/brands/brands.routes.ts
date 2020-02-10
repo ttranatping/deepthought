@@ -14,6 +14,7 @@ import { BrandViewBundlesComponent } from './brand-view/brand-view-bundles/brand
 import { BrandViewProductsComponent } from './brand-view/brand-view-products/brand-view-products.component';
 import { BundleViewComponent } from './bundle-view/bundle-view.component';
 import { ProductViewCardArtComponent } from './product-view/product-view-card-art/product-view-card-art.component';
+import { ProductFeeCreateEditComponent } from './product-view/product-view-fees/product-fee-create-edit/product-fee-create-edit.component';
 
 const routes: Routes = [
 
@@ -46,6 +47,14 @@ const routes: Routes = [
     {
         path: ':brandId/bundles/:bundleId',
         component: BundleViewComponent,
+    },
+    {
+        path: ':brandId/products/:productId/fees/create',
+        component: ProductFeeCreateEditComponent
+    },
+    {
+        path: ':brandId/products/:productId/fees/:feeId/edit',
+        component: ProductFeeCreateEditComponent
     }
 ];
 

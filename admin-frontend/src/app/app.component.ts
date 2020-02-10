@@ -82,6 +82,8 @@ export class AppComponent implements OnInit {
             FormFieldType.BANKINGPRODUCTLENDINGRATEINTERESTPAYMENTTYPE,
             FormFieldType.COMMONUNITOFMEASURETYPE,
             FormFieldType.BANKINGPRODUCTRATETIERAPPLICATIONMETHOD,
+            FormFieldType.BANKINGPRODUCTDISCOUNTTYPE,
+            FormFieldType.BANKINGPRODUCTDISCOUNTELIGIBILITYTYPE,
         ]);
     }
 

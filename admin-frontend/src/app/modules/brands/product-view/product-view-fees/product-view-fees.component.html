@@ -1,6 +1,6 @@
 <h2 class="Section-title">
     Fees & Discounts
-    <p-button label="Create fee" (click)="createFee()"></p-button>
+    <p-button label="Create fee" [routerLink]="['create']"></p-button>
 </h2>
 
 <div class="Fees" *ngIf="fees; else emptyFees;">
@@ -11,7 +11,7 @@
             <div class="Fee-info" *ngIf="getFeeDetail(fee, 'INFO') as info">{{ info }}</div>
         </div>
         <div class="Fee-actions">
-            <p-button (click)="editFee(fee)" label="Edit"></p-button>
+            <p-button [routerLink]="[fee.id, 'edit']" label="Edit"></p-button>
             <p-button (click)="removeFee(fee)" label="Remove"></p-button>
         </div>
     </div>
