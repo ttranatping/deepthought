@@ -71,8 +71,6 @@ export class ProductViewConstraintsComponent implements OnInit {
                 case BankingProductEligibilityType.EMPLOYMENTSTATUS:
                 case BankingProductEligibilityType.RESIDENCYSTATUS:
                     return eligibility.cdrBanking.additionalValue;
-                case BankingProductEligibilityType.OTHER:
-                    return eligibility.cdrBanking.additionalInfo;
                 default: return '';
             }
         }
