@@ -3,7 +3,7 @@
     <p-button label="Create fee" [routerLink]="['create']"></p-button>
 </h1>
 
-<div class="Fees" *ngIf="fees; else emptyFees;">
+<div class="Fees" *ngIf="fees">
     <div class="Fee" *ngFor="let fee of fees;">
         <div class="Fee-container">
             <div class="Fee-name">{{ getFeeDetail(fee, 'NAME') }}</div>
@@ -48,6 +48,4 @@
     </div>
 </div>
 
-<ng-template #emptyFees>
-    <p>No Fee Information Available</p>
-</ng-template>
+<p *ngIf="feesEmpty()">No Fees and Discounts Available</p>

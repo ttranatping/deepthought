@@ -26,6 +26,7 @@ export class ProductViewFeaturesComponent implements OnInit {
     features$: any;
 
     activeTabIndex = -1;
+    private hasFeatures = false;
 
     constructor(
         private route: ActivatedRoute,
@@ -58,6 +59,7 @@ export class ProductViewFeaturesComponent implements OnInit {
                 }
 
                 acc[feature.cdrBanking.featureType].push(feature);
+                this.hasFeatures = true;
                 return acc;
             }, {})
         );
@@ -163,4 +165,7 @@ export class ProductViewFeaturesComponent implements OnInit {
         });
     }
 
+    featuresEmpty() {
+        return this.hasFeatures != true;
+    }
 }
