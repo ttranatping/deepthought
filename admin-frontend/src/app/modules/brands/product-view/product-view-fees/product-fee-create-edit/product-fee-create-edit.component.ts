@@ -53,6 +53,7 @@ export class ProductFeeCreateEditComponent implements OnInit {
 
     fee: DioProductFee;
     discounts: BankingProductDiscountV1[] = [];
+    discountsErrors: { [key: string]: string } = {};
 
     discountDetailsOptions: Array<{ key: string; label: string; }> = [
         { key: 'discountType', label: 'Discount type' },
@@ -155,7 +156,8 @@ export class ProductFeeCreateEditComponent implements OnInit {
             currency,
             additionalValue,
             additionalInfo,
-            additionalInfoUri
+            additionalInfoUri,
+            discounts = []
         } = cdrBanking;
 
         this.cdrBankingForm.get('feeType').setValue(feeType);
@@ -169,6 +171,8 @@ export class ProductFeeCreateEditComponent implements OnInit {
         this.cdrBankingForm.get('additionalValue').setValue(additionalValue);
         this.cdrBankingForm.get('additionalInfo').setValue(additionalInfo);
         this.cdrBankingForm.get('additionalInfoUri').setValue(additionalInfoUri);
+
+        this.discounts = discounts;
     }
 
     createEditDiscount(discount?: BankingProductDiscountV1) {
@@ -236,6 +240,7 @@ export class ProductFeeCreateEditComponent implements OnInit {
     }
 
     onSave() {
+        this.discountsErrors = {};
         this.feeForm.setSubmitted(true);
 
         if (!this.feeForm.valid) {
@@ -244,7 +249,7 @@ export class ProductFeeCreateEditComponent implements OnInit {
 
         const data = this.feeForm.getRawValue();
 
-        data.discounts = this.discounts;
+        data.cdrBanking.discounts = this.discounts;
 
         const saving$ = this.fee
             ? this.productsApi.updateProductFee(this.brandId, this.productId, this.fee.id, data)
@@ -269,8 +274,8 @@ export class ProductFeeCreateEditComponent implements OnInit {
                 'cdrBanking.accruedRate':       this.cdrBankingForm.get('accruedRate'),
                 'cdrBanking.accrualFrequency':  this.cdrBankingForm.get('accrualFrequency'),
                 'cdrBanking.currency':          this.cdrBankingForm.get('currency'),
-                'cdrBanking.additionalValue':   this.cdrBankingForm.get('additionalValue'),
                 'cdrBanking.value':             this.cdrBankingForm.get('additionalValue'),
+                'cdrBanking.additionalValue':   this.cdrBankingForm.get('additionalValue'),
                 'cdrBanking.additionalInfo':    this.cdrBankingForm.get('additionalInfo'),
                 'cdrBanking.additionalInfoUri': this.cdrBankingForm.get('additionalInfoUri'),
             };
@@ -282,6 +287,17 @@ export class ProductFeeCreateEditComponent implements OnInit {
                     }
                 }
             }
+
+            for (let i = 0; i < this.discounts.length; i++) {
+                for (const error of errors) {
+                    for (const field of error.fields) {
+                        if (field.startsWith(`cdrBanking.discounts[${i}]`)) {
+                            this.discountsErrors[i] = error.message;
+                        }
+                    }
+                }
+            }
+
         }
     }
 

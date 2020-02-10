@@ -12,8 +12,9 @@
 
     <div class="Form-discounts">
 
-        <div class="Discount" *ngFor="let discount of discounts;">
+        <div class="Discount" *ngFor="let discount of discounts; let i = index;">
             <div class="Discount-content">
+                <p *ngIf="discountsErrors[i]" style="color: red; width: 100%;">{{ discountsErrors[i] }}</p>
                 <ng-container *ngFor="let detail of discountDetailsOptions;">
                     <ng-container *ngIf="discount[detail.key]">
                         <div class="Discount-detailName">{{ detail.label }}</div>
