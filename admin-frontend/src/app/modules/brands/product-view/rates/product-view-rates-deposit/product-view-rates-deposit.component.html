@@ -6,7 +6,7 @@
     ></p-button>
 </h2>
 
-<div *ngIf="rateData">
+<div *ngIf="rateData; else emptyRates">
     <div class="rateList" *ngFor="let rateDataItem of rateData | keyvalue">
         <ng-template [ngIf]="rateDataItem.value.length > 0">
             <h3>{{ getRateType(rateDataItem.key) }}</h3>
@@ -87,3 +87,7 @@
     </ng-template>
 </div>
 </div>
+
+<ng-template #emptyRates>
+    <p>No Lending Rates Information Available</p>
+</ng-template>
