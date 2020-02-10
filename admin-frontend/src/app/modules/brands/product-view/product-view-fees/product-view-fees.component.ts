@@ -24,6 +24,19 @@ export class ProductViewFeesComponent implements OnInit {
 
     fees: DioProductFee[] = [];
 
+    discountDetailsOptions: Array<{ key: string; label: string; }> = [
+        { key: 'discountType', label: 'Discount type' },
+        { key: 'description', label: 'Description' },
+        { key: 'amount', label: 'Amount' },
+        { key: 'balanceRate', label: 'Balance rate' },
+        { key: 'transactionRate', label: 'Transaction rate' },
+        { key: 'accruedRate', label: 'Accrued rate' },
+        { key: 'feeRate', label: 'Fee rate' },
+        { key: 'additionalValue', label: 'Additional value' },
+        { key: 'additionalInfo', label: 'Additional info' },
+        { key: 'additionalInfoUri', label: 'Additional info URI' },
+    ];
+
     constructor(
         private route: ActivatedRoute,
         private typeManager: TypeManagementService,
@@ -92,6 +105,14 @@ export class ProductViewFeesComponent implements OnInit {
                 return feeDescription.join(' + ');
         }
     }
+    getDiscountType(type) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTDISCOUNTTYPE, type);
+    }
+
+    getDiscountEligibilityType(type) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTDISCOUNTELIGIBILITYTYPE, type);
+    }
+
 
     createFee() {
         const ref = this.dialogService.open(ProductFeeCreateEditComponent, {
