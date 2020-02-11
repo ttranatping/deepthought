@@ -221,4 +221,15 @@ export class ProductViewRatesLendingComponent implements OnInit {
         }
     }
 
+    ratesEmpty() {
+        if(this.rateData == null) { return true }
+        let nonEmpty = 0;
+        for(let keyName of Object.keys(this.rateData)) {
+            if(this.rateData[keyName] != null && Object.keys(this.rateData[keyName]).length != 0) {
+                nonEmpty++;
+            }
+        }
+        return nonEmpty == 0;
+    }
+
 }

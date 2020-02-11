@@ -174,5 +174,8 @@ export class ProductViewFeesComponent implements OnInit {
         });
     }
 
+    feesEmpty() {
+        return this.fees == null || this.fees.length == 0;
+    }
 }
 
