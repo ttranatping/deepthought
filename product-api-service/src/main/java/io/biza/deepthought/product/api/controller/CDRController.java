@@ -91,7 +91,8 @@ public class CDRController implements ResponseBodyAdvice<Object> {
         return inputBody;
       } else {
         try {
-          return BabelfishVersioner.convert(inputBody, destinationType);
+          //return BabelfishVersioner.convert(inputBody, destinationType);
+          return inputBody;
         } catch (Exception e) {
           e.printStackTrace();
           LOG.error(

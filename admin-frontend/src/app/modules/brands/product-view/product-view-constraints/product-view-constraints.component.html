@@ -13,7 +13,7 @@
                 <p-button (click)="removeEligibility(eligibility)" label="Remove"></p-button>
             </div>
 
-            <p class="Eligibility-additionalInfo">
+            <p class="Eligibility-additionalInfo" *ngIf="eligibility.cdrBanking.additionalInfo">
                 {{ eligibility.cdrBanking.additionalInfo }}
             </p>
 

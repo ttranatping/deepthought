@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { TypeManagementService } from '@app/core/services/type-management.service';
-import { TypeUtilityService } from '@app/core/services/type-utility.service';
-import { ConfirmationService, DialogService } from 'primeng/api';
-import { ProductFeeCreateEditComponent } from './product-fee-create-edit/product-fee-create-edit.component';
-import { BankingProductFeeType, DioProductFee, FormFieldType, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
-import { map, switchMap } from 'rxjs/operators';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, ParamMap} from '@angular/router';
+import {TypeManagementService} from '@app/core/services/type-management.service';
+import {TypeUtilityService} from '@app/core/services/type-utility.service';
+import {ConfirmationService, DialogService} from 'primeng/api';
+import {ProductFeeCreateEditComponent} from './product-fee-create-edit/product-fee-create-edit.component';
+import {
+    BankingProductFeeType,
+    DioProductFee,
+    FormFieldType,
+    ProductAdminService
+} from '@bizaoss/deepthought-admin-angular-client';
+import {map, switchMap} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-product-view-fees',
-  templateUrl: './product-view-fees.component.html',
-  styleUrls: ['./product-view-fees.component.scss']
+    selector: 'app-product-view-fees',
+    templateUrl: './product-view-fees.component.html',
+    styleUrls: ['./product-view-fees.component.scss']
 })
 export class ProductViewFeesComponent implements OnInit {
 
@@ -19,6 +24,19 @@ export class ProductViewFeesComponent implements OnInit {
 
     fees: DioProductFee[] = [];
 
+    discountDetailsOptions: Array<{ key: string; label: string; }> = [
+        { key: 'discountType', label: 'Discount type' },
+        { key: 'description', label: 'Description' },
+        { key: 'amount', label: 'Amount' },
+        { key: 'balanceRate', label: 'Balance rate' },
+        { key: 'transactionRate', label: 'Transaction rate' },
+        { key: 'accruedRate', label: 'Accrued rate' },
+        { key: 'feeRate', label: 'Fee rate' },
+        { key: 'additionalValue', label: 'Additional value' },
+        { key: 'additionalInfo', label: 'Additional info' },
+        { key: 'additionalInfoUri', label: 'Additional info URI' },
+    ];
+
     constructor(
         private route: ActivatedRoute,
         private typeManager: TypeManagementService,
@@ -26,7 +44,8 @@ export class ProductViewFeesComponent implements OnInit {
         private confirmationService: ConfirmationService,
         private dialogService: DialogService,
         private productsApi: ProductAdminService
-    ) { }
+    ) {
+    }
 
     ngOnInit() {
         this.route.parent.paramMap.subscribe((params: ParamMap) => {
@@ -39,15 +58,21 @@ export class ProductViewFeesComponent implements OnInit {
 
     fetchFees() {
         return this.productsApi.listProductFees(this.brandId, this.productId).pipe(
-            map((fees) => this.fees = fees)
+            map((fees) => {
+                this.fees = fees
+                this.fees.sort((a, b) => a.cdrBanking.name.localeCompare(b.cdrBanking.name))
+            }),
         );
     }
 
     getFeeDetail(fee: DioProductFee, fieldName: string) {
         switch (fieldName) {
-            case 'NAME': return fee.cdrBanking.name;
-            case 'LABEL': return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTFEETYPE, fee.cdrBanking.feeType.toString());
-            case 'INFO': return fee.cdrBanking.additionalInfo;
+            case 'NAME':
+                return fee.cdrBanking.name;
+            case 'LABEL':
+                return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTFEETYPE, fee.cdrBanking.feeType.toString());
+            case 'INFO':
+                return fee.cdrBanking.additionalInfo;
             case 'DETAIL':
                 const feeDescription = [];
 
@@ -80,6 +105,14 @@ export class ProductViewFeesComponent implements OnInit {
                 return feeDescription.join(' + ');
         }
     }
+    getDiscountType(type) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTDISCOUNTTYPE, type);
+    }
+
+    getDiscountEligibilityType(type) {
+        return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTDISCOUNTELIGIBILITYTYPE, type);
+    }
+
 
     createFee() {
         const ref = this.dialogService.open(ProductFeeCreateEditComponent, {
@@ -91,7 +124,7 @@ export class ProductViewFeesComponent implements OnInit {
                 'max-height': '80vh',
                 'min-height': '250px'
             },
-            data: { brandId: this.brandId, productId: this.productId }
+            data: {brandId: this.brandId, productId: this.productId}
         });
 
         ref.onClose.subscribe((newFee) => {
@@ -113,7 +146,7 @@ export class ProductViewFeesComponent implements OnInit {
                 'max-height': '80vh',
                 'min-height': '250px'
             },
-            data: { brandId: this.brandId, productId: this.productId, fee }
+            data: {brandId: this.brandId, productId: this.productId, fee}
         });
 
         ref.onClose.subscribe((editedFee) => {
@@ -136,9 +169,13 @@ export class ProductViewFeesComponent implements OnInit {
                     .pipe(switchMap(() => this.fetchFees()))
                     .subscribe();
             },
-            reject: () => {}
+            reject: () => {
+            }
         });
     }
 
+    feesEmpty() {
+        return this.fees == null || this.fees.length == 0;
+    }
 }
 

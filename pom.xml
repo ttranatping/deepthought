@@ -8,7 +8,7 @@
     <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Deep Thought: Parent Project</name>
-    <description>Deep Thought is a reference implementation of an Open Banking platform initially focused on the Australian Consumer Data Right and associated Consumer Data Standards</description>
+    <description>The Deep Thought project is intended to be a reference Data Holder for the Australian Consumer Data Right (aka "open banking"). It is currently being developed by Biza.io as part of it's DataRight Lab initiative.</description>
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
