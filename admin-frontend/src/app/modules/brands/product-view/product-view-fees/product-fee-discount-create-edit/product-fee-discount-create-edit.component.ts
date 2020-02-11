@@ -130,6 +130,7 @@ export class ProductFeeDiscountCreateEditComponent implements OnInit {
         }
 
         const data = this.discountForm.value;
+        data.additionalValue = data.additionalValue || null;
 
         data.eligibility = this.eligibilitysForm.value;
 
