@@ -109,9 +109,12 @@ export class ProductFeatureCreateEditComponent implements OnInit {
             return;
         }
 
+        const data = this.featureForm.getRawValue();
+        data.cdrBanking.additionalValue = data.cdrBanking.additionalValue || null;
+
         const saving$ = this.feature
-            ? this.productsApi.updateProductFeature(this.brandId, this.productId, this.feature.id, this.featureForm.getRawValue())
-            : this.productsApi.createProductFeature(this.brandId, this.productId, this.featureForm.getRawValue())
+            ? this.productsApi.updateProductFeature(this.brandId, this.productId, this.feature.id, data)
+            : this.productsApi.createProductFeature(this.brandId, this.productId, data)
         ;
 
         saving$.subscribe(
