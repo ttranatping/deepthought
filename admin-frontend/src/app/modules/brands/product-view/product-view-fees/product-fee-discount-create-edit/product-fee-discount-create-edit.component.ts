@@ -133,6 +133,9 @@ export class ProductFeeDiscountCreateEditComponent implements OnInit {
         data.additionalValue = data.additionalValue || null;
 
         data.eligibility = this.eligibilitysForm.value;
+        if(data.eligibility != null) {
+            data.eligibility.additionalValue = data.eligibility.additionalValue || null;
+        }
 
         this.ref.close(data);
     }
