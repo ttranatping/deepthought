@@ -26,6 +26,7 @@ We are currently working on adding the following:
 
 
 
+
 ## Quick Start
 
 Deep Thought is split into a number of individual components which interact with each other. The easiest way to get started is to use the [Amazon AMI](#amazon-ami) we make available with the latest release which includes a preconfigured Keycloak authentication server and MySQL database.
@@ -34,14 +35,20 @@ Deep Thought is split into a number of individual components which interact with
 ## Table of Contents
 
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Quick Start](#quick-start)
 - [Running](#running)
+  - [Amazon AMI](#amazon-ami)
+  - [GitHub Releases](#github-releases)
+- [Deployments](#deployments)
 - [Support](#support)
 - [Compatibility](#compatibility)
 - [Prerequisites](#prerequisites)
-- [Using Babelfish CDR in your project](#using-deepthought-in-your-project)
-- [Extended Features](#extended-features)
-- [Building](#building)
+- [Architecture](#architecture)
+  - [Components](#components)
+  - [Database Support](#database-support)
+  - [Authentication](#authentication)
+- [Production Deployment](#production-deployment)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -52,7 +59,7 @@ Deep Thought is split into a number of individual components which interact with
 Deep Thought can be deployed via a number of methods:
   - Amazon AMI deployment ([See Quick Start](#quick-start)
   - From GitHub Release artefacts
-  - Compiled from Source  
+  - Compiled from Source ([See Building](#building))
 
 ### Amazon AMI
 
@@ -60,15 +67,31 @@ Deep Thought can be deployed via a number of methods:
 
 Deploying using the preconfigured Amazon AMI is an ideal way to test Deep Thought.
 
+The All in One image contains the following:
+
+- `product-api-service` deployed at the path specified by the [Standards](https://consumerdatastandardsaustralia.github.io/standards/#uri-structure)
+- `admin-frontend` attached to `admin-service`
+- `admin-service` attached to a local MySQL database
+- A Keycloak service configured for the `admin-service` and setup with a default username (`deepthought`) and password (`solongandthanksforallthefish`)
+- An Nginx reverse proxy which has been automatically configured with a dynamically issued SSL certificate as a subdomain of `cdr.zone` (one of our domains)
+
+### GitHub Releases
+
+As a fast alternative to using the Amazon AMI you can download the GitHub Releases and run the components locally. By default the components are configured to use a H2 file based database (at `../localdb`) and authenticated via a registration enabled OIDC server hosted by [Biza.io](https://biza.io/) for our [DataRight.io](https://dataright.io) project.
+
+#### Running
+
+1. From the GitHub Releases page download each of the components comprising the release, currently this is `admin-service`, `admin-frontend` and `product-api-service`
+2. For `admin-service` and `product-api-service` execute `jar -jar jar-file-name`, they are configured to operate on ports 8080 (`admin-service`) and 8081 (`product-api-service`)
+3. For `admin-frontend` you will need to run this on a local http server. After extracting the zip file, `cd` into the directory and then execute your [simple http server of choice](https://gist.github.com/willurd/5720255). For example for Python 3.x enabled hosts `python -m http.server 4200` will result in a server available at [http://localhost:4200](http://localhost:4200)
 
 ## Deployments
 
 [(Back to top)](#table-of-contents)
 
 `Deep Thought` is currently deployed within the following projects or organisations:
-
-   - [DataRight Lab](https://dataright.io/lab)
-   - [Biza Hosted Holder](https://biza.io/holder/)
+- [DataRight Lab](https://dataright.io/lab)
+- [Biza Hosted Holder](https://biza.io/holder/)
 
 If you are using `Deep Thought` in your organisation we welcome you to let us know by [email](mailto:hello@biza.io).
 
@@ -157,6 +180,10 @@ Deep Thought is specifically built to be deployed within Production like environ
 3. Databases should be configured in a Master for `admin-service` access and Read-Only Replica for `product-api-service`
 
 If you are considering deploying `Deep Thought` into production we encourage you to contact us by [email](mailto:hello@biza.io).
+
+## Building
+
+TODO
 
 ## Contributing
 
