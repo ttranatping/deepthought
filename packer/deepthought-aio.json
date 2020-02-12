@@ -45,6 +45,14 @@
       ],
       "playbook_file": "../ansible/deepthought-aio.yml",
       "host_alias": "deepthought_aio"
+    },
+    {
+    	"type": "shell",
+    	"inline": [
+    		"sudo rm -f /home/ubuntu/.ssh/authorized_keys",
+    		"sudo rm -f /root/.ssh/authorized_keys",
+    		"sudo rm -f /etc/mysql/debian.cnf"
+    	]
     }
   ]
 }
