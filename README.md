@@ -25,7 +25,7 @@ We are currently working on adding the following:
 ## Screenshots
 
 ![Product List](/screenshots/product-list.png?raw=true "List Products") ![Fees & Discounts List](/screenshots/fees-list.png?raw=true "Fees & Discounts")
-![Lending Rate View](/screenshots/lending-rate-view.png?raw=true "Lending Rate View") ![Rate Validation](/screenshots/duration-selection.png?raw=true "Rate Format Validation") ![Additional Information Type Validation](/screenshots/additional-info-validation.png?raw=true "Additional Information Validation") ![Card Art List](/screenshots/card-art-list.png?raw=true "Card Art List")
+![Lending Rate View](/screenshots/lending-rate-view.png?raw=true "Lending Rate View") ![Rate Validation](/screenshots/duration-selector.png?raw=true "Rate Format Validation") ![Additional Information Type Validation](/screenshots/additional-info-validation.png?raw=true "Additional Information Validation") ![Card Art List](/screenshots/card-art-list.png?raw=true "Card Art List")
 
 ## Quick Start
 
