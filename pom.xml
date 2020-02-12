@@ -28,7 +28,7 @@
         <springdoc-openapi-ui.version>1.2.25</springdoc-openapi-ui.version>
         <springdoc-openapi-maven-plugin.version>0.2</springdoc-openapi-maven-plugin.version>
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
-        <babelfish-cdr.version>1.2.1-SNAPSHOT</babelfish-cdr.version>
+        <babelfish-cdr.version>1.2.2</babelfish-cdr.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
         <lombok.version>1.18.10</lombok.version>
         <junit-jupiter.version>5.6.0-M1</junit-jupiter.version>
