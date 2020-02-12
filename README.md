@@ -1,8 +1,6 @@
 # Deep Thought
 
-[![GitHub Release](https://img.shields.io/github/v/release/bizaio/deepthought?label=latest%20release)](https://search.maven.org/artifact/io.biza/deepthought) [![Consumer Data Standards v1.2.0](https://img.shields.io/badge/Consumer%20Data%20Standards-v1.2.0-success)](https://consumerdatastandardsaustralia.github.io/standards)
-
-[![develop build](https://img.shields.io/travis/com/bizaio/deepthought/develop?label=develop%20build)](https://travis-ci.com/bizaio/deepthought) [![master build](https://img.shields.io/travis/com/bizaio/deepthought/master?label=master%20build)](https://travis-ci.com/bizaio/deepthought) [![GitHub issues](https://img.shields.io/github/issues/bizaio/deepthought)](https://github.com/bizaio/deepthought/issues) ![GitHub](https://img.shields.io/github/license/bizaio/deepthought) 
+[![Consumer Data Standards v1.2.0](https://img.shields.io/badge/Consumer%20Data%20Standards-v1.2.0-success)](https://consumerdatastandardsaustralia.github.io/standards) [![master build](https://img.shields.io/travis/com/bizaio/deepthought/master?label=master%20build)](https://travis-ci.com/bizaio/deepthought) [![GitHub issues](https://img.shields.io/github/issues/bizaio/deepthought)](https://github.com/bizaio/deepthought/issues) ![GitHub](https://img.shields.io/github/license/bizaio/deepthought) 
 
 The Deep Thought project is intended to be a reference Data Holder for the Australian Consumer Data Right (aka "open banking"). It is currently being developed by Biza.io as part of it's DataRight Lab initiative.
 
@@ -259,7 +257,7 @@ If you are considering deploying `Deep Thought` into production we encourage you
 
 ## Building
 
-TODO
+*WIP*: We will update this soon
 
 ## Contributing
 
