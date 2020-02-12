@@ -2,6 +2,7 @@ package io.biza.deepthought.product.api;
 
 import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.enumerations.BankingProductEffectiveWithAll;
+import io.biza.babelfish.cdr.exceptions.UnsupportedPayloadException;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV2;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductListV2;

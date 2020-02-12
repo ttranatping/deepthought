@@ -115,10 +115,17 @@
             <artifactId>babelfish-cdr</artifactId>
             <version>${babelfish-cdr.version}</version>
         </dependency>
+        
 
         <dependency>
             <groupId>io.biza</groupId>
             <artifactId>deepthought-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.biza</groupId>
+            <artifactId>deepthought-common</artifactId>
             <version>${project.version}</version>
         </dependency>
 

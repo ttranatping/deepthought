@@ -4,11 +4,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 
 @SpringBootApplication
+@ComponentScan({"io.biza.deepthought.common.component", "io.biza.deepthought.data.component", "io.biza.deepthought.product"})
 public class DeepThoughtProductApiApplication {
 
   public static void main(String[] args) {
@@ -30,5 +36,4 @@ public class DeepThoughtProductApiApplication {
         .license(new License().name("GPL 3.0")
             .url("https://github.com/bizaio/deepthought/blob/develop/LICENSE")));
   }
-
 }

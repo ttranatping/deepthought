@@ -8,20 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
+import io.biza.babelfish.cdr.exceptions.UnsupportedPayloadException;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDetailV2;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductV2;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV2;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductListV2;
 import io.biza.babelfish.cdr.models.responses.container.ResponseBankingProductListDataV2;
-import io.biza.deepthought.common.CDRContainerAttributes;
+import io.biza.deepthought.common.support.CDRContainerAttributes;
+import io.biza.deepthought.common.support.CDRVersioner;
+import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.persistence.model.ProductData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import io.biza.deepthought.data.specification.ProductSpecifications;
-import io.biza.deepthought.product.DeepThoughtMapper;
 import io.biza.deepthought.product.api.delegate.ProductApiDelegate;
 import io.biza.deepthought.product.api.requests.RequestListProducts;
 import lombok.extern.slf4j.Slf4j;
@@ -92,8 +95,9 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
       productResponse.meta(CDRContainerAttributes.toMeta());
       productResponse.links(CDRContainerAttributes.toLinks());
       productResponse.data(mapper.map(productResult.get(), BankingProductDetailV2.class));
-      LOG.debug("Product Response returned is: {}", productResponse);
+      
       return ResponseEntity.ok(productResponse);
+      
     } else {
       LOG.warn("Invalid Product Identifier of {} requested, returning 400 Error", productId);
       return ResponseEntity.badRequest().build();

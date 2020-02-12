@@ -1,4 +1,4 @@
-package io.biza.deepthought.product;
+package io.biza.deepthought.data.component;
 
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.impl.ConfigurableMapper;

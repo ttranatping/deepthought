@@ -1,4 +1,4 @@
-package io.biza.deepthought.common;
+package io.biza.deepthought.common.support;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;

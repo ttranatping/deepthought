@@ -1,4 +1,4 @@
-package io.biza.deepthought.admin;
+package io.biza.deepthought.data.component;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;

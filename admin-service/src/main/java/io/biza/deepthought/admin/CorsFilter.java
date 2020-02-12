@@ -27,7 +27,6 @@ public class CorsFilter implements Filter {
       throws IOException, ServletException {
     final HttpServletResponse response = (HttpServletResponse) res;
     // TODO: Global cors
-
     response.setHeader("Access-Control-Allow-Origin", apiUrl);
     response.setHeader("Access-Control-Allow-Credentials", "true");
     response.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET, OPTIONS, DELETE");
