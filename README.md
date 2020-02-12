@@ -135,19 +135,19 @@ On first boot Deep Thought performs a number of initialisation activities associ
 
 After obtaining the publicly assigned IP from the Amazon console and ssh to the IP using your SSH key and the username of `ubuntu`. On login you will be presented a message of the day containing the endpoint details. If the endpoint details still refer to `localhost` the initialisation has not yet completed.
 
-<img src="/screenshots/step9-motd?raw=true" width="800px"> 
+<img src="/screenshots/step9-motd.png?raw=true" width="800px"> 
 
 **Step 10**
 
 Load the URL for *Deep Thought Administration GUI* and you should be presented with the Deep Thought themed Keycloak login. Login with the default username of `deepthought` and password of `solongandthanksforallthefish`.
 
-<img src="/screenshots/step10-login?raw=true" width="800px"> 
+<img src="/screenshots/step10-login.png?raw=true" width="800px"> 
 
 **Step 11**
 
 After logging in and changing your password you can now begin building out your Data Holder.
 
-<img src="/screenshots/step11-deepthought?raw=true" width="800px"> 
+<img src="/screenshots/step11-deepthought.png?raw=true" width="800px"> 
 
 ### GitHub Releases
 
