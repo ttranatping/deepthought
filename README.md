@@ -10,9 +10,9 @@ Deep Thought is currently developed and maintained by [Biza.io](https://www.biza
 
 ## Features
 
-  - Complete Product Endpoint support for V1 and V2 Payloads
+  - Complete Product Reference Data support for V1 and V2 Payloads
   - Administration API for Payload Manipulation backed by Hibernate
-  - Graphical User Interface for Administration with full validation and type labelling presentation
+  - Graphical User Interface for Administration with full validation and type labeling presentation
   - Database backed storage of data with payload mappings powered by [Orika Mapper](https://github.com/orika-mapper/orika)
   - Ansible configuration and Packer rules for DevOps enabled deployment
   - Self Contained Amazon AMI for rapid deployment
