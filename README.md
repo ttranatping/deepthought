@@ -79,7 +79,79 @@ The All in One image contains the following:
 - A Keycloak service configured for the `admin-service` and setup with a default username (`deepthought`) and password (`solongandthanksforallthefish`)
 - An Nginx reverse proxy which has been automatically configured with a dynamically issued SSL certificate as a subdomain of `cdr.zone` (one of our domains)
 
+#### Deployment
+
+Our Amazon Marketplace entry, which makes things even easier, is currently awaiting approval however in the meantime you can deploy the public AMI `ami-0d0fe791606551e99` in the `ap-southeast-2` region directly as follows:
+
+**Note:** In order to conduct SSL initialisation the AMI requires a Public IP to be assigned with Internet access.
+
+**Step 1**
+
+From the *Launch Instance* dialog within AWS find the current Deep Thought AMI (`ami-0d0fe791606551e99`).
+
+<img src="/screenshots/step1-launchinstance.png?raw=true" width="800px"> 
+
+**Step 2**
+
+Select an instance type of at least `t2.small` type. Other instance types should function however small instance types will encounter performance degradation
+
+<img src="/screenshots/step2-instancetype.png?raw=true" width="800px"> 
+
+**Step 3**
+
+Select Network details and **make sure** that *Auto-assign Public IP* is selected.
+
+<img src="/screenshots/step3-instancedetails.png?raw=true" width="800px"> 
+
+**Step 4**
+
+Intialise a Root volume of at least 8GB
+
+<img src="/screenshots/step4-storage.png?raw=true" width="800px"> 
+
+**Step 5**
+
+Add tags if desired
+
+<img src="/screenshots/step5-tags.png?raw=true" width="800px"> 
+
+**Step 6**
+
+Initialise a Security Group with access to SSH, HTTP and HTTPS. HTTP is used for Letsencrypt SSL certificate initialisation and should be 0.0.0.0/0. For SSH and HTTPS you can choose to limit the IP range to your source address.
+
+<img src="/screenshots/step6-securitygroups.png?raw=true" width="800px"> 
+
+**Step 7**
+
+Review your instance and proceed with launch making sure you choose an SSH key pair you have access to.
+
+<img src="/screenshots/step7-instancelaunch.png?raw=true" width="800px"> 
+
+**Step 8**
+
+On first boot Deep Thought performs a number of initialisation activities associated with setting up a Root CA accepted certificate. Consequently initialisation can take up to 10 minutes.
+
+**Step 9**
+
+After obtaining the publicly assigned IP from the Amazon console and ssh to the IP using your SSH key and the username of `ubuntu`. On login you will be presented a message of the day containing the endpoint details. If the endpoint details still refer to `localhost` the initialisation has not yet completed.
+
+<img src="/screenshots/step9-motd?raw=true" width="800px"> 
+
+**Step 10**
+
+Load the URL for *Deep Thought Administration GUI* and you should be presented with the Deep Thought themed Keycloak login. Login with the default username of `deepthought` and password of `solongandthanksforallthefish`.
+
+<img src="/screenshots/step10-login?raw=true" width="800px"> 
+
+**Step 11**
+
+After logging in and changing your password you can now begin building out your Data Holder.
+
+<img src="/screenshots/step11-deepthought?raw=true" width="800px"> 
+
 ### GitHub Releases
+
+*WIP:* We will release these soon. 
 
 As a fast alternative to using the Amazon AMI you can download the GitHub Releases and run the components locally. By default the components are configured to use a H2 file based database (at `../localdb`) and authenticated via a registration enabled OIDC server hosted by [Biza.io](https://biza.io/) for our [DataRight.io](https://dataright.io) project.
 
