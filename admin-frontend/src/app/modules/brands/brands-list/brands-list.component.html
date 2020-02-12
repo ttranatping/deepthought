@@ -1,9 +1,11 @@
-<div style="text-align: right; margin-bottom: 10px;">
+<h1>
+    Brands
     <p-button
         label="Create brand"
         (click)="createBrand()"
+        style="float: right;"
     ></p-button>
-</div>
+</h1>
 
 <p-table [value]="brands$ | async" [scrollable]="true">
     <ng-template pTemplate="header">

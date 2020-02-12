@@ -3,14 +3,13 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { TypeUtilityService } from '@app/core/services/type-utility.service';
 import {
-    BankingProductDepositRateType, BankingProductLendingRateType, BankingProductRateTierApplicationMethod,
-    CommonUnitOfMeasureType,
-    DioProductRateDeposit, DioProductRateLending, FormFieldType,
+    BankingProductDepositRateType,
+    DioProductRateDeposit,
+    FormFieldType,
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
 import { ConfirmationService, DialogService } from 'primeng/api';
 import { ProductRateDepositCreateEditComponent } from './product-rate-deposit-create-edit/product-rate-deposit-create-edit.component';
-import {falseIfMissing} from 'protractor/built/util';
 
 @Component({
   selector: 'app-product-view-rates-deposit',

@@ -3,9 +3,7 @@ import {ActivatedRoute, ParamMap} from '@angular/router';
 import {TypeManagementService} from '@app/core/services/type-management.service';
 import {TypeUtilityService} from '@app/core/services/type-utility.service';
 import {
-    BankingProductDepositRateType,
     BankingProductLendingRateType,
-    DioProductRateDeposit,
     DioProductRateLending, FormFieldType,
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';

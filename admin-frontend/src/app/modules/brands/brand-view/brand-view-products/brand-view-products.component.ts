@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
     BankingProductCategory,
     DioProduct,
@@ -18,7 +18,7 @@ import { CdrFormSelect } from '@app/shared/forms/cdr-form-control/cdr-form-contr
   templateUrl: './brand-view-products.component.html',
   styleUrls: ['./brand-view-products.component.scss']
 })
-export class BrandViewProductsComponent implements OnInit {
+export class BrandViewProductsComponent implements OnInit, AfterViewInit {
 
     brandId: string;
     products: DioProduct[];
@@ -55,6 +55,10 @@ export class BrandViewProductsComponent implements OnInit {
         this.filters.category.valueChanges.pipe(
             switchMap(() => this.fetchProducts())
         ).subscribe();
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => this.layoutService.runWalkthrough(), 100);
     }
 
     fetchProducts() {

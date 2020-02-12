@@ -4,8 +4,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { environment } from '@env';
 import { filter } from 'rxjs/operators';
 import { TypeManagementService } from '@app/core/services/type-management.service';
-import {BASE_PATH, FormFieldType} from '@bizaoss/deepthought-admin-angular-client';
-import {RuntimeConfigLoaderService} from 'runtime-config-loader';
+import { FormFieldType } from '@bizaoss/deepthought-admin-angular-client';
+import { RuntimeConfigLoaderService } from 'runtime-config-loader';
 
 export const STORAGE_REDIRECT_URI_KEY = 'redirectUri';
 

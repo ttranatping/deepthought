@@ -26,6 +26,11 @@ export class BrandsListComponent implements OnInit {
 
     ngOnInit() {
         this.layoutService.togglePageLoader.emit(true);
+        this.layoutService.runWalkthrough([{
+            element: document.querySelectorAll('.SidebarMenu li')[0],
+            position: 'right',
+            intro: 'Here you can find all brands list!'
+        }]);
 
         this.breadcrumbService.setItems([{
             label: 'Brands',

@@ -12,6 +12,9 @@
         </div>
 
         <p-button
+            data-intro="In Deep Thought you will find actions on the right hand side"
+            data-position='left'
+            id="createProduct"
             label="Create product"
             (click)="createProduct()"
         ></p-button>
@@ -27,7 +30,7 @@
         </tr>
     </ng-template>
 
-    <ng-template pTemplate="body" let-product>
+    <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
         <tr>
             <td class="Product-base">
                 <h3>{{ product.name }}</h3>
@@ -35,11 +38,16 @@
             </td>
             <td class="Product-category">{{ getProductCategory(product.cdrBanking.productCategory) }}</td>
             <td class="Product-actions">
-                <p-button
-                    label="View"
-                    pTooltip="View product detail"
-                    [routerLink]="['/brands', this.brandId, 'products', product.id]"
-                ></p-button>
+                <div style="display: inline-table;"
+                     [attr.data-intro]="rowIndex === 0 ? 'In Deep Thought you will find actions on the right hand side' : null"
+                     data-position='left'
+                >
+                    <p-button
+                        label="View"
+                        pTooltip="View product detail"
+                        [routerLink]="['/brands', this.brandId, 'products', product.id]"
+                    ></p-button>
+                </div>
             </td>
         </tr>
     </ng-template>
