@@ -2,12 +2,10 @@ package io.biza.deepthought.data.translation.mapper;
 
 import java.util.ArrayList;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductBundleV1;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRateV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.DioProductBundle;
 import io.biza.deepthought.data.persistence.model.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.ProductData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositData;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;

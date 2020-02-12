@@ -1,6 +1,5 @@
 package io.biza.deepthought.admin.api.controller;
 
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -22,7 +21,6 @@ import io.biza.deepthought.data.enumerations.DioValidationErrorType;
 import io.biza.deepthought.data.payloads.ResponseValidationError;
 import io.biza.deepthought.data.payloads.ValidationError;
 import lombok.extern.slf4j.Slf4j;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;

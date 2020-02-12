@@ -46,6 +46,8 @@
         <spring-shell.version>2.0.1.RELEASE</spring-shell.version>
         <classgraph.version>4.8.60</classgraph.version>
         <dockerfile.skip>true</dockerfile.skip>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <github-release-maven-plugin.version>1.0.2</github-release-maven-plugin.version>
     </properties>
 
     <scm>
@@ -55,8 +57,8 @@
     </scm>
     <modules>
         <module>keycloak-theme</module>
-	<module>data</module>
-	<module>common</module>
+        <module>data</module>
+        <module>common</module>
         <module>admin-service</module>
         <module>product-api-service</module>
         <module>admin-frontend</module>
@@ -72,6 +74,28 @@
                 <configuration>
                     <skip>false</skip>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.ragedunicorn.tools.maven</groupId>
+                <artifactId>github-release-maven-plugin</artifactId>
+                <version>${github-release-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <configuration>
+                            <owner>bizaio</owner>
+                            <repository>deepthought</repository>
+                            <server>github-oauth</server>
+                            <tagName>v${project.version}</tagName>
+                            <releaseNotes>RELEASE_NOTES.md</releaseNotes>
+                            <assets>
+                                <asset>admin-service/target/deepthought-admin-service-${project.version}.jar</asset>
+                                <asset>product-api-service/target/deepthought-product-api-service-${project.version}.jar</asset>
+                                <asset>admin-frontend/target/deepthought-admin-frontend-${project.version}.zip</asset>
+                            </assets>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -116,4 +140,59 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven-gpg-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${maven-javadoc-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${maven-source-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

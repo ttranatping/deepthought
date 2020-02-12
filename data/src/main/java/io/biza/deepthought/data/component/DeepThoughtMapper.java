@@ -12,6 +12,7 @@ import io.biza.deepthought.data.OrikaFactoryConfigurer;
 @Component
 public class DeepThoughtMapper extends ConfigurableMapper implements ApplicationContextAware {
 
+  @SuppressWarnings("unused")
   private ApplicationContext applicationContext;
   private OrikaFactoryConfigurer configurer;
 

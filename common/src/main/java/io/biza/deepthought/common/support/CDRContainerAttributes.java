@@ -1,16 +1,12 @@
 package io.biza.deepthought.common.support;
 
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.biza.babelfish.cdr.models.payloads.LinksPaginatedV1;
 import io.biza.babelfish.cdr.models.payloads.LinksV1;
 import io.biza.babelfish.cdr.models.payloads.MetaPaginatedV1;
 import io.biza.babelfish.cdr.models.payloads.MetaV1;
-import io.biza.babelfish.cdr.models.responses.CDRResponsePaginatedV1;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 public class CDRContainerAttributes {
   
   public static MetaPaginatedV1 toMetaPaginated(Page<?> inputPage) {

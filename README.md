@@ -1,2 +1,175 @@
-# deepthought
-The Deep Thought project is intended to be a Reference Implementation for Open Banking implementations. It is initially focused on the Australian Consumer Data Right and is currently being developed by Biza.io as part of it's DataRight Lab initiative.
+# Deep Thought
+
+[![GitHub Release](https://img.shields.io/github/v/release/bizaio/deepthought?label=latest%20release)](https://search.maven.org/artifact/io.biza/deepthought) [![Consumer Data Standards v1.2.0](https://img.shields.io/badge/Consumer%20Data%20Standards-v1.2.0-success)](https://consumerdatastandardsaustralia.github.io/standards)
+
+[![develop build](https://img.shields.io/travis/com/bizaio/deepthought/develop?label=develop%20build)](https://travis-ci.com/bizaio/deepthought) [![master build](https://img.shields.io/travis/com/bizaio/deepthought/master?label=master%20build)](https://travis-ci.com/bizaio/deepthought) [![GitHub issues](https://img.shields.io/github/issues/bizaio/deepthought)](https://github.com/bizaio/deepthought/issues) ![GitHub](https://img.shields.io/github/license/bizaio/deepthought) 
+
+The Deep Thought project is intended to be a reference Data Holder for the Australian Consumer Data Right (aka "open banking"). It is currently being developed by Biza.io as part of it's DataRight Lab initiative.
+
+Deep Thought is currently developed and maintained by [Biza.io](https://www.biza.io).
+
+## Features
+
+  - Complete Product Endpoint support for V1 and V2 Payloads
+  - Administration API for Payload Manipulation backed by Hibernate
+  - Graphical User Interface for Administration with full validation and type labelling presentation
+  - Database backed storage of data with payload mappings powered by [Orika Mapper](https://github.com/orika-mapper/orika)
+  - Ansible configuration and Packer rules for DevOps enabled deployment
+  - Self Contained Amazon AMI for rapid deployment
+  - OpenAPI 3 Support for all components
+
+We are currently working on adding the following:
+   - Support for all Authenticated Endpoints
+   - Integration with the CDR Consent flow
+
+## Screenshots
+
+
+
+## Quick Start
+
+Deep Thought is split into a number of individual components which interact with each other. The easiest way to get started is to use the [Amazon AMI](#amazon-ami) we make available with the latest release which includes a preconfigured Keycloak authentication server and MySQL database.
+
+
+## Table of Contents
+
+- [Features](#features)
+- [Quick Start](#quick-start)
+- [Running](#running)
+- [Support](#support)
+- [Compatibility](#compatibility)
+- [Prerequisites](#prerequisites)
+- [Using Babelfish CDR in your project](#using-deepthought-in-your-project)
+- [Extended Features](#extended-features)
+- [Building](#building)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Running
+
+[(Back to top)](#table-of-contents)
+
+Deep Thought can be deployed via a number of methods:
+  - Amazon AMI deployment ([See Quick Start](#quick-start)
+  - From GitHub Release artefacts
+  - Compiled from Source  
+
+### Amazon AMI
+
+[(Back to top)](#table-of-contents)
+
+Deploying using the preconfigured Amazon AMI is an ideal way to test Deep Thought.
+
+
+## Deployments
+
+[(Back to top)](#table-of-contents)
+
+`Deep Thought` is currently deployed within the following projects or organisations:
+
+   - [DataRight Lab](https://dataright.io/lab)
+   - [Biza Hosted Holder](https://biza.io/holder/)
+
+If you are using `Deep Thought` in your organisation we welcome you to let us know by [email](mailto:hello@biza.io).
+
+## Support
+
+[(Back to top)](#table-of-contents)
+
+[Biza Pty Ltd](https://biza.io/) are currently the primary maintainers of this software. 
+
+We welcome bug reports via [GitHub Issues](https://github.com/bizaio/deepthought/issues) or if you prefer via [email](mailto:hello@biza.io).
+
+If you are looking for commercial support we offer a number of deployment options including commercial software support, a managed service or pure Software-as-a-Service.
+
+
+## Compatibility
+
+[(Back to top)](#table-of-contents)
+
+The Deep Thought project aims to be entirely compliant to the [Consumer Data Standards](https://consumerdatastandardsaustralia.github.io/standards). While we try to align our version numbers to those of the Standards unfortunately the DSB has chosen to use all of the *x.y.z* versioning of the semantic versioning scheme. Consequently the following table outlines the alignment between Deep Thought versions and the Standards:
+
+Deep Thought Version                 | Release Date | CDS Spec Compatibility     | Notes                                                             | Status
+------------------------------------ | ------------ | -------------------------- | ----------------------------------------------------------------- | --------
+1.0.3-SNAPSHOT (**current develop**) | Regular      | 1.2.0                      | Snapshot Development Release                                      | Active Development
+1.0.2 (**current stable**)           | 2020-02-12   | 1.2.0                      | [tag v1.2.2](https://github.com/bizaio/deepthought/tree/v1.2.2)   | Supported
+
+## Prerequisites
+
+[(Back to top)](#table-of-contents)
+
+You need the following installed and available in your $PATH during compilation:
+- Java 11+
+- Apache Maven 3.6.3 or later
+- NodeJS 12.14+
+- NPM 6.12+
+
+## Architecture
+
+[(Back to top)](#table-of-contents)
+
+Deep Thought is a combination of frontend and backend components, database storage and authentication clients designed to be implemented either all together or in a distributed fashion for production deployments.
+
+### Components
+
+[(Back to top)](#table-of-contents)
+
+Deep Thought is comprised of multiple services designed for either self contained or complete Production deployment.
+
+Component Name                       | Description                                                                           | Dependencies
+-------------------------------------|---------------------------------------------------------------------------------------|------------------------------
+admin-angular-client                 | An NPMJS.com published artefact written in Typescript for accessing the admin-service | `admin-service`
+admin-frontend                       | Angular based GUI for Holder Administration activities                                | `admin-service`
+admin-service                        | OpenAPI 3 Administration API secured by an OIDC server                                | `data` `common`
+ansible                              | Ansible rules for deployment of the All in One Server                                 |
+common                               | Shared Spring components                                                              |
+data                                 | Shared Hibernate components                                                           |
+keycloak-theme                       | Customer Keycloak Login theme used within the AIO AMI                                 | Keycloak Server
+packer                               | Packer definitions for the AIO AMI                                                    |
+product-api-service                  | CDR Compliant Product Reference Data Endpoint                                         | `data` `common`
+
+### Database Support
+
+[(Back to top)](#table-of-contents)
+
+Deep Thought utilises Java Hibernate for database operations. While it is likely that it can support any database Hibernate supports we currently test it for the following database architectures:
+  - H2 Database using Local Directory/File storage
+  - MySQL Database via Network
+
+**By default** Deep Thought components will initialise using a H2 file based database located at `../localdb/deepthought`. Database access parameters can modified via a custom Spring YAML configuration file as demonstrated by the `spring-config.yml` [template contained within](https://github.com/bizaio/deepthought/blob/develop/ansible/roles/deepthought-service/templates/spring-config.yml) the Ansible component.
+
+### Authentication
+
+[(Back to top)](#table-of-contents)
+
+Deep Thought uses OpenID Connect for authentication within the Administration interface. The Administration interface expects the authenticated user to be granted the scopes of `DEEPTHOUGHT:ADMIN:PRODUCT:READ` and `DEEPTHOUGHT:ADMIN:PRODUCT:WRITE`.
+
+**By default** Deep Thought utilises an OpenID Connect server hosted by DataRight.io. While no warranty is implied for this server we have enabled User Registration for this realm to ease testing Deep Thought locally. As with database configuration it is possible to alter the JWKS endpoint used by utilising a custom Spring config as demonstrated within the Ansible rules for [Spring Configuration](https://github.com/bizaio/deepthought/blob/develop/ansible/roles/deepthought-service/templates/spring-config.yml) and by deploying a custom `config.json` within the Admin Frontend in `assets/config.json` as demonstrated in the Ansible rules for [deepthought-frontend](https://github.com/bizaio/deepthought/blob/develop/ansible/roles/deepthought-frontend/templates/config.json).
+
+## Production Deployment
+
+[(Back to top)](#table-of-contents)
+
+Deep Thought is specifically built to be deployed within Production like environments. This means that it deliberately isolates individual components and, where relevent, assumes that certain components will be deployed in separate security zones from others. While we are still putting together some more indepth documentation around these deployment methodologies at a bare minimum we **recommend** the following:
+
+1. Deployment of `admin-service` and `admin-frontend` should occur in a protected security environment with an internal OIDC server
+2. `product-api-service` should be deployed behind an API Gateway (typically in reverse proxy configuration)
+3. Databases should be configured in a Master for `admin-service` access and Read-Only Replica for `product-api-service`
+
+If you are considering deploying `Deep Thought` into production we encourage you to contact us by [email](mailto:hello@biza.io).
+
+## Contributing
+
+[(Back to top)](#table-of-contents)
+
+1. Clone repository and create a new branch: `$ git checkout https://github.com/bizaio/deepthought -b my_new_branch`
+2. Make changes (including tests please!)
+3. Submit Pull Request for integration of changes
+
+## License
+
+[(Back to top)](#table-of-contents)
+
+GNU General Public License v3.0 2020 - [Biza Pty Ltd](https://biza.io/). Please have a look at the [LICENSE.md](LICENSE.md) for more details.
+
+
