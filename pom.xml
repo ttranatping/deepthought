@@ -53,6 +53,7 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <github-release-maven-plugin.version>1.0.2</github-release-maven-plugin.version>
         <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
+        <skip.npm>true</skip.npm>
     </properties>
 
     <scm>

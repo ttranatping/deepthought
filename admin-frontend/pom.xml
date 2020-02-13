@@ -20,7 +20,6 @@
                 <version>${frontend-maven-plugin.version}</version>
 
                 <executions>
-
                     <execution>
                         <id>install node and npm</id>
                         <goals>
@@ -114,6 +113,7 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <skipAssembly>${skip.npm}</skipAssembly>
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptors>
                                 <descriptor>assembly.xml</descriptor>
