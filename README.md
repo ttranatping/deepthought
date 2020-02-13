@@ -189,7 +189,7 @@ The Deep Thought project aims to be entirely compliant to the [Consumer Data Sta
 
 Deep Thought Version                 | Release Date | CDS Spec Compatibility     | Notes                                                             | Status
 ------------------------------------ | ------------ | -------------------------- | ----------------------------------------------------------------- | --------
-1.0.3-SNAPSHOT (**current develop**) | Regular      | 1.2.0                      | Snapshot Development Release                                      | Active Development
+1.1.0-SNAPSHOT (**current develop**) | Regular      | 1.2.0                      | Snapshot Development Release                                      | Active Development
 1.0.2 (**current stable**)           | 2020-02-12   | 1.2.0                      | [tag v1.2.2](https://github.com/bizaio/deepthought/tree/v1.2.2)   | Supported
 
 ## Prerequisites
