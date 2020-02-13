@@ -1,6 +1,8 @@
 # Deep Thought
 
-[![Consumer Data Standards v1.2.0](https://img.shields.io/badge/Consumer%20Data%20Standards-v1.2.0-success)](https://consumerdatastandardsaustralia.github.io/standards) [![master build](https://img.shields.io/travis/com/bizaio/deepthought/master?label=master%20build)](https://travis-ci.com/bizaio/deepthought) [![GitHub issues](https://img.shields.io/github/issues/bizaio/deepthought)](https://github.com/bizaio/deepthought/issues) ![GitHub](https://img.shields.io/github/license/bizaio/deepthought) 
+[![Maven Central](https://img.shields.io/maven-central/v/io.biza/deepthought?label=latest%20release)](https://search.maven.org/artifact/io.biza/deepthought) [![Nexus Latest Snapshot](https://img.shields.io/nexus/s/io.biza/deepthought?label=latest%20snapshot&server=https%3A%2F%2Foss.sonatype.org)](https://oss.sonatype.org/#nexus-search;classname~io.biza.deepthought) [![Consumer Data Standards v1.2.0](https://img.shields.io/badge/Consumer%20Data%20Standards-v1.2.0-success)](https://consumerdatastandardsaustralia.github.io/standards)
+
+[![develop build](https://img.shields.io/travis/com/bizaio/deepthought/develop?label=develop%20build)](https://travis-ci.com/bizaio/deepthought) [![master build](https://img.shields.io/travis/com/bizaio/deepthought/master?label=master%20build)](https://travis-ci.com/bizaio/deepthought) [![GitHub issues](https://img.shields.io/github/issues/bizaio/deepthought)](https://github.com/bizaio/deepthought/issues) ![GitHub](https://img.shields.io/github/license/bizaio/deepthought) 
 
 The Deep Thought project is intended to be a reference Data Holder for the Australian Consumer Data Right (aka "open banking"). It is currently being developed by Biza.io as part of it's DataRight Lab initiative.
 
@@ -8,7 +10,7 @@ Deep Thought is currently developed and maintained by [Biza.io](https://www.biza
 
 ## Features
 
-  - Complete Product Reference Data support for V1 and V2 Payloads
+  - Complete Product Reference Data support for V1 and V2 Payloads powered by [babelfish-cdr](https://github.com/bizaio/babelfish-cdr)
   - Administration API for Payload Manipulation backed by Hibernate
   - Graphical User Interface for Administration with full validation and type labeling presentation
   - Database backed storage of data with payload mappings powered by [Orika Mapper](https://github.com/orika-mapper/orika)
@@ -24,7 +26,7 @@ We are currently working on adding the following:
 
 <img src="/screenshots/product-list.png?raw=true" width="500px"> | <img src="/screenshots/product-view.png?raw=true" width="500px"> | <img src="/screenshots/fees-list.png?raw=true" width="500px">
 :----:|:-----:|:-----:|
-Product List | Account View | Fees List |
+Product List | Product View | Fees List |
 <img src="/screenshots/constraints-eligibility-list.png?raw=true" width="500px"> | <img src="/screenshots/additional-info-validation.png?raw=true" width="500px"> | <img src="/screenshots/card-art-list.png?raw=true" width="500px"> |
 Constraints & Eligibility List | Additional Information Validation | Card Art List
 
