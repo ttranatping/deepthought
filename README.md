@@ -151,13 +151,11 @@ After logging in and changing your password you can now begin building out your 
 
 ### GitHub Releases
 
-*WIP:* We will release these soon. 
-
 As a fast alternative to using the Amazon AMI you can download the GitHub Releases and run the components locally. By default the components are configured to use a H2 file based database (at `../localdb`) and authenticated via a registration enabled OIDC server hosted by [Biza.io](https://biza.io/) for our [DataRight.io](https://dataright.io) project.
 
 #### Running
 
-1. From the GitHub Releases page download each of the components comprising the release, currently this is `admin-service`, `admin-frontend` and `product-api-service`
+1. From the [GitHub Releases page](https://github.com/bizaio/deepthought/releases) download each of the components comprising the release, currently this is `admin-service`, `admin-frontend` and `product-api-service`
 2. For `admin-service` and `product-api-service` execute `jar -jar jar-file-name`, they are configured to operate on ports 8080 (`admin-service`) and 8081 (`product-api-service`)
 3. For `admin-frontend` you will need to run this on a local http server. After extracting the zip file, `cd` into the directory and then execute your [simple http server of choice](https://gist.github.com/willurd/5720255). For example for Python 3.x enabled hosts `python -m http.server 4200` will result in a server available at [http://localhost:4200](http://localhost:4200)
 
@@ -165,11 +163,11 @@ As a fast alternative to using the Amazon AMI you can download the GitHub Releas
 
 [(Back to top)](#table-of-contents)
 
-`Deep Thought` is currently deployed within the following projects or organisations:
+*Deep Thought* is currently deployed within the following projects or organisations:
 - [DataRight Lab](https://dataright.io/lab)
 - [Biza Hosted Holder](https://biza.io/holder/)
 
-If you are using `Deep Thought` in your organisation we welcome you to let us know by [email](mailto:hello@biza.io).
+If you are using *Deep Thought* in your organisation we welcome you to let us know by [email](mailto:hello@biza.io).
 
 ## Support
 
@@ -255,11 +253,20 @@ Deep Thought is specifically built to be deployed within Production like environ
 2. `product-api-service` should be deployed behind an API Gateway (typically in reverse proxy configuration)
 3. Databases should be configured in a Master for `admin-service` access and Read-Only Replica for `product-api-service`
 
-If you are considering deploying `Deep Thought` into production we encourage you to contact us by [email](mailto:hello@biza.io).
+If you are considering deploying *Deep Thought* into production we encourage you to contact us by [email](mailto:hello@biza.io).
 
 ## Building
 
-*WIP*: We will update this soon
+This project is a Maven based meta package. Consequently it is possible to build all components at once then run from each sub directory.
+
+1. Clone the repository: `$ git clone https://github.com/bizaio/deepthought`
+2. Change to the root project directory: `cd deepthought`
+3. Execute the build including the Angular npm wrapper: `mvn clean install -D -Dskip.npm=false`
+4. Start each service individually:
+   - Start `admin-service`: `cd admin-service; mvn spring-boot:run`
+   - Start `admin-frontend`: `cd admin-frontend; ng serve`
+   - Start `product-api-service`: `cd product-api-service; mvn spring-boot:run`
+
 
 ## Contributing
 
