@@ -53,6 +53,7 @@ Deep Thought is split into a number of individual components which interact with
   - [Database Support](#database-support)
   - [Authentication](#authentication)
 - [Production Deployment](#production-deployment)
+- [Building](#building)
 - [Contributing](#contributing)
 - [License](#license)
 
