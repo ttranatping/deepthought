@@ -9,6 +9,48 @@
     <packaging>pom</packaging>
     <name>Deep Thought: Parent Project</name>
     <description>The Deep Thought project is intended to be a reference Data Holder for the Australian Consumer Data Right (aka "open banking"). It is currently being developed by Biza.io as part of it's DataRight Lab initiative.</description>
+    <url>https://github.com/bizaio/deepthought</url>
+    <organization>
+        <name>Biza Pty Ltd</name>
+        <url>https://biza.io/</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>perlboy</id>
+            <name>Stuart Low</name>
+            <email>hello@biza.io</email>
+            <organization>Biza Pty Ltd</organization>
+            <organizationUrl>https://www.biza.io/</organizationUrl>
+            <roles>
+                <role>founder</role>
+                <role>developer</role>
+            </roles>
+            <timezone>+11</timezone>
+            <properties>
+                <picUrl>https://avatars.githubusercontent.com/perlboy</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <id>edmoiseenkov</id>
+            <name>Eduard Moiseenkov</name>
+            <email>hello@biza.io</email>
+            <organization>Biza Pty Ltd</organization>
+            <organizationUrl>https://www.biza.io/</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+11</timezone>
+            <properties>
+                <picUrl>https://avatars.githubusercontent.com/edmoiseenkov</picUrl>
+            </properties>
+        </developer>
+    </developers>
+    <licenses>
+        <license>
+            <name>GNU General Public License v3.0 or later</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
+        </license>
+    </licenses>
     <properties>
         <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
@@ -66,8 +108,8 @@
         <module>data</module>
         <module>common</module>
         <module>admin-service</module>
-        <module>product-api-service</module>
         <module>admin-frontend</module>
+        <module>product-api-service</module>
     </modules>
 
     <build>
@@ -93,7 +135,7 @@
                             <repository>deepthought</repository>
                             <server>github-oauth</server>
                             <tagName>v${project.version}</tagName>
-                            <releaseNotes>RELEASE_NOTES.md</releaseNotes>
+                            <releaseNotes>./RELEASE_NOTES.md</releaseNotes>
                             <assets>
                                 <asset>admin-service/target/deepthought-admin-service-${project.version}.jar</asset>
                                 <asset>product-api-service/target/deepthought-product-api-service-${project.version}.jar</asset>
@@ -184,6 +226,9 @@
     <profiles>
         <profile>
             <id>release</id>
+            <properties>
+                <skip.npm>false</skip.npm>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
