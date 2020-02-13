@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.biza</groupId>
         <artifactId>deepthought</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
     <artifactId>deepthought-data</artifactId>
     <name>Deep Thought: Data Definitions</name>
