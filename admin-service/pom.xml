@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.biza</groupId>
         <artifactId>deepthought</artifactId>
-        <version>1.0.3-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
     <artifactId>deepthought-admin-service</artifactId>
     <name>Deep Thought: Administration Service</name>
