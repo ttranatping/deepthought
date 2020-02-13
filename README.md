@@ -62,8 +62,8 @@ Deep Thought is split into a number of individual components which interact with
 [(Back to top)](#table-of-contents)
 
 Deep Thought can be deployed via a number of methods:
-  - Amazon AMI deployment ([See Quick Start](#quick-start))
-  - From GitHub Release artefacts
+  - Amazon AMI deployment ([See Amazon AMI](#amazon-ami))
+  - From GitHub Release artefacts ([See GitHub Releases](#github-releases))
   - Compiled from Source ([See Building](#building))
 
 ### Amazon AMI
