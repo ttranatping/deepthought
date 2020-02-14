@@ -17,8 +17,8 @@ import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.DioProductFeature;
-import io.biza.deepthought.data.persistence.model.ProductData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductFeatureRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +43,7 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
   @Override
   public ResponseEntity<List<DioProductFeature>> listProductFeatures(UUID brandId, UUID productId) {
 
-    List<ProductCdrBankingFeatureData> featureList = featureRepository
+    List<ProductBankingFeatureData> featureList = featureRepository
         .findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing features and have database result of {}", featureList);
     return ResponseEntity.ok(mapper.mapAsList(featureList, DioProductFeature.class));
@@ -52,7 +52,7 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
   @Override
   public ResponseEntity<DioProductFeature> getProductFeature(UUID brandId, UUID productId,
       UUID id) {
-    Optional<ProductCdrBankingFeatureData> data = featureRepository
+    Optional<ProductBankingFeatureData> data = featureRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
@@ -78,7 +78,7 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
       throw ValidationListException.builder().type(DioExceptionType.INVALID_BRAND_AND_PRODUCT).explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    ProductCdrBankingFeatureData data = mapper.map(createData, ProductCdrBankingFeatureData.class);
+    ProductBankingFeatureData data = mapper.map(createData, ProductBankingFeatureData.class);
 
     LOG.debug("Attempting to save: {}", data);
 
@@ -98,7 +98,7 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
 
   @Override
   public ResponseEntity<Void> deleteProductFeature(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductCdrBankingFeatureData> optionalData = featureRepository
+    Optional<ProductBankingFeatureData> optionalData = featureRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -117,11 +117,11 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
     
     DeepThoughtValidator.validate(validator, updateData);
     
-    Optional<ProductCdrBankingFeatureData> optionalData = featureRepository
+    Optional<ProductBankingFeatureData> optionalData = featureRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      ProductCdrBankingFeatureData data = optionalData.get();
+      ProductBankingFeatureData data = optionalData.get();
       mapper.map(updateData, data);
       featureRepository.save(data);
       LOG.debug("Updated product feature for brand: {} productId: {} id: {} with data of {}",

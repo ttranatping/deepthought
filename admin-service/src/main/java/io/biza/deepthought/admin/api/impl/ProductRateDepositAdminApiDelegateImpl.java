@@ -17,9 +17,9 @@ import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.DioProductRateDeposit;
-import io.biza.deepthought.data.persistence.model.ProductData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierData;
+import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductRateDepositRepository;
 import io.biza.deepthought.data.repository.ProductRateDepositTierRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
@@ -48,7 +48,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
   @Override
   public ResponseEntity<List<DioProductRateDeposit>> listProductRateDeposits(UUID brandId, UUID productId) {
 
-    List<ProductCdrBankingRateDepositData> feeList =
+    List<ProductBankingRateDepositData> feeList =
         rateRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing fees and have database result of {}", feeList);
     return ResponseEntity.ok(mapper.mapAsList(feeList, DioProductRateDeposit.class));
@@ -56,7 +56,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
 
   @Override
   public ResponseEntity<DioProductRateDeposit> getProductRateDeposit(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductCdrBankingRateDepositData> data = rateRepository
+    Optional<ProductBankingRateDepositData> data = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
@@ -82,10 +82,10 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
           .explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    ProductCdrBankingRateDepositData data = mapper.map(createData, ProductCdrBankingRateDepositData.class);
+    ProductBankingRateDepositData data = mapper.map(createData, ProductBankingRateDepositData.class);
 
     if (data.tiers() != null) {
-      for(ProductCdrBankingRateDepositTierData tier : data.tiers()) {
+      for(ProductBankingRateDepositTierData tier : data.tiers()) {
         if (tier.applicabilityConditions() != null) {
           tier.applicabilityConditions().rateTier(tier);
         }
@@ -114,7 +114,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
 
   @Override
   public ResponseEntity<Void> deleteProductRateDeposit(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductCdrBankingRateDepositData> optionalData = rateRepository
+    Optional<ProductBankingRateDepositData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -132,14 +132,14 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
 
     DeepThoughtValidator.validate(validator, updateData);
 
-    Optional<ProductCdrBankingRateDepositData> optionalData = rateRepository
+    Optional<ProductBankingRateDepositData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      ProductCdrBankingRateDepositData data = optionalData.get();
+      ProductBankingRateDepositData data = optionalData.get();
       
       if (data.tiers() != null) {
-        for(ProductCdrBankingRateDepositTierData tier : data.tiers()) {
+        for(ProductBankingRateDepositTierData tier : data.tiers()) {
           data.tiers().remove(tier);
           tierRepository.deleteById(tier.id());
         }
@@ -152,7 +152,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
       mapper.map(updateData, data);
       
       if (data.tiers() != null) {
-        for(ProductCdrBankingRateDepositTierData tier : data.tiers()) {
+        for(ProductBankingRateDepositTierData tier : data.tiers()) {
           if (tier.applicabilityConditions() != null) {
             tier.applicabilityConditions().rateTier(tier);
           }

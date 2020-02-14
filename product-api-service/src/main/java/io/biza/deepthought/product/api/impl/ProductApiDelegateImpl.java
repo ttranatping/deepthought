@@ -17,7 +17,7 @@ import io.biza.babelfish.cdr.models.responses.ResponseBankingProductListV2;
 import io.biza.babelfish.cdr.models.responses.container.ResponseBankingProductListDataV2;
 import io.biza.deepthought.common.support.CDRContainerAttributes;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
-import io.biza.deepthought.data.persistence.model.ProductData;
+import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductRepository;
 import io.biza.deepthought.data.specification.ProductSpecifications;
 import io.biza.deepthought.product.api.delegate.ProductApiDelegate;

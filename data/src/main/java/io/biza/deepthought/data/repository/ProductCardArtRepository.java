@@ -5,13 +5,13 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingCardArtData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingCardArtData;
 
 @Repository
 public interface ProductCardArtRepository
-    extends JpaRepository<ProductCdrBankingCardArtData, UUID> {
-  public List<ProductCdrBankingCardArtData> findAllByProduct_Product_Brand_IdAndProduct_Product_Id(
+    extends JpaRepository<ProductBankingCardArtData, UUID> {
+  public List<ProductBankingCardArtData> findAllByProduct_Product_Brand_IdAndProduct_Product_Id(
       UUID brandId, UUID productId);
-  public Optional<ProductCdrBankingCardArtData> findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(
+  public Optional<ProductBankingCardArtData> findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(
       UUID id, UUID brandId, UUID productId);
 }

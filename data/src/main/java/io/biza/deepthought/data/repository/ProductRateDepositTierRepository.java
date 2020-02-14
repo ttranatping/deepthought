@@ -5,14 +5,14 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierData;
 
 @Repository
 public interface ProductRateDepositTierRepository
-    extends JpaRepository<ProductCdrBankingRateDepositTierData, UUID> {
-  public List<ProductCdrBankingRateDepositTierData> findAllByDepositRate_Product_Product_Brand_IdAndDepositRate_Product_Product_IdAndDepositRate_Id(
+    extends JpaRepository<ProductBankingRateDepositTierData, UUID> {
+  public List<ProductBankingRateDepositTierData> findAllByDepositRate_Product_Product_Brand_IdAndDepositRate_Product_Product_IdAndDepositRate_Id(
       UUID brandId, UUID productId, UUID depositRateId);
-  public Optional<ProductCdrBankingRateDepositTierData> findByIdAndDepositRate_Product_Product_Brand_IdAndDepositRate_Product_Product_IdAndDepositRate_Id(
+  public Optional<ProductBankingRateDepositTierData> findByIdAndDepositRate_Product_Product_Brand_IdAndDepositRate_Product_Product_IdAndDepositRate_Id(
       UUID id, UUID brandId, UUID productId, UUID depositRateId);
 }
 

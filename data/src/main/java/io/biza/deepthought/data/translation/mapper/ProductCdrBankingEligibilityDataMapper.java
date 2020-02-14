@@ -3,7 +3,7 @@ package io.biza.deepthought.data.translation.mapper;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductEligibilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.DioProductEligibility;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingEligibilityData;
 import ma.glasnost.orika.MapperFactory;
 
 public class ProductCdrBankingEligibilityDataMapper implements OrikaFactoryConfigurerInterface {
@@ -11,9 +11,9 @@ public class ProductCdrBankingEligibilityDataMapper implements OrikaFactoryConfi
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
     orikaMapperFactory
-        .classMap(ProductCdrBankingEligibilityData.class, BankingProductEligibilityV1.class)
+        .classMap(ProductBankingEligibilityData.class, BankingProductEligibilityV1.class)
         .byDefault().register();
-    orikaMapperFactory.classMap(ProductCdrBankingEligibilityData.class, DioProductEligibility.class)
+    orikaMapperFactory.classMap(ProductBankingEligibilityData.class, DioProductEligibility.class)
         .field("", "cdrBanking").fieldAToB("id", "id").byDefault().register();
   }
 

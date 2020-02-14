@@ -10,12 +10,12 @@ public class ProductCdrBankingCardArtDataMapper implements OrikaFactoryConfigure
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
     orikaMapperFactory
-        .classMap(io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingCardArtData.class,
+        .classMap(io.biza.deepthought.data.persistence.model.product.ProductBankingCardArtData.class,
             DioProductCardArt.class)
         .fieldAToB("id", "id").field("", "cdrBanking").byDefault().register();
 
     orikaMapperFactory
-        .classMap(io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingCardArtData.class,
+        .classMap(io.biza.deepthought.data.persistence.model.product.ProductBankingCardArtData.class,
             BankingProductCardArtV1.class)
         .byDefault().register();
 

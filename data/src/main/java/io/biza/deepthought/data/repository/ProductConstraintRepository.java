@@ -5,10 +5,10 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingConstraintData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingConstraintData;
 
 @Repository
-public interface ProductConstraintRepository extends JpaRepository<ProductCdrBankingConstraintData, UUID> {
-  public Optional<ProductCdrBankingConstraintData> findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(UUID id, UUID brandId, UUID productId);
-  public List<ProductCdrBankingConstraintData> findAllByProduct_Product_Brand_IdAndProduct_Product_Id(UUID brandId, UUID productId);
+public interface ProductConstraintRepository extends JpaRepository<ProductBankingConstraintData, UUID> {
+  public Optional<ProductBankingConstraintData> findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(UUID id, UUID brandId, UUID productId);
+  public List<ProductBankingConstraintData> findAllByProduct_Product_Brand_IdAndProduct_Product_Id(UUID brandId, UUID productId);
 }

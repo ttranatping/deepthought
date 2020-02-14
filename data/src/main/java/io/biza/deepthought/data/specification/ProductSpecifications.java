@@ -6,18 +6,18 @@ import javax.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.enumerations.BankingProductEffectiveWithAll;
-import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.BrandData_;
-import io.biza.deepthought.data.persistence.model.ProductData;
 import io.biza.deepthought.data.persistence.model.ProductData_;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingData;
+import io.biza.deepthought.data.persistence.model.bank.BrandData;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingData_;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingData;
+import io.biza.deepthought.data.persistence.model.product.ProductData;
 
 public class ProductSpecifications {
 
   public static Specification<ProductData> updatedSince(OffsetDateTime updatedSince) {
     return (root, query, cb) -> {
-      Join<ProductData, ProductCdrBankingData> bankingJoin = root.join(ProductData_.cdrBanking);
+      Join<ProductData, ProductBankingData> bankingJoin = root.join(ProductData_.cdrBanking);
       return cb.greaterThan(bankingJoin.get(ProductCdrBankingData_.lastUpdated), updatedSince);
     };
   }
@@ -32,7 +32,7 @@ public class ProductSpecifications {
   public static Specification<ProductData> productCategory(
       BankingProductCategory productCategory) {
     return (root, query, cb) -> {
-      Join<ProductData, ProductCdrBankingData> bankingJoin = root.join(ProductData_.cdrBanking);
+      Join<ProductData, ProductBankingData> bankingJoin = root.join(ProductData_.cdrBanking);
       return cb.equal(bankingJoin.get(ProductCdrBankingData_.productCategory), productCategory);
     };
   } 
@@ -42,7 +42,7 @@ public class ProductSpecifications {
     
     if (effective.equals(BankingProductEffectiveWithAll.CURRENT)) {
       return (root, query, cb) -> {
-        Join<ProductData, ProductCdrBankingData> bankingJoin = root.join(ProductData_.cdrBanking);
+        Join<ProductData, ProductBankingData> bankingJoin = root.join(ProductData_.cdrBanking);
         
         Predicate effectiveFromNow =
             cb.lessThanOrEqualTo(bankingJoin.get(ProductCdrBankingData_.effectiveFrom), OffsetDateTime.now());
@@ -58,7 +58,7 @@ public class ProductSpecifications {
     if (effective.equals(BankingProductEffectiveWithAll.FUTURE)) {
       return (root, query, cb) -> {
         
-        Join<ProductData, ProductCdrBankingData> bankingJoin = root.join(ProductData_.cdrBanking);
+        Join<ProductData, ProductBankingData> bankingJoin = root.join(ProductData_.cdrBanking);
 
         Predicate effectiveFromNow =
             cb.greaterThanOrEqualTo(bankingJoin.get(ProductCdrBankingData_.effectiveFrom), OffsetDateTime.now());

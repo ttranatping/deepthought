@@ -17,8 +17,8 @@ import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.DioProductCardArt;
-import io.biza.deepthought.data.persistence.model.ProductData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingCardArtData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingCardArtData;
+import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductCardArtRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +43,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
   @Override
   public ResponseEntity<List<DioProductCardArt>> listProductCardArts(UUID brandId, UUID productId) {
 
-    List<ProductCdrBankingCardArtData> cardArtList =
+    List<ProductBankingCardArtData> cardArtList =
         cardArtRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing cardArts and have database result of {}", cardArtList);
     return ResponseEntity.ok(mapper.mapAsList(cardArtList, DioProductCardArt.class));
@@ -51,7 +51,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
 
   @Override
   public ResponseEntity<DioProductCardArt> getProductCardArt(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductCdrBankingCardArtData> data = cardArtRepository
+    Optional<ProductBankingCardArtData> data = cardArtRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
@@ -77,7 +77,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
           .explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    ProductCdrBankingCardArtData data = mapper.map(createData, ProductCdrBankingCardArtData.class);
+    ProductBankingCardArtData data = mapper.map(createData, ProductBankingCardArtData.class);
 
     LOG.debug("Attempting to save: {}", data);
 
@@ -99,7 +99,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
 
   @Override
   public ResponseEntity<Void> deleteProductCardArt(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductCdrBankingCardArtData> optionalData = cardArtRepository
+    Optional<ProductBankingCardArtData> optionalData = cardArtRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -117,11 +117,11 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
 
     DeepThoughtValidator.validate(validator, updateData);
 
-    Optional<ProductCdrBankingCardArtData> optionalData = cardArtRepository
+    Optional<ProductBankingCardArtData> optionalData = cardArtRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      ProductCdrBankingCardArtData data = optionalData.get();
+      ProductBankingCardArtData data = optionalData.get();
       data = cardArtRepository.save(data);
       mapper.map(updateData, data);
       data = cardArtRepository.save(data);
