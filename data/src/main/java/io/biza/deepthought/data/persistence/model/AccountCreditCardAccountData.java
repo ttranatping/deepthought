@@ -1,13 +1,19 @@
 package io.biza.deepthought.data.persistence.model;
 
+import java.math.BigDecimal;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.Set;
+import java.util.Currency;
 import java.util.HashSet;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,13 +22,16 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
+import io.biza.babelfish.cdr.enumerations.BankingTermDepositMaturityInstructions;
+import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
+import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeatureData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,54 +48,35 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BUNDLE")
-public class ProductBundleData {
+@Table(name = "ACCOUNT_CREDIT_CARD")
+public class AccountCreditCardAccountData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
-
-  @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false)
+  
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "ACCOUNT_ID")
   @ToString.Exclude
-  private BrandData brand;
-
-  @Column(name = "NAME", length = 255, nullable = false)
+  private AccountData account;
+  
+  @Column(name = "MIN_PAYMENT_AMOUNT")
   @NotNull
-  @NonNull
-  String name;
-
-  @Column(name = "DESCRIPTION", nullable = false)
-  @Lob
+  BigDecimal minimumPaymentAmount;
+  
+  @Column(name = "PAYMENT_DUE_AMOUNT")
   @NotNull
-  @NonNull
-  String description;
-
-  @Column(name = "ADDITIONAL_INFO", nullable = false)
-  @Lob
-  String additionalInfo;
-
-  @Column(name = "ADDITIONAL_INFO_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI additionalInfoUri;
-
-  @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name = "PRODUCT_BUNDLE_PRODUCT", joinColumns = {@JoinColumn(name = "PRODUCT_ID")},
-      inverseJoinColumns = {@JoinColumn(name = "BUNDLE_ID")})
+  BigDecimal paymentDueAmount;
+  
+  @Column(name = "PAYMENT_CURRENCY")
+  @NotNull
   @Builder.Default
-  Set<ProductData> products = new HashSet<ProductData>();
-
-  @PrePersist
-  public void prePersist() {
-    if (this.brand() != null) {
-      Set<ProductBundleData> set = new HashSet<ProductBundleData>();
-      if (this.brand().bundle() != null) {
-        set.addAll(this.brand.bundle());
-      }
-      set.add(this);
-      this.brand().bundle(set);
-    }
-  }
+  Currency paymentCurrency = Currency.getInstance("AUD");
+  
+  @Column(name = "PAYMENT_DUE_DATE")
+  @NotNull
+  LocalDate paymentDueDate;
+  
 }

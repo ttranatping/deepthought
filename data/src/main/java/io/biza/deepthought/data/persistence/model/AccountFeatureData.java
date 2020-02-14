@@ -8,6 +8,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +24,10 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.biza.babelfish.cdr.enumerations.BankingProductFeatureType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
+import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeatureData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,54 +44,41 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BUNDLE")
-public class ProductBundleData {
+@Table(name = "ACCOUNT_FEATURE")
+public class AccountFeatureData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
-
+  
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false)
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+  @JsonIgnore
   @ToString.Exclude
-  private BrandData brand;
+  private AccountData account;
 
-  @Column(name = "NAME", length = 255, nullable = false)
-  @NotNull
-  @NonNull
-  String name;
+  @Column(name = "FEATURE_TYPE")
+  @Enumerated(EnumType.STRING)
+  private BankingProductFeatureType featureType;
 
-  @Column(name = "DESCRIPTION", nullable = false)
+  @Column(name = "ADDITIONAL_VALUE", length = 4096)
+  private String additionalValue;
+
+  @Column(name = "ADDITIONAL_INFO")
   @Lob
-  @NotNull
-  @NonNull
-  String description;
-
-  @Column(name = "ADDITIONAL_INFO", nullable = false)
-  @Lob
-  String additionalInfo;
+  private String additionalInfo;
 
   @Column(name = "ADDITIONAL_INFO_URI")
   @Convert(converter = URIDataConverter.class)
-  URI additionalInfoUri;
-
-  @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name = "PRODUCT_BUNDLE_PRODUCT", joinColumns = {@JoinColumn(name = "PRODUCT_ID")},
-      inverseJoinColumns = {@JoinColumn(name = "BUNDLE_ID")})
+  private URI additionalInfoUri;
+  
+  @Column(name = "IS_ACTIVATED", nullable = false)
+  @NotNull
+  @NonNull
+  @Type(type = "true_false")
   @Builder.Default
-  Set<ProductData> products = new HashSet<ProductData>();
-
-  @PrePersist
-  public void prePersist() {
-    if (this.brand() != null) {
-      Set<ProductBundleData> set = new HashSet<ProductBundleData>();
-      if (this.brand().bundle() != null) {
-        set.addAll(this.brand.bundle());
-      }
-      set.add(this);
-      this.brand().bundle(set);
-    }
-  }
+  Boolean isActivated = true;
+  
 }

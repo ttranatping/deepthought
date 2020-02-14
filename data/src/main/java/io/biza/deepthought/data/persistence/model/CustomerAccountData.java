@@ -16,7 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -39,54 +38,26 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BUNDLE")
-public class ProductBundleData {
+@Table(name = "CUSTOMER_ACCOUNT")
+public class CustomerAccountData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
+  
+  @Column(name = "OWNER")
+  @Type(type = "true_false")
+  Boolean owner;
 
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false)
+  @JoinColumn(name = "CUSTOMER_ID", nullable = false)
   @ToString.Exclude
-  private BrandData brand;
+  private CustomerData customer;
 
-  @Column(name = "NAME", length = 255, nullable = false)
-  @NotNull
-  @NonNull
-  String name;
-
-  @Column(name = "DESCRIPTION", nullable = false)
-  @Lob
-  @NotNull
-  @NonNull
-  String description;
-
-  @Column(name = "ADDITIONAL_INFO", nullable = false)
-  @Lob
-  String additionalInfo;
-
-  @Column(name = "ADDITIONAL_INFO_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI additionalInfoUri;
-
-  @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name = "PRODUCT_BUNDLE_PRODUCT", joinColumns = {@JoinColumn(name = "PRODUCT_ID")},
-      inverseJoinColumns = {@JoinColumn(name = "BUNDLE_ID")})
-  @Builder.Default
-  Set<ProductData> products = new HashSet<ProductData>();
-
-  @PrePersist
-  public void prePersist() {
-    if (this.brand() != null) {
-      Set<ProductBundleData> set = new HashSet<ProductBundleData>();
-      if (this.brand().bundle() != null) {
-        set.addAll(this.brand.bundle());
-      }
-      set.add(this);
-      this.brand().bundle(set);
-    }
-  }
+  @ManyToOne
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+  @ToString.Exclude
+  private AccountData account;
 }

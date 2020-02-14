@@ -1,5 +1,6 @@
 package io.biza.deepthought.data.persistence.model;
 
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -12,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -22,10 +22,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
+import io.biza.deepthought.data.enumerations.DioCustomerType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingData;
+import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingTierApplicabilityData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -40,62 +43,47 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT")
-public class ProductData {
+@Table(name = "CUSTOMER")
+@EqualsAndHashCode
+public class CustomerData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
-
+  
   @ManyToOne
   @JoinColumn(name = "BRAND_ID", nullable = false)
   BrandData brand;
-
-  @Column(name = "NAME", length = 255, nullable = false)
-  @NotNull
-  @NonNull
-  String name;
-
-  @Column(name = "DESCRIPTION", nullable = false)
-  @Lob
-  @NotNull
-  @NonNull
-  String description;
-
-  @ManyToMany(mappedBy = "products")
+  
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<ProductBundleData> bundle;
-
-  @Column(name = "SCHEME_TYPE")
-  @Enumerated(EnumType.STRING)
-  @NotNull
-  @NonNull
-  DioSchemeType schemeType;
-
-  @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, optional = true)
-  ProductCdrBankingData cdrBanking;
-
-  @AssertTrue(message = "Payload data must be populated based on specified scheme type")
-  private boolean isSchemeValuePopulated() {
-    if (schemeType.equals(DioSchemeType.CDR_BANKING)) {
-      return cdrBanking() != null;
-    }
-    return false;
+  Set<CustomerAccountData> accounts;
+  
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<ScheduledPaymentData> scheduledPayments;
+  
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<PayeeData> payees;
+  
+  @Column(name = "LAST_UPDATED", nullable = false)
+  @UpdateTimestamp
+  @Builder.Default
+  OffsetDateTime lastUpdated = OffsetDateTime.now();
+  
+  @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true)
+  PersonData person;
+  
+  @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true)
+  OrganisationData organisation;
+  
+  @AssertTrue(
+      message = "Only one of PersonData or OrganisationData can be populated")
+  private boolean personXorOrganisation() {
+    return (person != null && organisation == null) || (person == null && organisation != null);
   }
-
-  @PrePersist
-  public void prePersist() {
-    if (this.cdrBanking() != null) {
-      this.cdrBanking().product(this);
-      
-      if(this.cdrBanking().additionalInformation() != null) {
-        this.cdrBanking().additionalInformation().product(this.cdrBanking());
-      }
-    }
-  }
-
-
-
+  
 }

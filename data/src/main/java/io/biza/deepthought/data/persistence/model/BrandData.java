@@ -60,6 +60,18 @@ public class BrandData {
   @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
   @ToString.Exclude
   Set<ProductBundleData> bundle;
+  
+  @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<CustomerData> customer;
+  
+  @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<BranchData> branch;
+  
+  @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<AuthorisedEntityData> authorisedEntity;
 
   @PrePersist
   public void prePersist() {

@@ -16,7 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -39,54 +38,21 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BUNDLE")
-public class ProductBundleData {
+@Table(name = "BRANCH")
+public class BranchData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
-
+  
   @ManyToOne
   @JoinColumn(name = "BRAND_ID", nullable = false)
-  @ToString.Exclude
-  private BrandData brand;
-
-  @Column(name = "NAME", length = 255, nullable = false)
+  BrandData brand;
+  
+  @Column(name = "BSB")
   @NotNull
-  @NonNull
-  String name;
-
-  @Column(name = "DESCRIPTION", nullable = false)
-  @Lob
-  @NotNull
-  @NonNull
-  String description;
-
-  @Column(name = "ADDITIONAL_INFO", nullable = false)
-  @Lob
-  String additionalInfo;
-
-  @Column(name = "ADDITIONAL_INFO_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI additionalInfoUri;
-
-  @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name = "PRODUCT_BUNDLE_PRODUCT", joinColumns = {@JoinColumn(name = "PRODUCT_ID")},
-      inverseJoinColumns = {@JoinColumn(name = "BUNDLE_ID")})
-  @Builder.Default
-  Set<ProductData> products = new HashSet<ProductData>();
-
-  @PrePersist
-  public void prePersist() {
-    if (this.brand() != null) {
-      Set<ProductBundleData> set = new HashSet<ProductBundleData>();
-      if (this.brand().bundle() != null) {
-        set.addAll(this.brand.bundle());
-      }
-      set.add(this);
-      this.brand().bundle(set);
-    }
-  }
+  String bsb;
+  
 }

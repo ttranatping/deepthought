@@ -1,5 +1,8 @@
 package io.biza.deepthought.data.persistence.model;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -12,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -21,11 +23,20 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
+import io.biza.babelfish.cdr.enumerations.BankingAccountStatus;
+import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
+import io.biza.babelfish.cdr.enumerations.BankingScheduledPaymentStatus;
+import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
+import io.biza.deepthought.data.enumerations.DioCustomerType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingData;
+import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingTierApplicabilityData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -40,62 +51,45 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT")
-public class ProductData {
+@Table(name = "ACCOUNT")
+@EqualsAndHashCode
+public class ScheduledPaymentData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
-
+  
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false)
-  BrandData brand;
-
-  @Column(name = "NAME", length = 255, nullable = false)
-  @NotNull
-  @NonNull
-  String name;
-
-  @Column(name = "DESCRIPTION", nullable = false)
-  @Lob
-  @NotNull
-  @NonNull
-  String description;
-
-  @ManyToMany(mappedBy = "products")
+  @JoinColumn(name = "CUSTOMER_ID", nullable = false)
   @ToString.Exclude
-  Set<ProductBundleData> bundle;
-
-  @Column(name = "SCHEME_TYPE")
-  @Enumerated(EnumType.STRING)
+  CustomerData customer;
+  
+  @Column(name = "NICK_NAME")
+  String nickName;
+  
+  @Column(name = "PAYER_REFERENCE")
   @NotNull
-  @NonNull
-  DioSchemeType schemeType;
-
-  @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, optional = true)
-  ProductCdrBankingData cdrBanking;
-
-  @AssertTrue(message = "Payload data must be populated based on specified scheme type")
-  private boolean isSchemeValuePopulated() {
-    if (schemeType.equals(DioSchemeType.CDR_BANKING)) {
-      return cdrBanking() != null;
-    }
-    return false;
-  }
-
-  @PrePersist
-  public void prePersist() {
-    if (this.cdrBanking() != null) {
-      this.cdrBanking().product(this);
-      
-      if(this.cdrBanking().additionalInformation() != null) {
-        this.cdrBanking().additionalInformation().product(this.cdrBanking());
-      }
-    }
-  }
-
-
+  @Builder.Default
+  String payerReference = "";
+  
+  @Column(name = "PAYEE_REFERENCE")
+  @NotNull
+  @Builder.Default
+  String payeeReference = "";
+  
+  @Column(name = "STATUS")
+  @Enumerated(EnumType.STRING)
+  BankingScheduledPaymentStatus status;
+  
+  @ManyToOne
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+  @ToString.Exclude
+  AccountData from;
+  
+  @OneToMany(mappedBy = "scheduledPayment", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<ScheduledPaymentSetData> paymentSet;
 
 }

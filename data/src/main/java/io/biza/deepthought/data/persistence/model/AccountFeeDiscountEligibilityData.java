@@ -1,10 +1,7 @@
-package io.biza.deepthought.data.persistence.model.cdr;
+package io.biza.deepthought.data.persistence.model;
 
 import java.net.URI;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -16,17 +13,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
-import io.biza.babelfish.cdr.enumerations.BankingProductFeatureType;
+import io.biza.babelfish.cdr.enumerations.BankingProductDiscountEligibilityType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
-import io.biza.deepthought.data.persistence.model.CustomerAccountData;
-import io.biza.deepthought.data.persistence.model.AccountFeatureData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,8 +35,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_CDR_BANKING_FEATURE")
-public class ProductCdrBankingFeatureData {
+@Table(name = "PRODUCT_CDR_BANKING_FEE_DISCOUNT_ELIGIBILITY")
+public class AccountFeeDiscountEligibilityData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -56,34 +49,23 @@ public class ProductCdrBankingFeatureData {
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
-  @JoinColumn(name = "PRODUCT_ID", nullable = false)
+  @JoinColumn(name = "DISCOUNT_ID", nullable = false)
   @ToString.Exclude
-  private ProductCdrBankingData product;
+  private AccountFeeDiscountData discount;
 
-  @Column(name = "FEATURE_TYPE")
+  @Column(name = "TYPE")
   @Enumerated(EnumType.STRING)
-  private BankingProductFeatureType featureType;
+  private BankingProductDiscountEligibilityType discountEligibilityType;
 
-  @Column(name = "ADDITIONAL_VALUE", length = 4096)
-  private String additionalValue;
-
-  @Column(name = "ADDITIONAL_INFO")
+  @Column(name = "INFO")
   @Lob
   private String additionalInfo;
 
-  @Column(name = "ADDITIONAL_INFO_URI")
+  @Column(name = "URI")
   @Convert(converter = URIDataConverter.class)
   private URI additionalInfoUri;
 
-  @PrePersist
-  public void prePersist() {
-    if (this.product() != null) {
-      Set<ProductCdrBankingFeatureData> set = new HashSet<ProductCdrBankingFeatureData>();
-      if (this.product().feature() != null) {
-        set.addAll(this.product.feature());
-      }
-      set.add(this);
-      this.product().feature(set);
-    }
-  }
+  @Column(name = "VALUE", length = 4096)
+  private String additionalValue;
+
 }
