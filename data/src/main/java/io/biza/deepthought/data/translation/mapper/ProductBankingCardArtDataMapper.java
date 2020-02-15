@@ -5,7 +5,7 @@ import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.DioProductCardArt;
 import ma.glasnost.orika.MapperFactory;
 
-public class ProductCdrBankingCardArtDataMapper implements OrikaFactoryConfigurerInterface {
+public class ProductBankingCardArtDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {

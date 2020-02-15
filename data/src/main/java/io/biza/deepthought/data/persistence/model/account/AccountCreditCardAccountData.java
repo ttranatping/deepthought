@@ -3,6 +3,7 @@ package io.biza.deepthought.data.persistence.model.account;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.Currency;
 import java.util.HashSet;
@@ -27,6 +28,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import io.biza.babelfish.cdr.enumerations.BankingTermDepositMaturityInstructions;
 import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
@@ -57,26 +59,31 @@ public class AccountCreditCardAccountData {
   @Type(type = "uuid-char")
   UUID id;
   
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "ACCOUNT_ID")
+  @ManyToOne
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
   @ToString.Exclude
   private AccountData account;
   
-  @Column(name = "MIN_PAYMENT_AMOUNT")
+  @Column(name = "LAST_STATEMENT")
   @NotNull
-  BigDecimal minimumPaymentAmount;
-  
-  @Column(name = "PAYMENT_DUE_AMOUNT")
-  @NotNull
-  BigDecimal paymentDueAmount;
+  @CreationTimestamp
+  OffsetDateTime lastStatement;
   
   @Column(name = "PAYMENT_CURRENCY")
   @NotNull
   @Builder.Default
   Currency paymentCurrency = Currency.getInstance("AUD");
   
+  @Column(name = "MIN_PAYMENT_AMOUNT")
+  @NotNull
+  BigDecimal paymentMinimum;
+  
+  @Column(name = "PAYMENT_DUE_AMOUNT")
+  @NotNull
+  BigDecimal paymentDueAmount;
+  
   @Column(name = "PAYMENT_DUE_DATE")
   @NotNull
-  LocalDate paymentDueDate;
+  OffsetDateTime paymentDue;
   
 }

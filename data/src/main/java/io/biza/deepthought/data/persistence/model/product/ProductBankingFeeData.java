@@ -30,6 +30,9 @@ import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.CurrencyDataConverter;
 import io.biza.deepthought.data.persistence.converter.PeriodDataConverter;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
+import io.biza.deepthought.data.persistence.model.account.AccountData;
+import io.biza.deepthought.data.persistence.model.account.AccountFeatureData;
+import io.biza.deepthought.data.persistence.model.account.AccountFeeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -58,13 +61,17 @@ public class ProductBankingFeeData {
   @Transient
   @Builder.Default
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
+  
+  @OneToMany(mappedBy = "fee", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  private Set<AccountFeeData> accounts;
 
   @ManyToOne
   @JoinColumn(name = "PRODUCT_ID", nullable = false)
   @JsonIgnore
   @ToString.Exclude
   private ProductBankingData product;
-
+  
   @Column(name = "NAME", length = 4096)
   @NotNull
   @NonNull

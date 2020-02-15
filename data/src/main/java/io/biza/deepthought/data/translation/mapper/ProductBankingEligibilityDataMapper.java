@@ -6,7 +6,7 @@ import io.biza.deepthought.data.payloads.DioProductEligibility;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingEligibilityData;
 import ma.glasnost.orika.MapperFactory;
 
-public class ProductCdrBankingEligibilityDataMapper implements OrikaFactoryConfigurerInterface {
+public class ProductBankingEligibilityDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {

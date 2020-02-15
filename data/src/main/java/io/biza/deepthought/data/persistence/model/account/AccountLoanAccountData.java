@@ -3,6 +3,8 @@ package io.biza.deepthought.data.persistence.model.account;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.Period;
 import java.util.Set;
 import java.util.Currency;
 import java.util.HashSet;
@@ -27,9 +29,11 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import io.biza.babelfish.cdr.enumerations.BankingTermDepositMaturityInstructions;
 import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
+import io.biza.deepthought.data.enumerations.DioLoanRepaymentType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
 import lombok.AllArgsConstructor;
@@ -57,47 +61,40 @@ public class AccountLoanAccountData {
   @Type(type = "uuid-char")
   UUID id;
   
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "ACCOUNT_ID")
+  @ManyToOne
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
   @ToString.Exclude
   private AccountData account;
   
-  @Column(name = "ORIGINAL_START_DATE")
-  LocalDate originalStartDate;
-  
-  @Column(name = "ORIGINAL_LOAN_AMOUNT")
-  BigDecimal originalLoanAmount;
-  
-  @Column(name = "ORIGINAL_LOAN_CURRENCY")
-  @Builder.Default
-  Currency originalLoanCurrency = Currency.getInstance("AUD");
-  
-  @Column(name = "LOAN_END_DATE", nullable = false)
-  LocalDate loanEndDate;
-  
-  @Column(name = "NEXT_INSTALMENT_DATE", nullable = false)
+  @Column(name = "CREATION_DATETIME")
   @NotNull
-  LocalDate nextInstalmentDate;
-    
-  @Column(name = "MIN_INSTALMENT_AMOUNT")
-  BigDecimal minInstalmentAmount;
+  @CreationTimestamp
+  OffsetDateTime creationDateTime;
   
-  @Column(name = "MIN_INSTALMENT_CURRENCY")
+  @Column(name = "CREATION_AMOUNT")
+  @NotNull
+  BigDecimal creationAmount;
+  
+  @Column(name = "CURRENCY")
   @Builder.Default
-  Currency minInstalmentCurrency = Currency.getInstance("AUD");
+  Currency currency = Currency.getInstance("AUD");
   
-  @Column(name = "MAX_REDRAW_AMOUNT")
-  BigDecimal maxRedraw;
+  @Column(name = "CREATION_LENGTH")
+  Period creationLength;
   
-  @Column(name = "MAX_REDRAW_CURRENCY")
-  @Builder.Default
-  Currency maxRedrawCurrency = Currency.getInstance("AUD");
+  @Column(name = "REPAYMENT_FREQUENCY")
+  Period repaymentFrequency;
   
-  @Column(name = "MIN_REDRAW_AMOUNT")
-  BigDecimal minRedraw;
+  @Column(name = "NEXT_REPAYMENT")
+  OffsetDateTime lastRepayment;
   
-  @Column(name = "MIN_REDRAW_CURRENCY")
-  @Builder.Default
-  Currency minRedrawCurrency = Currency.getInstance("AUD");
+  @Column(name = "NEXT_REPAYMENT_AMOUNT")
+  BigDecimal nextRepaymentAmount;
+  
+  @Column(name = "REDRAW_AVAILABLE")
+  BigDecimal redrawAvailable;
+  
+  @Column(name = "REPAYMENT_TYPE")
+  DioLoanRepaymentType repaymentType;
   
 }

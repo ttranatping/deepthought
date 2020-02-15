@@ -18,10 +18,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -47,12 +51,40 @@ public class BranchData {
   @Type(type = "uuid-char")
   UUID id;
   
+  @Transient
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
+  
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false)
+  @JoinColumn(name = "BRAND_ID")
   BrandData brand;
   
-  @Column(name = "BSB")
+  @Column(name = "BSB", unique = true)
   @NotNull
-  String bsb;
+  Integer bsb;
+  
+  @Column(name = "BANK_NAME")
+  @NotNull
+  String bankName;
+  
+  @Column(name = "BRANCH_NAME")
+  @NotNull
+  String branchName;
+  
+  @Column(name = "BRANCH_ADDRESS")
+  @NotNull
+  String branchAddress;
+  
+  @Column(name = "BRANCH_CITY")
+  @NotNull
+  String branchCity;
+  
+  @Column(name = "BRANCH_STATE")
+  @NotNull
+  String branchState;
+  
+  @Column(name = "BRANCH_POSTCODE")
+  @NotNull
+  String branchPostcode;
   
 }

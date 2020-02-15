@@ -4,36 +4,36 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepositRateV1;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendingRateV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.DioProductRateDeposit;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierData;
+import io.biza.deepthought.data.payloads.DioProductRateLending;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierData;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
 
-public class ProductCdrBankingRateDepositDataMapper implements OrikaFactoryConfigurerInterface {
+public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
 
     orikaMapperFactory
-        .classMap(ProductBankingRateDepositData.class, BankingProductDepositRateV1.class)
+        .classMap(ProductBankingRateLendingData.class, BankingProductLendingRateV1.class)
         .exclude("tiers").byDefault()
-        .customize(new CustomMapper<ProductBankingRateDepositData, BankingProductDepositRateV1>() {
+        .customize(new CustomMapper<ProductBankingRateLendingData, BankingProductLendingRateV1>() {
           @Override
-          public void mapAtoB(ProductBankingRateDepositData from, BankingProductDepositRateV1 to,
+          public void mapAtoB(ProductBankingRateLendingData from, BankingProductLendingRateV1 to,
               MappingContext context) {
 
             List<BankingProductRateTierV1> tierList =
                 new ArrayList<BankingProductRateTierV1>();
 
             if (from.tiers() != null) {
-              for (ProductBankingRateDepositTierData tierData : from.tiers()) {
+              for (ProductBankingRateLendingTierData tierData : from.tiers()) {
                 BankingProductRateTierV1 rateTier = new BankingProductRateTierV1();
                 rateTier.maximumValue(tierData.maximumValue());
                 rateTier.minimumValue(tierData.minimumValue());
@@ -49,28 +49,32 @@ public class ProductCdrBankingRateDepositDataMapper implements OrikaFactoryConfi
                 tierList.add(rateTier);
               }
             }
+
             to.tiers(tierList);
           }
         }).register();
 
-    orikaMapperFactory.classMap(ProductBankingRateDepositData.class, DioProductRateDeposit.class)
+    orikaMapperFactory.classMap(ProductBankingRateLendingData.class, DioProductRateLending.class)
         .fieldAToB("id", "id").field("schemeType", "schemeType")
-        .field("depositRateType", "cdrBanking.depositRateType").field("rate", "cdrBanking.rate")
+        .field("lendingRateType", "cdrBanking.lendingRateType").field("rate", "cdrBanking.rate")
+        .field("comparisonRate", "cdrBanking.comparisonRate")
         .field("applicationFrequency", "cdrBanking.applicationFrequency")
         .field("calculationFrequency", "cdrBanking.calculationFrequency")
+        .field("interestPaymentDue", "cdrBanking.interestPaymentDue")
         .field("additionalValue", "cdrBanking.additionalValue")
         .field("additionalInfo", "cdrBanking.additionalInfo")
         .field("additionalInfoUri", "cdrBanking.additionalInfoUri")
-        .customize(new CustomMapper<ProductBankingRateDepositData, DioProductRateDeposit>() {
+        .customize(new CustomMapper<ProductBankingRateLendingData, DioProductRateLending>() {
           @Override
-          public void mapAtoB(ProductBankingRateDepositData from, DioProductRateDeposit to,
+          public void mapAtoB(ProductBankingRateLendingData from, DioProductRateLending to,
               MappingContext context) {
 
             List<BankingProductRateTierV1> tierList =
                 new ArrayList<BankingProductRateTierV1>();
 
             if (from.tiers() != null) {
-              for (ProductBankingRateDepositTierData tierData : from.tiers()) {
+
+              for (ProductBankingRateLendingTierData tierData : from.tiers()) {
                 BankingProductRateTierV1 rateTier = new BankingProductRateTierV1();
                 rateTier.maximumValue(tierData.maximumValue());
                 rateTier.minimumValue(tierData.minimumValue());
@@ -86,34 +90,35 @@ public class ProductCdrBankingRateDepositDataMapper implements OrikaFactoryConfi
                 tierList.add(rateTier);
               }
             }
+
             to.cdrBanking().tiers(tierList);
           }
 
           @Override
-          public void mapBtoA(DioProductRateDeposit from, ProductBankingRateDepositData to,
+          public void mapBtoA(DioProductRateLending from, ProductBankingRateLendingData to,
               MappingContext context) {
 
-            Set<ProductBankingRateDepositTierData> tierList =
-                new HashSet<ProductBankingRateDepositTierData>();
+            Set<ProductBankingRateLendingTierData> tierList =
+                new HashSet<ProductBankingRateLendingTierData>();
 
             if (from.cdrBanking().tiers() != null) {
-              for (BankingProductRateTierV1 rateTier : from
+              for (BankingProductRateTierV1 tierData : from
                   .cdrBanking().tiers()) {
-                ProductBankingRateDepositTierData tierData =
-                    new ProductBankingRateDepositTierData();
-                tierData.maximumValue(rateTier.maximumValue());
-                tierData.minimumValue(rateTier.minimumValue());
-                tierData.name(rateTier.name());
-                tierData.rateApplicationMethod(rateTier.rateApplicationMethod());
-                tierData.unitOfMeasure(rateTier.unitOfMeasure());
-                if (rateTier.applicabilityConditions() != null) {
-                  tierData.applicabilityConditions(
-                      new ProductBankingRateDepositTierApplicabilityData()
-                          .additionalInfo(rateTier.applicabilityConditions().additionalInfo())
+                ProductBankingRateLendingTierData rateTier =
+                    new ProductBankingRateLendingTierData();
+                rateTier.maximumValue(tierData.maximumValue());
+                rateTier.minimumValue(tierData.minimumValue());
+                rateTier.name(tierData.name());
+                rateTier.rateApplicationMethod(tierData.rateApplicationMethod());
+                rateTier.unitOfMeasure(tierData.unitOfMeasure());
+                if (tierData.applicabilityConditions() != null) {
+                  rateTier.applicabilityConditions(
+                      new ProductBankingRateLendingTierApplicabilityData()
+                          .additionalInfo(tierData.applicabilityConditions().additionalInfo())
                           .additionalInfoUri(
-                              rateTier.applicabilityConditions().additionalInfoUri()));
+                              tierData.applicabilityConditions().additionalInfoUri()));
                 }
-                tierList.add(tierData);
+                tierList.add(rateTier);
               }
             }
             to.tiers(tierList);

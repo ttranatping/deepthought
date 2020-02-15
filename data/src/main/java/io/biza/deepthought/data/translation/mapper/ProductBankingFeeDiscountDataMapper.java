@@ -5,7 +5,7 @@ import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeDiscountData;
 import ma.glasnost.orika.MapperFactory;
 
-public class ProductCdrBankingFeeDiscountDataMapper implements OrikaFactoryConfigurerInterface {
+public class ProductBankingFeeDiscountDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {

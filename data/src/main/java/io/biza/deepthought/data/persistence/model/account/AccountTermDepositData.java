@@ -3,6 +3,8 @@ package io.biza.deepthought.data.persistence.model.account;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.Period;
 import java.util.Set;
 import java.util.Currency;
 import java.util.HashSet;
@@ -28,6 +30,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.babelfish.cdr.enumerations.BankingTermDepositMaturityInstructions;
 import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
+import io.biza.deepthought.data.enumerations.DioMaturityInstructionType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
 import lombok.AllArgsConstructor;
@@ -60,24 +63,45 @@ public class AccountTermDepositData {
   @ToString.Exclude
   private AccountData account;
   
-  @Column(name = "LODGEMENT_DATE", nullable = false)
+  @Column(name = "AMOUNT", nullable = false)
   @NotNull
-  LocalDate lodgementDate;
+  BigDecimal amount;
   
-  @Column(name = "MATURITY_DATE", nullable = false)
-  @NotNull
-  LocalDate maturityDate;
-  
-  @Column(name = "MATURITY_AMOUNT")
-  BigDecimal maturityAmount;
-  
-  @Column(name = "MATURITY_CURRENCY")
+  @Column(name = "CURRENCY")
   @Builder.Default
-  Currency maturityCurrency = Currency.getInstance("AUD");
+  Currency currency = Currency.getInstance("AUD");
   
-  @Column(name = "MATURITY_INSTRUCTIONS", nullable = false)
+  @Column(name = "RATE", nullable = false)
+  @NotNull
+  BigDecimal rate;
+  
+  @Column(name = "LODGEMENT", nullable = false)
+  @NotNull
+  OffsetDateTime lodgement;
+  
+  @Column(name = "TERM_LENGTH", nullable = false)
+  @NotNull
+  Period termLength;
+  
+  @Column(name = "CALCULATION_FREQUENCY", nullable = false)
+  @NotNull
+  Period calculationFrequency;
+  
+  @Column(name = "LAST_CALCULATED")
+  @NotNull
+  OffsetDateTime lastCalculated;
+  
+  @Column(name = "APPLICATION_FREQUENCY", nullable = false)
+  @NotNull
+  Period applicationFrequency;
+  
+  @Column(name = "LAST_APPLIED")
+  @NotNull
+  OffsetDateTime lastApplied;
+  
+  @Column(name = "MATURITY_INSTRUCTION", nullable = false)
   @Enumerated(EnumType.STRING)
   @NotNull
-  BankingTermDepositMaturityInstructions maturityInstructions;
-  
+  DioMaturityInstructionType maturityInstruction;
+
 }

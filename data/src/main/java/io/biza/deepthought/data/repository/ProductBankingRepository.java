@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingData;
 
 @Repository
-public interface ProductCdrBankingRepository extends JpaRepository<ProductBankingData, UUID>, JpaSpecificationExecutor<ProductBankingData> {
+public interface ProductBankingRepository extends JpaRepository<ProductBankingData, UUID>, JpaSpecificationExecutor<ProductBankingData> {
 
 }

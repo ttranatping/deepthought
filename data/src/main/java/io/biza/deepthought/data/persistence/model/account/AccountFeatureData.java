@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.biza.babelfish.cdr.enumerations.BankingProductFeatureType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -55,24 +56,12 @@ public class AccountFeatureData {
   
   @ManyToOne
   @JoinColumn(name = "ACCOUNT_ID", nullable = false)
-  @JsonIgnore
   @ToString.Exclude
   private AccountData account;
-
-  @Column(name = "FEATURE_TYPE")
-  @Enumerated(EnumType.STRING)
-  private BankingProductFeatureType featureType;
-
-  @Column(name = "ADDITIONAL_VALUE", length = 4096)
-  private String additionalValue;
-
-  @Column(name = "ADDITIONAL_INFO")
-  @Lob
-  private String additionalInfo;
-
-  @Column(name = "ADDITIONAL_INFO_URI")
-  @Convert(converter = URIDataConverter.class)
-  private URI additionalInfoUri;
+  
+  @ManyToOne
+  @JoinColumn(name = "FEATURE_ID", nullable = false)
+  private ProductBankingFeatureData feature;
   
   @Column(name = "IS_ACTIVATED", nullable = false)
   @NotNull

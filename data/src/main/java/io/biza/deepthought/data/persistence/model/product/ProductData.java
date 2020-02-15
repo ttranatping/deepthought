@@ -23,6 +23,7 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
+import io.biza.deepthought.data.persistence.model.account.AccountData;
 import io.biza.deepthought.data.persistence.model.bank.BrandData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,6 +53,10 @@ public class ProductData {
   @ManyToOne
   @JoinColumn(name = "BRAND_ID", nullable = false)
   BrandData brand;
+  
+  @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<AccountData> accounts;
 
   @Column(name = "NAME", length = 255, nullable = false)
   @NotNull

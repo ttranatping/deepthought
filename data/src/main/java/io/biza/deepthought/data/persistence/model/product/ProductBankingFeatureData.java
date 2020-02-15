@@ -54,6 +54,10 @@ public class ProductBankingFeatureData {
   @Transient
   @Builder.Default
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
+  
+  @OneToMany(mappedBy = "feature", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  private Set<AccountFeatureData> accounts;
 
   @ManyToOne
   @JoinColumn(name = "PRODUCT_ID", nullable = false)

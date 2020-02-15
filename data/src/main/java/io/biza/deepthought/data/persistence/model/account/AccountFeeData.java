@@ -2,6 +2,7 @@ package io.biza.deepthought.data.persistence.model.account;
 
 import java.math.BigDecimal;
 import java.net.URI;
+import java.time.OffsetDateTime;
 import java.time.Period;
 import java.util.Currency;
 import java.util.Set;
@@ -30,6 +31,8 @@ import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.CurrencyDataConverter;
 import io.biza.deepthought.data.persistence.converter.PeriodDataConverter;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,57 +60,19 @@ public class AccountFeeData {
 
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
+  DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
   @JoinColumn(name = "ACCOUNT_ID", nullable = false)
   @JsonIgnore
   @ToString.Exclude
-  private AccountData account;
-
-  @Column(name = "NAME", length = 4096)
-  @NotNull
-  @NonNull
-  private String name;
-
-  @Column(name = "FEE_TYPE")
-  @Enumerated(EnumType.STRING)
-  @NotNull
-  @NonNull
-  private BankingProductFeeType feeType;
-
-  @Column(name = "AMOUNT")
-  private BigDecimal amount;
-
-  @Column(name = "BALANCE_RATE", precision = 17, scale = 16)
-  private BigDecimal balanceRate;
-
-  @Column(name = "TRANSACTION_RATE", precision = 17, scale = 16)
-  private BigDecimal transactionRate;
-
-  @Column(name = "ACCRUED_RATE", precision = 17, scale = 16)
-  private BigDecimal accruedRate;
-
-  @Column(name = "ACCRUAL_FREQUENCY")
-  @Convert(converter = PeriodDataConverter.class)
-  private Period accrualFrequency;
-
-  @Column(name = "CURRENCY")
-  @Convert(converter = CurrencyDataConverter.class)
-  private Currency currency;
-
-  @Column(name = "INFO")
-  @Lob
-  private String additionalInfo;
-
-  @Column(name = "URI")
-  @Convert(converter = URIDataConverter.class)
-  private URI additionalInfoUri;
-
-  @Column(name = "VALUE", length = 4096)
-  private String additionalValue;
-
-  @OneToMany(mappedBy = "fee", cascade = CascadeType.ALL)
-  private Set<AccountFeeDiscountData> discounts;
+  AccountData account;
+  
+  @ManyToOne
+  @JoinColumn(name = "FEE_ID", nullable = false)
+  ProductBankingFeeData fee;
+  
+  @Column(name = "LAST_APPLIED")
+  OffsetDateTime lastApplied;
 
 }

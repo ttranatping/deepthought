@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
+import io.biza.deepthought.data.persistence.model.account.AccountData;
 import io.biza.deepthought.data.persistence.model.bank.BrandData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,6 +54,10 @@ public class ProductBundleData {
   @JoinColumn(name = "BRAND_ID", nullable = false)
   @ToString.Exclude
   private BrandData brand;
+  
+  @OneToMany(mappedBy = "bundle", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<AccountData> accounts;
 
   @Column(name = "NAME", length = 255, nullable = false)
   @NotNull
