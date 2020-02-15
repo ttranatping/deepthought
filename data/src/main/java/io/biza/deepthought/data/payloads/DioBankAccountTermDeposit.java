@@ -1,6 +1,5 @@
 package io.biza.deepthought.data.payloads;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 import javax.validation.Valid;
@@ -10,16 +9,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
-import io.biza.babelfish.cdr.converters.LocalDateToStringConverter;
 import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
-import io.biza.babelfish.cdr.converters.StringToLocalDateConverter;
-import io.biza.babelfish.cdr.enumerations.BankingAccountStatus;
-import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrBankingAccount;
-import io.biza.deepthought.data.payloads.cdr.CdrBankingProduct;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;

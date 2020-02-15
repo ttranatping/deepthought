@@ -3,7 +3,6 @@ package io.biza.deepthought.data.enumerations;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.biza.babelfish.cdr.enumerations.BankingProductConstraintType;
 import io.biza.babelfish.cdr.exceptions.LabelValueEnumValueNotSupportedException;
 import io.biza.babelfish.cdr.support.LabelValueEnumInterface;
 import io.swagger.v3.oas.annotations.media.Schema;

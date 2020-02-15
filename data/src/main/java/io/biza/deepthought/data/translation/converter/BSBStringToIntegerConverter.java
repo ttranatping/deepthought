@@ -12,8 +12,6 @@
 package io.biza.deepthought.data.translation.converter;
 
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.time.LocalDate;
 import com.fasterxml.jackson.databind.util.StdConverter;
 import io.biza.deepthought.data.Constants;
 

@@ -1,37 +1,20 @@
 package io.biza.deepthought.data.persistence.model.person;
 
-import java.util.List;
-import java.util.Set;
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
-import io.biza.babelfish.cdr.enumerations.CommonEmailAddressPurpose;
-import io.biza.babelfish.cdr.enumerations.CommonPhoneNumberPurpose;
-import io.biza.deepthought.data.enumerations.DioCustomerType;
-import io.biza.deepthought.data.enumerations.DioPersonPrefix;
-import io.biza.deepthought.data.enumerations.DioPersonSuffix;
+import io.biza.deepthought.data.enumerations.DioEmailType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -57,6 +40,9 @@ public class PersonEmailData {
   @Type(type = "uuid-char")
   UUID id;
   
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  
   @ManyToOne
   @JoinColumn(name = "PERSON_ID", nullable = false)
   @ToString.Exclude
@@ -69,9 +55,9 @@ public class PersonEmailData {
   @Builder.Default
   Boolean isPreferred = false;
   
-  @Column(name = "PURPOSE")
+  @Column(name = "TYPE")
   @Enumerated(EnumType.STRING)
-  CommonEmailAddressPurpose purpose;
+  DioEmailType type;
   
   @Column(name = "ADDRESS")
   @NotNull

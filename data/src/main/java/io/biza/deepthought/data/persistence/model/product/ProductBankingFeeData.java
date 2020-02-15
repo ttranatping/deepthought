@@ -30,8 +30,6 @@ import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.CurrencyDataConverter;
 import io.biza.deepthought.data.persistence.converter.PeriodDataConverter;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
-import io.biza.deepthought.data.persistence.model.account.AccountData;
-import io.biza.deepthought.data.persistence.model.account.AccountFeatureData;
 import io.biza.deepthought.data.persistence.model.account.AccountFeeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -11,11 +11,9 @@
  *******************************************************************************/
 package io.biza.deepthought.data.translation.converter;
 
-import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import com.fasterxml.jackson.databind.util.StdConverter;
-import io.biza.babelfish.cdr.Constants;
 
 /**
  * A Jackson StdConverter implementation for converting between BSB String format and Integer

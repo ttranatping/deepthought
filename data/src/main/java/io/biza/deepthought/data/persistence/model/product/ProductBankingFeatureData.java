@@ -26,7 +26,6 @@ import io.biza.babelfish.cdr.enumerations.BankingProductFeatureType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import io.biza.deepthought.data.persistence.model.account.AccountFeatureData;
-import io.biza.deepthought.data.persistence.model.customer.CustomerAccountData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
