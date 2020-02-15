@@ -8,7 +8,7 @@ import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendi
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.DioProductRateLending;
+import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingData;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierApplicabilityData;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierData;

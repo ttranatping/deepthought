@@ -1,4 +1,4 @@
-package io.biza.deepthought.data.payloads;
+package io.biza.deepthought.data.payloads.dio.common;
 
 import java.time.OffsetDateTime;
 import java.util.List;

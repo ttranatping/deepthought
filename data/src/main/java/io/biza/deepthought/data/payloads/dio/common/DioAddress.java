@@ -1,10 +1,10 @@
-package io.biza.deepthought.data.payloads;
+package io.biza.deepthought.data.payloads.dio.common;
 
 import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.biza.deepthought.data.enumerations.DioCustomerType;
+import io.biza.babelfish.cdr.enumerations.AddressPurpose;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -24,36 +24,35 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "A Deep Thought Customer Container")
-public class DioCustomer {
+@Schema(description = "A Deep Thought Physical Address Container")
+public class DioAddress {
 
   @JsonProperty("id")
   @NotNull
   @NonNull
-  @Schema(description = "Deep Thought Customer Identifier",
+  @Schema(description = "Deep Thought Address Identifier",
       defaultValue = "00000000-0000-0000-0000-000000000000")
   @Builder.Default
-  public UUID id = new UUID(0, 0);
-  
+  UUID id = new UUID(0, 0);
+
   @JsonProperty("schemeType")
   @NotNull
   @NonNull
-  @Schema(description = "Deep Thought Scheme Type", defaultValue = "DIO_COMMON")
+  @Schema(description = "Scheme Type", defaultValue = "DIO_COMMON")
   @Builder.Default
-  public DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
-
-  @JsonProperty("customerType")
+  DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  
+  @JsonProperty("purpose")
   @NotNull
-  @NonNull
-  @Schema(description = "Deep Thought Customer Type")
-  public DioCustomerType customerType;
+  @Schema(description = "Address Purpose")
+  AddressPurpose purpose;
 
-  @JsonProperty("person")
-  @Schema(description = "Deep Thought Person")
-  DioPerson person;
+  @JsonProperty("simple")
+  @Schema(description = "Simple Address")
+  DioAddressSimple simple;
   
-  @JsonProperty("organisation")
-  @Schema(description = "Deep Thought Organisation")
-  DioOrganisation organisation;
-  
+  @JsonProperty("paf")
+  @Schema(description = "PAF Address")
+  DioAddressPAF paf;
+
 }

@@ -1,4 +1,4 @@
-package io.biza.deepthought.data.payloads;
+package io.biza.deepthought.data.payloads.dio.banking;
 
 import java.util.UUID;
 import javax.validation.Valid;
@@ -50,9 +50,6 @@ public class DioBranch {
   @Schema(
       description = "Australian Payments Clearing Association Number (aka BSB)",
       required = true, format = "string")
-  @JsonSerialize(converter = BSBStringToIntegerConverter.class)
-  @JsonDeserialize(converter = IntegerToBSBStringConverter.class)
-  @NotEmpty(message = "Must contain a valid 6 digit number")
   @JsonProperty("bsb")
   @Min(100000)
   @Max(999999)

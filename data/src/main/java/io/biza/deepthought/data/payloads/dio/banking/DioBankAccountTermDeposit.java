@@ -1,4 +1,4 @@
-package io.biza.deepthought.data.payloads;
+package io.biza.deepthought.data.payloads.dio.banking;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -14,6 +14,8 @@ import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrBankingAccount;
+import io.biza.deepthought.data.payloads.dio.product.DioProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
@@ -34,7 +36,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "A Deep Thought Bank Account Container")
-public class DioBankAccount {
+public class DioBankAccountTermDeposit {
 
   @JsonProperty("id")
   @NotNull

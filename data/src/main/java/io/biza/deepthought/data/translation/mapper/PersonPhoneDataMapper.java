@@ -1,7 +1,7 @@
 package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.DioPhoneNumber;
+import io.biza.deepthought.data.payloads.dio.common.DioPhoneNumber;
 import io.biza.deepthought.data.persistence.model.person.PersonPhoneData;
 import ma.glasnost.orika.MapperFactory;
 

@@ -1,6 +1,7 @@
-package io.biza.deepthought.data.payloads;
+package io.biza.deepthought.data.payloads.dio.common;
 
 import java.util.Locale;
+import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -10,12 +11,14 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.biza.babelfish.cdr.converters.CountryStringToLocaleConverter;
 import io.biza.babelfish.cdr.converters.LocaleToCountryStringConverter;
 import io.biza.deepthought.data.Constants;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -28,7 +31,23 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "A Deep Thought Simple Address")
-public class DioAddressSimple {   
+public class DioAddressSimple {
+  
+  @JsonProperty("id")
+  @NotNull
+  @NonNull
+  @Schema(description = "Deep Thought Simple Address Identifier",
+      defaultValue = "00000000-0000-0000-0000-000000000000")
+  @Builder.Default
+  UUID id = new UUID(0, 0);
+
+  @JsonProperty("schemeType")
+  @NotNull
+  @NonNull
+  @Schema(description = "Scheme Type", defaultValue = "DIO_COMMON")
+  @Builder.Default
+  DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  
   @Schema(
       description = "Name of the individual or business formatted for inclusion in an address used for physical mail")
   @JsonProperty("mailingName")
@@ -69,5 +88,5 @@ public class DioAddressSimple {
   @JsonDeserialize(converter = CountryStringToLocaleConverter.class)
   @JsonProperty("country")
   @Builder.Default
-  Locale country = new Locale(Constants.DEFAULT_LANGUAGE, "AU");
+  Locale country = new Locale(Constants.DEFAULT_LANGUAGE, Constants.DEFAULT_LOCALE);
 }

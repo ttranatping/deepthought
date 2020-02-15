@@ -1,4 +1,4 @@
-package io.biza.deepthought.data.payloads;
+package io.biza.deepthought.data.payloads.dio.product;
 
 import java.util.UUID;
 import javax.validation.Valid;

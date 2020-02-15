@@ -13,14 +13,18 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 import io.biza.deepthought.data.Constants;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Builder
 @Getter
@@ -38,14 +42,21 @@ public class PersonAddressSimpleData {
   @Type(type = "uuid-char")
   UUID id;
   
+  @JsonProperty("schemeType")
+  @NotNull
+  @NonNull
+  @Schema(description = "Scheme Type", defaultValue = "DIO_COMMON")
+  @Builder.Default
+  DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
   @JoinColumn(name = "PERSON_ADDRESS_ID")
   @ToString.Exclude
   PersonAddressData address;
   
-  @Column(name = "NAME")
-  String name;
+  @Column(name = "MAILING_NAME")
+  String mailingName;
   
   @Column(name = "ADDRESS_LINE1")
   @NotNull
@@ -60,11 +71,14 @@ public class PersonAddressSimpleData {
   @Column(name = "POSTCODE")
   String postcode;
   
+  @Column(name = "CITY")
+  String city;
+  
   @Column(name = "STATE")
   String state;
   
   @Column(name = "COUNTRY")
   @Builder.Default
-  Locale country = new Locale(Constants.DEFAULT_LANGUAGE, "AU");
+  Locale country = new Locale(Constants.DEFAULT_LANGUAGE, Constants.DEFAULT_LOCALE);
 
 }

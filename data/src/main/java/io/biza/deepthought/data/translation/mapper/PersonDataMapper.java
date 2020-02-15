@@ -2,10 +2,10 @@ package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.babelfish.cdr.enumerations.AddressPurpose;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.DioEmail;
-import io.biza.deepthought.data.payloads.DioPerson;
-import io.biza.deepthought.data.payloads.DioAddress;
-import io.biza.deepthought.data.payloads.DioPhoneNumber;
+import io.biza.deepthought.data.payloads.dio.common.DioAddress;
+import io.biza.deepthought.data.payloads.dio.common.DioEmail;
+import io.biza.deepthought.data.payloads.dio.common.DioPerson;
+import io.biza.deepthought.data.payloads.dio.common.DioPhoneNumber;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressData;
 import io.biza.deepthought.data.persistence.model.person.PersonData;
 import io.biza.deepthought.data.persistence.model.person.PersonEmailData;

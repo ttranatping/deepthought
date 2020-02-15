@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -22,6 +23,7 @@ import io.biza.babelfish.cdr.enumerations.AddressPAFPostalDeliveryType;
 import io.biza.babelfish.cdr.enumerations.AddressPAFStateType;
 import io.biza.babelfish.cdr.enumerations.AddressPAFStreetSuffix;
 import io.biza.babelfish.cdr.enumerations.AddressPAFStreetType;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -45,6 +47,10 @@ public class PersonAddressPAFData {
   @Id
   @Type(type = "uuid-char")
   UUID id;
+  
+  @Transient
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
@@ -107,6 +113,9 @@ public class PersonAddressPAFData {
   @Column(name = "POSTAL_DELIVERY_TYPE")
   @Enumerated(EnumType.STRING)
   AddressPAFPostalDeliveryType postalDeliveryType;
+  
+  @Column(name = "POSTAL_DELIVERY_NUMBER")
+  String postalDeliveryNumber;
   
   @Column(name = "POSTAL_DELIVERY_NUMBER_PREFIX")
   String postalDeliveryNumberPrefix;

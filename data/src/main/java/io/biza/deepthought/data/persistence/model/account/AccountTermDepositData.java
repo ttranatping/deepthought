@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioMaturityInstructionType;
+import io.biza.deepthought.data.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -54,7 +55,7 @@ public class AccountTermDepositData {
   
   @Column(name = "CURRENCY")
   @Builder.Default
-  Currency currency = Currency.getInstance("AUD");
+  Currency currency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
   
   @Column(name = "RATE", nullable = false)
   @NotNull

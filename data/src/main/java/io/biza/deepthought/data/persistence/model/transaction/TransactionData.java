@@ -22,6 +22,8 @@ import org.hibernate.annotations.Type;
 import io.biza.babelfish.cdr.enumerations.BankingTransactionStatus;
 import io.biza.babelfish.cdr.enumerations.BankingTransactionType;
 import io.biza.deepthought.data.persistence.model.account.AccountData;
+import io.biza.deepthought.data.Constants;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,6 +47,9 @@ public class TransactionData {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
+  
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
 
   @ManyToOne
   @JoinColumn(name = "ACCOUNT_ID", nullable = false)
@@ -79,7 +84,7 @@ public class TransactionData {
   
   @Column(name = "CURRENCY")
   @Builder.Default
-  private Currency currency = Currency.getInstance("AUD");
+  private Currency currency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
   
   @Column(name = "REFERENCE")
   @NotNull
@@ -94,6 +99,9 @@ public class TransactionData {
   
   @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
   private TransactionAPCSData apcs;
+  
+  @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
+  private TransactionNPPData npp;
 
 
 }

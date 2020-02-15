@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioLoanRepaymentType;
+import io.biza.deepthought.data.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -58,7 +59,7 @@ public class AccountLoanAccountData {
   
   @Column(name = "CURRENCY")
   @Builder.Default
-  Currency currency = Currency.getInstance("AUD");
+  Currency currency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
   
   @Column(name = "CREATION_LENGTH")
   Period creationLength;

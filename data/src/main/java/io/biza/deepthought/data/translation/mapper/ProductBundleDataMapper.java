@@ -3,7 +3,7 @@ package io.biza.deepthought.data.translation.mapper;
 import java.util.ArrayList;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductBundleV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.DioProductBundle;
+import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import ma.glasnost.orika.CustomMapper;

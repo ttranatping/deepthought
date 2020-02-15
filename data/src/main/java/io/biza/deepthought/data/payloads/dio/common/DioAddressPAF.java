@@ -1,5 +1,6 @@
-package io.biza.deepthought.data.payloads;
+package io.biza.deepthought.data.payloads.dio.common;
 
+import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -10,12 +11,14 @@ import io.biza.babelfish.cdr.enumerations.AddressPAFPostalDeliveryType;
 import io.biza.babelfish.cdr.enumerations.AddressPAFStateType;
 import io.biza.babelfish.cdr.enumerations.AddressPAFStreetSuffix;
 import io.biza.babelfish.cdr.enumerations.AddressPAFStreetType;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -29,10 +32,26 @@ import lombok.ToString;
 @AllArgsConstructor
 @Schema(description = "A Deep Thought AusPost Postal Address Format")
 public class DioAddressPAF {   
+  
+  @JsonProperty("id")
+  @NotNull
+  @NonNull
+  @Schema(description = "Deep Thought PAF Address Identifier",
+      defaultValue = "00000000-0000-0000-0000-000000000000")
+  @Builder.Default
+  UUID id = new UUID(0, 0);
+
+  @JsonProperty("schemeType")
+  @NotNull
+  @NonNull
+  @Schema(description = "Scheme Type", defaultValue = "DIO_COMMON")
+  @Builder.Default
+  DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  
   @Schema(
       description = "Unique identifier for an address as defined by Australia Post.  Also known as Delivery Point Identifier")
   @JsonProperty("dpid")
-  String dpid;
+  String dpId;
 
   @Schema(
       description = "Thoroughfare number for a property (first number in a property ranged address)")
@@ -124,7 +143,7 @@ public class DioAddressPAF {
   @Schema(description = "Postcode for the locality", required = true)
   @JsonProperty("postcode")
   @NotEmpty(message = "Postcode must be supplied")
-  String postcode;
+  String postCode;
 
   @Schema(
       description = "State in which the address belongs. Valid enumeration defined by Australia Post PAF code file",

@@ -1,10 +1,11 @@
-package io.biza.deepthought.data.payloads;
+package io.biza.deepthought.data.payloads.dio.common;
 
 import java.util.UUID;
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.biza.deepthought.data.enumerations.DioPhoneType;
+import io.biza.deepthought.data.enumerations.DioEmailType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -24,22 +25,23 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "A Deep Thought Phone Number Container")
-public class DioPhoneNumber {
+@Schema(description = "A Deep Thought Email Container")
+public class DioEmail {
 
   @JsonProperty("id")
   @NotNull
   @NonNull
-  @Schema(description = "Deep Thought Person Identifier",
+  @Schema(description = "Deep Thought Email Identifier",
       defaultValue = "00000000-0000-0000-0000-000000000000")
   @Builder.Default
-  public UUID id = new UUID(0, 0);
-
+  UUID id = new UUID(0, 0);
+  
   @JsonProperty("schemeType")
   @NotNull
+  @NonNull
   @Schema(description = "Scheme Type", defaultValue = "DIO_COMMON")
   @Builder.Default
-  public DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
   
   @JsonProperty("isPreferred")
   @NotNull
@@ -47,14 +49,13 @@ public class DioPhoneNumber {
   @Builder.Default
   Boolean isPreferred = false;
   
-  @JsonProperty("phoneType")
-  @Schema(description = "Phone Type")
-  DioPhoneType phoneType;
+  @JsonProperty("type")
+  @Schema(description = "Email Type")
+  DioEmailType type;
   
-  @JsonProperty("fullNumber")
-  @Schema(description = "Phone Number in RFC3966 Format")
-  @NotNull
-  // TODO: Add validator
-  String fullNumber;  
+  @JsonProperty("address")
+  @Schema(description = "Phone Number in RFC3966 Format", format = "email")
+  @Email
+  public String address;  
   
 }

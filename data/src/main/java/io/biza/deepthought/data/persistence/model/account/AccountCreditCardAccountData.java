@@ -22,6 +22,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import io.biza.deepthought.data.Constants;
 
 @Builder
 @Getter
@@ -53,7 +54,7 @@ public class AccountCreditCardAccountData {
   @Column(name = "PAYMENT_CURRENCY")
   @NotNull
   @Builder.Default
-  Currency paymentCurrency = Currency.getInstance("AUD");
+  Currency paymentCurrency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
   
   @Column(name = "MIN_PAYMENT_AMOUNT")
   @NotNull

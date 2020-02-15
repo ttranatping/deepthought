@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.persistence.model.account.AccountData;
+import io.biza.deepthought.data.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -50,7 +51,7 @@ public class ScheduledPaymentSetData {
   
   @Column(name = "CURRENCY")
   @Builder.Default
-  Currency currency = Currency.getInstance("AUD");
+  Currency currency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
   
   @ManyToOne
   @JoinColumn(name = "ACCOUNT_ID")

@@ -1,7 +1,7 @@
 package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.DioBranch;
+import io.biza.deepthought.data.payloads.dio.banking.DioBranch;
 import io.biza.deepthought.data.persistence.model.bank.BranchData;
 import ma.glasnost.orika.MapperFactory;
 

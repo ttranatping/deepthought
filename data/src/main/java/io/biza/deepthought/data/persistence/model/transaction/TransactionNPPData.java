@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.babelfish.cdr.enumerations.BankingTransactionService;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -38,6 +39,9 @@ public class TransactionNPPData {
   @Type(type = "uuid-char")
   UUID id;
   
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
+  
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "TRANSACTION_ID")
   @ToString.Exclude
@@ -49,8 +53,8 @@ public class TransactionNPPData {
   @Column(name = "PAYEE")
   String payee;
   
-  @Column(name = "END_TO_END")
-  String endToEnd;
+  @Column(name = "END_TO_END_ID")
+  String endToEndId;
   
   @Column(name = "PURPOSE")
   String purposeCode;
