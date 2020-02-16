@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductFee;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductFee;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountEligibilityData;
@@ -52,23 +52,23 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
   private Validator validator;
   
   @Override
-  public ResponseEntity<List<DioProductFee>> listProductFees(UUID brandId, UUID productId) {
+  public ResponseEntity<List<DioBankProductFee>> listProductFees(UUID brandId, UUID productId) {
 
     List<ProductBankingFeeData> feeList =
         feeRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing fees and have database result of {}", feeList);
-    return ResponseEntity.ok(mapper.mapAsList(feeList, DioProductFee.class));
+    return ResponseEntity.ok(mapper.mapAsList(feeList, DioBankProductFee.class));
   }
 
   @Override
-  public ResponseEntity<DioProductFee> getProductFee(UUID brandId, UUID productId, UUID id) {
+  public ResponseEntity<DioBankProductFee> getProductFee(UUID brandId, UUID productId, UUID id) {
     Optional<ProductBankingFeeData> data = feeRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
       LOG.debug("Get Product Fee for brand {} and product {} returning: {}", brandId, productId,
           data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioProductFee.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductFee.class));
     } else {
       LOG.warn("Get product fee for brand {} and product {} not found", brandId, productId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -76,8 +76,8 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
   }
 
   @Override
-  public ResponseEntity<DioProductFee> createProductFee(UUID brandId, UUID productId,
-      DioProductFee createData) throws ValidationListException {
+  public ResponseEntity<DioBankProductFee> createProductFee(UUID brandId, UUID productId,
+      DioBankProductFee createData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, createData);
 
@@ -134,8 +134,8 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
   }
 
   @Override
-  public ResponseEntity<DioProductFee> updateProductFee(UUID brandId, UUID productId, UUID id,
-      DioProductFee updateData) throws ValidationListException {
+  public ResponseEntity<DioBankProductFee> updateProductFee(UUID brandId, UUID productId, UUID id,
+      DioBankProductFee updateData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, updateData);
 

@@ -7,25 +7,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioProductEligibility;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductEligibility;
 
 public interface ProductEligibilityAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
     return Optional.empty();
   }
 
-  default ResponseEntity<List<DioProductEligibility>> listProductEligibilitys(UUID brandId,
+  default ResponseEntity<List<DioBankProductEligibility>> listProductEligibilitys(UUID brandId,
       UUID productId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProductEligibility> getProductEligibility(UUID brandId, UUID productId,
+  default ResponseEntity<DioBankProductEligibility> getProductEligibility(UUID brandId, UUID productId,
       UUID eligibilityId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProductEligibility> createProductEligibility(UUID brandId,
-      UUID productId, DioProductEligibility eligibility) throws ValidationListException {
+  default ResponseEntity<DioBankProductEligibility> createProductEligibility(UUID brandId,
+      UUID productId, DioBankProductEligibility eligibility) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
@@ -34,8 +34,8 @@ public interface ProductEligibilityAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProductEligibility> updateProductEligibility(UUID brandId,
-      UUID productId, UUID eligibilityId, DioProductEligibility eligibility) throws ValidationListException {
+  default ResponseEntity<DioBankProductEligibility> updateProductEligibility(UUID brandId,
+      UUID productId, UUID eligibilityId, DioBankProductEligibility eligibility) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

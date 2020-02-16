@@ -3,7 +3,7 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductFeatureAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioProductFeature;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductFeature;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -34,10 +34,10 @@ public interface ProductFeatureAdminApi {
           scopes = {Labels.SECURITY_SCOPE_PRODUCT_READ})})
   @ApiResponses(value = {@ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
       description = Labels.RESPONSE_SUCCESSFUL_LIST, content = @Content(
-          array = @ArraySchema(schema = @Schema(implementation = DioProductFeature.class))))})
+          array = @ArraySchema(schema = @Schema(implementation = DioBankProductFeature.class))))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<List<DioProductFeature>> listProductFeatures(
+  default ResponseEntity<List<DioBankProductFeature>> listProductFeatures(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId) {
     return getDelegate().listProductFeatures(brandId, productId);
@@ -50,12 +50,12 @@ public interface ProductFeatureAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_READ,
-          content = @Content(schema = @Schema(implementation = DioProductFeature.class))),
+          content = @Content(schema = @Schema(implementation = DioBankProductFeature.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
           description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
   @GetMapping(value = "/{featureId}", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<DioProductFeature> getProductFeature(
+  default ResponseEntity<DioBankProductFeature> getProductFeature(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
       @NotNull @Valid @PathVariable("featureId") UUID featureId) {
@@ -69,17 +69,17 @@ public interface ProductFeatureAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_CREATE,
-          content = @Content(schema = @Schema(implementation = DioProductFeature.class))),
+          content = @Content(schema = @Schema(implementation = DioBankProductFeature.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioProductFeature> createProductFeature(
+  default ResponseEntity<DioBankProductFeature> createProductFeature(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
-      @NotNull @RequestBody DioProductFeature feature) throws ValidationListException {
+      @NotNull @RequestBody DioBankProductFeature feature) throws ValidationListException {
     return getDelegate().createProductFeature(brandId, productId, feature);
   }
 
@@ -90,18 +90,18 @@ public interface ProductFeatureAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_UPDATE,
-          content = @Content(schema = @Schema(implementation = DioProductFeature.class))),
+          content = @Content(schema = @Schema(implementation = DioBankProductFeature.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PutMapping(path = "/{featureId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioProductFeature> updateProductFeature(
+  default ResponseEntity<DioBankProductFeature> updateProductFeature(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
       @NotNull @Valid @PathVariable("featureId") UUID featureId,
-      @NotNull @RequestBody DioProductFeature feature) throws ValidationListException {
+      @NotNull @RequestBody DioBankProductFeature feature) throws ValidationListException {
     return getDelegate().updateProductFeature(brandId, productId, featureId, feature);
   }
 

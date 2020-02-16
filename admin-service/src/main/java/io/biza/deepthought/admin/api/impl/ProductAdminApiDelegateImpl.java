@@ -17,7 +17,7 @@ import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payloads.dio.product.DioProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
@@ -44,20 +44,20 @@ public class ProductAdminApiDelegateImpl implements ProductAdminApiDelegate {
   private Validator validator;
 
   @Override
-  public ResponseEntity<List<DioProduct>> listProducts(UUID brandId) {
+  public ResponseEntity<List<DioBankProduct>> listProducts(UUID brandId) {
     List<ProductData> productData = productRepository.findAllByBrandId(brandId);
     LOG.debug("Listing all products for brand id of {} and received {}", brandId, productData);
-    return ResponseEntity.ok(mapper.mapAsList(productData, DioProduct.class));
+    return ResponseEntity.ok(mapper.mapAsList(productData, DioBankProduct.class));
   }
 
   @Override
-  public ResponseEntity<DioProduct> getProduct(UUID brandId, UUID productId) {
+  public ResponseEntity<DioBankProduct> getProduct(UUID brandId, UUID productId) {
     Optional<ProductData> data = productRepository.findByIdAndBrandId(productId, brandId);
 
     if (data.isPresent()) {
       LOG.info("Retrieving a single product with brand of {} and id of {} and content of {}",
           brandId, productId, data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioProduct.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioBankProduct.class));
     } else {
       LOG.warn(
           "Attempted to retrieve a single product but could not find with brand of {} and id of {}",
@@ -67,7 +67,7 @@ public class ProductAdminApiDelegateImpl implements ProductAdminApiDelegate {
   }
 
   @Override
-  public ResponseEntity<DioProduct> createProduct(UUID brandId, DioProduct createData)
+  public ResponseEntity<DioBankProduct> createProduct(UUID brandId, DioBankProduct createData)
       throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, createData);
@@ -103,8 +103,8 @@ public class ProductAdminApiDelegateImpl implements ProductAdminApiDelegate {
   }
 
   @Override
-  public ResponseEntity<DioProduct> updateProduct(UUID brandId, UUID productId,
-      DioProduct updateData) throws ValidationListException {
+  public ResponseEntity<DioBankProduct> updateProduct(UUID brandId, UUID productId,
+      DioBankProduct updateData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, updateData);
     

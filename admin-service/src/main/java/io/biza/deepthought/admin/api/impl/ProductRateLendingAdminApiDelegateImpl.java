@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateLending;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
@@ -46,23 +46,23 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
   private Validator validator;
 
   @Override
-  public ResponseEntity<List<DioProductRateLending>> listProductRateLendings(UUID brandId, UUID productId) {
+  public ResponseEntity<List<DioBankProductRateLending>> listProductRateLendings(UUID brandId, UUID productId) {
 
     List<ProductBankingRateLendingData> feeList =
         rateRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing fees and have database result of {}", feeList);
-    return ResponseEntity.ok(mapper.mapAsList(feeList, DioProductRateLending.class));
+    return ResponseEntity.ok(mapper.mapAsList(feeList, DioBankProductRateLending.class));
   }
 
   @Override
-  public ResponseEntity<DioProductRateLending> getProductRateLending(UUID brandId, UUID productId, UUID id) {
+  public ResponseEntity<DioBankProductRateLending> getProductRateLending(UUID brandId, UUID productId, UUID id) {
     Optional<ProductBankingRateLendingData> data = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
       LOG.debug("Get Product Lending Rate for brand {} and product {} returning: {}", brandId, productId,
           data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioProductRateLending.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductRateLending.class));
     } else {
       LOG.warn("Get product lending rate for brand {} and product {} not found", brandId, productId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -70,8 +70,8 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
   }
 
   @Override
-  public ResponseEntity<DioProductRateLending> createProductRateLending(UUID brandId, UUID productId,
-      DioProductRateLending createData) throws ValidationListException {
+  public ResponseEntity<DioBankProductRateLending> createProductRateLending(UUID brandId, UUID productId,
+      DioBankProductRateLending createData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, createData);
 
@@ -129,8 +129,8 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
   }
 
   @Override
-  public ResponseEntity<DioProductRateLending> updateProductRateLending(UUID brandId, UUID productId, UUID id,
-      DioProductRateLending updateData) throws ValidationListException {
+  public ResponseEntity<DioBankProductRateLending> updateProductRateLending(UUID brandId, UUID productId, UUID id,
+      DioBankProductRateLending updateData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, updateData);
 

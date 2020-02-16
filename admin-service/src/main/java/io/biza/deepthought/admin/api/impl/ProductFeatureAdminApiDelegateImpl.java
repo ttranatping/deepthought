@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductFeature;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductFeature;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeatureData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductBankingFeatureRepository;
@@ -41,16 +41,16 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
   private Validator validator;
   
   @Override
-  public ResponseEntity<List<DioProductFeature>> listProductFeatures(UUID brandId, UUID productId) {
+  public ResponseEntity<List<DioBankProductFeature>> listProductFeatures(UUID brandId, UUID productId) {
 
     List<ProductBankingFeatureData> featureList = featureRepository
         .findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing features and have database result of {}", featureList);
-    return ResponseEntity.ok(mapper.mapAsList(featureList, DioProductFeature.class));
+    return ResponseEntity.ok(mapper.mapAsList(featureList, DioBankProductFeature.class));
   }
 
   @Override
-  public ResponseEntity<DioProductFeature> getProductFeature(UUID brandId, UUID productId,
+  public ResponseEntity<DioBankProductFeature> getProductFeature(UUID brandId, UUID productId,
       UUID id) {
     Optional<ProductBankingFeatureData> data = featureRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
@@ -58,7 +58,7 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
     if (data.isPresent()) {
       LOG.debug("Get Product Feature for brand {} and product {} returning: {}", brandId, productId,
           data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioProductFeature.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductFeature.class));
     } else {
       LOG.warn("Get product feature for brand {} and product {} not found", brandId, productId,
           data.get());
@@ -67,8 +67,8 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
   }
 
   @Override
-  public ResponseEntity<DioProductFeature> createProductFeature(UUID brandId, UUID productId,
-      DioProductFeature createData) throws ValidationListException {
+  public ResponseEntity<DioBankProductFeature> createProductFeature(UUID brandId, UUID productId,
+      DioBankProductFeature createData) throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, createData);
 
@@ -112,8 +112,8 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
   }
 
   @Override
-  public ResponseEntity<DioProductFeature> updateProductFeature(UUID brandId, UUID productId,
-      UUID id, DioProductFeature updateData) throws ValidationListException {
+  public ResponseEntity<DioBankProductFeature> updateProductFeature(UUID brandId, UUID productId,
+      UUID id, DioBankProductFeature updateData) throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, updateData);
     

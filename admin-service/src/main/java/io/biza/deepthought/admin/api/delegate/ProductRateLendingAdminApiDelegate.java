@@ -7,25 +7,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateLending;
 
 public interface ProductRateLendingAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
     return Optional.empty();
   }
 
-  default ResponseEntity<List<DioProductRateLending>> listProductRateLendings(UUID brandId,
+  default ResponseEntity<List<DioBankProductRateLending>> listProductRateLendings(UUID brandId,
       UUID productId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProductRateLending> getProductRateLending(UUID brandId, UUID productId,
+  default ResponseEntity<DioBankProductRateLending> getProductRateLending(UUID brandId, UUID productId,
       UUID rateId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProductRateLending> createProductRateLending(UUID brandId, UUID productId,
-      DioProductRateLending rate) throws ValidationListException {
+  default ResponseEntity<DioBankProductRateLending> createProductRateLending(UUID brandId, UUID productId,
+      DioBankProductRateLending rate) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
@@ -33,8 +33,8 @@ public interface ProductRateLendingAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProductRateLending> updateProductRateLending(UUID brandId, UUID productId,
-      UUID rateId, DioProductRateLending rate) throws ValidationListException {
+  default ResponseEntity<DioBankProductRateLending> updateProductRateLending(UUID brandId, UUID productId,
+      UUID rateId, DioBankProductRateLending rate) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

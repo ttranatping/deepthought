@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductEligibility;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductEligibility;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingEligibilityData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductBankingEligibilityRepository;
@@ -41,17 +41,17 @@ public class ProductEligibilityAdminApiDelegateImpl implements ProductEligibilit
   private Validator validator;
   
   @Override
-  public ResponseEntity<List<DioProductEligibility>> listProductEligibilitys(UUID brandId,
+  public ResponseEntity<List<DioBankProductEligibility>> listProductEligibilitys(UUID brandId,
       UUID productId) {
 
     List<ProductBankingEligibilityData> eligibilityList = eligibilityRepository
         .findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing eligibilitys and have database result of {}", eligibilityList);
-    return ResponseEntity.ok(mapper.mapAsList(eligibilityList, DioProductEligibility.class));
+    return ResponseEntity.ok(mapper.mapAsList(eligibilityList, DioBankProductEligibility.class));
   }
 
   @Override
-  public ResponseEntity<DioProductEligibility> getProductEligibility(UUID brandId, UUID productId,
+  public ResponseEntity<DioBankProductEligibility> getProductEligibility(UUID brandId, UUID productId,
       UUID id) {
     Optional<ProductBankingEligibilityData> data = eligibilityRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
@@ -59,7 +59,7 @@ public class ProductEligibilityAdminApiDelegateImpl implements ProductEligibilit
     if (data.isPresent()) {
       LOG.debug("Get Product Eligibility for brand {} and product {} returning: {}", brandId,
           productId, data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioProductEligibility.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductEligibility.class));
     } else {
       LOG.warn("Get product eligibility for brand {} and product {} not found", brandId, productId,
           data.get());
@@ -68,8 +68,8 @@ public class ProductEligibilityAdminApiDelegateImpl implements ProductEligibilit
   }
 
   @Override
-  public ResponseEntity<DioProductEligibility> createProductEligibility(UUID brandId,
-      UUID productId, DioProductEligibility createData) throws ValidationListException {
+  public ResponseEntity<DioBankProductEligibility> createProductEligibility(UUID brandId,
+      UUID productId, DioBankProductEligibility createData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, createData);
     
@@ -114,8 +114,8 @@ public class ProductEligibilityAdminApiDelegateImpl implements ProductEligibilit
   }
 
   @Override
-  public ResponseEntity<DioProductEligibility> updateProductEligibility(UUID brandId,
-      UUID productId, UUID id, DioProductEligibility updateData) throws ValidationListException {
+  public ResponseEntity<DioBankProductEligibility> updateProductEligibility(UUID brandId,
+      UUID productId, UUID id, DioBankProductEligibility updateData) throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, updateData);
 

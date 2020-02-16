@@ -15,7 +15,7 @@ import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payloads.dio.banking.DioBranch;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.repository.BrandRepository;
@@ -40,20 +40,20 @@ public class BranchAdminApiDelegateImpl implements BranchAdminApiDelegate {
   private Validator validator;
 
   @Override
-  public ResponseEntity<List<DioBranch>> listBranches(UUID brandId) {
+  public ResponseEntity<List<DioBankBranch>> listBranches(UUID brandId) {
     List<BankBranchData> branchData = branchRepository.findAllByBrandId(brandId);
     LOG.debug("Listing all branchs for brand id of {} and received {}", brandId, branchData);
-    return ResponseEntity.ok(mapper.mapAsList(branchData, DioBranch.class));
+    return ResponseEntity.ok(mapper.mapAsList(branchData, DioBankBranch.class));
   }
 
   @Override
-  public ResponseEntity<DioBranch> getBranch(UUID brandId, UUID branchId) {
+  public ResponseEntity<DioBankBranch> getBranch(UUID brandId, UUID branchId) {
     Optional<BankBranchData> data = branchRepository.findByIdAndBrandId(branchId, brandId);
 
     if (data.isPresent()) {
       LOG.info("Retrieving a single branch with brand of {} and id of {} and content of {}",
           brandId, branchId, data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioBranch.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioBankBranch.class));
     } else {
       LOG.warn(
           "Attempted to retrieve a single branch but could not find with brand of {} and id of {}",
@@ -63,7 +63,7 @@ public class BranchAdminApiDelegateImpl implements BranchAdminApiDelegate {
   }
 
   @Override
-  public ResponseEntity<DioBranch> createBranch(UUID brandId, DioBranch createData)
+  public ResponseEntity<DioBankBranch> createBranch(UUID brandId, DioBankBranch createData)
       throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, createData);
@@ -98,8 +98,8 @@ public class BranchAdminApiDelegateImpl implements BranchAdminApiDelegate {
   }
 
   @Override
-  public ResponseEntity<DioBranch> updateBranch(UUID brandId, UUID branchId,
-      DioBranch updateData) throws ValidationListException {
+  public ResponseEntity<DioBankBranch> updateBranch(UUID brandId, UUID branchId,
+      DioBankBranch updateData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, updateData);
     

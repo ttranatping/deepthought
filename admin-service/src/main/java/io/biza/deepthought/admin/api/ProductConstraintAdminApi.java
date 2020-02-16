@@ -3,7 +3,7 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductConstraintAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioProductConstraint;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductConstraint;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -34,10 +34,10 @@ public interface ProductConstraintAdminApi {
           scopes = {Labels.SECURITY_SCOPE_PRODUCT_READ})})
   @ApiResponses(value = {@ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
       description = Labels.RESPONSE_SUCCESSFUL_LIST, content = @Content(
-          array = @ArraySchema(schema = @Schema(implementation = DioProductConstraint.class))))})
+          array = @ArraySchema(schema = @Schema(implementation = DioBankProductConstraint.class))))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<List<DioProductConstraint>> listProductConstraints(
+  default ResponseEntity<List<DioBankProductConstraint>> listProductConstraints(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId) {
     return getDelegate().listProductConstraints(brandId, productId);
@@ -50,12 +50,12 @@ public interface ProductConstraintAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_READ,
-          content = @Content(schema = @Schema(implementation = DioProductConstraint.class))),
+          content = @Content(schema = @Schema(implementation = DioBankProductConstraint.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
           description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
   @GetMapping(value = "/{constraintId}", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<DioProductConstraint> getProductConstraint(
+  default ResponseEntity<DioBankProductConstraint> getProductConstraint(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
       @NotNull @Valid @PathVariable("constraintId") UUID constraintId) {
@@ -69,17 +69,17 @@ public interface ProductConstraintAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_CREATE,
-          content = @Content(schema = @Schema(implementation = DioProductConstraint.class))),
+          content = @Content(schema = @Schema(implementation = DioBankProductConstraint.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioProductConstraint> createProductConstraint(
+  default ResponseEntity<DioBankProductConstraint> createProductConstraint(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
-      @NotNull @RequestBody DioProductConstraint constraint) throws ValidationListException {
+      @NotNull @RequestBody DioBankProductConstraint constraint) throws ValidationListException {
     return getDelegate().createProductConstraint(brandId, productId, constraint);
   }
 
@@ -90,18 +90,18 @@ public interface ProductConstraintAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_UPDATE,
-          content = @Content(schema = @Schema(implementation = DioProductConstraint.class))),
+          content = @Content(schema = @Schema(implementation = DioBankProductConstraint.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PutMapping(path = "/{constraintId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioProductConstraint> updateProductConstraint(
+  default ResponseEntity<DioBankProductConstraint> updateProductConstraint(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
       @NotNull @Valid @PathVariable("constraintId") UUID constraintId,
-      @NotNull @RequestBody DioProductConstraint constraint) throws ValidationListException {
+      @NotNull @RequestBody DioBankProductConstraint constraint) throws ValidationListException {
     return getDelegate().updateProductConstraint(brandId, productId, constraintId, constraint);
   }
 

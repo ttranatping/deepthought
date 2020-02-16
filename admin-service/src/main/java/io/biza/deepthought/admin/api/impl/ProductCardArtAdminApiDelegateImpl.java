@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductCardArt;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductCardArt;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingCardArtData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductBankingCardArtRepository;
@@ -41,23 +41,23 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
   private Validator validator;
   
   @Override
-  public ResponseEntity<List<DioProductCardArt>> listProductCardArts(UUID brandId, UUID productId) {
+  public ResponseEntity<List<DioBankProductCardArt>> listProductCardArts(UUID brandId, UUID productId) {
 
     List<ProductBankingCardArtData> cardArtList =
         cardArtRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing cardArts and have database result of {}", cardArtList);
-    return ResponseEntity.ok(mapper.mapAsList(cardArtList, DioProductCardArt.class));
+    return ResponseEntity.ok(mapper.mapAsList(cardArtList, DioBankProductCardArt.class));
   }
 
   @Override
-  public ResponseEntity<DioProductCardArt> getProductCardArt(UUID brandId, UUID productId, UUID id) {
+  public ResponseEntity<DioBankProductCardArt> getProductCardArt(UUID brandId, UUID productId, UUID id) {
     Optional<ProductBankingCardArtData> data = cardArtRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
       LOG.debug("Get Product CardArt for brand {} and product {} returning: {}", brandId, productId,
           data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioProductCardArt.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductCardArt.class));
     } else {
       LOG.warn("Get product cardArt for brand {} and product {} not found", brandId, productId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -65,8 +65,8 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
   }
 
   @Override
-  public ResponseEntity<DioProductCardArt> createProductCardArt(UUID brandId, UUID productId,
-      DioProductCardArt createData) throws ValidationListException {
+  public ResponseEntity<DioBankProductCardArt> createProductCardArt(UUID brandId, UUID productId,
+      DioBankProductCardArt createData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, createData);
 
@@ -112,8 +112,8 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
   }
 
   @Override
-  public ResponseEntity<DioProductCardArt> updateProductCardArt(UUID brandId, UUID productId, UUID id,
-      DioProductCardArt updateData) throws ValidationListException {
+  public ResponseEntity<DioBankProductCardArt> updateProductCardArt(UUID brandId, UUID productId, UUID id,
+      DioBankProductCardArt updateData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, updateData);
 

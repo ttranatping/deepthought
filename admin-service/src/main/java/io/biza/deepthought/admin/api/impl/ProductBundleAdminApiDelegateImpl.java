@@ -17,7 +17,7 @@ import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payloads.dio.product.DioProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
@@ -202,7 +202,7 @@ public class ProductBundleAdminApiDelegateImpl implements ProductBundleAdminApiD
   }
 
   @Override
-  public ResponseEntity<List<DioProduct>> listProductsForBundle(UUID brandId,
+  public ResponseEntity<List<DioBankProduct>> listProductsForBundle(UUID brandId,
       UUID bundleId) {
     Optional<ProductBundleData> data = bundleRepository.findByIdAndBrandId(bundleId, brandId);
 
@@ -216,7 +216,7 @@ public class ProductBundleAdminApiDelegateImpl implements ProductBundleAdminApiD
         products.addAll(data.get().products());
       }
 
-      return ResponseEntity.ok(mapper.mapAsList(products, DioProduct.class));
+      return ResponseEntity.ok(mapper.mapAsList(products, DioBankProduct.class));
     } else {
       LOG.warn("Unable to locate product bundle with brand of {} and identifier of {}", brandId,
           bundleId);

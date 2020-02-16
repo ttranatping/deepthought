@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 
 public interface ProductBundleAdminApiDelegate {
@@ -49,7 +49,7 @@ public interface ProductBundleAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<List<DioProduct>> listProductsForBundle(@NotNull @Valid UUID brandId,
+  default ResponseEntity<List<DioBankProduct>> listProductsForBundle(@NotNull @Valid UUID brandId,
       @NotNull @Valid UUID bundleId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }

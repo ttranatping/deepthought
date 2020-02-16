@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateDeposit;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
@@ -46,23 +46,23 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
   private Validator validator;
 
   @Override
-  public ResponseEntity<List<DioProductRateDeposit>> listProductRateDeposits(UUID brandId, UUID productId) {
+  public ResponseEntity<List<DioBankProductRateDeposit>> listProductRateDeposits(UUID brandId, UUID productId) {
 
     List<ProductBankingRateDepositData> feeList =
         rateRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing fees and have database result of {}", feeList);
-    return ResponseEntity.ok(mapper.mapAsList(feeList, DioProductRateDeposit.class));
+    return ResponseEntity.ok(mapper.mapAsList(feeList, DioBankProductRateDeposit.class));
   }
 
   @Override
-  public ResponseEntity<DioProductRateDeposit> getProductRateDeposit(UUID brandId, UUID productId, UUID id) {
+  public ResponseEntity<DioBankProductRateDeposit> getProductRateDeposit(UUID brandId, UUID productId, UUID id) {
     Optional<ProductBankingRateDepositData> data = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
       LOG.debug("Get Product Deposit Rate for brand {} and product {} returning: {}", brandId, productId,
           data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioProductRateDeposit.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductRateDeposit.class));
     } else {
       LOG.warn("Get product deposit rate for brand {} and product {} not found", brandId, productId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -70,8 +70,8 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
   }
 
   @Override
-  public ResponseEntity<DioProductRateDeposit> createProductRateDeposit(UUID brandId, UUID productId,
-      DioProductRateDeposit createData) throws ValidationListException {
+  public ResponseEntity<DioBankProductRateDeposit> createProductRateDeposit(UUID brandId, UUID productId,
+      DioBankProductRateDeposit createData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, createData);
 
@@ -127,8 +127,8 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
   }
 
   @Override
-  public ResponseEntity<DioProductRateDeposit> updateProductRateDeposit(UUID brandId, UUID productId, UUID id,
-      DioProductRateDeposit updateData) throws ValidationListException {
+  public ResponseEntity<DioBankProductRateDeposit> updateProductRateDeposit(UUID brandId, UUID productId, UUID id,
+      DioBankProductRateDeposit updateData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, updateData);
 

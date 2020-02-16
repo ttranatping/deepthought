@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 
 public interface ProductAdminApiDelegate {
@@ -17,15 +17,15 @@ public interface ProductAdminApiDelegate {
     return Optional.empty();
   }
 
-  default ResponseEntity<List<DioProduct>> listProducts(UUID brandId) {
+  default ResponseEntity<List<DioBankProduct>> listProducts(UUID brandId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProduct> getProduct(UUID brandId, UUID productId) {
+  default ResponseEntity<DioBankProduct> getProduct(UUID brandId, UUID productId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProduct> createProduct(UUID brandId, DioProduct product)
+  default ResponseEntity<DioBankProduct> createProduct(UUID brandId, DioBankProduct product)
       throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
@@ -34,8 +34,8 @@ public interface ProductAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProduct> updateProduct(UUID brandId, UUID productId,
-      DioProduct product) throws ValidationListException {
+  default ResponseEntity<DioBankProduct> updateProduct(UUID brandId, UUID productId,
+      DioBankProduct product) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

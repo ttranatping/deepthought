@@ -7,25 +7,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioProductConstraint;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductConstraint;
 
 public interface ProductConstraintAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
     return Optional.empty();
   }
 
-  default ResponseEntity<List<DioProductConstraint>> listProductConstraints(UUID brandId,
+  default ResponseEntity<List<DioBankProductConstraint>> listProductConstraints(UUID brandId,
       UUID productId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProductConstraint> getProductConstraint(UUID brandId, UUID productId,
+  default ResponseEntity<DioBankProductConstraint> getProductConstraint(UUID brandId, UUID productId,
       UUID constraintId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProductConstraint> createProductConstraint(UUID brandId, UUID productId,
-      DioProductConstraint constraint) throws ValidationListException {
+  default ResponseEntity<DioBankProductConstraint> createProductConstraint(UUID brandId, UUID productId,
+      DioBankProductConstraint constraint) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
@@ -34,8 +34,8 @@ public interface ProductConstraintAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioProductConstraint> updateProductConstraint(UUID brandId, UUID productId,
-      UUID constraintId, DioProductConstraint constraint) throws ValidationListException {
+  default ResponseEntity<DioBankProductConstraint> updateProductConstraint(UUID brandId, UUID productId,
+      UUID constraintId, DioBankProductConstraint constraint) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

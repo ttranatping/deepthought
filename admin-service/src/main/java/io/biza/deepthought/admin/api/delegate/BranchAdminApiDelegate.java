@@ -7,22 +7,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.banking.DioBranch;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;
 
 public interface BranchAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
     return Optional.empty();
   }
 
-  default ResponseEntity<List<DioBranch>> listBranches(UUID brandId) {
+  default ResponseEntity<List<DioBankBranch>> listBranches(UUID brandId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBranch> getBranch(UUID brandId, UUID branchId) {
+  default ResponseEntity<DioBankBranch> getBranch(UUID brandId, UUID branchId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBranch> createBranch(UUID brandId, DioBranch branch)
+  default ResponseEntity<DioBankBranch> createBranch(UUID brandId, DioBankBranch branch)
       throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
@@ -31,8 +31,8 @@ public interface BranchAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBranch> updateBranch(UUID brandId, UUID branchId,
-      DioBranch branch) throws ValidationListException {
+  default ResponseEntity<DioBankBranch> updateBranch(UUID brandId, UUID branchId,
+      DioBankBranch branch) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
