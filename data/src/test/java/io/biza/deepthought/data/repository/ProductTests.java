@@ -24,33 +24,33 @@ import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendi
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.DioProduct;
-import io.biza.deepthought.data.payloads.DioProductCardArt;
-import io.biza.deepthought.data.payloads.DioProductConstraint;
-import io.biza.deepthought.data.payloads.DioProductEligibility;
-import io.biza.deepthought.data.payloads.DioProductFeature;
-import io.biza.deepthought.data.payloads.DioProductFee;
-import io.biza.deepthought.data.payloads.DioProductRateDeposit;
-import io.biza.deepthought.data.payloads.DioProductRateLending;
 import io.biza.deepthought.data.payloads.cdr.CdrBankingProduct;
-import io.biza.deepthought.data.persistence.model.BrandData;
-import io.biza.deepthought.data.persistence.model.ProductBundleData;
-import io.biza.deepthought.data.persistence.model.ProductData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingAdditionalInformationData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingCardArtData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingConstraintData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingEligibilityData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeatureData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeDiscountData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingFeeDiscountEligibilityData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateDepositTierData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingRateLendingTierData;
+import io.biza.deepthought.data.payloads.dio.product.DioProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioProductCardArt;
+import io.biza.deepthought.data.payloads.dio.product.DioProductConstraint;
+import io.biza.deepthought.data.payloads.dio.product.DioProductEligibility;
+import io.biza.deepthought.data.payloads.dio.product.DioProductFeature;
+import io.biza.deepthought.data.payloads.dio.product.DioProductFee;
+import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
+import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
+import io.biza.deepthought.data.persistence.model.bank.BrandData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingAdditionalInformationData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingCardArtData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingConstraintData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeDiscountData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeDiscountEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierData;
+import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
+import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.support.DeepThoughtJpaConfig;
 import io.biza.deepthought.data.support.TranslatorInitialisation;
@@ -103,54 +103,54 @@ public class ProductTests extends TranslatorInitialisation {
     ProductData product = ProductData.builder().name(VariableConstants.PRODUCT_NAME)
         .description(VariableConstants.PRODUCT_DESCRIPTION).schemeType(DioSchemeType.CDR_BANKING)
         .build();
-    ProductCdrBankingData cdrBanking =
-        ProductCdrBankingData.builder().effectiveFrom(VariableConstants.PRODUCT_EFFECTIVE_FROM)
+    ProductBankingData cdrBanking =
+        ProductBankingData.builder().effectiveFrom(VariableConstants.PRODUCT_EFFECTIVE_FROM)
             // Product Baseline
             .effectiveTo(VariableConstants.PRODUCT_EFFECTIVE_TO)
             .lastUpdated(VariableConstants.PRODUCT_LAST_UPDATED)
             .productCategory(VariableConstants.PRODUCT_CATEGORY)
             .applicationUri(VariableConstants.PRODUCT_APPLICATION_URI)
             .isTailored(VariableConstants.PRODUCT_ISTAILORED)
-            .additionalInformation(ProductCdrBankingAdditionalInformationData.builder()
+            .additionalInformation(ProductBankingAdditionalInformationData.builder()
                 .overviewUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_OVERVIEW_URI)
                 .termsUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_TERMS_URI)
                 .eligibilityUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_ELIGIBILITY_URI)
                 .feesPricingUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_FEES_URI)
                 .bundleUri(VariableConstants.PRODUCT_ADDITIONAL_INFO_BUNDLE_URI).build())
-            .cardArt(Set.of(ProductCdrBankingCardArtData.builder()
+            .cardArt(Set.of(ProductBankingCardArtData.builder()
                 .title(VariableConstants.PRODUCT_CARDART_TITLE)
                 .imageUri(VariableConstants.PRODUCT_CARDART_URI).build()))
             // Product Detail with one of basically everything
-            .feature(Set.of(ProductCdrBankingFeatureData.builder()
+            .feature(Set.of(ProductBankingFeatureData.builder()
                 .featureType(VariableConstants.PRODUCT_FEATURE_TYPE)
                 .additionalInfo(VariableConstants.PRODUCT_FEATURE_ADDITIONAL_INFO)
                 .additionalInfoUri(VariableConstants.PRODUCT_FEATURE_ADDITIONAL_INFO_URI)
                 .additionalValue(VariableConstants.PRODUCT_FEATURE_ADDITIONAL_VALUE).build()))
-            .constraint(Set.of(ProductCdrBankingConstraintData.builder()
+            .constraint(Set.of(ProductBankingConstraintData.builder()
                 .constraintType(VariableConstants.PRODUCT_CONSTRAINT_TYPE)
                 .additionalInfo(VariableConstants.PRODUCT_CONSTRAINT_ADDITIONAL_INFO)
                 .additionalInfoUri(VariableConstants.PRODUCT_CONSTRAINT_ADDITIONAL_INFO_URI)
                 .additionalValue(VariableConstants.PRODUCT_CONSTRAINT_ADDITIONAL_VALUE).build()))
-            .eligibility(Set.of(ProductCdrBankingEligibilityData.builder()
+            .eligibility(Set.of(ProductBankingEligibilityData.builder()
                 .eligibilityType(VariableConstants.PRODUCT_ELIGIBILITY_TYPE)
                 .additionalInfo(VariableConstants.PRODUCT_ELIGIBILITY_ADDITIONAL_INFO)
                 .additionalInfoUri(VariableConstants.PRODUCT_ELIGIBILITY_ADDITIONAL_INFO_URI)
                 .additionalValue(VariableConstants.PRODUCT_ELIGIBILITY_ADDITIONAL_VALUE).build()))
-            .fee(Set.of(ProductCdrBankingFeeData.builder().name(VariableConstants.PRODUCT_FEE1_NAME)
+            .fee(Set.of(ProductBankingFeeData.builder().name(VariableConstants.PRODUCT_FEE1_NAME)
                 .feeType(VariableConstants.PRODUCT_FEE1_TYPE)
                 .amount(VariableConstants.PRODUCT_FEE1_AMOUNT)
                 .currency(VariableConstants.PRODUCT_FEE1_CURRENCY)
                 .additionalValue(VariableConstants.PRODUCT_FEE1_ADDITIONAL_VALUE)
                 .additionalInfo(VariableConstants.PRODUCT_FEE1_ADDITIONAL_INFO)
                 .additionalInfoUri(VariableConstants.PRODUCT_FEE1_ADDITIONAL_INFO_URI)
-                .discounts(Set.of(ProductCdrBankingFeeDiscountData.builder()
+                .discounts(Set.of(ProductBankingFeeDiscountData.builder()
                     .discountType(BankingProductDiscountType.ELIGIBILITY_ONLY)
                     .description(VariableConstants.PRODUCT_FEE1_DISCOUNT_DESCRIPTION)
                     .amount(VariableConstants.PRODUCT_FEE1_DISCOUNT_AMOUNT)
                     .additionalInfo(VariableConstants.PRODUCT_FEE1_DISCOUNT_ADDITIONAL_INFO)
                     .additionalValue(VariableConstants.PRODUCT_FEE1_DISCOUNT_ADDITIONAL_VALUE)
                     .additionalInfoUri(VariableConstants.PRODUCT_FEE1_DISCOUNT_ADDITIONAL_URI)
-                    .eligibility(Set.of(ProductCdrBankingFeeDiscountEligibilityData.builder()
+                    .eligibility(Set.of(ProductBankingFeeDiscountEligibilityData.builder()
                         .discountEligibilityType(
                             VariableConstants.PRODUCT_FEE1_DISCOUNT_ELIGIBILITY_TYPE)
                         .additionalValue(
@@ -162,7 +162,7 @@ public class ProductTests extends TranslatorInitialisation {
                         .build()))
                     .build()))
                 .build()))
-            .depositRate(Set.of(ProductCdrBankingRateDepositData.builder()
+            .depositRate(Set.of(ProductBankingRateDepositData.builder()
                 .depositRateType(VariableConstants.PRODUCT_DEPOSIT_RATE_TYPE)
                 .rate(VariableConstants.PRODUCT_DEPOSIT_RATE_RATE)
                 .calculationFrequency(VariableConstants.PRODUCT_DEPOSIT_RATE_CALCULATION_FREQUENCY)
@@ -170,14 +170,14 @@ public class ProductTests extends TranslatorInitialisation {
                 .additionalInfo(VariableConstants.PRODUCT_DEPOSIT_RATE_ADDITIONAL_INFO)
                 .additionalValue(VariableConstants.PRODUCT_DEPOSIT_RATE_ADDITIONAL_VALUE)
                 .additionalInfoUri(VariableConstants.PRODUCT_DEPOSIT_RATE_ADDITIONAL_URI)
-                .tiers(Set.of(ProductCdrBankingRateDepositTierData.builder()
+                .tiers(Set.of(ProductBankingRateDepositTierData.builder()
                     .name(VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_NAME)
                     .unitOfMeasure(VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_UNITOFMEASURE)
                     .minimumValue(VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_MINIMUM_VALUE)
                     .maximumValue(VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_MAXIMUM_VALUE)
                     .rateApplicationMethod(
                         VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_RATE_APPLICATION_METHOD)
-                    .applicabilityConditions(ProductCdrBankingRateDepositTierApplicabilityData
+                    .applicabilityConditions(ProductBankingRateDepositTierApplicabilityData
                         .builder()
                         .additionalInfo(
                             VariableConstants.PRODUCT_DEPOSIT_RATE_TIER1_APPLICABILITY_INFO)
@@ -186,7 +186,7 @@ public class ProductTests extends TranslatorInitialisation {
                         .build())
                     .build()))
                 .build()))
-            .lendingRate(Set.of(ProductCdrBankingRateLendingData.builder()
+            .lendingRate(Set.of(ProductBankingRateLendingData.builder()
                 .lendingRateType(VariableConstants.PRODUCT_LENDING_RATE_TYPE)
                 .rate(VariableConstants.PRODUCT_LENDING_RATE_RATE)
                 .calculationFrequency(VariableConstants.PRODUCT_LENDING_RATE_CALCULATION_FREQUENCY)
@@ -195,14 +195,14 @@ public class ProductTests extends TranslatorInitialisation {
                 .additionalInfo(VariableConstants.PRODUCT_LENDING_RATE_ADDITIONAL_INFO)
                 .additionalValue(VariableConstants.PRODUCT_LENDING_RATE_ADDITIONAL_VALUE)
                 .additionalInfoUri(VariableConstants.PRODUCT_LENDING_RATE_ADDITIONAL_URI)
-                .tiers(Set.of(ProductCdrBankingRateLendingTierData.builder()
+                .tiers(Set.of(ProductBankingRateLendingTierData.builder()
                     .name(VariableConstants.PRODUCT_LENDING_RATE_TIER1_NAME)
                     .unitOfMeasure(VariableConstants.PRODUCT_LENDING_RATE_TIER1_UNITOFMEASURE)
                     .minimumValue(VariableConstants.PRODUCT_LENDING_RATE_TIER1_MINIMUM_VALUE)
                     .maximumValue(VariableConstants.PRODUCT_LENDING_RATE_TIER1_MAXIMUM_VALUE)
                     .rateApplicationMethod(
                         VariableConstants.PRODUCT_LENDING_RATE_TIER1_RATE_APPLICATION_METHOD)
-                    .applicabilityConditions(ProductCdrBankingRateLendingTierApplicabilityData
+                    .applicabilityConditions(ProductBankingRateLendingTierApplicabilityData
                         .builder()
                         .additionalInfo(
                             VariableConstants.PRODUCT_LENDING_RATE_TIER1_APPLICABILITY_INFO)
@@ -261,7 +261,7 @@ public class ProductTests extends TranslatorInitialisation {
   public void testProductConstraintCreateAndCompare() {
     ProductData product = createProductWithTheWorks();
 
-    for (ProductCdrBankingConstraintData constraint : product.cdrBanking().constraint()) {
+    for (ProductBankingConstraintData constraint : product.cdrBanking().constraint()) {
       DioProductConstraint dioProductConstraint =
           mapper.getMapperFacade().map(constraint, DioProductConstraint.class);
 
@@ -287,7 +287,7 @@ public class ProductTests extends TranslatorInitialisation {
   public void testProductFeatureCreateAndCompare() {
     ProductData product = createProductWithTheWorks();
 
-    for (ProductCdrBankingFeatureData feature : product.cdrBanking().feature()) {
+    for (ProductBankingFeatureData feature : product.cdrBanking().feature()) {
       DioProductFeature dioProductFeature =
           mapper.getMapperFacade().map(feature, DioProductFeature.class);
 
@@ -313,7 +313,7 @@ public class ProductTests extends TranslatorInitialisation {
   public void testProductEligibilityCreateAndCompare() {
     ProductData product = createProductWithTheWorks();
 
-    for (ProductCdrBankingEligibilityData eligibility : product.cdrBanking().eligibility()) {
+    for (ProductBankingEligibilityData eligibility : product.cdrBanking().eligibility()) {
       DioProductEligibility dioProductEligibility =
           mapper.getMapperFacade().map(eligibility, DioProductEligibility.class);
 
@@ -339,7 +339,7 @@ public class ProductTests extends TranslatorInitialisation {
   public void testProductCardArtCreateAndCompare() {
     ProductData product = createProductWithTheWorks();
 
-    for (ProductCdrBankingCardArtData cardArt : product.cdrBanking().cardArt()) {
+    for (ProductBankingCardArtData cardArt : product.cdrBanking().cardArt()) {
       DioProductCardArt dioProductCardArt =
           mapper.getMapperFacade().map(cardArt, DioProductCardArt.class);
 
@@ -362,7 +362,7 @@ public class ProductTests extends TranslatorInitialisation {
   public void testProductFeeCreateAndCompare() {
     ProductData product = createProductWithTheWorks();
 
-    for (ProductCdrBankingFeeData fee : product.cdrBanking().fee()) {
+    for (ProductBankingFeeData fee : product.cdrBanking().fee()) {
       DioProductFee dioProductFee = mapper.getMapperFacade().map(fee, DioProductFee.class);
 
       DioProductFee dioFeeStatic = DioProductFee.builder().id(fee.id())
@@ -405,7 +405,7 @@ public class ProductTests extends TranslatorInitialisation {
   public void testProductDepositRateCreateAndCompare() {
     ProductData product = createProductWithTheWorks();
 
-    for (ProductCdrBankingRateDepositData depositRate : product.cdrBanking().depositRate()) {
+    for (ProductBankingRateDepositData depositRate : product.cdrBanking().depositRate()) {
       DioProductRateDeposit dioProductDepositRate =
           mapper.getMapperFacade().map(depositRate, DioProductRateDeposit.class);
 
@@ -446,7 +446,7 @@ public class ProductTests extends TranslatorInitialisation {
   public void testProductLendingRateCreateAndCompare() {
     ProductData product = createProductWithTheWorks();
 
-    for (ProductCdrBankingRateLendingData lendingRate : product.cdrBanking().lendingRate()) {
+    for (ProductBankingRateLendingData lendingRate : product.cdrBanking().lendingRate()) {
       DioProductRateLending dioProductLendingRate =
           mapper.getMapperFacade().map(lendingRate, DioProductRateLending.class);
 
@@ -511,8 +511,8 @@ public class ProductTests extends TranslatorInitialisation {
                         VariableConstants.PRODUCT_LENDING_RATE_TIER1_APPLICABILITY_URI)))))
         .build();
 
-    ProductCdrBankingRateLendingData lendingData =
-        mapper.getMapperFacade().map(dioLendingRateStatic, ProductCdrBankingRateLendingData.class);
+    ProductBankingRateLendingData lendingData =
+        mapper.getMapperFacade().map(dioLendingRateStatic, ProductBankingRateLendingData.class);
     
     LOG.info(lendingData.toString());
     

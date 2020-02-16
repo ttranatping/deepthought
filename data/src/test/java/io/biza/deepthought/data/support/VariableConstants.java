@@ -3,10 +3,16 @@ package io.biza.deepthought.data.support;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.Period;
 import java.time.ZoneOffset;
 import java.util.Currency;
+import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
+import io.biza.deepthought.data.Constants;
+import io.biza.babelfish.cdr.enumerations.AddressPurpose;
 import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.enumerations.BankingProductConstraintType;
 import io.biza.babelfish.cdr.enumerations.BankingProductDepositRateType;
@@ -18,7 +24,26 @@ import io.biza.babelfish.cdr.enumerations.BankingProductFeeType;
 import io.biza.babelfish.cdr.enumerations.BankingProductLendingRateInterestPaymentType;
 import io.biza.babelfish.cdr.enumerations.BankingProductLendingRateType;
 import io.biza.babelfish.cdr.enumerations.BankingProductRateTierApplicationMethod;
+import io.biza.babelfish.cdr.enumerations.BankingTransactionStatus;
+import io.biza.babelfish.cdr.enumerations.BankingTransactionType;
+import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
 import io.biza.babelfish.cdr.enumerations.CommonUnitOfMeasureType;
+import io.biza.babelfish.cdr.enumerations.PayloadTypeBankingDomesticPayeePayId;
+import io.biza.babelfish.cdr.support.customtypes.MerchantCategoryCodeType;
+import io.biza.deepthought.data.enumerations.DioEmailType;
+import io.biza.deepthought.data.enumerations.DioLoanRepaymentType;
+import io.biza.deepthought.data.enumerations.DioMaturityInstructionType;
+import io.biza.deepthought.data.enumerations.DioPersonPrefix;
+import io.biza.deepthought.data.enumerations.DioPersonSuffix;
+import io.biza.deepthought.data.enumerations.DioPhoneType;
+import io.biza.deepthought.data.payloads.cdr.CdrCommonOrganisation;
+import io.biza.deepthought.data.payloads.cdr.CdrCommonPerson;
+import io.biza.deepthought.data.payloads.dio.common.DioAddress;
+import io.biza.deepthought.data.payloads.dio.common.DioAddressSimple;
+import io.biza.deepthought.data.payloads.dio.common.DioEmail;
+import io.biza.deepthought.data.payloads.dio.common.DioOrganisation;
+import io.biza.deepthought.data.payloads.dio.common.DioPerson;
+import io.biza.deepthought.data.payloads.dio.common.DioPhoneNumber;
 
 public class VariableConstants {
   public static final String PRODUCT_BUNDLE_ADDITIONAL_INFO = "Product Bundle Additional Info";
@@ -146,4 +171,134 @@ public class VariableConstants {
       URI.create("http://www.acme.com.au/product/rate/lending/applicability/info");
   public static final BankingProductLendingRateInterestPaymentType PRODUCT_LENDING_INTEREST_PAYMENT_DUE =
       BankingProductLendingRateInterestPaymentType.IN_ARREARS;
+
+  public static final String BANK_NAME = "Arlington Bank";
+  public static final String BRANCH_ADDRESS = "29 Arlington Avenue";
+  public static final String BRANCH_CITY = "Islington";
+  public static final String BRANCH_NAME = "Teacup";
+  public static final String BRANCH_POSTCODE = "1000";
+  public static final String BRANCH_STATE = "NSW";
+  public static final Integer BRANCH_BSB = 999999;
+  public static final OffsetDateTime CREATION_DATETIME =
+      OffsetDateTime.of(2020, 01, 01, 00, 00, 00, 00, ZoneOffset.UTC);
+  public static final OffsetDateTime UPDATE_DATETIME =
+      OffsetDateTime.of(2020, 01, 05, 00, 00, 00, 00, ZoneOffset.UTC);
+  public static final String EMAIL_ADDRESS = "dev@null.com";
+  public static final String PHONE_NUMBER = "+61733001234";
+  public static final String PERSON_NAME = "Arthur Dent";
+  public static final String PERSON_FIRST_NAME = "Arthur";
+  public static final String PERSON_LAST_NAME = "Dent";
+  public static final List<String> PERSON_MIDDLE_NAME = List.of("Phillip");
+  public static final DioPersonPrefix PERSON_PREFIX = DioPersonPrefix.MR;
+  public static final DioPersonSuffix PERSON_SUFFIX = DioPersonSuffix.OAM;
+  public static final String OCCUPATION_CODE = "0411";
+
+  public static final DioEmail DIO_EMAIL =
+      DioEmail.builder().address(EMAIL_ADDRESS).isPreferred(true).type(DioEmailType.HOME).build();
+  public static final DioPhoneNumber DIO_PHONE_NUMBER = DioPhoneNumber.builder()
+      .fullNumber(PHONE_NUMBER).isPreferred(true).phoneType(DioPhoneType.HOME).build();
+  public static final DioAddress DIO_ADDRESS = DioAddress.builder()
+      .purpose(AddressPurpose.REGISTERED)
+      .simple(DioAddressSimple.builder().addressLine1(BRANCH_ADDRESS).city(BRANCH_CITY)
+          .country(new Locale(Constants.DEFAULT_LANGUAGE, Constants.DEFAULT_LOCALE))
+          .mailingName(PERSON_NAME).postcode(BRANCH_POSTCODE).state(BRANCH_STATE).build())
+      .build();
+
+  public static final DioPerson DIO_PERSON = DioPerson.builder().email(VariableConstants.DIO_EMAIL)
+      .phone(VariableConstants.DIO_PHONE_NUMBER).address(VariableConstants.DIO_ADDRESS)
+      .firstName(VariableConstants.PERSON_FIRST_NAME).lastName(VariableConstants.PERSON_LAST_NAME)
+      .prefix(PERSON_PREFIX).suffix(PERSON_SUFFIX).middleNames(PERSON_MIDDLE_NAME)
+      .cdrCommon(CdrCommonPerson.builder().occupationCode(OCCUPATION_CODE).build()).build();
+
+  public static final String ORGANISATION_ABN = "65085684368";
+  public static final String ORGANISATION_ACN = "085684368";
+  public static final String ORGANISATION_LEGAL_NAME = "DEEP THOUGHT INDUSTRIES PTY LIMITED";
+  public static final String ORGANISATION_NAME = "DEEP THOUGHT INDUSTRIES";
+  public static final LocalDate ORGANISATION_ESTABLISHMENT = LocalDate.of(2000, 07, 01);
+  public static final String ORGANISATION_INDUSTRY_CODE = "1111";
+
+  public static final DioOrganisation DIO_ORGANISATION = DioOrganisation.builder()
+      .cdrCommon(CdrCommonOrganisation.builder().abn(VariableConstants.ORGANISATION_ABN)
+          .acn(VariableConstants.ORGANISATION_ACN).organisationType(CommonOrganisationType.COMPANY)
+          .industryCode(VariableConstants.ORGANISATION_INDUSTRY_CODE)
+          .establishmentDate(VariableConstants.ORGANISATION_ESTABLISHMENT
+              .format(Constants.CDR_DATESTRING_FORMATTER))
+          .registeredCountry(
+              new Locale(Constants.DEFAULT_LANGUAGE, Constants.DEFAULT_LOCALE).getISO3Country())
+          .build())
+      .businessName(VariableConstants.ORGANISATION_NAME)
+      .legalName(VariableConstants.ORGANISATION_LEGAL_NAME)
+      .address(DioAddress.builder().purpose(VariableConstants.DIO_ADDRESS.purpose())
+          .simple(DioAddressSimple.builder()
+              .addressLine1(VariableConstants.DIO_ADDRESS.simple().addressLine1())
+              .city(VariableConstants.DIO_ADDRESS.simple().city())
+              .country(VariableConstants.DIO_ADDRESS.simple().country())
+              .mailingName(VariableConstants.DIO_ADDRESS.simple().mailingName())
+              .postcode(VariableConstants.DIO_ADDRESS.simple().postcode())
+              .state(VariableConstants.DIO_ADDRESS.simple().state()).build())
+          .build())
+      .build();
+  
+  public static final String CARD_NUMBER = "4716-7028-1638-2681";
+  public static final String DISPLAY_NAME = "Example Display Name";
+  public static final String NICK_NAME = "Arthur's Account";
+  public static final OffsetDateTime OPEN_DATE_TIME = OffsetDateTime.of(2020, 01, 05, 00, 00, 00, 00, ZoneOffset.UTC);
+  public static final OffsetDateTime PAYMENT_DUE_DATE_TIME = OffsetDateTime.of(2020, 02, 05, 00, 00, 00, 00, ZoneOffset.UTC);
+  public static final BigDecimal PAYMENT_DUE = new BigDecimal(100.00);
+  public static final BigDecimal PAYMENT_MINIMUM = new BigDecimal(50.00);
+  public static final BigDecimal TERM_DEPOSIT_AMOUNT = new BigDecimal(10000.00);
+  public static final BigDecimal TERM_DEPOSIT_RATE = new BigDecimal(0.015);
+  public static final Period TERM_DEPOSIT_LENGTH = Period.of(1, 0, 0);
+  public static final OffsetDateTime TERM_DEPOSIT_LODGEMENT_DATE = OffsetDateTime.of(2020, 01, 05, 00, 00, 00, 00, ZoneOffset.UTC);
+  public static final Period TERM_DEPOSIT_APPLICATION_FREQUENCY = Period.of(0, 1, 0);
+  public static final Period TERM_DEPOSIT_CALCULATION_FREQUENCY = Period.of(0, 0, 1);
+  public static final OffsetDateTime TERM_DEPOSIT_LAST_APPLIED = TERM_DEPOSIT_LODGEMENT_DATE.plusMonths(1);
+  public static final OffsetDateTime TERM_DEPOSIT_LAST_CALCULATED = TERM_DEPOSIT_LODGEMENT_DATE.plusDays(1);
+  public static final DioMaturityInstructionType TERM_DEPOSIT_MATURITY_INSTRUCTION = DioMaturityInstructionType.ROLLED_OVER;
+  
+  public static final OffsetDateTime LOAN_ACCOUNT_CREATION_DATE_TIME = OffsetDateTime.of(2020, 02, 06, 00, 00, 00, 00, ZoneOffset.UTC);
+  public static final BigDecimal LOAN_ACCOUNT_CREATION_AMOUNT = new BigDecimal(150000.00);
+  public static final Period LOAN_ACCOUNT_CREATION_LENGTH = Period.of(25, 0, 0);
+  public static final Period LOAN_ACCOUNT_REPAYMENT_FREQUENCY = Period.of(0, 1, 0);
+  public static final BigDecimal LOAN_ACCOUNT_NEXT_REPAYMENT = new BigDecimal(1000.00);
+  public static final BigDecimal LOAN_ACCOUNT_REDRAW_AVAILABLE = new BigDecimal(25000.00);
+  public static final DioLoanRepaymentType LOAN_ACCOUNT_REPAYMENT_TYPE = DioLoanRepaymentType.IN_ARREARS;
+  public static final OffsetDateTime LOAN_ACCOUNT_NEXT_DATE_TIME = LOAN_ACCOUNT_CREATION_DATE_TIME.plusMonths(1);
+  
+  public static final BigDecimal DEBIT_LAST_AMOUNT = new BigDecimal(100.00);
+  public static final OffsetDateTime DEBIT_DATE_TIME = OffsetDateTime.of(2020, 03, 06, 00, 00, 00, 00, ZoneOffset.UTC);
+  public static final String PAYEE_DESCRIPTION = "Slartibartfast Planet Building Account";
+  public static final String PAYEE_NICKNAME = "Slartibartfast";
+  public static final String PAYEE_BSB = "248-067";
+  public static final String PAYEE_ACCOUNT_NUMBER = "12341234";
+  public static final String PAYEE_ACCOUNT_NAME = "Slartibartfast Ruler of the Universe";
+  public static final String PAYEE_CARD_NUMBER = "4716-7028-1638-2681";
+  public static final String PAYEE_PAYID_NAME = "Deep Thought";
+  public static final String PAYEE_PAYID_IDENTIFIER = "42@universe.com";
+  public static final PayloadTypeBankingDomesticPayeePayId PAYEE_PAYID_TYPE = PayloadTypeBankingDomesticPayeePayId.EMAIL;
+  public static final String PAYEE_BILLER_CODE = "12345678";
+  public static final String PAYEE_CRN = "1234123412341234";
+  public static final String PAYEE_NAME = "Sirius Cybernetics Corporation";
+  public static final String BENEFICIARY_DESCRIPTION = "Payment for a new Earth";
+  public static final Locale PAYEE_COUNTRY = new Locale(Constants.DEFAULT_LANGUAGE, Constants.DEFAULT_LOCALE);
+  
+  public static final BigDecimal TRANSACTION_VALUE = new BigDecimal(10.00);
+  public static final String TRANSACTION_DESCRIPTION = "Very Expensive Coffee";
+  public static final BankingTransactionType TRANSACTION_TYPE = BankingTransactionType.PAYMENT;
+  public static final String TRANSACTION_REFERENCE = "Jerry's Hot Jo";
+  public static final String TRANSACTION_MERCHANT_NAME = "JERRY JO PTY LTD";
+  public static final String TRANSACTION_MERCHANT_CODE = "5814";
+  public static final String TRANSACTION_BILLER_CODE = PAYEE_BILLER_CODE;
+  public static final String TRANSACTION_BILLER_NAME = PAYEE_NAME;
+  public static final String TRANSACTION_CRN = PAYEE_CRN;
+  public static final String TRANSACTION_BSB = PAYEE_BSB;
+  public static final BankingTransactionStatus TRANSACTION_STATUS = BankingTransactionStatus.POSTED;
+  public static final OffsetDateTime TRANSACTION_ORIGINATED_DATETIME = OffsetDateTime.of(2020, 03, 06, 07, 15, 00, 00, ZoneOffset.UTC);
+  public static final OffsetDateTime TRANSACTION_POSTED_DATETIME =     OffsetDateTime.of(2020, 03, 06, 07, 33, 00, 00, ZoneOffset.UTC);  
+  public static final OffsetDateTime TRANSACTION_APPLIED_DATETIME =    OffsetDateTime.of(2020, 03, 06, 11, 11, 00, 00, ZoneOffset.UTC);
+  public static final UUID TRANSACTION_NPP_END_TO_END = UUID.randomUUID();
+  public static final String TRANSACTION_NPP_PAYER = PAYEE_NICKNAME;
+  public static final String TRANSACTION_NPP_PAYEE = NICK_NAME;
+  public static final String TRANSACTION_NPP_PURPOSE = "PURPOSE";
+
 }

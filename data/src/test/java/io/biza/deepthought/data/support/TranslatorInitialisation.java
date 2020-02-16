@@ -31,6 +31,8 @@ public class TranslatorInitialisation {
   private <A> LinkedHashSet<String> getAllFieldNames(A input) {
     LinkedHashSet<String> result = new LinkedHashSet<String>();
 
+    if(input == null) { return result; }
+    
     Class<?> i = input.getClass();
     while (i != null && i != Object.class) {
       for (Field field : i.getDeclaredFields()) {
@@ -113,8 +115,8 @@ public class TranslatorInitialisation {
           || objectAType.getTypeName().startsWith("io.biza.babelfish.cdr.v2.model")) {
         createComparisonModel(objectAValue, objectBValue, cellTitle, table);
       } else if (objectAType.getTypeName().startsWith("java.util.List")) {
-        List<?> listAItems = (List<?>) objectAValue;
-        List<?> listBItems = (List<?>) objectBValue;
+        List<?> listAItems = objectAValue instanceof String ? List.of(objectAValue) : (List<?>) objectAValue;
+        List<?> listBItems = objectBValue instanceof String ? List.of(objectBValue) : (List<?>) objectBValue;
         for (int i = 0; i < listAItems.size(); i++) {
           createComparisonModel(listAItems.get(i), listBItems.get(i), cellTitle + "[" + i + "]",
               table);
@@ -134,7 +136,8 @@ public class TranslatorInitialisation {
         }
       } else {
         // LOG.info("Object A: {} Type: {}", objectAValue, objectAType);
-        if (!objectAValue.equals(objectBValue)) {
+        if ((objectAValue == null && objectBValue != null) || !objectAValue.equals(objectBValue)) {
+          if(objectAValue == null) { objectAValue = "*UNDEFINED*"; }
           cellTitle = "** " + cellTitle;
         }
         table.addRow().addValue(cellTitle).addValue(objectAValue.toString())

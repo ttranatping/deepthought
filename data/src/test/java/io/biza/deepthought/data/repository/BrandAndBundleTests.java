@@ -9,10 +9,10 @@ import javax.annotation.Resource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import io.biza.deepthought.data.payloads.DioBrand;
-import io.biza.deepthought.data.payloads.DioProductBundle;
-import io.biza.deepthought.data.persistence.model.BrandData;
-import io.biza.deepthought.data.persistence.model.ProductBundleData;
+import io.biza.deepthought.data.payloads.dio.DioBrand;
+import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
+import io.biza.deepthought.data.persistence.model.bank.BrandData;
+import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.support.DeepThoughtJpaConfig;
 import io.biza.deepthought.data.support.TranslatorInitialisation;
@@ -65,10 +65,6 @@ public class BrandAndBundleTests extends TranslatorInitialisation {
     if (!dioBrandData.equals(dioBrandStatic)) {
       fail("Payload conversion did not provide equality:\n"
           + createComparisonTable(dioBrandData, dioBrandStatic));
-    }
-
-    if (!brand.equals(brandData)) {
-      fail("Data conversion did not provide equality:\n" + createComparisonTable(brand, brandData));
     }
   }
 

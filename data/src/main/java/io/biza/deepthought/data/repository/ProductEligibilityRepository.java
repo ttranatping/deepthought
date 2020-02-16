@@ -5,13 +5,13 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import io.biza.deepthought.data.persistence.model.cdr.ProductCdrBankingEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingEligibilityData;
 
 @Repository
 public interface ProductEligibilityRepository
-    extends JpaRepository<ProductCdrBankingEligibilityData, UUID> {
-  public List<ProductCdrBankingEligibilityData> findAllByProduct_Product_Brand_IdAndProduct_Product_Id(
+    extends JpaRepository<ProductBankingEligibilityData, UUID> {
+  public List<ProductBankingEligibilityData> findAllByProduct_Product_Brand_IdAndProduct_Product_Id(
       UUID brandId, UUID productId);
-  public Optional<ProductCdrBankingEligibilityData> findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(
+  public Optional<ProductBankingEligibilityData> findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(
       UUID id, UUID brandId, UUID productId);
 }

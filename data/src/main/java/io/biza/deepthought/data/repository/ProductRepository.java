@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
-import io.biza.deepthought.data.persistence.model.ProductData;
+import io.biza.deepthought.data.persistence.model.product.ProductData;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductData, UUID>, JpaSpecificationExecutor<ProductData> {

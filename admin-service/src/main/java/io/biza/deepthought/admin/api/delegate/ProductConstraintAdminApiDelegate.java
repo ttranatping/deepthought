@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.DioProductConstraint;
+import io.biza.deepthought.data.payloads.dio.product.DioProductConstraint;
 
 public interface ProductConstraintAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {

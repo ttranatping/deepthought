@@ -9,8 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.DioProduct;
-import io.biza.deepthought.data.payloads.DioProductBundle;
+import io.biza.deepthought.data.payloads.dio.product.DioProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 
 public interface ProductBundleAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
