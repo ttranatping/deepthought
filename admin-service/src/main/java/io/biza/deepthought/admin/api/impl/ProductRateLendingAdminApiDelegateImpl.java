@@ -17,11 +17,11 @@ import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.ProductRateLendingRepository;
-import io.biza.deepthought.data.repository.ProductRateLendingTierRepository;
+import io.biza.deepthought.data.repository.ProductBankingRateLendingRepository;
+import io.biza.deepthought.data.repository.ProductBankingRateLendingTierRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,10 +34,10 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
   private DeepThoughtMapper mapper;
 
   @Autowired
-  ProductRateLendingRepository rateRepository;
+  ProductBankingRateLendingRepository rateRepository;
 
   @Autowired
-  ProductRateLendingTierRepository tierRepository;
+  ProductBankingRateLendingTierRepository tierRepository;
 
   @Autowired
   ProductRepository productRepository;

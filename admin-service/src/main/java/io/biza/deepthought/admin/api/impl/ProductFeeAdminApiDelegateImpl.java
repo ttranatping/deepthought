@@ -17,13 +17,13 @@ import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.dio.product.DioProductFee;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeDiscountData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeDiscountEligibilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountEligibilityData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.ProductFeeDiscountEligibilityRepository;
-import io.biza.deepthought.data.repository.ProductFeeDiscountRepository;
-import io.biza.deepthought.data.repository.ProductFeeRepository;
+import io.biza.deepthought.data.repository.ProductBankingFeeDiscountEligibilityRepository;
+import io.biza.deepthought.data.repository.ProductBankingFeeDiscountRepository;
+import io.biza.deepthought.data.repository.ProductBankingFeeRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,13 +36,13 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
   private DeepThoughtMapper mapper;
 
   @Autowired
-  ProductFeeRepository feeRepository;
+  ProductBankingFeeRepository feeRepository;
 
   @Autowired
-  ProductFeeDiscountRepository discountRepository;
+  ProductBankingFeeDiscountRepository discountRepository;
   
   @Autowired
-  ProductFeeDiscountEligibilityRepository eligibilityRepository;
+  ProductBankingFeeDiscountEligibilityRepository eligibilityRepository;
 
 
   @Autowired

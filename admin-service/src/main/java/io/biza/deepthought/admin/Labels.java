@@ -8,6 +8,12 @@ public class Labels {
   public final static String TAG_BRAND_DESCRIPTION = "The Brand Administration API";
   public final static String TAG_PRODUCT_NAME = "product-admin";
   public final static String TAG_PRODUCT_DESCRIPTION = "The Product Administration API";
+  public final static String TAG_CUSTOMER_NAME = "customer-admin";
+  public final static String TAG_CUSTOMER_DESCRIPTION = "The Customer Administration API";
+  public final static String TAG_BRANCH_NAME = "branch-admin";
+  public final static String TAG_BRANCH_DESCRIPTION = "The Branch Administration API";
+  public final static String TAG_BANK_ACCOUNT_NAME = "bank-account-admin";
+  public final static String TAG_BANK_ACCOUNT_DESCRIPTION = "The Bank Account Administration API";
   public final static String TAG_PRODUCT_BUNDLE_NAME = "bundle-admin";
   public final static String TAG_PRODUCT_BUNDLE_DESCRIPTION =
       "The Product Bundle Administration API";
@@ -24,6 +30,25 @@ public class Labels {
   public final static String SECURITY_SCOPE_PRODUCT_WRITE = "DEEPTHOUGHT:ADMIN:PRODUCT:WRITE";
   public final static String OAUTH2_SCOPE_PRODUCT_WRITE =
       "hasAuthority('SCOPE_" + SECURITY_SCOPE_PRODUCT_WRITE + "')";
+  public final static String SECURITY_SCOPE_CUSTOMER_READ = "DEEPTHOUGHT:ADMIN:CUSTOMER:READ";
+  public final static String OAUTH2_SCOPE_CUSTOMER_READ =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_CUSTOMER_READ + "')";
+  public final static String SECURITY_SCOPE_CUSTOMER_WRITE = "DEEPTHOUGHT:ADMIN:CUSTOMER:WRITE";
+  public final static String OAUTH2_SCOPE_CUSTOMER_WRITE =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_CUSTOMER_WRITE + "')";
+  public final static String SECURITY_SCOPE_BRANCH_READ = "DEEPTHOUGHT:ADMIN:BRANCH:READ";
+  public final static String OAUTH2_SCOPE_BRANCH_READ =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_BRANCH_READ + "')";
+  public final static String SECURITY_SCOPE_BRANCH_WRITE = "DEEPTHOUGHT:ADMIN:BRANCH:WRITE";
+  public final static String OAUTH2_SCOPE_BRANCH_WRITE =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_BRANCH_WRITE + "')";
+  public final static String SECURITY_SCOPE_BANK_ACCOUNT_READ = "DEEPTHOUGHT:ADMIN:BANK_ACCOUNT:READ";
+  public final static String OAUTH2_SCOPE_BANK_ACCOUNT_READ =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_BANK_ACCOUNT_READ + "')";
+  public final static String SECURITY_SCOPE_BANK_ACCOUNT_WRITE = "DEEPTHOUGHT:ADMIN:BANK_ACCOUNT:WRITE";
+  public final static String OAUTH2_SCOPE_BANK_ACCOUNT_WRITE =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_BANK_ACCOUNT_WRITE + "')";
+
 
   /**
    * Response codes as strings

@@ -17,9 +17,9 @@ import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.dio.product.DioProductFeature;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeatureData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.ProductFeatureRepository;
+import io.biza.deepthought.data.repository.ProductBankingFeatureRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +32,7 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
   private DeepThoughtMapper mapper;
 
   @Autowired
-  ProductFeatureRepository featureRepository;
+  ProductBankingFeatureRepository featureRepository;
 
   @Autowired
   ProductRepository productRepository;

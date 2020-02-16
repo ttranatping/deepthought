@@ -17,9 +17,9 @@ import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.dio.product.DioProductCardArt;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingCardArtData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingCardArtData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.ProductCardArtRepository;
+import io.biza.deepthought.data.repository.ProductBankingCardArtRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +32,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
   private DeepThoughtMapper mapper;
 
   @Autowired
-  ProductCardArtRepository cardArtRepository;
+  ProductBankingCardArtRepository cardArtRepository;
 
   @Autowired
   ProductRepository productRepository;

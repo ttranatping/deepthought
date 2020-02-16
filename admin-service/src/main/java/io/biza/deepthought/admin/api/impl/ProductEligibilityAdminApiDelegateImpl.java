@@ -17,9 +17,9 @@ import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.dio.product.DioProductEligibility;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingEligibilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingEligibilityData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.ProductEligibilityRepository;
+import io.biza.deepthought.data.repository.ProductBankingEligibilityRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,7 +32,7 @@ public class ProductEligibilityAdminApiDelegateImpl implements ProductEligibilit
   private DeepThoughtMapper mapper;
 
   @Autowired
-  ProductEligibilityRepository eligibilityRepository;
+  ProductBankingEligibilityRepository eligibilityRepository;
 
   @Autowired
   ProductRepository productRepository;
