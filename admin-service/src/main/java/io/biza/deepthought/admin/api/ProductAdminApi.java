@@ -3,7 +3,7 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,10 +35,10 @@ public interface ProductAdminApi {
           scopes = {Labels.SECURITY_SCOPE_PRODUCT_READ})})
   @ApiResponses(value = {@ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
       description = Labels.RESPONSE_SUCCESSFUL_LIST, content = @Content(
-          array = @ArraySchema(schema = @Schema(implementation = DioBankProduct.class))))})
+          array = @ArraySchema(schema = @Schema(implementation = DioProduct.class))))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<List<DioBankProduct>> listProducts(
+  default ResponseEntity<List<DioProduct>> listProducts(
       @NotNull @Valid @PathVariable("brandId") UUID brandId) {
     return getDelegate().listProducts(brandId);
   }
@@ -63,12 +63,12 @@ public interface ProductAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_READ,
-          content = @Content(schema = @Schema(implementation = DioBankProduct.class))),
+          content = @Content(schema = @Schema(implementation = DioProduct.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
           description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
   @GetMapping(value = "/{productId}", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<DioBankProduct> getProduct(
+  default ResponseEntity<DioProduct> getProduct(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId) {
     return getDelegate().getProduct(brandId, productId);
@@ -80,16 +80,16 @@ public interface ProductAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_CREATED,
           description = Labels.RESPONSE_SUCCESSFUL_CREATE,
-          content = @Content(schema = @Schema(implementation = DioBankProduct.class))),
+          content = @Content(schema = @Schema(implementation = DioProduct.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioBankProduct> createProduct(
+  default ResponseEntity<DioProduct> createProduct(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
-      @NotNull @RequestBody DioBankProduct product) throws ValidationListException {
+      @NotNull @RequestBody DioProduct product) throws ValidationListException {
     return getDelegate().createProduct(brandId, product);
   }
 
@@ -100,17 +100,17 @@ public interface ProductAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_UPDATE,
-          content = @Content(schema = @Schema(implementation = DioBankProduct.class))),
+          content = @Content(schema = @Schema(implementation = DioProduct.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PutMapping(path = "/{productId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioBankProduct> updateProduct(
+  default ResponseEntity<DioProduct> updateProduct(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
-      @NotNull @RequestBody DioBankProduct product) throws ValidationListException {
+      @NotNull @RequestBody DioProduct product) throws ValidationListException {
     return getDelegate().updateProduct(brandId, productId, product);
   }
 
@@ -121,7 +121,7 @@ public interface ProductAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_DELETE,
-          content = @Content(schema = @Schema(implementation = DioBankProduct.class))),
+          content = @Content(schema = @Schema(implementation = DioProduct.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
           description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
   @DeleteMapping(path = "/{productId}")

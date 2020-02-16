@@ -16,9 +16,9 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateDeposit;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositData;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierData;
+import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositTierData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductBankingRateDepositRepository;
 import io.biza.deepthought.data.repository.ProductBankingRateDepositTierRepository;
@@ -46,23 +46,23 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
   private Validator validator;
 
   @Override
-  public ResponseEntity<List<DioBankProductRateDeposit>> listProductRateDeposits(UUID brandId, UUID productId) {
+  public ResponseEntity<List<DioProductRateDeposit>> listProductRateDeposits(UUID brandId, UUID productId) {
 
-    List<ProductBankingRateDepositData> feeList =
+    List<BankProductRateDepositData> feeList =
         rateRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing fees and have database result of {}", feeList);
-    return ResponseEntity.ok(mapper.mapAsList(feeList, DioBankProductRateDeposit.class));
+    return ResponseEntity.ok(mapper.mapAsList(feeList, DioProductRateDeposit.class));
   }
 
   @Override
-  public ResponseEntity<DioBankProductRateDeposit> getProductRateDeposit(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductBankingRateDepositData> data = rateRepository
+  public ResponseEntity<DioProductRateDeposit> getProductRateDeposit(UUID brandId, UUID productId, UUID id) {
+    Optional<BankProductRateDepositData> data = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
       LOG.debug("Get Product Deposit Rate for brand {} and product {} returning: {}", brandId, productId,
           data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductRateDeposit.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioProductRateDeposit.class));
     } else {
       LOG.warn("Get product deposit rate for brand {} and product {} not found", brandId, productId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -70,8 +70,8 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
   }
 
   @Override
-  public ResponseEntity<DioBankProductRateDeposit> createProductRateDeposit(UUID brandId, UUID productId,
-      DioBankProductRateDeposit createData) throws ValidationListException {
+  public ResponseEntity<DioProductRateDeposit> createProductRateDeposit(UUID brandId, UUID productId,
+      DioProductRateDeposit createData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, createData);
 
@@ -82,10 +82,10 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
           .explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    ProductBankingRateDepositData data = mapper.map(createData, ProductBankingRateDepositData.class);
+    BankProductRateDepositData data = mapper.map(createData, BankProductRateDepositData.class);
 
     if (data.tiers() != null) {
-      for(ProductBankingRateDepositTierData tier : data.tiers()) {
+      for(BankProductRateDepositTierData tier : data.tiers()) {
         if (tier.applicabilityConditions() != null) {
           tier.applicabilityConditions().rateTier(tier);
         }
@@ -114,7 +114,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
 
   @Override
   public ResponseEntity<Void> deleteProductRateDeposit(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductBankingRateDepositData> optionalData = rateRepository
+    Optional<BankProductRateDepositData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -127,19 +127,19 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
   }
 
   @Override
-  public ResponseEntity<DioBankProductRateDeposit> updateProductRateDeposit(UUID brandId, UUID productId, UUID id,
-      DioBankProductRateDeposit updateData) throws ValidationListException {
+  public ResponseEntity<DioProductRateDeposit> updateProductRateDeposit(UUID brandId, UUID productId, UUID id,
+      DioProductRateDeposit updateData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, updateData);
 
-    Optional<ProductBankingRateDepositData> optionalData = rateRepository
+    Optional<BankProductRateDepositData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      ProductBankingRateDepositData data = optionalData.get();
+      BankProductRateDepositData data = optionalData.get();
       
       if (data.tiers() != null) {
-        for(ProductBankingRateDepositTierData tier : data.tiers()) {
+        for(BankProductRateDepositTierData tier : data.tiers()) {
           data.tiers().remove(tier);
           tierRepository.deleteById(tier.id());
         }
@@ -152,7 +152,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
       mapper.map(updateData, data);
       
       if (data.tiers() != null) {
-        for(ProductBankingRateDepositTierData tier : data.tiers()) {
+        for(BankProductRateDepositTierData tier : data.tiers()) {
           if (tier.applicabilityConditions() != null) {
             tier.applicabilityConditions().rateTier(tier);
           }

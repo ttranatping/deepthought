@@ -3,7 +3,7 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductRateDepositAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateDeposit;
+import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -34,10 +34,10 @@ public interface ProductRateDepositAdminApi {
           scopes = {Labels.SECURITY_SCOPE_PRODUCT_READ})})
   @ApiResponses(value = {@ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
       description = Labels.RESPONSE_SUCCESSFUL_LIST, content = @Content(
-          array = @ArraySchema(schema = @Schema(implementation = DioBankProductRateDeposit.class))))})
+          array = @ArraySchema(schema = @Schema(implementation = DioProductRateDeposit.class))))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<List<DioBankProductRateDeposit>> listProductRateDeposits(
+  default ResponseEntity<List<DioProductRateDeposit>> listProductRateDeposits(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId) {
     return getDelegate().listProductRateDeposits(brandId, productId);
@@ -50,12 +50,12 @@ public interface ProductRateDepositAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_READ,
-          content = @Content(schema = @Schema(implementation = DioBankProductRateDeposit.class))),
+          content = @Content(schema = @Schema(implementation = DioProductRateDeposit.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
           description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
   @GetMapping(value = "/{rateId}", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<DioBankProductRateDeposit> getProductRateDeposit(
+  default ResponseEntity<DioProductRateDeposit> getProductRateDeposit(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
       @NotNull @Valid @PathVariable("rateId") UUID rateId) {
@@ -69,17 +69,17 @@ public interface ProductRateDepositAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_CREATE,
-          content = @Content(schema = @Schema(implementation = DioBankProductRateDeposit.class))),
+          content = @Content(schema = @Schema(implementation = DioProductRateDeposit.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioBankProductRateDeposit> createProductRateDeposit(
+  default ResponseEntity<DioProductRateDeposit> createProductRateDeposit(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
-      @NotNull @RequestBody DioBankProductRateDeposit rate) throws ValidationListException {
+      @NotNull @RequestBody DioProductRateDeposit rate) throws ValidationListException {
     return getDelegate().createProductRateDeposit(brandId, productId, rate);
   }
 
@@ -90,18 +90,18 @@ public interface ProductRateDepositAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_UPDATE,
-          content = @Content(schema = @Schema(implementation = DioBankProductRateDeposit.class))),
+          content = @Content(schema = @Schema(implementation = DioProductRateDeposit.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PutMapping(path = "/{rateId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioBankProductRateDeposit> updateProductRateDeposit(
+  default ResponseEntity<DioProductRateDeposit> updateProductRateDeposit(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
       @NotNull @Valid @PathVariable("rateId") UUID rateId,
-      @NotNull @RequestBody DioBankProductRateDeposit rate) throws ValidationListException {
+      @NotNull @RequestBody DioProductRateDeposit rate) throws ValidationListException {
     return getDelegate().updateProductRateDeposit(brandId, productId, rateId, rate);
   }
 

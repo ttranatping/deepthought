@@ -15,7 +15,7 @@ import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrBankingAccount;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
@@ -94,7 +94,7 @@ public class DioBankAccount {
   
   @Schema(description = "Associated Product")
   @JsonProperty("product")
-  DioBankProduct product;
+  DioProduct product;
   
   @Schema(description = "Card List")
   @JsonProperty("cardList")

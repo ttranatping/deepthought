@@ -7,25 +7,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductFeature;
+import io.biza.deepthought.data.payloads.dio.product.DioProductFeature;
 
 public interface ProductFeatureAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
     return Optional.empty();
   }
 
-  default ResponseEntity<List<DioBankProductFeature>> listProductFeatures(UUID brandId,
+  default ResponseEntity<List<DioProductFeature>> listProductFeatures(UUID brandId,
       UUID productId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankProductFeature> getProductFeature(UUID brandId, UUID productId,
+  default ResponseEntity<DioProductFeature> getProductFeature(UUID brandId, UUID productId,
       UUID featureId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankProductFeature> createProductFeature(UUID brandId, UUID productId,
-      DioBankProductFeature feature) throws ValidationListException {
+  default ResponseEntity<DioProductFeature> createProductFeature(UUID brandId, UUID productId,
+      DioProductFeature feature) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
@@ -33,8 +33,8 @@ public interface ProductFeatureAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankProductFeature> updateProductFeature(UUID brandId, UUID productId,
-      UUID featureId, DioBankProductFeature feature) throws ValidationListException {
+  default ResponseEntity<DioProductFeature> updateProductFeature(UUID brandId, UUID productId,
+      UUID featureId, DioProductFeature feature) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

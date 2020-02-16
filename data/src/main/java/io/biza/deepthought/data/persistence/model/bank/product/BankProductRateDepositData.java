@@ -1,7 +1,8 @@
 package io.biza.deepthought.data.persistence.model.bank.product;
 
+import java.math.BigDecimal;
 import java.net.URI;
-import java.util.HashSet;
+import java.time.Period;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -17,19 +18,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
-import io.biza.babelfish.cdr.enumerations.BankingProductFeatureType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.biza.babelfish.cdr.enumerations.BankingProductDepositRateType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
+import io.biza.deepthought.data.persistence.converter.PeriodDataConverter;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
-import io.biza.deepthought.data.persistence.model.bank.account.BankAccountFeatureData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -41,8 +44,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_FEATURE")
-public class ProductBankingFeatureData {
+@Table(name = "BANK_PRODUCT_RATE_DEPOSIT")
+public class BankProductRateDepositData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -53,40 +56,44 @@ public class ProductBankingFeatureData {
   @Transient
   @Builder.Default
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
-  
-  @OneToMany(mappedBy = "feature", cascade = CascadeType.ALL)
-  @ToString.Exclude
-  private Set<BankAccountFeatureData> accounts;
 
   @ManyToOne
   @JoinColumn(name = "PRODUCT_ID", nullable = false)
+  @JsonIgnore
   @ToString.Exclude
-  private ProductBankingData product;
+  private BankProductData product;
 
-  @Column(name = "FEATURE_TYPE")
+  @NonNull
+  @NotNull
+  @Column(name = "RATE_TYPE")
   @Enumerated(EnumType.STRING)
-  private BankingProductFeatureType featureType;
+  BankingProductDepositRateType depositRateType;
+
+  @NonNull
+  @NotNull
+  @Column(name = "RATE", precision = 17, scale = 16)
+  BigDecimal rate;
+
+  @Column(name = "CALCULATION_FREQUENCY")
+  @Convert(converter = PeriodDataConverter.class)
+  Period calculationFrequency;
+
+  @Column(name = "APPLICATION_FREQUENCY")
+  @Convert(converter = PeriodDataConverter.class)
+  Period applicationFrequency;
+
+  @OneToMany(mappedBy = "depositRate", cascade = CascadeType.ALL)
+  Set<BankProductRateDepositTierData> tiers;
 
   @Column(name = "ADDITIONAL_VALUE", length = 4096)
-  private String additionalValue;
+  String additionalValue;
 
   @Column(name = "ADDITIONAL_INFO")
   @Lob
-  private String additionalInfo;
+  String additionalInfo;
 
-  @Column(name = "ADDITIONAL_INFO_URI")
+  @Column(name = "ADDITIONAL_INFO_URL")
   @Convert(converter = URIDataConverter.class)
-  private URI additionalInfoUri;
+  URI additionalInfoUri;
 
-  @PrePersist
-  public void prePersist() {
-    if (this.product() != null) {
-      Set<ProductBankingFeatureData> set = new HashSet<ProductBankingFeatureData>();
-      if (this.product().feature() != null) {
-        set.addAll(this.product.feature());
-      }
-      set.add(this);
-      this.product().feature(set);
-    }
-  }
 }

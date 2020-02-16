@@ -5,14 +5,14 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountData;
 
 @Repository
 public interface ProductBankingFeeDiscountRepository
-    extends JpaRepository<ProductBankingFeeDiscountData, UUID> {
-  public List<ProductBankingFeeDiscountData> findAllByFee_Product_Product_Brand_IdAndFee_Product_Product_IdAndFee_Id(
+    extends JpaRepository<BankProductFeeDiscountData, UUID> {
+  public List<BankProductFeeDiscountData> findAllByFee_Product_Product_Brand_IdAndFee_Product_Product_IdAndFee_Id(
       UUID brandId, UUID productId, UUID feeId);
-  public Optional<ProductBankingFeeDiscountData> findByIdAndFee_Product_Product_Brand_IdAndFee_Product_Product_IdAndFee_Id(
+  public Optional<BankProductFeeDiscountData> findByIdAndFee_Product_Product_Brand_IdAndFee_Product_Product_IdAndFee_Id(
       UUID id, UUID brandId, UUID productId, UUID feeId);
 }
 

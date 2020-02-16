@@ -25,7 +25,7 @@ import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -82,7 +82,7 @@ public class ProductData {
   DioSchemeType schemeType;
 
   @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, optional = true)
-  ProductBankingData cdrBanking;
+  BankProductData cdrBanking;
 
   @AssertTrue(message = "Payload data must be populated based on specified scheme type")
   private boolean isSchemeValuePopulated() {

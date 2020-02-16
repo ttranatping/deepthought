@@ -2,18 +2,18 @@ package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductConstraintV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductConstraint;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingConstraintData;
+import io.biza.deepthought.data.payloads.dio.product.DioProductConstraint;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductConstraintData;
 import ma.glasnost.orika.MapperFactory;
 
 public class ProductBankingConstraintDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
-    orikaMapperFactory.classMap(ProductBankingConstraintData.class, DioBankProductConstraint.class)
+    orikaMapperFactory.classMap(BankProductConstraintData.class, DioProductConstraint.class)
         .fieldAToB("id", "id").field("", "cdrBanking").byDefault().register();
     orikaMapperFactory
-        .classMap(ProductBankingConstraintData.class, BankingProductConstraintV1.class).byDefault()
+        .classMap(BankProductConstraintData.class, BankingProductConstraintV1.class).byDefault()
         .register();
   }
 

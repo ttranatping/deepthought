@@ -1,11 +1,9 @@
 package io.biza.deepthought.data.persistence.model.bank.product;
 
-import java.math.BigDecimal;
 import java.net.URI;
-import java.time.Period;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -17,23 +15,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.biza.babelfish.cdr.enumerations.BankingProductLendingRateInterestPaymentType;
-import io.biza.babelfish.cdr.enumerations.BankingProductLendingRateType;
+import io.biza.babelfish.cdr.enumerations.BankingProductEligibilityType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.converter.PeriodDataConverter;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -45,8 +39,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_RATE_LENDING")
-public class ProductBankingRateLendingData {
+@Table(name = "BANK_PRODUCT_ELIGIBILITY")
+public class BankProductEligibilityData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -62,46 +56,33 @@ public class ProductBankingRateLendingData {
   @JoinColumn(name = "PRODUCT_ID", nullable = false)
   @JsonIgnore
   @ToString.Exclude
-  private ProductBankingData product;
+  private BankProductData product;
 
-  @NonNull
-  @NotNull
-  @Column(name = "RATE_TYPE")
+  @Column(name = "ELIGIBILITY_TYPE")
   @Enumerated(EnumType.STRING)
-  BankingProductLendingRateType lendingRateType;
-
-  @NonNull
-  @NotNull
-  @Column(name = "RATE", precision = 17, scale = 16)
-  BigDecimal rate;
-
-  @Column(name = "COMPARISON_RATE", precision = 17, scale = 16)
-  BigDecimal comparisonRate;
-
-  @Column(name = "CALCULATION_FREQUENCY")
-  @Convert(converter = PeriodDataConverter.class)
-  Period calculationFrequency;
-
-  @Column(name = "APPLICATION_FREQUENCY")
-  @Convert(converter = PeriodDataConverter.class)
-  Period applicationFrequency;
-
-  @Column(name = "INTEREST_PAYMENT_DUE")
-  @Enumerated(EnumType.STRING)
-  BankingProductLendingRateInterestPaymentType interestPaymentDue;
+  private BankingProductEligibilityType eligibilityType;
 
   @Column(name = "ADDITIONAL_VALUE", length = 4096)
-  String additionalValue;
-
-  @OneToMany(mappedBy = "lendingRate", cascade = CascadeType.ALL)
-  Set<ProductBankingRateLendingTierData> tiers;
+  private String additionalValue;
 
   @Column(name = "ADDITIONAL_INFO")
   @Lob
-  String additionalInfo;
+  private String additionalInfo;
 
-  @Column(name = "ADDITIONAL_INFO_URL")
+  @Column(name = "ADDITIONAL_INFO_URI")
   @Convert(converter = URIDataConverter.class)
-  URI additionalInfoUri;
+  private URI additionalInfoUri;
+  
+  @PrePersist
+  public void prePersist() {
+    if (this.product() != null) {
+      Set<BankProductEligibilityData> set = new HashSet<BankProductEligibilityData>();
+      if (this.product().eligibility() != null) {
+        set.addAll(this.product.eligibility());
+      }
+      set.add(this);
+      this.product().eligibility(set);
+    }
+  }
 
 }

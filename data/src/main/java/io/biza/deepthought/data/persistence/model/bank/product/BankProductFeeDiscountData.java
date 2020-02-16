@@ -2,7 +2,6 @@ package io.biza.deepthought.data.persistence.model.bank.product;
 
 import java.math.BigDecimal;
 import java.net.URI;
-import java.time.Period;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -15,24 +14,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.biza.babelfish.cdr.enumerations.BankingProductDepositRateType;
+import io.biza.babelfish.cdr.enumerations.BankingProductDiscountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.converter.PeriodDataConverter;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -44,8 +38,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_RATE_DEPOSIT")
-public class ProductBankingRateDepositData {
+@Table(name = "BANK_PRODUCT_FEE_DISCOUNT")
+public class BankProductFeeDiscountData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -58,42 +52,43 @@ public class ProductBankingRateDepositData {
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
-  @JoinColumn(name = "PRODUCT_ID", nullable = false)
-  @JsonIgnore
+  @JoinColumn(name = "FEE_ID", nullable = false)
   @ToString.Exclude
-  private ProductBankingData product;
+  private BankProductFeeData fee;
 
-  @NonNull
-  @NotNull
-  @Column(name = "RATE_TYPE")
+  @OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
+  private Set<BankProductFeeDiscountEligibilityData> eligibility;
+
+  @Column(name = "DESCRIPTION", length = 2048)
+  private String description;
+
+  @Column(name = "DISCOUNT_TYPE")
   @Enumerated(EnumType.STRING)
-  BankingProductDepositRateType depositRateType;
+  private BankingProductDiscountType discountType;
 
-  @NonNull
-  @NotNull
-  @Column(name = "RATE", precision = 17, scale = 16)
-  BigDecimal rate;
+  @Column(name = "AMOUNT", precision = 24, scale = 8)
+  private BigDecimal amount;
 
-  @Column(name = "CALCULATION_FREQUENCY")
-  @Convert(converter = PeriodDataConverter.class)
-  Period calculationFrequency;
+  @Column(name = "BALANCE_RATE", precision = 17, scale = 16)
+  private BigDecimal balanceRate;
 
-  @Column(name = "APPLICATION_FREQUENCY")
-  @Convert(converter = PeriodDataConverter.class)
-  Period applicationFrequency;
+  @Column(name = "TRANSACTION_RATE", precision = 17, scale = 16)
+  private BigDecimal transactionRate;
 
-  @OneToMany(mappedBy = "depositRate", cascade = CascadeType.ALL)
-  Set<ProductBankingRateDepositTierData> tiers;
+  @Column(name = "ACCRUED_RATE", precision = 17, scale = 16)
+  private BigDecimal accruedRate;
 
-  @Column(name = "ADDITIONAL_VALUE", length = 4096)
-  String additionalValue;
+  @Column(name = "FEE_RATE", precision = 17, scale = 16)
+  private BigDecimal feeRate;
 
-  @Column(name = "ADDITIONAL_INFO")
-  @Lob
-  String additionalInfo;
+  @Column(name = "INFO", length = 4096)
+  private String additionalInfo;
 
-  @Column(name = "ADDITIONAL_INFO_URL")
+  @Column(name = "URI")
   @Convert(converter = URIDataConverter.class)
-  URI additionalInfoUri;
+  private URI additionalInfoUri;
+
+  @Column(name = "VALUE", length = 4096)
+  private String additionalValue;
 
 }

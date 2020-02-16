@@ -7,20 +7,16 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
-import io.biza.babelfish.cdr.enumerations.BankingProductConstraintType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;
@@ -38,8 +34,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_CONSTRAINT")
-public class ProductBankingConstraintData {
+@Table(name = "BANK_PRODUCT_CARD_ART")
+public class BankProductCardArtData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -54,32 +50,24 @@ public class ProductBankingConstraintData {
   @ManyToOne
   @JoinColumn(name = "PRODUCT_ID", nullable = false)
   @ToString.Exclude
-  private ProductBankingData product;
+  BankProductData product;
 
-  @Column(name = "CONSTRAINT_TYPE")
-  @Enumerated(EnumType.STRING)
-  private BankingProductConstraintType constraintType;
+  @Column(name = "TITLE", length = 4096)
+  String title;
 
-  @Column(name = "ADDITIONAL_VALUE", length = 4096)
-  private String additionalValue;
-
-  @Column(name = "ADDITIONAL_INFO")
-  @Lob
-  private String additionalInfo;
-
-  @Column(name = "ADDITIONAL_INFO_URI")
+  @Column(name = "IMAGE_URI")
   @Convert(converter = URIDataConverter.class)
-  private URI additionalInfoUri;
+  URI imageUri;
   
   @PrePersist
   public void prePersist() {
     if (this.product() != null) {
-      Set<ProductBankingConstraintData> set = new HashSet<ProductBankingConstraintData>();
-      if (this.product().constraint() != null) {
-        set.addAll(this.product.constraint());
+      Set<BankProductCardArtData> set = new HashSet<BankProductCardArtData>();
+      if (this.product().cardArt() != null) {
+        set.addAll(this.product.cardArt());
       }
       set.add(this);
-      this.product().constraint(set);
+      this.product().cardArt(set);
     }
   }
 

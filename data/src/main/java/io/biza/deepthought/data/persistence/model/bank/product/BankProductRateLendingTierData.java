@@ -37,8 +37,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_RATE_DEPOSIT_TIER")
-public class ProductBankingRateDepositTierData {
+@Table(name = "BANK_PRODUCT_RATE_LENDING_TIER")
+public class BankProductRateLendingTierData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -51,12 +51,12 @@ public class ProductBankingRateDepositTierData {
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
-  @JoinColumn(name = "DEPOSIT_RATE_ID", nullable = false)
+  @JoinColumn(name = "LENDING_RATE_ID", nullable = false)
   @ToString.Exclude
-  private ProductBankingRateDepositData depositRate;
+  private BankProductRateLendingData lendingRate;
 
   @OneToOne(mappedBy = "rateTier", cascade = CascadeType.ALL, optional = true)
-  private ProductBankingRateDepositTierApplicabilityData applicabilityConditions;
+  private BankProductRateLendingTierApplicabilityData applicabilityConditions;
 
   @Column(name = "NAME", length = 255, nullable = false)
   @NotNull
@@ -76,7 +76,6 @@ public class ProductBankingRateDepositTierData {
 
   @Column(name = "MAXIMUM_VALUE")
   BigDecimal maximumValue;
-
 
   @Column(name = "RATE_APPLICATION_METHOD")
   @Enumerated(EnumType.STRING)

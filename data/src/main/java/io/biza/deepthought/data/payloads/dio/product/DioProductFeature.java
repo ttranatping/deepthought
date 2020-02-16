@@ -4,8 +4,8 @@ import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeatureV1;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.cdr.CdrBankingProduct;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,10 +22,10 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "A Deep Thought Product Container")
-public class DioBankProduct {
+@NoArgsConstructor
+@Schema(description = "A Deep Thought Product Feature Container")
+public class DioProductFeature {
 
   @JsonProperty("id")
   @NotNull
@@ -35,29 +35,17 @@ public class DioBankProduct {
   @Builder.Default
   public UUID id = new UUID(0, 0);
 
-  @JsonProperty("schemeType")
   @NotNull
   @NonNull
   @Schema(description = "Deep Thought Scheme Type", defaultValue = "CDR_BANKING")
+  @JsonProperty("schemeType")
   public DioSchemeType schemeType;
 
-  @JsonProperty("name")
-  @NotNull
-  @NonNull
-  @Schema(description = "Product Name")
-  public String name;
-
-  @JsonProperty("description")
-  @NotNull
-  @NonNull
-  @Schema(description = "Product Description")
-  public String description;
-
   @JsonProperty("cdrBanking")
-  @Schema(description = "CDR Banking Product")
+  @Schema(description = "CDR Banking Product Feature")
   @Valid
   @NotNull
   @NonNull
-  public CdrBankingProduct cdrBanking;
+  public BankingProductFeatureV1 cdrBanking;
 
 }

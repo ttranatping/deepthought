@@ -47,8 +47,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_FEE")
-public class ProductBankingFeeData {
+@Table(name = "BANK_PRODUCT_FEE")
+public class BankProductFeeData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -68,7 +68,7 @@ public class ProductBankingFeeData {
   @JoinColumn(name = "PRODUCT_ID", nullable = false)
   @JsonIgnore
   @ToString.Exclude
-  private ProductBankingData product;
+  private BankProductData product;
   
   @Column(name = "NAME", length = 4096)
   @NotNull
@@ -113,6 +113,6 @@ public class ProductBankingFeeData {
   private String additionalValue;
 
   @OneToMany(mappedBy = "fee", cascade = CascadeType.ALL)
-  private Set<ProductBankingFeeDiscountData> discounts;
+  private Set<BankProductFeeDiscountData> discounts;
 
 }

@@ -1,27 +1,21 @@
 package io.biza.deepthought.data.persistence.model.bank.product;
 
 import java.net.URI;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.biza.babelfish.cdr.enumerations.BankingProductEligibilityType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;
@@ -39,8 +33,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_ELIGIBILITY")
-public class ProductBankingEligibilityData {
+@Table(name = "BANK_PRODUCT_ADDITIONAL_INFORMATION")
+public class BankProductAdditionalInformationData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -52,37 +46,35 @@ public class ProductBankingEligibilityData {
   @Builder.Default
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
-  @ManyToOne
-  @JoinColumn(name = "PRODUCT_ID", nullable = false)
-  @JsonIgnore
+  @OneToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "PRODUCT_CDR_ID")
   @ToString.Exclude
-  private ProductBankingData product;
+  BankProductData product;
 
-  @Column(name = "ELIGIBILITY_TYPE")
-  @Enumerated(EnumType.STRING)
-  private BankingProductEligibilityType eligibilityType;
-
-  @Column(name = "ADDITIONAL_VALUE", length = 4096)
-  private String additionalValue;
-
-  @Column(name = "ADDITIONAL_INFO")
-  @Lob
-  private String additionalInfo;
-
-  @Column(name = "ADDITIONAL_INFO_URI")
+  @Column(name = "OVERVIEW_URI")
   @Convert(converter = URIDataConverter.class)
-  private URI additionalInfoUri;
-  
+  URI overviewUri;
+
+  @Column(name = "TERMS_URI")
+  @Convert(converter = URIDataConverter.class)
+  URI termsUri;
+
+  @Column(name = "ELIGIBILITY_URI")
+  @Convert(converter = URIDataConverter.class)
+  URI eligibilityUri;
+
+  @Column(name = "FEES_PRICING_URI")
+  @Convert(converter = URIDataConverter.class)
+  URI feesPricingUri;
+
+  @Column(name = "BUNDLE_URI")
+  @Convert(converter = URIDataConverter.class)
+  URI bundleUri;
+
   @PrePersist
   public void prePersist() {
-    if (this.product() != null) {
-      Set<ProductBankingEligibilityData> set = new HashSet<ProductBankingEligibilityData>();
-      if (this.product().eligibility() != null) {
-        set.addAll(this.product.eligibility());
-      }
-      set.add(this);
-      this.product().eligibility(set);
+    if(this.product() != null) {
+      this.product.additionalInformation(this);
     }
   }
-
 }

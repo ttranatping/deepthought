@@ -16,8 +16,8 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductFeature;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.payloads.dio.product.DioProductFeature;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeatureData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductBankingFeatureRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
@@ -41,24 +41,24 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
   private Validator validator;
   
   @Override
-  public ResponseEntity<List<DioBankProductFeature>> listProductFeatures(UUID brandId, UUID productId) {
+  public ResponseEntity<List<DioProductFeature>> listProductFeatures(UUID brandId, UUID productId) {
 
-    List<ProductBankingFeatureData> featureList = featureRepository
+    List<BankProductFeatureData> featureList = featureRepository
         .findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing features and have database result of {}", featureList);
-    return ResponseEntity.ok(mapper.mapAsList(featureList, DioBankProductFeature.class));
+    return ResponseEntity.ok(mapper.mapAsList(featureList, DioProductFeature.class));
   }
 
   @Override
-  public ResponseEntity<DioBankProductFeature> getProductFeature(UUID brandId, UUID productId,
+  public ResponseEntity<DioProductFeature> getProductFeature(UUID brandId, UUID productId,
       UUID id) {
-    Optional<ProductBankingFeatureData> data = featureRepository
+    Optional<BankProductFeatureData> data = featureRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
       LOG.debug("Get Product Feature for brand {} and product {} returning: {}", brandId, productId,
           data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductFeature.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioProductFeature.class));
     } else {
       LOG.warn("Get product feature for brand {} and product {} not found", brandId, productId,
           data.get());
@@ -67,8 +67,8 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
   }
 
   @Override
-  public ResponseEntity<DioBankProductFeature> createProductFeature(UUID brandId, UUID productId,
-      DioBankProductFeature createData) throws ValidationListException {
+  public ResponseEntity<DioProductFeature> createProductFeature(UUID brandId, UUID productId,
+      DioProductFeature createData) throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, createData);
 
@@ -78,7 +78,7 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
       throw ValidationListException.builder().type(DioExceptionType.INVALID_BRAND_AND_PRODUCT).explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    ProductBankingFeatureData data = mapper.map(createData, ProductBankingFeatureData.class);
+    BankProductFeatureData data = mapper.map(createData, BankProductFeatureData.class);
 
     LOG.debug("Attempting to save: {}", data);
 
@@ -98,7 +98,7 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
 
   @Override
   public ResponseEntity<Void> deleteProductFeature(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductBankingFeatureData> optionalData = featureRepository
+    Optional<BankProductFeatureData> optionalData = featureRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -112,16 +112,16 @@ public class ProductFeatureAdminApiDelegateImpl implements ProductFeatureAdminAp
   }
 
   @Override
-  public ResponseEntity<DioBankProductFeature> updateProductFeature(UUID brandId, UUID productId,
-      UUID id, DioBankProductFeature updateData) throws ValidationListException {
+  public ResponseEntity<DioProductFeature> updateProductFeature(UUID brandId, UUID productId,
+      UUID id, DioProductFeature updateData) throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, updateData);
     
-    Optional<ProductBankingFeatureData> optionalData = featureRepository
+    Optional<BankProductFeatureData> optionalData = featureRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      ProductBankingFeatureData data = optionalData.get();
+      BankProductFeatureData data = optionalData.get();
       mapper.map(updateData, data);
       featureRepository.save(data);
       LOG.debug("Updated product feature for brand: {} productId: {} id: {} with data of {}",

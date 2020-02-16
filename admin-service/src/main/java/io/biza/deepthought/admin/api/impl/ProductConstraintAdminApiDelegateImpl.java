@@ -16,8 +16,8 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductConstraint;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingConstraintData;
+import io.biza.deepthought.data.payloads.dio.product.DioProductConstraint;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductConstraintData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductBankingConstraintRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
@@ -41,25 +41,25 @@ public class ProductConstraintAdminApiDelegateImpl implements ProductConstraintA
   private Validator validator;
   
   @Override
-  public ResponseEntity<List<DioBankProductConstraint>> listProductConstraints(UUID brandId,
+  public ResponseEntity<List<DioProductConstraint>> listProductConstraints(UUID brandId,
       UUID productId) {
 
-    List<ProductBankingConstraintData> constraintList = constraintRepository
+    List<BankProductConstraintData> constraintList = constraintRepository
         .findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing constraints and have database result of {}", constraintList);
-    return ResponseEntity.ok(mapper.mapAsList(constraintList, DioBankProductConstraint.class));
+    return ResponseEntity.ok(mapper.mapAsList(constraintList, DioProductConstraint.class));
   }
 
   @Override
-  public ResponseEntity<DioBankProductConstraint> getProductConstraint(UUID brandId, UUID productId,
+  public ResponseEntity<DioProductConstraint> getProductConstraint(UUID brandId, UUID productId,
       UUID id) {
-    Optional<ProductBankingConstraintData> data = constraintRepository
+    Optional<BankProductConstraintData> data = constraintRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
       LOG.debug("Get Product Constraint for brand {} and product {} returning: {}", brandId,
           productId, data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductConstraint.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioProductConstraint.class));
     } else {
       LOG.warn("Get product constraint for brand {} and product {} not found", brandId, productId,
           data.get());
@@ -68,8 +68,8 @@ public class ProductConstraintAdminApiDelegateImpl implements ProductConstraintA
   }
 
   @Override
-  public ResponseEntity<DioBankProductConstraint> createProductConstraint(UUID brandId, UUID productId,
-      DioBankProductConstraint createData) throws ValidationListException {
+  public ResponseEntity<DioProductConstraint> createProductConstraint(UUID brandId, UUID productId,
+      DioProductConstraint createData) throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, createData);
     
@@ -79,8 +79,8 @@ public class ProductConstraintAdminApiDelegateImpl implements ProductConstraintA
       throw ValidationListException.builder().type(DioExceptionType.INVALID_BRAND_AND_PRODUCT).explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    ProductBankingConstraintData data =
-        mapper.map(createData, ProductBankingConstraintData.class);
+    BankProductConstraintData data =
+        mapper.map(createData, BankProductConstraintData.class);
 
     if (!product.get().schemeType().equals(createData.schemeType())) {
       throw ValidationListException.builder().type(DioExceptionType.UNSUPPORTED_PRODUCT_SCHEME_TYPE).explanation(Labels.ERROR_UNSUPPORTED_PRODUCT_SCHEME_TYPE).build();
@@ -98,7 +98,7 @@ public class ProductConstraintAdminApiDelegateImpl implements ProductConstraintA
 
   @Override
   public ResponseEntity<Void> deleteProductConstraint(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductBankingConstraintData> optionalData = constraintRepository
+    Optional<BankProductConstraintData> optionalData = constraintRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -112,16 +112,16 @@ public class ProductConstraintAdminApiDelegateImpl implements ProductConstraintA
   }
 
   @Override
-  public ResponseEntity<DioBankProductConstraint> updateProductConstraint(UUID brandId, UUID productId,
-      UUID id, DioBankProductConstraint updateData) throws ValidationListException {
+  public ResponseEntity<DioProductConstraint> updateProductConstraint(UUID brandId, UUID productId,
+      UUID id, DioProductConstraint updateData) throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, updateData);
     
-    Optional<ProductBankingConstraintData> optionalData = constraintRepository
+    Optional<BankProductConstraintData> optionalData = constraintRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      ProductBankingConstraintData data = optionalData.get();
+      BankProductConstraintData data = optionalData.get();
       mapper.map(updateData, data);
       constraintRepository.save(data);
       LOG.debug("Updated product constraint for brand: {} productId: {} id: {} with data of {}",

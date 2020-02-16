@@ -16,9 +16,9 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateLending;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingData;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierData;
+import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductBankingRateLendingRepository;
 import io.biza.deepthought.data.repository.ProductBankingRateLendingTierRepository;
@@ -46,23 +46,23 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
   private Validator validator;
 
   @Override
-  public ResponseEntity<List<DioBankProductRateLending>> listProductRateLendings(UUID brandId, UUID productId) {
+  public ResponseEntity<List<DioProductRateLending>> listProductRateLendings(UUID brandId, UUID productId) {
 
-    List<ProductBankingRateLendingData> feeList =
+    List<BankProductRateLendingData> feeList =
         rateRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing fees and have database result of {}", feeList);
-    return ResponseEntity.ok(mapper.mapAsList(feeList, DioBankProductRateLending.class));
+    return ResponseEntity.ok(mapper.mapAsList(feeList, DioProductRateLending.class));
   }
 
   @Override
-  public ResponseEntity<DioBankProductRateLending> getProductRateLending(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductBankingRateLendingData> data = rateRepository
+  public ResponseEntity<DioProductRateLending> getProductRateLending(UUID brandId, UUID productId, UUID id) {
+    Optional<BankProductRateLendingData> data = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
       LOG.debug("Get Product Lending Rate for brand {} and product {} returning: {}", brandId, productId,
           data.get());
-      return ResponseEntity.ok(mapper.map(data.get(), DioBankProductRateLending.class));
+      return ResponseEntity.ok(mapper.map(data.get(), DioProductRateLending.class));
     } else {
       LOG.warn("Get product lending rate for brand {} and product {} not found", brandId, productId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -70,8 +70,8 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
   }
 
   @Override
-  public ResponseEntity<DioBankProductRateLending> createProductRateLending(UUID brandId, UUID productId,
-      DioBankProductRateLending createData) throws ValidationListException {
+  public ResponseEntity<DioProductRateLending> createProductRateLending(UUID brandId, UUID productId,
+      DioProductRateLending createData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, createData);
 
@@ -82,12 +82,12 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
           .explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    ProductBankingRateLendingData data = mapper.map(createData, ProductBankingRateLendingData.class);
+    BankProductRateLendingData data = mapper.map(createData, BankProductRateLendingData.class);
     
     LOG.debug("Preparing to create data: {}", data);
 
     if (data.tiers() != null) {
-      for(ProductBankingRateLendingTierData tier : data.tiers()) {
+      for(BankProductRateLendingTierData tier : data.tiers()) {
         if (tier.applicabilityConditions() != null) {
           tier.applicabilityConditions().rateTier(tier);
         }
@@ -116,7 +116,7 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
 
   @Override
   public ResponseEntity<Void> deleteProductRateLending(UUID brandId, UUID productId, UUID id) {
-    Optional<ProductBankingRateLendingData> optionalData = rateRepository
+    Optional<BankProductRateLendingData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -129,19 +129,19 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
   }
 
   @Override
-  public ResponseEntity<DioBankProductRateLending> updateProductRateLending(UUID brandId, UUID productId, UUID id,
-      DioBankProductRateLending updateData) throws ValidationListException {
+  public ResponseEntity<DioProductRateLending> updateProductRateLending(UUID brandId, UUID productId, UUID id,
+      DioProductRateLending updateData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, updateData);
 
-    Optional<ProductBankingRateLendingData> optionalData = rateRepository
+    Optional<BankProductRateLendingData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      ProductBankingRateLendingData data = optionalData.get();
+      BankProductRateLendingData data = optionalData.get();
       
       if (data.tiers() != null) {
-        for(ProductBankingRateLendingTierData tier : data.tiers()) {
+        for(BankProductRateLendingTierData tier : data.tiers()) {
           data.tiers().remove(tier);
           tierRepository.deleteById(tier.id());
         }
@@ -154,7 +154,7 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
       mapper.map(updateData, data);
       
       if (data.tiers() != null) {
-        for(ProductBankingRateLendingTierData tier : data.tiers()) {
+        for(BankProductRateLendingTierData tier : data.tiers()) {
           if (tier.applicabilityConditions() != null) {
             tier.applicabilityConditions().rateTier(tier);
           }

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeatureData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,7 +45,7 @@ public class BankAccountFeatureData {
   
   @ManyToOne
   @JoinColumn(name = "FEATURE_ID", nullable = false)
-  private ProductBankingFeatureData feature;
+  private BankProductFeatureData feature;
   
   @Column(name = "IS_ACTIVATED", nullable = false)
   @NotNull

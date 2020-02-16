@@ -3,7 +3,7 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductEligibilityAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductEligibility;
+import io.biza.deepthought.data.payloads.dio.product.DioProductEligibility;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -35,10 +35,10 @@ public interface ProductEligibilityAdminApi {
           scopes = {Labels.SECURITY_SCOPE_PRODUCT_READ})})
   @ApiResponses(value = {@ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
       description = Labels.RESPONSE_SUCCESSFUL_LIST, content = @Content(
-          array = @ArraySchema(schema = @Schema(implementation = DioBankProductEligibility.class))))})
+          array = @ArraySchema(schema = @Schema(implementation = DioProductEligibility.class))))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<List<DioBankProductEligibility>> listProductEligibilitys(
+  default ResponseEntity<List<DioProductEligibility>> listProductEligibilitys(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId) {
     return getDelegate().listProductEligibilitys(brandId, productId);
@@ -51,12 +51,12 @@ public interface ProductEligibilityAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_READ,
-          content = @Content(schema = @Schema(implementation = DioBankProductEligibility.class))),
+          content = @Content(schema = @Schema(implementation = DioProductEligibility.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
           description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
   @GetMapping(value = "/{eligibilityId}", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<DioBankProductEligibility> getProductEligibility(
+  default ResponseEntity<DioProductEligibility> getProductEligibility(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
       @NotNull @Valid @PathVariable("eligibilityId") UUID eligibilityId) {
@@ -70,17 +70,17 @@ public interface ProductEligibilityAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_CREATE,
-          content = @Content(schema = @Schema(implementation = DioBankProductEligibility.class))),
+          content = @Content(schema = @Schema(implementation = DioProductEligibility.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioBankProductEligibility> createProductEligibility(
+  default ResponseEntity<DioProductEligibility> createProductEligibility(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
-      @NotNull @RequestBody DioBankProductEligibility eligibility) throws ValidationListException {
+      @NotNull @RequestBody DioProductEligibility eligibility) throws ValidationListException {
     return getDelegate().createProductEligibility(brandId, productId, eligibility);
   }
 
@@ -91,18 +91,18 @@ public interface ProductEligibilityAdminApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
           description = Labels.RESPONSE_SUCCESSFUL_UPDATE,
-          content = @Content(schema = @Schema(implementation = DioBankProductEligibility.class))),
+          content = @Content(schema = @Schema(implementation = DioProductEligibility.class))),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR, content = @Content(
               array = @ArraySchema(schema = @Schema(implementation = ValidationListException.class))))})
   @PutMapping(path = "/{eligibilityId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_WRITE)
-  default ResponseEntity<DioBankProductEligibility> updateProductEligibility(
+  default ResponseEntity<DioProductEligibility> updateProductEligibility(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("productId") UUID productId,
       @NotNull @Valid @PathVariable("eligibilityId") UUID eligibilityId,
-      @NotNull @RequestBody DioBankProductEligibility eligibility) throws ValidationListException {
+      @NotNull @RequestBody DioProductEligibility eligibility) throws ValidationListException {
     return getDelegate().updateProductEligibility(brandId, productId, eligibilityId, eligibility);
   }
 

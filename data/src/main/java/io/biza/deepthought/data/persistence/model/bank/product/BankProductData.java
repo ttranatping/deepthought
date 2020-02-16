@@ -42,8 +42,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_CDR_BANKING")
-public class ProductBankingData {
+@Table(name = "BANK_PRODUCT")
+public class BankProductData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -57,28 +57,28 @@ public class ProductBankingData {
   ProductData product;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  Set<ProductBankingFeatureData> feature;
+  Set<BankProductFeatureData> feature;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  Set<ProductBankingConstraintData> constraint;
+  Set<BankProductConstraintData> constraint;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<ProductBankingEligibilityData> eligibility;
+  private Set<BankProductEligibilityData> eligibility;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<ProductBankingFeeData> fee;
+  private Set<BankProductFeeData> fee;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<ProductBankingRateDepositData> depositRate;
+  private Set<BankProductRateDepositData> depositRate;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<ProductBankingRateLendingData> lendingRate;
+  private Set<BankProductRateLendingData> lendingRate;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<ProductBankingCardArtData> cardArt;
+  private Set<BankProductCardArtData> cardArt;
 
   @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, optional = true)
-  private ProductBankingAdditionalInformationData additionalInformation;
+  private BankProductAdditionalInformationData additionalInformation;
 
   @Column(name = "EFFECTIVE_FROM")
   OffsetDateTime effectiveFrom;
@@ -109,37 +109,37 @@ public class ProductBankingData {
   @PrePersist
   public void prePersist() {
     if (this.feature != null) {
-      for (ProductBankingFeatureData one : this.feature) {
+      for (BankProductFeatureData one : this.feature) {
         one.product(this);
       }
     }
     if (this.constraint != null) {
-      for (ProductBankingConstraintData one : this.constraint) {
+      for (BankProductConstraintData one : this.constraint) {
         one.product(this);
       }
     }
     if (this.eligibility != null) {
-      for (ProductBankingEligibilityData one : this.eligibility) {
+      for (BankProductEligibilityData one : this.eligibility) {
         one.product(this);
       }
     }
     if (this.fee != null) {
-      for (ProductBankingFeeData one : this.fee) {
+      for (BankProductFeeData one : this.fee) {
         one.product(this);
       }
     }
     if (this.depositRate != null) {
-      for (ProductBankingRateDepositData one : this.depositRate) {
+      for (BankProductRateDepositData one : this.depositRate) {
         one.product(this);
       }
     }
     if (this.lendingRate != null) {
-      for (ProductBankingRateLendingData one : this.lendingRate) {
+      for (BankProductRateLendingData one : this.lendingRate) {
         one.product(this);
       }
     }
     if (this.cardArt != null) {
-      for (ProductBankingCardArtData one : this.cardArt) {
+      for (BankProductCardArtData one : this.cardArt) {
         one.product(this);
       }
     }

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductFee;
+import io.biza.deepthought.data.payloads.dio.product.DioProductFee;
 
 public interface ProductFeeAdminApiDelegate {
   
@@ -15,16 +15,16 @@ public interface ProductFeeAdminApiDelegate {
     return Optional.empty();
   }
 
-  default ResponseEntity<List<DioBankProductFee>> listProductFees(UUID brandId, UUID productId) {
+  default ResponseEntity<List<DioProductFee>> listProductFees(UUID brandId, UUID productId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankProductFee> getProductFee(UUID brandId, UUID productId, UUID feeId) {
+  default ResponseEntity<DioProductFee> getProductFee(UUID brandId, UUID productId, UUID feeId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankProductFee> createProductFee(UUID brandId, UUID productId,
-      DioBankProductFee fee) throws ValidationListException {
+  default ResponseEntity<DioProductFee> createProductFee(UUID brandId, UUID productId,
+      DioProductFee fee) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
@@ -32,8 +32,8 @@ public interface ProductFeeAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankProductFee> updateProductFee(UUID brandId, UUID productId, UUID feeId,
-      DioBankProductFee fee) throws ValidationListException {
+  default ResponseEntity<DioProductFee> updateProductFee(UUID brandId, UUID productId, UUID feeId,
+      DioProductFee fee) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProductCardArt;
+import io.biza.deepthought.data.payloads.dio.product.DioProductCardArt;
 
 public interface ProductCardArtAdminApiDelegate {
   
@@ -15,16 +15,16 @@ public interface ProductCardArtAdminApiDelegate {
     return Optional.empty();
   }
 
-  default ResponseEntity<List<DioBankProductCardArt>> listProductCardArts(UUID brandId, UUID productId) {
+  default ResponseEntity<List<DioProductCardArt>> listProductCardArts(UUID brandId, UUID productId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankProductCardArt> getProductCardArt(UUID brandId, UUID productId, UUID cardArtId) {
+  default ResponseEntity<DioProductCardArt> getProductCardArt(UUID brandId, UUID productId, UUID cardArtId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankProductCardArt> createProductCardArt(UUID brandId, UUID productId,
-      DioBankProductCardArt cardArt) throws ValidationListException {
+  default ResponseEntity<DioProductCardArt> createProductCardArt(UUID brandId, UUID productId,
+      DioProductCardArt cardArt) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
@@ -32,8 +32,8 @@ public interface ProductCardArtAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankProductCardArt> updateProductCardArt(UUID brandId, UUID productId, UUID cardArtId,
-      DioBankProductCardArt cardArt) throws ValidationListException {
+  default ResponseEntity<DioProductCardArt> updateProductCardArt(UUID brandId, UUID productId, UUID cardArtId,
+      DioProductCardArt cardArt) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

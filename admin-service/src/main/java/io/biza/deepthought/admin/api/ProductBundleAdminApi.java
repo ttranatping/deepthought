@@ -3,7 +3,7 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductBundleAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -69,7 +69,7 @@ public interface ProductBundleAdminApi {
           array = @ArraySchema(schema = @Schema(implementation = DioProductBundle.class))))})
   @GetMapping(value = "/{bundleId}/product", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_PRODUCT_READ)
-  default ResponseEntity<List<DioBankProduct>> listProductsForBundle(
+  default ResponseEntity<List<DioProduct>> listProductsForBundle(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,
       @NotNull @Valid @PathVariable("bundleId") UUID bundleId) {
     return getDelegate().listProductsForBundle(brandId, bundleId);

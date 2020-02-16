@@ -10,8 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -33,8 +33,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_ADDITIONAL_INFORMATION")
-public class ProductBankingAdditionalInformationData {
+@Table(name = "BANK_PRODUCT_RATE_DEPOSIT_TIER_APPLICABILITY")
+public class BankProductRateDepositTierApplicabilityData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -47,34 +47,16 @@ public class ProductBankingAdditionalInformationData {
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "PRODUCT_CDR_ID")
+  @JoinColumn(name = "DEPOSIT_TIER_ID")
   @ToString.Exclude
-  ProductBankingData product;
+  BankProductRateDepositTierData rateTier;
 
-  @Column(name = "OVERVIEW_URI")
+  @Column(name = "ADDITIONAL_INFO")
+  @Lob
+  String additionalInfo;
+
+  @Column(name = "ADDITIONAL_INFO_URI")
   @Convert(converter = URIDataConverter.class)
-  URI overviewUri;
+  URI additionalInfoUri;
 
-  @Column(name = "TERMS_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI termsUri;
-
-  @Column(name = "ELIGIBILITY_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI eligibilityUri;
-
-  @Column(name = "FEES_PRICING_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI feesPricingUri;
-
-  @Column(name = "BUNDLE_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI bundleUri;
-
-  @PrePersist
-  public void prePersist() {
-    if(this.product() != null) {
-      this.product.additionalInformation(this);
-    }
-  }
 }

@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,7 +52,7 @@ public class BankAccountFeeData {
   
   @ManyToOne
   @JoinColumn(name = "FEE_ID", nullable = false)
-  ProductBankingFeeData fee;
+  BankProductFeeData fee;
   
   @Column(name = "LAST_APPLIED")
   OffsetDateTime lastApplied;

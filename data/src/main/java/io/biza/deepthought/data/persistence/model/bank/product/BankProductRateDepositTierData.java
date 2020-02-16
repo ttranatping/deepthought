@@ -1,9 +1,9 @@
 package io.biza.deepthought.data.persistence.model.bank.product;
 
-import java.net.URI;
+import java.math.BigDecimal;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -11,19 +11,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
-import io.biza.babelfish.cdr.enumerations.BankingProductDiscountEligibilityType;
+import io.biza.babelfish.cdr.enumerations.BankingProductRateTierApplicationMethod;
+import io.biza.babelfish.cdr.enumerations.CommonUnitOfMeasureType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -35,8 +37,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_FEE_DISCOUNT_ELIGIBILITY")
-public class ProductBankingFeeDiscountEligibilityData {
+@Table(name = "BANK_PRODUCT_RATE_DEPOSIT_TIER")
+public class BankProductRateDepositTierData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -49,23 +51,35 @@ public class ProductBankingFeeDiscountEligibilityData {
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
-  @JoinColumn(name = "DISCOUNT_ID", nullable = false)
+  @JoinColumn(name = "DEPOSIT_RATE_ID", nullable = false)
   @ToString.Exclude
-  private ProductBankingFeeDiscountData discount;
+  private BankProductRateDepositData depositRate;
 
-  @Column(name = "TYPE")
+  @OneToOne(mappedBy = "rateTier", cascade = CascadeType.ALL, optional = true)
+  private BankProductRateDepositTierApplicabilityData applicabilityConditions;
+
+  @Column(name = "NAME", length = 255, nullable = false)
+  @NotNull
+  @NonNull
+  String name;
+
+  @NonNull
+  @NotNull
+  @Column(name = "UNIT_OF_MEASURE")
   @Enumerated(EnumType.STRING)
-  private BankingProductDiscountEligibilityType discountEligibilityType;
+  CommonUnitOfMeasureType unitOfMeasure;
 
-  @Column(name = "INFO")
-  @Lob
-  private String additionalInfo;
+  @NonNull
+  @NotNull
+  @Column(name = "MINIMUM_VALUE")
+  BigDecimal minimumValue;
 
-  @Column(name = "URI")
-  @Convert(converter = URIDataConverter.class)
-  private URI additionalInfoUri;
+  @Column(name = "MAXIMUM_VALUE")
+  BigDecimal maximumValue;
 
-  @Column(name = "VALUE", length = 4096)
-  private String additionalValue;
+
+  @Column(name = "RATE_APPLICATION_METHOD")
+  @Enumerated(EnumType.STRING)
+  BankingProductRateTierApplicationMethod rateApplicationMethod;
 
 }

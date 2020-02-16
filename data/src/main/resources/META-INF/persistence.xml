@@ -11,21 +11,21 @@
 		<class>io.biza.deepthought.data.persistence.model.BrandData</class>
 		<class>io.biza.deepthought.data.persistence.model.product.ProductBundleData</class>
 		<class>io.biza.deepthought.data.persistence.model.product.ProductData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingAdditionalInformationData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingCardArtData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingConstraintData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingEligibilityData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeatureData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountEligibilityData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierApplicabilityData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierApplicabilityData</class>
-		<class>io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductAdditionalInformationData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductCardArtData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductConstraintData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductEligibilityData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductFeatureData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountEligibilityData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositTierApplicabilityData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositTierData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierApplicabilityData</class>
+		<class>io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierData</class>
 
 		<properties>
 			<property name="hibernate.archive.autodetection"

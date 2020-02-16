@@ -33,8 +33,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "PRODUCT_BANKING_RATE_LENDING_TIER_APPLICABILITY")
-public class ProductBankingRateLendingTierApplicabilityData {
+@Table(name = "BANK_PRODUCT_RATE_LENDING_TIER_APPLICABILITY")
+public class BankProductRateLendingTierApplicabilityData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -49,7 +49,7 @@ public class ProductBankingRateLendingTierApplicabilityData {
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "LENDING_TIER_ID")
   @ToString.Exclude
-  ProductBankingRateLendingTierData rateTier;
+  BankProductRateLendingTierData rateTier;
 
   @Column(name = "ADDITIONAL_INFO")
   @Lob
