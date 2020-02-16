@@ -23,8 +23,9 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.model.account.AccountData;
-import io.biza.deepthought.data.persistence.model.bank.BrandData;
+import io.biza.deepthought.data.persistence.model.BrandData;
+import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -57,7 +58,7 @@ public class ProductData {
   
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<AccountData> accounts;
+  Set<BankAccountData> accounts;
 
   @Column(name = "NAME", length = 255, nullable = false)
   @NotNull

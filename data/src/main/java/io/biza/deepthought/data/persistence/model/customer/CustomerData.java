@@ -21,10 +21,11 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.model.bank.BrandData;
+import io.biza.deepthought.data.persistence.model.BrandData;
+import io.biza.deepthought.data.persistence.model.bank.payments.BankPayeeData;
+import io.biza.deepthought.data.persistence.model.bank.payments.BankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.organisation.OrganisationData;
-import io.biza.deepthought.data.persistence.model.payments.PayeeData;
-import io.biza.deepthought.data.persistence.model.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.person.PersonData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -71,15 +72,15 @@ public class CustomerData {
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<CustomerAccountData> accounts;
+  Set<CustomerBankAccountData> accounts;
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<ScheduledPaymentData> scheduledPayments;
+  Set<BankScheduledPaymentData> scheduledPayments;
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<PayeeData> payees;
+  Set<BankPayeeData> payees;
     
   @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true)
   PersonData person;

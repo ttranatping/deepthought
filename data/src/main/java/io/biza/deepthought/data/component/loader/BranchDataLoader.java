@@ -7,16 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import io.biza.babelfish.cdr.support.customtypes.ApcaNumberType;
-import io.biza.deepthought.data.persistence.model.bank.BranchData;
-import io.biza.deepthought.data.repository.BranchRepository;
+import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
+import io.biza.deepthought.data.repository.BankBranchRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class BranchDataLoader {
-  private BranchRepository branchRepository;
+  private BankBranchRepository branchRepository;
 
   @Autowired
-  public BranchDataLoader(BranchRepository branchRepository) {
+  public BranchDataLoader(BankBranchRepository branchRepository) {
     this.branchRepository = branchRepository;
     loadBankDirectory();
   }
@@ -30,7 +30,7 @@ public class BranchDataLoader {
       while ((line = csvReader.readNext()) != null) {
         Integer bsb = Integer.parseInt(line[0].replaceAll("-", ""));
         if (branchRepository.findByBsb(bsb) == null) {
-          branchRepository.save(BranchData.builder().bsb(bsb).bankName(line[1]).branchName(line[2])
+          branchRepository.save(BankBranchData.builder().bsb(bsb).bankName(line[1]).branchName(line[2])
               .branchAddress(line[3]).branchCity(line[4]).branchState(line[5])
               .branchPostcode(line[6]).build());
         }

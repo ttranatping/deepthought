@@ -33,22 +33,22 @@ import io.biza.deepthought.data.payloads.dio.product.DioProductFeature;
 import io.biza.deepthought.data.payloads.dio.product.DioProductFee;
 import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
 import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
-import io.biza.deepthought.data.persistence.model.bank.BrandData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingAdditionalInformationData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingCardArtData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingConstraintData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingEligibilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeDiscountData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeDiscountEligibilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierData;
+import io.biza.deepthought.data.persistence.model.BrandData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingAdditionalInformationData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingCardArtData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingConstraintData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingEligibilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountEligibilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.BrandRepository;
@@ -76,7 +76,7 @@ public class ProductTests extends TranslatorInitialisation {
   private BrandRepository brandRepository;
 
   @Resource
-  private ProductBundleRepository productBundleRepository;
+  private ProductBankingBundleRepository productBundleRepository;
 
   public BrandData createBrandWithBundle() {
     BrandData brand = BrandData.builder().name(VariableConstants.BRAND_NAME)

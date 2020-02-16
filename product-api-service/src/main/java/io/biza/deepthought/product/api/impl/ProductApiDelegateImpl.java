@@ -19,7 +19,7 @@ import io.biza.deepthought.common.support.CDRContainerAttributes;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductRepository;
-import io.biza.deepthought.data.specification.ProductSpecifications;
+import io.biza.deepthought.data.specification.ProductBankingSpecifications;
 import io.biza.deepthought.product.api.delegate.ProductApiDelegate;
 import io.biza.deepthought.product.api.requests.RequestListProducts;
 import lombok.extern.slf4j.Slf4j;
@@ -44,22 +44,22 @@ public class ProductApiDelegateImpl implements ProductApiDelegate {
 
     if (requestList.effective() != null) {
       filterSpecifications =
-          filterSpecifications.and(ProductSpecifications.effective(requestList.effective()));
+          filterSpecifications.and(ProductBankingSpecifications.effective(requestList.effective()));
     }
 
     if (requestList.updatedSince() != null) {
       filterSpecifications =
-          filterSpecifications.and(ProductSpecifications.updatedSince(requestList.updatedSince()));
+          filterSpecifications.and(ProductBankingSpecifications.updatedSince(requestList.updatedSince()));
     }
 
     if (requestList.productCategory() != null) {
       filterSpecifications = filterSpecifications
-          .and(ProductSpecifications.productCategory(requestList.productCategory()));
+          .and(ProductBankingSpecifications.productCategory(requestList.productCategory()));
     }
 
     if (StringUtils.isNotBlank(requestList.brand())) {
       filterSpecifications =
-          filterSpecifications.and(ProductSpecifications.brand(requestList.brand()));
+          filterSpecifications.and(ProductBankingSpecifications.brand(requestList.brand()));
     }
 
     /**

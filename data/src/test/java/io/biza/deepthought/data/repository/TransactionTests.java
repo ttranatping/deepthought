@@ -1,88 +1,65 @@
 package io.biza.deepthought.data.repository;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
-import java.util.Currency;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import javax.annotation.Resource;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import io.biza.babelfish.cdr.enumerations.BankingProductDiscountType;
 import io.biza.babelfish.cdr.enumerations.BankingTransactionService;
-import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
-import io.biza.babelfish.cdr.models.payloads.banking.account.BankingCreditCardAccountV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAdditionalInformationV1;
 import io.biza.babelfish.cdr.support.customtypes.MerchantCategoryCodeType;
-import io.biza.deepthought.data.Constants;
 import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
-import io.biza.deepthought.data.enumerations.DioCustomerType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.cdr.CdrBankingAccount;
 import io.biza.deepthought.data.payloads.cdr.CdrBankingProduct;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccount;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountCard;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountCreditCard;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountLoanAccount;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountTermDeposit;
-import io.biza.deepthought.data.payloads.dio.banking.DioBranch;
 import io.biza.deepthought.data.payloads.dio.banking.DioTransaction;
 import io.biza.deepthought.data.payloads.dio.banking.DioTransactionAPCS;
 import io.biza.deepthought.data.payloads.dio.banking.DioTransactionBPAY;
 import io.biza.deepthought.data.payloads.dio.banking.DioTransactionCard;
 import io.biza.deepthought.data.payloads.dio.banking.DioTransactionNPP;
-import io.biza.deepthought.data.payloads.dio.common.DioCustomer;
 import io.biza.deepthought.data.payloads.dio.product.DioProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
-import io.biza.deepthought.data.persistence.model.account.AccountCreditCardData;
-import io.biza.deepthought.data.persistence.model.account.AccountData;
-import io.biza.deepthought.data.persistence.model.account.AccountLoanAccountData;
-import io.biza.deepthought.data.persistence.model.account.AccountTermDepositData;
-import io.biza.deepthought.data.persistence.model.bank.BranchData;
-import io.biza.deepthought.data.persistence.model.bank.BrandData;
-import io.biza.deepthought.data.persistence.model.customer.CustomerAccountCardData;
-import io.biza.deepthought.data.persistence.model.customer.CustomerAccountData;
+import io.biza.deepthought.data.persistence.model.BrandData;
+import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
+import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingAdditionalInformationData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingCardArtData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingConstraintData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingEligibilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingFeeDiscountEligibilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionAPCSData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionBPAYData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionCardData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionNPPData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
-import io.biza.deepthought.data.persistence.model.organisation.OrganisationAddressData;
-import io.biza.deepthought.data.persistence.model.organisation.OrganisationAddressSimpleData;
-import io.biza.deepthought.data.persistence.model.organisation.OrganisationData;
+import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountCardData;
+import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressData;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressSimpleData;
 import io.biza.deepthought.data.persistence.model.person.PersonData;
 import io.biza.deepthought.data.persistence.model.person.PersonEmailData;
 import io.biza.deepthought.data.persistence.model.person.PersonPhoneData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingAdditionalInformationData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingCardArtData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingConstraintData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingEligibilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeDiscountData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeDiscountEligibilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositTierData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.persistence.model.transaction.TransactionAPCSData;
-import io.biza.deepthought.data.persistence.model.transaction.TransactionBPAYData;
-import io.biza.deepthought.data.persistence.model.transaction.TransactionCardData;
-import io.biza.deepthought.data.persistence.model.transaction.TransactionData;
-import io.biza.deepthought.data.persistence.model.transaction.TransactionNPPData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.support.DeepThoughtJpaConfig;
 import io.biza.deepthought.data.support.TranslatorInitialisation;
@@ -112,38 +89,38 @@ public class TransactionTests extends TranslatorInitialisation {
   private BrandRepository brandRepository;
 
   @Resource
-  private BranchRepository branchRepository;
+  private BankBranchRepository branchRepository;
 
   @Resource
-  private AccountRepository accountRepository;
+  private BankAccountRepository accountRepository;
 
   @Resource
-  private AccountCreditCardRepository accountCreditCardRepository;
+  private BankAccountCreditCardRepository accountCreditCardRepository;
 
 
   @Resource
-  private CustomerAccountCardRepository accountCardRepository;
+  private CustomerBankAccountCardRepository accountCardRepository;
 
   @Resource
-  private AccountTermDepositRepository accountTermDepositRepository;
+  private BankAccountTermDepositRepository accountTermDepositRepository;
 
   @Resource
-  private AccountLoanAccountRepository accountLoanAccountRepository;
+  private BankAccountLoanAccountRepository accountLoanAccountRepository;
 
   @Resource
   private ProductRepository productRepository;
 
   @Resource
-  private ProductBundleRepository productBundleRepository;
+  private ProductBankingBundleRepository productBundleRepository;
 
   @Resource
-  private TransactionRepository transactionRepository;
+  private BankTransactionRepository transactionRepository;
 
   @Test
   public void testTransactionNppCreateAndCompare() throws CsvValidationException, IOException {
 
-    TransactionData transaction = createTransactionBase();
-    transaction.npp(TransactionNPPData.builder()
+    BankTransactionData transaction = createTransactionBase();
+    transaction.npp(BankTransactionNPPData.builder()
         .endToEndId(VariableConstants.TRANSACTION_NPP_END_TO_END.toString())
         .payee(VariableConstants.TRANSACTION_NPP_PAYEE)
         .payer(VariableConstants.TRANSACTION_NPP_PAYER)
@@ -181,8 +158,8 @@ public class TransactionTests extends TranslatorInitialisation {
   @Test
   public void testTransactionApcsCreateAndCompare() throws CsvValidationException, IOException {
 
-    TransactionData transaction = createTransactionBase();
-    transaction.apcs(TransactionAPCSData.builder().branch(transaction.account().branch()).build()
+    BankTransactionData transaction = createTransactionBase();
+    transaction.apcs(BankTransactionAPCSData.builder().branch(transaction.account().branch()).build()
         .transaction(transaction));
     transactionRepository.save(transaction);
 
@@ -212,9 +189,9 @@ public class TransactionTests extends TranslatorInitialisation {
   @Test
   public void testTransactionBpayCreateAndCompare() throws CsvValidationException, IOException {
 
-    TransactionData transaction = createTransactionBase();
+    BankTransactionData transaction = createTransactionBase();
     transaction
-        .bpay(TransactionBPAYData.builder().billerCode(VariableConstants.TRANSACTION_BILLER_CODE)
+        .bpay(BankTransactionBPAYData.builder().billerCode(VariableConstants.TRANSACTION_BILLER_CODE)
             .billerName(VariableConstants.TRANSACTION_BILLER_NAME)
             .crn(VariableConstants.TRANSACTION_CRN).build().transaction(transaction));
     transactionRepository.save(transaction);
@@ -247,8 +224,8 @@ public class TransactionTests extends TranslatorInitialisation {
   @Test
   public void testTransactionMerchantCreateAndCompare() throws CsvValidationException, IOException {
 
-    TransactionData transaction = createTransactionBase();
-    transaction.card(TransactionCardData.builder()
+    BankTransactionData transaction = createTransactionBase();
+    transaction.card(BankTransactionCardData.builder()
         .merchantCategoryCode(
             MerchantCategoryCodeType.fromValue(VariableConstants.TRANSACTION_MERCHANT_CODE))
         .merchantName(VariableConstants.TRANSACTION_MERCHANT_NAME).build()
@@ -280,11 +257,11 @@ public class TransactionTests extends TranslatorInitialisation {
     }
   }
 
-  public TransactionData createTransactionBase() {
-    AccountData account = createAccountWithCard();
+  public BankTransactionData createTransactionBase() {
+    BankAccountData account = createAccountWithCard();
 
-    TransactionData transaction =
-        TransactionData.builder().amount(VariableConstants.TRANSACTION_VALUE)
+    BankTransactionData transaction =
+        BankTransactionData.builder().amount(VariableConstants.TRANSACTION_VALUE)
             .description(VariableConstants.TRANSACTION_DESCRIPTION)
             .originated(VariableConstants.TRANSACTION_ORIGINATED_DATETIME)
             .posted(VariableConstants.TRANSACTION_POSTED_DATETIME)
@@ -300,24 +277,24 @@ public class TransactionTests extends TranslatorInitialisation {
   }
 
 
-  public AccountData createAccountWithCard() {
+  public BankAccountData createAccountWithCard() {
 
     CustomerData customer = createCustomerPerson();
-    BranchData branch = createBranch();
+    BankBranchData branch = createBranch();
     ProductData product = createProductWithTheWorks();
 
-    AccountData account = AccountData.builder().nickName(VariableConstants.NICK_NAME)
+    BankAccountData account = BankAccountData.builder().nickName(VariableConstants.NICK_NAME)
         .status(DioAccountStatus.OPEN).displayName(VariableConstants.DISPLAY_NAME)
         .creationDateTime(VariableConstants.OPEN_DATE_TIME)
         .accountType(DioBankAccountType.TRANS_AND_SAVINGS_ACCOUNTS).build();
     account.branch(branch);
     account.product(product);
     account.bundle(product.bundle().iterator().next());
-    CustomerAccountData customerAccount = CustomerAccountData.builder().owner(true).build();
+    CustomerBankAccountData customerAccount = CustomerBankAccountData.builder().owner(true).build();
     customerAccount.account(account);
     customerAccount.customer(customer);
-    CustomerAccountCardData accountCard =
-        CustomerAccountCardData.builder().issueDateTime(VariableConstants.OPEN_DATE_TIME)
+    CustomerBankAccountCardData accountCard =
+        CustomerBankAccountCardData.builder().issueDateTime(VariableConstants.OPEN_DATE_TIME)
             .cardNumber(VariableConstants.CARD_NUMBER).build();
     accountCard.account(customerAccount);
     customerAccount.card(accountCard);
@@ -328,7 +305,7 @@ public class TransactionTests extends TranslatorInitialisation {
     return account;
   }
 
-  public DioBankAccount getAccountStaticBase(AccountData account) {
+  public DioBankAccount getAccountStaticBase(BankAccountData account) {
     DioProduct dioProductStatic = DioProduct.builder().id(account.product().id())
         .name(VariableConstants.PRODUCT_NAME).description(VariableConstants.PRODUCT_DESCRIPTION)
         .schemeType(DioSchemeType.CDR_BANKING)
@@ -371,7 +348,7 @@ public class TransactionTests extends TranslatorInitialisation {
   @Test
   public void testAccountAndCompare() {
 
-    AccountData account = createAccountWithCard();
+    BankAccountData account = createAccountWithCard();
     DioBankAccount dioAccount = mapper.getMapperFacade().map(account, DioBankAccount.class);
 
     DioBankAccount dioAccountStatic = getAccountStaticBase(account);
@@ -438,7 +415,7 @@ public class TransactionTests extends TranslatorInitialisation {
     return customer;
   }
 
-  public BranchData createBranch() {
+  public BankBranchData createBranch() {
 
     BrandData brand = BrandData.builder().name(VariableConstants.BRAND_NAME)
         .displayName(VariableConstants.BRAND_DISPLAY_NAME).build();
@@ -447,7 +424,7 @@ public class TransactionTests extends TranslatorInitialisation {
     Optional<BrandData> brandReturn = brandRepository.findById(brand.id());
     assertTrue(brandReturn.isPresent());
 
-    BranchData branch = BranchData.builder().bankName(VariableConstants.BANK_NAME)
+    BankBranchData branch = BankBranchData.builder().bankName(VariableConstants.BANK_NAME)
         .branchAddress(VariableConstants.BRANCH_ADDRESS).branchCity(VariableConstants.BRANCH_CITY)
         .branchName(VariableConstants.BRANCH_NAME).branchPostcode(VariableConstants.BRANCH_POSTCODE)
         .branchState(VariableConstants.BRANCH_STATE).bsb(VariableConstants.BRANCH_BSB).brand(brand)

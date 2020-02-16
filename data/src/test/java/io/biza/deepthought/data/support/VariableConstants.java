@@ -29,7 +29,6 @@ import io.biza.babelfish.cdr.enumerations.BankingTransactionType;
 import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
 import io.biza.babelfish.cdr.enumerations.CommonUnitOfMeasureType;
 import io.biza.babelfish.cdr.enumerations.PayloadTypeBankingDomesticPayeePayId;
-import io.biza.babelfish.cdr.support.customtypes.MerchantCategoryCodeType;
 import io.biza.deepthought.data.enumerations.DioEmailType;
 import io.biza.deepthought.data.enumerations.DioLoanRepaymentType;
 import io.biza.deepthought.data.enumerations.DioMaturityInstructionType;

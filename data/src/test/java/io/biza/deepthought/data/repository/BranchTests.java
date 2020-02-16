@@ -8,8 +8,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import io.biza.deepthought.data.payloads.dio.banking.DioBranch;
-import io.biza.deepthought.data.persistence.model.bank.BranchData;
-import io.biza.deepthought.data.persistence.model.bank.BrandData;
+import io.biza.deepthought.data.persistence.model.BrandData;
+import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.support.DeepThoughtJpaConfig;
 import io.biza.deepthought.data.support.TranslatorInitialisation;
@@ -29,12 +29,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class BranchTests extends TranslatorInitialisation {
 
   @Resource
-  private BranchRepository branchRepository;
+  private BankBranchRepository branchRepository;
 
   @Resource
   private BrandRepository brandRepository;
 
-  public BranchData createBranch() {
+  public BankBranchData createBranch() {
 
     BrandData brand = BrandData.builder().name(VariableConstants.BRAND_NAME)
         .displayName(VariableConstants.BRAND_DISPLAY_NAME).build();
@@ -43,7 +43,7 @@ public class BranchTests extends TranslatorInitialisation {
     Optional<BrandData> brandReturn = brandRepository.findById(brand.id());
     assertTrue(brandReturn.isPresent());
 
-    BranchData branch = BranchData.builder().bankName(VariableConstants.BANK_NAME)
+    BankBranchData branch = BankBranchData.builder().bankName(VariableConstants.BANK_NAME)
         .branchAddress(VariableConstants.BRANCH_ADDRESS).branchCity(VariableConstants.BRANCH_CITY)
         .branchName(VariableConstants.BRANCH_NAME).branchPostcode(VariableConstants.BRANCH_POSTCODE)
         .branchState(VariableConstants.BRANCH_STATE).bsb(VariableConstants.BRANCH_BSB).brand(brand)
@@ -56,7 +56,7 @@ public class BranchTests extends TranslatorInitialisation {
   @Test
   public void testBranchAndCompare() {
 
-    BranchData branch = createBranch();
+    BankBranchData branch = createBranch();
     DioBranch dioBranch = mapper.getMapperFacade().map(branch, DioBranch.class);
 
     DioBranch dioBranchStatic = DioBranch.builder().id(branch.id())
