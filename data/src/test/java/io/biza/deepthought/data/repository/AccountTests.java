@@ -23,7 +23,7 @@ import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountCard;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountCreditCard;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountLoanAccount;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountTermDeposit;
-import io.biza.deepthought.data.payloads.dio.product.DioProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
@@ -297,7 +297,7 @@ public class AccountTests extends TranslatorInitialisation {
 
 
   public DioBankAccount getAccountStaticBase(BankAccountData account) {
-    DioProduct dioProductStatic = DioProduct.builder().id(account.product().id())
+    DioBankProduct dioProductStatic = DioBankProduct.builder().id(account.product().id())
         .name(VariableConstants.PRODUCT_NAME).description(VariableConstants.PRODUCT_DESCRIPTION)
         .schemeType(DioSchemeType.CDR_BANKING)
         .cdrBanking(

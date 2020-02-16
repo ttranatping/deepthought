@@ -2,7 +2,7 @@ package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.babelfish.cdr.enumerations.PayloadTypeBankingPayee;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.dio.banking.DioPayee;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankPayee;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankPayeeData;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
@@ -12,16 +12,16 @@ public class PayeeDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
-    orikaMapperFactory.classMap(BankPayeeData.class, DioPayee.class)
+    orikaMapperFactory.classMap(BankPayeeData.class, DioBankPayee.class)
         .fieldAToB("id", "id").field("id", "cdrBanking.payeeId")
         .field("description", "cdrBanking.description")
         .field("nickName", "cdrBanking.nickname").field("creationDateTime", "cdrBanking.creationDate")
         .field("domestic", "cdrBanking.domestic")
         .field("bpay", "cdrBanking.biller")
         .field("international", "cdrBanking.international")
-        .customize(new CustomMapper<BankPayeeData, DioPayee>() {
+        .customize(new CustomMapper<BankPayeeData, DioBankPayee>() {
           @Override
-          public void mapAtoB(BankPayeeData from, DioPayee to, MappingContext context) {
+          public void mapAtoB(BankPayeeData from, DioBankPayee to, MappingContext context) {
             if (from.domestic() != null) {
               to.cdrBanking.type(PayloadTypeBankingPayee.DOMESTIC);
             }

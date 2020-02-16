@@ -20,7 +20,7 @@ import io.biza.babelfish.cdr.models.payloads.banking.account.payee.international
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.international.BankingInternationalPayeeV1;
 import io.biza.babelfish.cdr.support.customtypes.ApcaNumberType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.banking.DioPayee;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankPayee;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankPayeeBPAYData;
@@ -122,9 +122,9 @@ public class PayeeTests extends TranslatorInitialisation {
     payeeRepository.save(payee);
 
 
-    DioPayee dioAccount = mapper.getMapperFacade().map(payee, DioPayee.class);
+    DioBankPayee dioAccount = mapper.getMapperFacade().map(payee, DioBankPayee.class);
 
-    DioPayee dioAccountStatic = getPayeeStatic(payee).cdrBanking(BankingPayeeDetailV1.builder()
+    DioBankPayee dioAccountStatic = getPayeeStatic(payee).cdrBanking(BankingPayeeDetailV1.builder()
         .creationDate(payee.creationDateTime().toLocalDate()).payeeId(payee.id().toString())
         .type(PayloadTypeBankingPayee.INTERNATIONAL)
         .description(VariableConstants.PAYEE_DESCRIPTION).nickname(VariableConstants.PAYEE_NICKNAME)
@@ -161,9 +161,9 @@ public class PayeeTests extends TranslatorInitialisation {
     payeeRepository.save(payee);
 
 
-    DioPayee dioAccount = mapper.getMapperFacade().map(payee, DioPayee.class);
+    DioBankPayee dioAccount = mapper.getMapperFacade().map(payee, DioBankPayee.class);
 
-    DioPayee dioAccountStatic = getPayeeStatic(payee).cdrBanking(BankingPayeeDetailV1.builder()
+    DioBankPayee dioAccountStatic = getPayeeStatic(payee).cdrBanking(BankingPayeeDetailV1.builder()
         .creationDate(payee.creationDateTime().toLocalDate()).payeeId(payee.id().toString())
         .type(PayloadTypeBankingPayee.BILLER).description(VariableConstants.PAYEE_DESCRIPTION)
         .nickname(VariableConstants.PAYEE_NICKNAME)
@@ -198,9 +198,9 @@ public class PayeeTests extends TranslatorInitialisation {
     payeeRepository.save(payee);
 
 
-    DioPayee dioAccount = mapper.getMapperFacade().map(payee, DioPayee.class);
+    DioBankPayee dioAccount = mapper.getMapperFacade().map(payee, DioBankPayee.class);
 
-    DioPayee dioAccountStatic = getPayeeStatic(payee).cdrBanking(BankingPayeeDetailV1.builder()
+    DioBankPayee dioAccountStatic = getPayeeStatic(payee).cdrBanking(BankingPayeeDetailV1.builder()
         .creationDate(payee.creationDateTime().toLocalDate()).payeeId(payee.id().toString())
         .type(PayloadTypeBankingPayee.DOMESTIC).description(VariableConstants.PAYEE_DESCRIPTION)
         .nickname(VariableConstants.PAYEE_NICKNAME)
@@ -240,9 +240,9 @@ public class PayeeTests extends TranslatorInitialisation {
     return payeeRepository.findById(payee.id()).get();
   }
 
-  public DioPayee getPayeeStatic(BankPayeeData payee) {
+  public DioBankPayee getPayeeStatic(BankPayeeData payee) {
     LOG.warn("Debit details are: {}", payee.toString());
-    DioPayee dioPayeeStatic = DioPayee.builder().id(payee.id())
+    DioBankPayee dioPayeeStatic = DioBankPayee.builder().id(payee.id())
         .cdrBanking(BankingPayeeDetailV1.builder().description(VariableConstants.PAYEE_DESCRIPTION)
             .nickname(VariableConstants.PAYEE_NICKNAME).build())
         .build();

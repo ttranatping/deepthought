@@ -3,7 +3,7 @@ package io.biza.deepthought.data.translation.mapper;
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.scheduled.BankingScheduledPaymentRecurrenceV1;
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.scheduled.BankingScheduledPaymentV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.dio.banking.DioScheduledPayment;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankScheduledPayment;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankScheduledPaymentData;
 import ma.glasnost.orika.MapperFactory;
 
@@ -11,7 +11,7 @@ public class ScheduledPaymentDataMapper implements OrikaFactoryConfigurerInterfa
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
-    orikaMapperFactory.classMap(BankScheduledPaymentData.class, DioScheduledPayment.class)
+    orikaMapperFactory.classMap(BankScheduledPaymentData.class, DioBankScheduledPayment.class)
         .fieldAToB("id", "id")
         .field("", "cdrBanking")
         .byDefault().register();

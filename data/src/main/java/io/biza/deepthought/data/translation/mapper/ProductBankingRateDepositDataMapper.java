@@ -8,7 +8,7 @@ import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDepos
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateDeposit;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierApplicabilityData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateDepositTierData;
@@ -53,7 +53,7 @@ public class ProductBankingRateDepositDataMapper implements OrikaFactoryConfigur
           }
         }).register();
 
-    orikaMapperFactory.classMap(ProductBankingRateDepositData.class, DioProductRateDeposit.class)
+    orikaMapperFactory.classMap(ProductBankingRateDepositData.class, DioBankProductRateDeposit.class)
         .fieldAToB("id", "id").field("schemeType", "schemeType")
         .field("depositRateType", "cdrBanking.depositRateType").field("rate", "cdrBanking.rate")
         .field("applicationFrequency", "cdrBanking.applicationFrequency")
@@ -61,9 +61,9 @@ public class ProductBankingRateDepositDataMapper implements OrikaFactoryConfigur
         .field("additionalValue", "cdrBanking.additionalValue")
         .field("additionalInfo", "cdrBanking.additionalInfo")
         .field("additionalInfoUri", "cdrBanking.additionalInfoUri")
-        .customize(new CustomMapper<ProductBankingRateDepositData, DioProductRateDeposit>() {
+        .customize(new CustomMapper<ProductBankingRateDepositData, DioBankProductRateDeposit>() {
           @Override
-          public void mapAtoB(ProductBankingRateDepositData from, DioProductRateDeposit to,
+          public void mapAtoB(ProductBankingRateDepositData from, DioBankProductRateDeposit to,
               MappingContext context) {
 
             List<BankingProductRateTierV1> tierList =
@@ -90,7 +90,7 @@ public class ProductBankingRateDepositDataMapper implements OrikaFactoryConfigur
           }
 
           @Override
-          public void mapBtoA(DioProductRateDeposit from, ProductBankingRateDepositData to,
+          public void mapBtoA(DioBankProductRateDeposit from, ProductBankingRateDepositData to,
               MappingContext context) {
 
             Set<ProductBankingRateDepositTierData> tierList =

@@ -43,7 +43,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Banking Information")
-public class DioTransaction {
+public class DioBankTransaction {
   
   @JsonProperty("id")
   @NotNull
@@ -121,22 +121,22 @@ public class DioTransaction {
   @Schema(
       description = "Details associated with Card Originated Transactions")
   @JsonProperty("card")
-  DioTransactionCard card;
+  DioBankTransactionCard card;
   
   @Schema(
       description = "Details associated with BPAY Originated Transactions")
   @JsonProperty("bpay")
-  DioTransactionBPAY bpay;
+  DioBankTransactionBPAY bpay;
   
   @Schema(
       description = "Details associated with APCS Originated Transactions")
   @JsonProperty("apcs")
-  DioTransactionAPCS apcs;
+  DioBankTransactionAPCS apcs;
   
   @Schema(
       description = "Details associated with NPP Originated Transactions")
   @JsonProperty("npp")
-  DioTransactionNPP npp;
+  DioBankTransactionNPP npp;
 
   
 }

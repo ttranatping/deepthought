@@ -33,7 +33,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "APCS Originated Transaction Details")
-public class DioTransactionAPCS {
+public class DioBankTransactionAPCS {
   
   @JsonProperty("id")
   @NotNull
@@ -51,6 +51,6 @@ public class DioTransactionAPCS {
   public DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @JsonProperty("branch")
-  DioBranch branch;
+  DioBankBranch branch;
 
 }

@@ -25,14 +25,14 @@ import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateT
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrBankingProduct;
-import io.biza.deepthought.data.payloads.dio.product.DioProduct;
-import io.biza.deepthought.data.payloads.dio.product.DioProductCardArt;
-import io.biza.deepthought.data.payloads.dio.product.DioProductConstraint;
-import io.biza.deepthought.data.payloads.dio.product.DioProductEligibility;
-import io.biza.deepthought.data.payloads.dio.product.DioProductFeature;
-import io.biza.deepthought.data.payloads.dio.product.DioProductFee;
-import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
-import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductCardArt;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductConstraint;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductEligibility;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductFeature;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductFee;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateDeposit;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateLending;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingAdditionalInformationData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingCardArtData;
@@ -227,9 +227,9 @@ public class ProductTests extends TranslatorInitialisation {
   public void testBaseProductCreateAndCompare() {
 
     ProductData product = createProductWithTheWorks();
-    DioProduct dioProduct = mapper.getMapperFacade().map(product, DioProduct.class);
+    DioBankProduct dioProduct = mapper.getMapperFacade().map(product, DioBankProduct.class);
 
-    DioProduct dioProductStatic = DioProduct.builder().id(product.id())
+    DioBankProduct dioProductStatic = DioBankProduct.builder().id(product.id())
         .name(VariableConstants.PRODUCT_NAME).description(VariableConstants.PRODUCT_DESCRIPTION)
         .schemeType(DioSchemeType.CDR_BANKING)
         .cdrBanking(
@@ -262,11 +262,11 @@ public class ProductTests extends TranslatorInitialisation {
     ProductData product = createProductWithTheWorks();
 
     for (ProductBankingConstraintData constraint : product.cdrBanking().constraint()) {
-      DioProductConstraint dioProductConstraint =
-          mapper.getMapperFacade().map(constraint, DioProductConstraint.class);
+      DioBankProductConstraint dioProductConstraint =
+          mapper.getMapperFacade().map(constraint, DioBankProductConstraint.class);
 
-      DioProductConstraint dioConstraintStatic =
-          DioProductConstraint.builder().id(constraint.id()).schemeType(DioSchemeType.CDR_BANKING)
+      DioBankProductConstraint dioConstraintStatic =
+          DioBankProductConstraint.builder().id(constraint.id()).schemeType(DioSchemeType.CDR_BANKING)
               .cdrBanking(new BankingProductConstraintV1()
                   .constraintType(VariableConstants.PRODUCT_CONSTRAINT_TYPE)
                   .additionalInfo(VariableConstants.PRODUCT_CONSTRAINT_ADDITIONAL_INFO)
@@ -288,11 +288,11 @@ public class ProductTests extends TranslatorInitialisation {
     ProductData product = createProductWithTheWorks();
 
     for (ProductBankingFeatureData feature : product.cdrBanking().feature()) {
-      DioProductFeature dioProductFeature =
-          mapper.getMapperFacade().map(feature, DioProductFeature.class);
+      DioBankProductFeature dioProductFeature =
+          mapper.getMapperFacade().map(feature, DioBankProductFeature.class);
 
-      DioProductFeature dioFeatureStatic =
-          DioProductFeature.builder().id(feature.id()).schemeType(DioSchemeType.CDR_BANKING)
+      DioBankProductFeature dioFeatureStatic =
+          DioBankProductFeature.builder().id(feature.id()).schemeType(DioSchemeType.CDR_BANKING)
               .cdrBanking(
                   new BankingProductFeatureV1().featureType(VariableConstants.PRODUCT_FEATURE_TYPE)
                       .additionalInfo(VariableConstants.PRODUCT_FEATURE_ADDITIONAL_INFO)
@@ -314,11 +314,11 @@ public class ProductTests extends TranslatorInitialisation {
     ProductData product = createProductWithTheWorks();
 
     for (ProductBankingEligibilityData eligibility : product.cdrBanking().eligibility()) {
-      DioProductEligibility dioProductEligibility =
-          mapper.getMapperFacade().map(eligibility, DioProductEligibility.class);
+      DioBankProductEligibility dioProductEligibility =
+          mapper.getMapperFacade().map(eligibility, DioBankProductEligibility.class);
 
-      DioProductEligibility dioEligibilityStatic =
-          DioProductEligibility.builder().id(eligibility.id()).schemeType(DioSchemeType.CDR_BANKING)
+      DioBankProductEligibility dioEligibilityStatic =
+          DioBankProductEligibility.builder().id(eligibility.id()).schemeType(DioSchemeType.CDR_BANKING)
               .cdrBanking(new BankingProductEligibilityV1()
                   .eligibilityType(VariableConstants.PRODUCT_ELIGIBILITY_TYPE)
                   .additionalInfo(VariableConstants.PRODUCT_ELIGIBILITY_ADDITIONAL_INFO)
@@ -340,11 +340,11 @@ public class ProductTests extends TranslatorInitialisation {
     ProductData product = createProductWithTheWorks();
 
     for (ProductBankingCardArtData cardArt : product.cdrBanking().cardArt()) {
-      DioProductCardArt dioProductCardArt =
-          mapper.getMapperFacade().map(cardArt, DioProductCardArt.class);
+      DioBankProductCardArt dioProductCardArt =
+          mapper.getMapperFacade().map(cardArt, DioBankProductCardArt.class);
 
-      DioProductCardArt dioCardArtStatic =
-          DioProductCardArt.builder().id(cardArt.id()).schemeType(DioSchemeType.CDR_BANKING)
+      DioBankProductCardArt dioCardArtStatic =
+          DioBankProductCardArt.builder().id(cardArt.id()).schemeType(DioSchemeType.CDR_BANKING)
               .cdrBanking(new BankingProductCardArtV1().title(VariableConstants.PRODUCT_CARDART_TITLE)
                   .imageUri(VariableConstants.PRODUCT_CARDART_URI))
               .build();
@@ -363,9 +363,9 @@ public class ProductTests extends TranslatorInitialisation {
     ProductData product = createProductWithTheWorks();
 
     for (ProductBankingFeeData fee : product.cdrBanking().fee()) {
-      DioProductFee dioProductFee = mapper.getMapperFacade().map(fee, DioProductFee.class);
+      DioBankProductFee dioProductFee = mapper.getMapperFacade().map(fee, DioBankProductFee.class);
 
-      DioProductFee dioFeeStatic = DioProductFee.builder().id(fee.id())
+      DioBankProductFee dioFeeStatic = DioBankProductFee.builder().id(fee.id())
           .schemeType(DioSchemeType.CDR_BANKING)
           .cdrBanking(new BankingProductFeeV1().name(VariableConstants.PRODUCT_FEE1_NAME)
               .feeType(VariableConstants.PRODUCT_FEE1_TYPE)
@@ -406,10 +406,10 @@ public class ProductTests extends TranslatorInitialisation {
     ProductData product = createProductWithTheWorks();
 
     for (ProductBankingRateDepositData depositRate : product.cdrBanking().depositRate()) {
-      DioProductRateDeposit dioProductDepositRate =
-          mapper.getMapperFacade().map(depositRate, DioProductRateDeposit.class);
+      DioBankProductRateDeposit dioProductDepositRate =
+          mapper.getMapperFacade().map(depositRate, DioBankProductRateDeposit.class);
 
-      DioProductRateDeposit dioDepositRateStatic = DioProductRateDeposit.builder()
+      DioBankProductRateDeposit dioDepositRateStatic = DioBankProductRateDeposit.builder()
           .id(depositRate.id()).schemeType(DioSchemeType.CDR_BANKING)
           .cdrBanking(new BankingProductDepositRateV1()
               .depositRateType(VariableConstants.PRODUCT_DEPOSIT_RATE_TYPE)
@@ -447,10 +447,10 @@ public class ProductTests extends TranslatorInitialisation {
     ProductData product = createProductWithTheWorks();
 
     for (ProductBankingRateLendingData lendingRate : product.cdrBanking().lendingRate()) {
-      DioProductRateLending dioProductLendingRate =
-          mapper.getMapperFacade().map(lendingRate, DioProductRateLending.class);
+      DioBankProductRateLending dioProductLendingRate =
+          mapper.getMapperFacade().map(lendingRate, DioBankProductRateLending.class);
 
-      DioProductRateLending dioLendingRateStatic = DioProductRateLending.builder()
+      DioBankProductRateLending dioLendingRateStatic = DioBankProductRateLending.builder()
           .id(lendingRate.id()).schemeType(DioSchemeType.CDR_BANKING)
           .cdrBanking(new BankingProductLendingRateV1()
               .lendingRateType(VariableConstants.PRODUCT_LENDING_RATE_TYPE)
@@ -487,7 +487,7 @@ public class ProductTests extends TranslatorInitialisation {
   @Test
   public void testProductLendingRateDataModelMismatch() {
 
-    DioProductRateLending dioLendingRateStatic = DioProductRateLending.builder()
+    DioBankProductRateLending dioLendingRateStatic = DioBankProductRateLending.builder()
         .id(UUID.randomUUID()).schemeType(DioSchemeType.CDR_BANKING)
         .cdrBanking(new BankingProductLendingRateV1()
             .lendingRateType(VariableConstants.PRODUCT_LENDING_RATE_TYPE)

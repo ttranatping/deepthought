@@ -20,12 +20,12 @@ import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrBankingProduct;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccount;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountCard;
-import io.biza.deepthought.data.payloads.dio.banking.DioTransaction;
-import io.biza.deepthought.data.payloads.dio.banking.DioTransactionAPCS;
-import io.biza.deepthought.data.payloads.dio.banking.DioTransactionBPAY;
-import io.biza.deepthought.data.payloads.dio.banking.DioTransactionCard;
-import io.biza.deepthought.data.payloads.dio.banking.DioTransactionNPP;
-import io.biza.deepthought.data.payloads.dio.product.DioProduct;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankTransaction;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankTransactionAPCS;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankTransactionBPAY;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankTransactionCard;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankTransactionNPP;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
@@ -128,16 +128,16 @@ public class TransactionTests extends TranslatorInitialisation {
         .service(BankingTransactionService.X2P101).build().transaction(transaction));
     transactionRepository.save(transaction);
 
-    DioTransaction dioTransaction = mapper.getMapperFacade().map(transaction, DioTransaction.class);
+    DioBankTransaction dioTransaction = mapper.getMapperFacade().map(transaction, DioBankTransaction.class);
 
-    DioTransaction dioTransactionStatic =
-        DioTransaction.builder().id(transaction.id()).amount(VariableConstants.TRANSACTION_VALUE)
+    DioBankTransaction dioTransactionStatic =
+        DioBankTransaction.builder().id(transaction.id()).amount(VariableConstants.TRANSACTION_VALUE)
             .description(VariableConstants.TRANSACTION_DESCRIPTION)
             .originated(VariableConstants.TRANSACTION_ORIGINATED_DATETIME)
             .posted(VariableConstants.TRANSACTION_POSTED_DATETIME)
             .reference(VariableConstants.TRANSACTION_REFERENCE)
             .status(VariableConstants.TRANSACTION_STATUS).type(VariableConstants.TRANSACTION_TYPE)
-            .npp(DioTransactionNPP.builder()
+            .npp(DioBankTransactionNPP.builder()
                 .endToEndId(VariableConstants.TRANSACTION_NPP_END_TO_END.toString())
                 .payee(VariableConstants.TRANSACTION_NPP_PAYEE)
                 .payer(VariableConstants.TRANSACTION_NPP_PAYER)
@@ -163,16 +163,16 @@ public class TransactionTests extends TranslatorInitialisation {
         .transaction(transaction));
     transactionRepository.save(transaction);
 
-    DioTransaction dioTransaction = mapper.getMapperFacade().map(transaction, DioTransaction.class);
+    DioBankTransaction dioTransaction = mapper.getMapperFacade().map(transaction, DioBankTransaction.class);
 
-    DioTransaction dioTransactionStatic =
-        DioTransaction.builder().id(transaction.id()).amount(VariableConstants.TRANSACTION_VALUE)
+    DioBankTransaction dioTransactionStatic =
+        DioBankTransaction.builder().id(transaction.id()).amount(VariableConstants.TRANSACTION_VALUE)
             .description(VariableConstants.TRANSACTION_DESCRIPTION)
             .originated(VariableConstants.TRANSACTION_ORIGINATED_DATETIME)
             .posted(VariableConstants.TRANSACTION_POSTED_DATETIME)
             .reference(VariableConstants.TRANSACTION_REFERENCE)
             .status(VariableConstants.TRANSACTION_STATUS).type(VariableConstants.TRANSACTION_TYPE)
-            .apcs(DioTransactionAPCS.builder().branch(dioTransaction.apcs().branch())
+            .apcs(DioBankTransactionAPCS.builder().branch(dioTransaction.apcs().branch())
                 .id(transaction.id()).build())
             .build();
 
@@ -196,16 +196,16 @@ public class TransactionTests extends TranslatorInitialisation {
             .crn(VariableConstants.TRANSACTION_CRN).build().transaction(transaction));
     transactionRepository.save(transaction);
 
-    DioTransaction dioTransaction = mapper.getMapperFacade().map(transaction, DioTransaction.class);
+    DioBankTransaction dioTransaction = mapper.getMapperFacade().map(transaction, DioBankTransaction.class);
 
-    DioTransaction dioTransactionStatic =
-        DioTransaction.builder().id(transaction.id()).amount(VariableConstants.TRANSACTION_VALUE)
+    DioBankTransaction dioTransactionStatic =
+        DioBankTransaction.builder().id(transaction.id()).amount(VariableConstants.TRANSACTION_VALUE)
             .description(VariableConstants.TRANSACTION_DESCRIPTION)
             .originated(VariableConstants.TRANSACTION_ORIGINATED_DATETIME)
             .posted(VariableConstants.TRANSACTION_POSTED_DATETIME)
             .reference(VariableConstants.TRANSACTION_REFERENCE)
             .status(VariableConstants.TRANSACTION_STATUS).type(VariableConstants.TRANSACTION_TYPE)
-            .bpay(DioTransactionBPAY.builder().id(transaction.id())
+            .bpay(DioBankTransactionBPAY.builder().id(transaction.id())
                 .billerCode(VariableConstants.TRANSACTION_BILLER_CODE)
                 .billerName(VariableConstants.TRANSACTION_BILLER_NAME)
                 .crn(VariableConstants.TRANSACTION_CRN).build())
@@ -232,16 +232,16 @@ public class TransactionTests extends TranslatorInitialisation {
         .transaction(transaction));
     transactionRepository.save(transaction);
 
-    DioTransaction dioTransaction = mapper.getMapperFacade().map(transaction, DioTransaction.class);
+    DioBankTransaction dioTransaction = mapper.getMapperFacade().map(transaction, DioBankTransaction.class);
 
-    DioTransaction dioTransactionStatic =
-        DioTransaction.builder().id(transaction.id()).amount(VariableConstants.TRANSACTION_VALUE)
+    DioBankTransaction dioTransactionStatic =
+        DioBankTransaction.builder().id(transaction.id()).amount(VariableConstants.TRANSACTION_VALUE)
             .description(VariableConstants.TRANSACTION_DESCRIPTION)
             .originated(VariableConstants.TRANSACTION_ORIGINATED_DATETIME)
             .posted(VariableConstants.TRANSACTION_POSTED_DATETIME)
             .reference(VariableConstants.TRANSACTION_REFERENCE)
             .status(VariableConstants.TRANSACTION_STATUS).type(VariableConstants.TRANSACTION_TYPE)
-            .card(DioTransactionCard.builder().id(transaction.id())
+            .card(DioBankTransactionCard.builder().id(transaction.id())
                 .merchantCategoryCode(
                     MerchantCategoryCodeType.fromValue(VariableConstants.TRANSACTION_MERCHANT_CODE))
                 .merchantName(VariableConstants.TRANSACTION_MERCHANT_NAME).build())
@@ -306,7 +306,7 @@ public class TransactionTests extends TranslatorInitialisation {
   }
 
   public DioBankAccount getAccountStaticBase(BankAccountData account) {
-    DioProduct dioProductStatic = DioProduct.builder().id(account.product().id())
+    DioBankProduct dioProductStatic = DioBankProduct.builder().id(account.product().id())
         .name(VariableConstants.PRODUCT_NAME).description(VariableConstants.PRODUCT_DESCRIPTION)
         .schemeType(DioSchemeType.CDR_BANKING)
         .cdrBanking(

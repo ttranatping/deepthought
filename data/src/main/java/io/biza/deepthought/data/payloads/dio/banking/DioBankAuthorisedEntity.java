@@ -24,7 +24,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "A Deep Thought Bank Account Container")
-public class DioAuthorisedEntity {
+public class DioBankAuthorisedEntity {
 
   @JsonProperty("id")
   @NotNull

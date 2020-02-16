@@ -32,7 +32,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "A Deep Thought Bank Account Container")
-public class DioDirectDebit {
+public class DioBankDirectDebit {
 
   @JsonProperty("id")
   @NotNull
@@ -52,7 +52,7 @@ public class DioDirectDebit {
   @Schema(required = true)
   @NotNull
   @JsonProperty("authorisedEntity")
-  DioAuthorisedEntity authorisedEntity;
+  DioBankAuthorisedEntity authorisedEntity;
 
   @Schema(description = "The date and time of the last debit executed under this authorisation",
       type = "string", format = "date-time")

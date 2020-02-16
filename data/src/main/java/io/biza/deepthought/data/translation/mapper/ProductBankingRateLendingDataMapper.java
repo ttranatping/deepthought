@@ -8,7 +8,7 @@ import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductLendi
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
+import io.biza.deepthought.data.payloads.dio.product.DioBankProductRateLending;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierApplicabilityData;
 import io.biza.deepthought.data.persistence.model.bank.product.ProductBankingRateLendingTierData;
@@ -54,7 +54,7 @@ public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigur
           }
         }).register();
 
-    orikaMapperFactory.classMap(ProductBankingRateLendingData.class, DioProductRateLending.class)
+    orikaMapperFactory.classMap(ProductBankingRateLendingData.class, DioBankProductRateLending.class)
         .fieldAToB("id", "id").field("schemeType", "schemeType")
         .field("lendingRateType", "cdrBanking.lendingRateType").field("rate", "cdrBanking.rate")
         .field("comparisonRate", "cdrBanking.comparisonRate")
@@ -64,9 +64,9 @@ public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigur
         .field("additionalValue", "cdrBanking.additionalValue")
         .field("additionalInfo", "cdrBanking.additionalInfo")
         .field("additionalInfoUri", "cdrBanking.additionalInfoUri")
-        .customize(new CustomMapper<ProductBankingRateLendingData, DioProductRateLending>() {
+        .customize(new CustomMapper<ProductBankingRateLendingData, DioBankProductRateLending>() {
           @Override
-          public void mapAtoB(ProductBankingRateLendingData from, DioProductRateLending to,
+          public void mapAtoB(ProductBankingRateLendingData from, DioBankProductRateLending to,
               MappingContext context) {
 
             List<BankingProductRateTierV1> tierList =
@@ -95,7 +95,7 @@ public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigur
           }
 
           @Override
-          public void mapBtoA(DioProductRateLending from, ProductBankingRateLendingData to,
+          public void mapBtoA(DioBankProductRateLending from, ProductBankingRateLendingData to,
               MappingContext context) {
 
             Set<ProductBankingRateLendingTierData> tierList =

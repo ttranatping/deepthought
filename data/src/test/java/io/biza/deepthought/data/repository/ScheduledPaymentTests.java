@@ -17,7 +17,7 @@ import io.biza.babelfish.cdr.models.payloads.banking.account.payee.scheduled.Ban
 import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.banking.DioScheduledPayment;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankScheduledPayment;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
@@ -113,10 +113,10 @@ public class ScheduledPaymentTests extends TranslatorInitialisation {
 
     BankScheduledPaymentData scheduledPayment = createScheduledPaymentBase();
 
-    DioScheduledPayment dioScheduledPayment =
-        mapper.getMapperFacade().map(scheduledPayment, DioScheduledPayment.class);
+    DioBankScheduledPayment dioScheduledPayment =
+        mapper.getMapperFacade().map(scheduledPayment, DioBankScheduledPayment.class);
 
-    DioScheduledPayment dioScheduledPaymentStatic = getScheduledPaymentStatic(scheduledPayment);
+    DioBankScheduledPayment dioScheduledPaymentStatic = getScheduledPaymentStatic(scheduledPayment);
 
     LOG.warn("Source: {}", dioScheduledPayment.toString());
     LOG.warn("Destination: {}", dioScheduledPaymentStatic.toString());
@@ -146,10 +146,10 @@ public class ScheduledPaymentTests extends TranslatorInitialisation {
     return scheduledPaymentRepository.findById(scheduledPayment.id()).get();
   }
 
-  public DioScheduledPayment getScheduledPaymentStatic(BankScheduledPaymentData scheduledPayment) {
+  public DioBankScheduledPayment getScheduledPaymentStatic(BankScheduledPaymentData scheduledPayment) {
     LOG.warn("Scheduled Payment are: {}", scheduledPayment.toString());
-    DioScheduledPayment dioScheduledPaymentStatic =
-        DioScheduledPayment.builder().id(scheduledPayment.id())
+    DioBankScheduledPayment dioScheduledPaymentStatic =
+        DioBankScheduledPayment.builder().id(scheduledPayment.id())
             .cdrBanking(BankingScheduledPaymentV1.builder().nickname(VariableConstants.NICK_NAME)
                 .payeeReference(VariableConstants.PAYEE_DESCRIPTION)
                 .payerReference(VariableConstants.BENEFICIARY_DESCRIPTION)

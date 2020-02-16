@@ -7,7 +7,7 @@ import javax.annotation.Resource;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import io.biza.deepthought.data.payloads.dio.banking.DioBranch;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.repository.BrandRepository;
@@ -57,9 +57,9 @@ public class BranchTests extends TranslatorInitialisation {
   public void testBranchAndCompare() {
 
     BankBranchData branch = createBranch();
-    DioBranch dioBranch = mapper.getMapperFacade().map(branch, DioBranch.class);
+    DioBankBranch dioBranch = mapper.getMapperFacade().map(branch, DioBankBranch.class);
 
-    DioBranch dioBranchStatic = DioBranch.builder().id(branch.id())
+    DioBankBranch dioBranchStatic = DioBankBranch.builder().id(branch.id())
         .bankName(VariableConstants.BANK_NAME).branchAddress(VariableConstants.BRANCH_ADDRESS)
         .branchCity(VariableConstants.BRANCH_CITY).branchName(VariableConstants.BRANCH_NAME)
         .branchPostcode(VariableConstants.BRANCH_POSTCODE)

@@ -12,8 +12,8 @@ import io.biza.babelfish.cdr.enumerations.BankingProductDiscountType;
 import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.banking.DioAuthorisedEntity;
-import io.biza.deepthought.data.payloads.dio.banking.DioDirectDebit;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankAuthorisedEntity;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankDirectDebit;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
@@ -108,9 +108,9 @@ public class DirectDebitTests extends TranslatorInitialisation {
   public void testDirectDebitAndCompare() {
 
     BankDirectDebitData debit = createDirectDebit();
-    DioDirectDebit dioAccount = mapper.getMapperFacade().map(debit, DioDirectDebit.class);
+    DioBankDirectDebit dioAccount = mapper.getMapperFacade().map(debit, DioBankDirectDebit.class);
 
-    DioDirectDebit dioAccountStatic = getDirectDebitStaticBase(debit);
+    DioBankDirectDebit dioAccountStatic = getDirectDebitStaticBase(debit);
 
     LOG.warn("Source: {}", dioAccount.toString());
     LOG.warn("Destination: {}", dioAccountStatic.toString());
@@ -174,10 +174,10 @@ public class DirectDebitTests extends TranslatorInitialisation {
     return account;
   }
 
-  public DioDirectDebit getDirectDebitStaticBase(BankDirectDebitData debit) {
+  public DioBankDirectDebit getDirectDebitStaticBase(BankDirectDebitData debit) {
     LOG.warn("Debit details are: {}", debit.toString());
-    DioDirectDebit dioDebitStatic = DioDirectDebit.builder().id(debit.id())
-        .authorisedEntity(DioAuthorisedEntity.builder().abn(VariableConstants.ORGANISATION_ABN)
+    DioBankDirectDebit dioDebitStatic = DioBankDirectDebit.builder().id(debit.id())
+        .authorisedEntity(DioBankAuthorisedEntity.builder().abn(VariableConstants.ORGANISATION_ABN)
             .acn(VariableConstants.ORGANISATION_ACN).id(debit.authorisedEntity().id())
             .description(VariableConstants.ORGANISATION_NAME)
             .financialInstitution(VariableConstants.BANK_NAME).build())

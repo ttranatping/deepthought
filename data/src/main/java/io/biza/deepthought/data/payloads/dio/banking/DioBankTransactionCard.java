@@ -38,7 +38,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Card Transaction Information")
-public class DioTransactionCard {
+public class DioBankTransactionCard {
   
   @JsonProperty("id")
   @NotNull
