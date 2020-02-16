@@ -1,19 +1,13 @@
 package io.biza.deepthought.data.payloads.dio.common;
 
-import java.time.OffsetDateTime;
 import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
-import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrCommonOrganisation;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -48,22 +42,6 @@ public class DioOrganisation {
   @Schema(description = "Scheme Type", defaultValue = "CDR_COMMON")
   @Builder.Default
   public DioSchemeType schemeType = DioSchemeType.CDR_COMMON;
-  
-  @Schema(
-      description = "Creation Date Time",
-      type = "string", format = "date-time", accessMode = AccessMode.READ_ONLY)
-  @JsonSerialize(converter = OffsetDateTimeToDateTimeStringConverter.class)
-  @JsonDeserialize(converter = DateTimeStringToOffsetDateTimeConverter.class)
-  @JsonProperty("lastUpdated")
-  OffsetDateTime creationDateTime;
-  
-  @Schema(
-      description = "The date and time that this record was last updated by the customer. If no update has occurred then this date should reflect the initial creation date for the data",
-      format = "date-time", type = "string")
-  @JsonSerialize(converter = OffsetDateTimeToDateTimeStringConverter.class)
-  @JsonDeserialize(converter = DateTimeStringToOffsetDateTimeConverter.class)
-  @JsonProperty("lastUpdated")
-  OffsetDateTime lastUpdated;
 
   @Schema(description = "Name of the organisation", required = true)
   @JsonProperty("businessName")
@@ -78,6 +56,10 @@ public class DioOrganisation {
   @Schema(description = "Short name used for communication, if  different to the business name")
   @JsonProperty("shortName")
   String shortName;
+  
+  @Schema(description = "Preferred Address")
+  @JsonProperty("address")
+  DioAddress address;
 
   @JsonProperty("cdrCommon")
   @Schema(description = "CDR Common Organisation")

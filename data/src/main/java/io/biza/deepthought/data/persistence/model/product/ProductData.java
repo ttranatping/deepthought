@@ -52,6 +52,7 @@ public class ProductData {
 
   @ManyToOne
   @JoinColumn(name = "BRAND_ID", nullable = false)
+  @ToString.Exclude
   BrandData brand;
   
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

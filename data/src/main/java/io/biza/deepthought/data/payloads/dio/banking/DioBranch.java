@@ -4,14 +4,9 @@ import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.translation.converter.BSBStringToIntegerConverter;
-import io.biza.deepthought.data.translation.converter.IntegerToBSBStringConverter;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,7 +40,8 @@ public class DioBranch {
   @NotNull
   @NonNull
   @Schema(description = "Deep Thought Scheme Type", defaultValue = "DIO_BANKING")
-  public DioSchemeType schemeType;
+  @Builder.Default
+  public DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @Schema(
       description = "Australian Payments Clearing Association Number (aka BSB)",
@@ -70,6 +66,10 @@ public class DioBranch {
   @Schema(description = "Branch City")
   @JsonProperty("branchCity")
   String branchCity;
+  
+  @Schema(description = "Branch State")
+  @JsonProperty("branchState")
+  String branchState;
   
   @Schema(description = "Branch Postcode")
   @JsonProperty("branchPostcode")

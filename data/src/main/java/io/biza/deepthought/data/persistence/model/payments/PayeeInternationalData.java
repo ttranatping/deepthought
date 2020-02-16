@@ -10,9 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -37,6 +39,10 @@ public class PayeeInternationalData {
   @Type(type = "uuid-char")
   UUID id;
   
+  @Transient
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
+  
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
   @JoinColumn(name = "PAYEE_ID")
@@ -53,20 +59,14 @@ public class PayeeInternationalData {
   @Column(name = "BENEFICIARY_MESSAGE")
   String beneficiaryMessage;
   
-  @Column(name = "BENEFICIARY_BIC")
-  String beneficiaryBic;
+  @Column(name = "BANK_SORTCODE")
+  String bankSortCode;
   
-  @Column(name = "BENEFICIARY_FEDWIRE")
-  String beneficiaryFedWire;
+  @Column(name = "BANK_CHIP")
+  String bankChip;
   
-  @Column(name = "BENEFICIARY_SORTCODE")
-  String beneficiarySortCode;
-  
-  @Column(name = "BENEFICIARY_CHIP")
-  String beneficiaryChip;
-  
-  @Column(name = "BENEFICIARY_ROUTING")
-  String routingNumber;
+  @Column(name = "BANK_ROUTING")
+  String bankRoutingNumber;
   
   @Column(name = "LEI")
   String legalEntityIdentifier;
@@ -84,5 +84,12 @@ public class PayeeInternationalData {
   
   @Column(name = "BANK_ADDRESS_ADDRESS")
   String bankAddressAddress;
+
+  @Column(name = "BANK_BENEFICIARY_BIC")
+  String bankBeneficiaryBic;
+
+  @Column(name = "BANK_FEDWIRE")
+  String bankFedWire;
+
   
 }

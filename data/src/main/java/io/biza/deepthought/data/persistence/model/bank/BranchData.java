@@ -47,6 +47,7 @@ public class BranchData {
   
   @ManyToOne
   @JoinColumn(name = "BRAND_ID")
+  @ToString.Exclude
   BrandData brand;
   
   @OneToMany(mappedBy = "branch")

@@ -1,9 +1,10 @@
-package io.biza.deepthought.data.persistence.model.account;
+package io.biza.deepthought.data.persistence.model.customer;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Currency;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -23,6 +26,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import io.biza.deepthought.data.Constants;
+import io.biza.deepthought.data.persistence.model.account.AccountData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingData;
 
 @Builder
 @Getter
@@ -32,40 +37,24 @@ import io.biza.deepthought.data.Constants;
 @Entity
 @ToString
 @Valid
-@Table(name = "ACCOUNT_CREDIT_CARD")
-public class AccountCreditCardAccountData {
+@Table(name = "CUSTOMER_ACCOUNT_CARD")
+public class CustomerAccountCardData {
 
   @Id
-  @Column(name = "ID", insertable = false, updatable = false)
-  @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
   
-  @ManyToOne
-  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
-  @ToString.Exclude
-  private AccountData account;
+  @OneToOne(mappedBy = "card", cascade = CascadeType.ALL, optional = true)
+  @MapsId
+  CustomerAccountData account;
   
-  @Column(name = "LAST_STATEMENT")
+  @Column(name = "ISSUE_DATE_TIME")
   @NotNull
   @CreationTimestamp
-  OffsetDateTime lastStatement;
+  OffsetDateTime issueDateTime;
   
-  @Column(name = "PAYMENT_CURRENCY")
+  @Column(name = "CARD_NUMBER")
   @NotNull
-  @Builder.Default
-  Currency paymentCurrency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
-  
-  @Column(name = "MIN_PAYMENT_AMOUNT")
-  @NotNull
-  BigDecimal paymentMinimum;
-  
-  @Column(name = "PAYMENT_DUE_AMOUNT")
-  @NotNull
-  BigDecimal paymentDueAmount;
-  
-  @Column(name = "PAYMENT_DUE_DATE")
-  @NotNull
-  OffsetDateTime paymentDue;
+  String cardNumber;
   
 }

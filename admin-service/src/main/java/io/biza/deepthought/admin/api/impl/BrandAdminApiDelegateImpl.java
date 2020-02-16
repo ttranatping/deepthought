@@ -13,7 +13,7 @@ import io.biza.deepthought.admin.api.delegate.BrandAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
-import io.biza.deepthought.data.payloads.DioBrand;
+import io.biza.deepthought.data.payloads.dio.DioBrand;
 import io.biza.deepthought.data.persistence.model.bank.BrandData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import lombok.extern.slf4j.Slf4j;

@@ -1,22 +1,16 @@
 package io.biza.deepthought.data.payloads.dio.common;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
-import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
 import io.biza.deepthought.data.enumerations.DioPersonPrefix;
 import io.biza.deepthought.data.enumerations.DioPersonSuffix;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrCommonPerson;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -34,7 +28,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "A Deep Thought Customer Container")
+@Schema(description = "A Deep Thought Person Container")
 public class DioPerson {
 
   @JsonProperty("id")
@@ -48,25 +42,9 @@ public class DioPerson {
   @JsonProperty("schemeType")
   @NotNull
   @NonNull
-  @Schema(description = "Scheme Type", defaultValue = "CDR_COMMON")
+  @Schema(description = "Scheme Type", defaultValue = "DIO_COMMON")
   @Builder.Default
-  public DioSchemeType schemeType = DioSchemeType.CDR_COMMON;
-  
-  @Schema(
-      description = "Creation Date Time",
-      type = "string", format = "date-time", accessMode = AccessMode.READ_ONLY)
-  @JsonSerialize(converter = OffsetDateTimeToDateTimeStringConverter.class)
-  @JsonDeserialize(converter = DateTimeStringToOffsetDateTimeConverter.class)
-  @JsonProperty("created")
-  OffsetDateTime created;
-  
-  @Schema(
-      description = "Last Update Date Time",
-      type = "string", format = "date-time", accessMode = AccessMode.READ_ONLY)
-  @JsonSerialize(converter = OffsetDateTimeToDateTimeStringConverter.class)
-  @JsonDeserialize(converter = DateTimeStringToOffsetDateTimeConverter.class)
-  @JsonProperty("lastUpdated")
-  OffsetDateTime lastUpdated;
+  public DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
   
   @Schema(
       description = "Also known as title or salutation.  The prefix to the name (e.g. Mr, Mrs, Ms, Miss, Sir, etc)")
@@ -112,6 +90,6 @@ public class DioPerson {
   @Valid
   @NotNull
   @NonNull
-  public CdrCommonPerson cdrCommon;
+  CdrCommonPerson cdrCommon;
 
 }

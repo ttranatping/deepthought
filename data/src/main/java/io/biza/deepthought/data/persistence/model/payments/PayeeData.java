@@ -1,6 +1,7 @@
 package io.biza.deepthought.data.persistence.model.payments;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -14,9 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +45,10 @@ public class PayeeData {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
+  
+  @Transient
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
   @JoinColumn(name = "CUSTOMER_ID", nullable = false)
@@ -58,12 +66,9 @@ public class PayeeData {
   @Column(name = "DESCRIPTION")
   String description;
   
-  @Column(name = "CREATION_DATE")
-  LocalDate creationDate;
-  
-  @Column(name = "REGISTERED")
-  @Builder.Default
-  Boolean isRegistered = true;
+  @Column(name = "CREATION_DATE_TIME")
+  @CreationTimestamp
+  OffsetDateTime creationDateTime;
   
   @OneToOne(mappedBy = "payee", cascade = CascadeType.ALL, optional = true)
   PayeeDomesticData domestic;

@@ -11,10 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
 import io.biza.babelfish.cdr.enumerations.PayloadTypeBankingDomesticPayee;
 import io.biza.babelfish.cdr.enumerations.PayloadTypeBankingDomesticPayeePayId;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -38,6 +40,10 @@ public class PayeeDomesticData {
   @Id
   @Type(type = "uuid-char")
   UUID id;
+  
+  @Transient
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId

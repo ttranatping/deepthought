@@ -17,17 +17,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioPersonPrefix;
 import io.biza.deepthought.data.enumerations.DioPersonSuffix;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.biza.deepthought.data.persistence.model.organisation.OrganisationPersonData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,7 +43,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "PERSON")
-@EqualsAndHashCode
 public class PersonData {
 
   @Id
@@ -50,6 +50,10 @@ public class PersonData {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
+  
+  @Transient
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
   
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "CUSTOMER_ID")

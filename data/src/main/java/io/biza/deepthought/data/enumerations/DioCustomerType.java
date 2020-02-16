@@ -10,8 +10,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "Customer Type", enumAsRef = true)
 public enum DioCustomerType implements LabelValueEnumInterface {
   // @formatter:off
-  PERSON("person", "Individual Customer"),
-  ORGANISATION("organisation", "Organisational Customer");
+  PERSON("PERSON", "Individual Customer"),
+  ORGANISATION("ORGANISATION", "Organisational Customer");
   // @formatter:on
 
   private String value;

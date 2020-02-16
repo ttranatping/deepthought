@@ -6,6 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -16,7 +17,6 @@ import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.bank.BranchData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,7 +31,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "TRANSACTION_APCS")
-@EqualsAndHashCode
 public class TransactionAPCSData {
 
   @Id
@@ -43,6 +42,7 @@ public class TransactionAPCSData {
   private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @OneToOne(fetch = FetchType.LAZY)
+  @MapsId
   @JoinColumn(name = "TRANSACTION_ID")
   @ToString.Exclude
   TransactionData transaction;

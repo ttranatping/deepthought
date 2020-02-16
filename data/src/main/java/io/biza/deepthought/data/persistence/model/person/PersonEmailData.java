@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +19,6 @@ import io.biza.deepthought.data.enumerations.DioEmailType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -33,10 +34,11 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "PERSON_EMAIL")
-@EqualsAndHashCode
 public class PersonEmailData {
 
   @Id
+  @Column(name = "ID", insertable = false, updatable = false)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
   

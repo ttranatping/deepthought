@@ -1,6 +1,8 @@
 package io.biza.deepthought.data.persistence.model.account;
 
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -27,6 +30,13 @@ import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.bank.BranchData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerAccountData;
 import io.biza.deepthought.data.persistence.model.payments.ScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingCardArtData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingConstraintData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeatureData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingFeeData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateDepositData;
+import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import lombok.AllArgsConstructor;
@@ -79,7 +89,7 @@ public class AccountData {
    */
   @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<CustomerAccountData> customers;
+  Set<CustomerAccountData> customerAccounts;
   
   /**
    * Account Number
@@ -96,14 +106,14 @@ public class AccountData {
   /**
    * Account Opening Date
    */
-  @Column(name = "OPEN_DATE")
-  LocalDate openDate;
+  @Column(name = "CREATION_DATE_TIME")
+  OffsetDateTime creationDateTime;
   
   /**
    * Account Closure Date
    */
-  @Column(name = "CLOSE_DATE")
-  LocalDate closeDate;
+  @Column(name = "CLOSED_DATE_TIME")
+  OffsetDateTime closedDate;
   
   /**
    * Account Status
@@ -154,7 +164,7 @@ public class AccountData {
   @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
   @ToString.Exclude
   @Size(min = 0, max = 1, message = "Only one loan per account supported at this time")
-  Set<AccountLoanAccountData> loanAccount;
+  Set<AccountLoanAccountData> loanAccounts;
   
   /**
    * Credit Card details
@@ -162,8 +172,8 @@ public class AccountData {
   @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
   @ToString.Exclude
   @Size(min = 0, max = 1, message = "Only one credit card detail supported at this time")
-  Set<AccountCreditCardAccountData> creditCard;
-
+  Set<AccountCreditCardData> creditCards;
+  
   /**
    * Features and activation state
    */
@@ -177,5 +187,5 @@ public class AccountData {
   @OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
   @ToString.Exclude
   Set<ScheduledPaymentData> scheduledPayments;
-
+  
 }

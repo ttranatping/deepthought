@@ -12,8 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.bank.BrandData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,8 +43,13 @@ public class AuthorisedEntityData {
   @Type(type = "uuid-char")
   UUID id;
   
+  @Transient
+  @Builder.Default
+  DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
+  
   @ManyToOne
   @JoinColumn(name = "BRAND_ID", nullable = false)
+  @ToString.Exclude
   BrandData brand;
   
   @OneToMany(mappedBy = "authorisedEntity", cascade = CascadeType.ALL)

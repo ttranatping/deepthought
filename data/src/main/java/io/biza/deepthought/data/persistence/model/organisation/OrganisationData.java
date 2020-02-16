@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -21,10 +22,11 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
+import io.biza.deepthought.data.Constants;
+import io.biza.deepthought.data.persistence.converter.LocaleDataConverter;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,7 +41,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "ORGANISATION")
-@EqualsAndHashCode
 public class OrganisationData {
 
   @Id
@@ -85,14 +86,14 @@ public class OrganisationData {
   CommonOrganisationType organisationType;
   
   @Column(name = "REGISTERED_COUNTRY")
+  @Convert(converter = LocaleDataConverter.class)
   @Builder.Default
-  Locale registeredCountry = new Locale("en", "AU");
+  Locale registeredCountry = new Locale(Constants.DEFAULT_LANGUAGE, Constants.DEFAULT_LOCALE);
   
   @Column(name = "ESTABLISHMENT_DATE")
   LocalDate establishmentDate;
   
   @OneToMany(mappedBy = "organisation", cascade = CascadeType.ALL)
-  @ToString.Exclude
   private Set<OrganisationAddressData> physicalAddress;
 
 }

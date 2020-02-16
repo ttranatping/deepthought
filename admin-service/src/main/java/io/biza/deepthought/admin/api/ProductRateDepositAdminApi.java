@@ -3,7 +3,7 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductRateDepositAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.DioProductRateDeposit;
+import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;

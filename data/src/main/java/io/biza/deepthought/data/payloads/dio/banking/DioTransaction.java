@@ -126,17 +126,17 @@ public class DioTransaction {
   @Schema(
       description = "Details associated with BPAY Originated Transactions")
   @JsonProperty("bpay")
-  DioTransactionCard bpay;
+  DioTransactionBPAY bpay;
   
   @Schema(
       description = "Details associated with APCS Originated Transactions")
   @JsonProperty("apcs")
-  DioTransactionCard apcs;
+  DioTransactionAPCS apcs;
   
   @Schema(
       description = "Details associated with NPP Originated Transactions")
   @JsonProperty("npp")
-  DioTransactionCard npp;
+  DioTransactionNPP npp;
 
   
 }

@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.DioProductRateLending;
+import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingData;
 import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;

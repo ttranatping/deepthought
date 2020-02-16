@@ -12,7 +12,6 @@ import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.persistence.model.person.PersonData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,7 +26,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "ORGANISATION_PERSON")
-@EqualsAndHashCode
 public class OrganisationPersonData {
 
   @Id

@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -17,7 +18,6 @@ import io.biza.babelfish.cdr.enumerations.BankingTransactionService;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,7 +32,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "TRANSACTION_NPP")
-@EqualsAndHashCode
 public class TransactionNPPData {
 
   @Id
@@ -44,6 +43,7 @@ public class TransactionNPPData {
   
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "TRANSACTION_ID")
+  @MapsId
   @ToString.Exclude
   TransactionData transaction;
 

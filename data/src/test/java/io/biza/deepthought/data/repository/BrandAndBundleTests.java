@@ -66,10 +66,6 @@ public class BrandAndBundleTests extends TranslatorInitialisation {
       fail("Payload conversion did not provide equality:\n"
           + createComparisonTable(dioBrandData, dioBrandStatic));
     }
-
-    if (!brand.equals(brandData)) {
-      fail("Data conversion did not provide equality:\n" + createComparisonTable(brand, brandData));
-    }
   }
 
   @Test

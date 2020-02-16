@@ -5,17 +5,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioPhoneType;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,12 +33,17 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "PERSON_PHONE")
-@EqualsAndHashCode
 public class PersonPhoneData {
 
   @Id
+  @Column(name = "ID", insertable = false, updatable = false)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
+  
+  @Transient
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
   
   @ManyToOne
   @JoinColumn(name = "PERSON_ID", nullable = false)

@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.biza.babelfish.cdr.models.payloads.banking.account.BankingCreditCardAccountV1;
 import io.biza.babelfish.cdr.models.payloads.banking.account.BankingLoanAccountV1;
 import io.biza.babelfish.cdr.models.payloads.banking.account.BankingTermDepositAccountV1;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountCreditCard;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountLoanAccount;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountTermDeposit;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,14 +28,14 @@ import lombok.ToString;
 public class CdrBankingAccount {
 
   @Schema(description = "Term Deposit Details")
-  @JsonProperty("termDeposit")
-  List<BankingTermDepositAccountV1> termDeposit;
+  @JsonProperty("termDeposits")
+  List<DioBankAccountTermDeposit> termDeposits;
   
   @Schema(description = "Credit Card Details")
-  @JsonProperty("creditCard")
-  List<BankingCreditCardAccountV1> creditCard;
+  @JsonProperty("creditCards")
+  List<DioBankAccountCreditCard> creditCards;
   
   @Schema(description = "Loan Account Details")
-  @JsonProperty("loanAccount")
-  List<BankingLoanAccountV1> loanAccount;
+  @JsonProperty("loanAccounts")
+  List<DioBankAccountLoanAccount> loanAccounts;
 }

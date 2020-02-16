@@ -24,7 +24,6 @@ import io.biza.babelfish.cdr.enumerations.AddressPAFStreetSuffix;
 import io.biza.babelfish.cdr.enumerations.AddressPAFStreetType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,7 +38,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "ORGANISATION_ADDRESS_PAF")
-@EqualsAndHashCode
 public class OrganisationAddressPAFData {
 
   @Id

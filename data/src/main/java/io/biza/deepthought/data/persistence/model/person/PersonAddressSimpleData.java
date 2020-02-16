@@ -16,7 +16,6 @@ import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -35,7 +34,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @ToString
 @Valid
 @Table(name = "CUSTOMER_PERSON_ADDRESS_SIMPLE")
-@EqualsAndHashCode
 public class PersonAddressSimpleData {
 
   @Id

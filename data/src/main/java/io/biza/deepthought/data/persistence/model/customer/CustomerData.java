@@ -28,7 +28,6 @@ import io.biza.deepthought.data.persistence.model.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.person.PersonData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -43,7 +42,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "CUSTOMER")
-@EqualsAndHashCode
 public class CustomerData {
 
   @Id
@@ -68,6 +66,7 @@ public class CustomerData {
   
   @ManyToOne
   @JoinColumn(name = "BRAND_ID", nullable = false)
+  @ToString.Exclude
   BrandData brand;
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
@@ -90,7 +89,7 @@ public class CustomerData {
   
   @AssertTrue(
       message = "Only one of PersonData or OrganisationData can be populated")
-  private boolean personXorOrganisation() {
+  private boolean isPersonXorOrganisation() {
     return (person != null && organisation == null) || (person == null && organisation != null);
   }
   

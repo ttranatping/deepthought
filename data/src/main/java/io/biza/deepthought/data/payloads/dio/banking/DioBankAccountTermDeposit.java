@@ -1,7 +1,13 @@
 package io.biza.deepthought.data.payloads.dio.banking;
 
+import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.time.Period;
+import java.util.Currency;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -12,8 +18,10 @@ import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
 import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
 import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
+import io.biza.deepthought.data.enumerations.DioMaturityInstructionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrBankingAccount;
+import io.biza.deepthought.data.Constants;
 import io.biza.deepthought.data.payloads.dio.product.DioProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -35,7 +43,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "A Deep Thought Bank Account Container")
+@Schema(description = "A Deep Thought Bank Term Deposit Account Container")
 public class DioBankAccountTermDeposit {
 
   @JsonProperty("id")
@@ -49,55 +57,59 @@ public class DioBankAccountTermDeposit {
   @JsonProperty("schemeType")
   @NotNull
   @NonNull
-  @Schema(description = "Deep Thought Scheme Type", defaultValue = "CDR_BANKING")
-  public DioSchemeType schemeType;
-  
-  @Schema(
-      description = "Creation Date Time",
-      type = "string", format = "date-time", accessMode = AccessMode.READ_ONLY)
-  @JsonSerialize(converter = OffsetDateTimeToDateTimeStringConverter.class)
-  @JsonDeserialize(converter = DateTimeStringToOffsetDateTimeConverter.class)
-  @JsonProperty("lastUpdated")
-  OffsetDateTime creationDateTime;
-  
-  @Schema(
-      description = "Open or closed status for the account. If not present then OPEN is assumed")
-  @JsonProperty(value = "openStatus", defaultValue = "OPEN")
+  @Schema(description = "Deep Thought Scheme Type", defaultValue = "DIO_BANKING")
   @Builder.Default
-  DioAccountStatus status = DioAccountStatus.OPEN;
+  public DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
-  @Schema(description = "The category to which a product or account belongs.", required = true)
-  @NotNull
-  @JsonProperty("productCategory")
-  DioBankAccountType accountType;
-    
+  
   @Schema(
-      description = "The display name of the account as defined by the bank. This should not incorporate account numbers or PANs. If it does the values should be masked according to the rules of the MaskedAccountString common type.",
-      required = true)
-  @NotEmpty(message = "Must contain a display name for the account")
-  @JsonProperty("displayName")
-  String displayName;
-  
-  @Schema(description = "A customer supplied nick name for the account")
-  @JsonProperty("nickName")
-  String nickName;
-  
-  @Schema(description = "Account Number")
-  @JsonProperty("accountNumber")
-  Integer accountNumber;
-  
-  @Schema(description = "Associated Product Bundle")
-  @JsonProperty("bundle")
-  DioProductBundle bundle;
-  
-  @Schema(description = "Associated Product")
-  @JsonProperty("product")
-  DioProduct product;
-  
-  @JsonProperty("cdrBanking")
-  @Schema(description = "CDR Banking Account")
-  @Valid
+      description = "Term Deposit Start Amount")
   @NotNull
-  public CdrBankingAccount cdrBanking;
+  BigDecimal amount;
+  
+  @Schema(
+      description = "Term Deposit Currency")
+  @Builder.Default
+  Currency currency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
+  
+  @Schema(
+      description = "Term Deposit Interet Rate")
+  @NotNull
+  BigDecimal rate;
+  
+  @Schema(
+      description = "Term Deposit Start Date/Time")
+  @NotNull
+  OffsetDateTime lodgement;
+  
+  @Schema(
+      description = "Term Deposit Term Length")
+  @NotNull
+  Period termLength;
+  
+  @Schema(
+      description = "Calculation Frequency")
+  @NotNull
+  Period calculationFrequency;
+  
+  @Schema(
+      description = "Last Calculated Date/Time")
+  @NotNull
+  OffsetDateTime lastCalculated;
+  
+  @Schema(
+      description = "Application Frequency")
+  @NotNull
+  Period applicationFrequency;
+  
+  @Schema(
+      description = "Last Time Interest was Applied")
+  @NotNull
+  OffsetDateTime lastApplied;
+  
+  @Schema(
+      description = "Maturity Instructions")
+  @NotNull
+  DioMaturityInstructionType maturityInstruction;
 
 }

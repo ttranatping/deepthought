@@ -1,5 +1,7 @@
 package io.biza.deepthought.data.persistence.model.payments;
 
+import java.time.OffsetDateTime;
+import java.time.Period;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -14,10 +16,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
+import io.biza.babelfish.cdr.enumerations.BankingPaymentNonBusinessDayTreatment;
 import io.biza.babelfish.cdr.enumerations.BankingScheduledPaymentStatus;
+import io.biza.babelfish.cdr.enumerations.CommonWeekDay;
+import io.biza.babelfish.cdr.enumerations.PayloadTypeBankingScheduledPaymentRecurrence;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.account.AccountData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import lombok.AllArgsConstructor;
@@ -36,7 +43,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "ACCOUNT")
+@Table(name = "SCHEDULED_PAYMENT")
 @EqualsAndHashCode
 public class ScheduledPaymentData {
 
@@ -45,6 +52,10 @@ public class ScheduledPaymentData {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
+  
+  @Transient
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
   
   @ManyToOne
   @JoinColumn(name = "CUSTOMER_ID", nullable = false)
@@ -76,5 +87,32 @@ public class ScheduledPaymentData {
   @OneToMany(mappedBy = "scheduledPayment", cascade = CascadeType.ALL)
   @ToString.Exclude
   Set<ScheduledPaymentSetData> paymentSet;
+  
+  @Column(name = "NEXT_PAYMENT_DATE")
+  OffsetDateTime nextPaymentDate;
+  
+  @Column(name = "SCHEDULE_TYPE")
+  @Enumerated(EnumType.STRING)
+  PayloadTypeBankingScheduledPaymentRecurrence scheduleType;
+  
+  @Column(name = "FINAL_PAYMENT_DATE")
+  OffsetDateTime finalPaymentDate;
+  
+  @Column(name = "PAYMENTS_REMAINING")
+  Integer paymentsRemaining;
+  
+  @Column(name = "NON_BUSINESS_DAY_TREATMENT")
+  @Enumerated(EnumType.STRING)
+  BankingPaymentNonBusinessDayTreatment nonBusinessDayTreatment;
+  
+  @Column(name = "PAYMENT_FREQUENCY")
+  Period paymentFrequency;
+  
+  @Column(name = "DAY_OF_WEEK")
+  @Enumerated(EnumType.STRING)
+  CommonWeekDay dayOfWeek;
+  
+  @Column(name = "SCHEDULE_DESCRIPTION")
+  String scheduleDescription;
 
 }

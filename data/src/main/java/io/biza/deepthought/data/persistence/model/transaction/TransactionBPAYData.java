@@ -6,13 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
+import io.biza.deepthought.data.enumerations.DioSchemeType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,16 +29,20 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "TRANSACTION_BPAY")
-@EqualsAndHashCode
 public class TransactionBPAYData {
 
   @Id
   @Type(type = "uuid-char")
   UUID id;
   
+  @Transient
+  @Builder.Default
+  private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
+  
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "TRANSACTION_ID")
   @ToString.Exclude
+  @MapsId
   TransactionData transaction;
   
   @Column(name = "BILLER_CODE")

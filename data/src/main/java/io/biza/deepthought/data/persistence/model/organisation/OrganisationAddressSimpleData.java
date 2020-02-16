@@ -15,7 +15,6 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,7 +29,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "CUSTOMER_ORGANISATION_ADDRESS_SIMPLE")
-@EqualsAndHashCode
 public class OrganisationAddressSimpleData {
 
   @Id
@@ -43,8 +41,8 @@ public class OrganisationAddressSimpleData {
   @ToString.Exclude
   OrganisationAddressData address;
   
-  @Column(name = "NAME")
-  String name;
+  @Column(name = "MAILING_NAME")
+  String mailingName;
   
   @Column(name = "ADDRESS_LINE1")
   @NotNull
@@ -58,6 +56,9 @@ public class OrganisationAddressSimpleData {
   
   @Column(name = "POSTCODE")
   String postcode;
+  
+  @Column(name = "CITY")
+  String city;
   
   @Column(name = "STATE")
   String state;

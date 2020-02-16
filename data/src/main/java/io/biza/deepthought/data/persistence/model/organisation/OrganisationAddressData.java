@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +19,6 @@ import io.biza.babelfish.cdr.enumerations.AddressPurpose;
 import io.biza.babelfish.cdr.enumerations.PayloadTypeAddress;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,10 +33,11 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "ORGANISATION_ADDRESS")
-@EqualsAndHashCode
 public class OrganisationAddressData {
 
   @Id
+  @Column(name = "ID", insertable = false, updatable = false)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
   

@@ -21,7 +21,6 @@ import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -37,7 +36,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "BRAND")
-@EqualsAndHashCode
 public class BrandData {
 
   @Id
@@ -58,23 +56,18 @@ public class BrandData {
   String displayName;
 
   @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-  @ToString.Exclude
   Set<ProductData> product;
 
   @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-  @ToString.Exclude
   Set<ProductBundleData> bundle;
   
   @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-  @ToString.Exclude
   Set<CustomerData> customer;
   
   @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-  @ToString.Exclude
   Set<BranchData> branch;
   
   @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-  @ToString.Exclude
   Set<AuthorisedEntityData> authorisedEntity;
 
   @PrePersist

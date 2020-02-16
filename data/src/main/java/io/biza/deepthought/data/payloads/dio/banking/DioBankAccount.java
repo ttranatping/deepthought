@@ -1,6 +1,7 @@
 package io.biza.deepthought.data.payloads.dio.banking;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -49,8 +50,9 @@ public class DioBankAccount {
   @JsonProperty("schemeType")
   @NotNull
   @NonNull
-  @Schema(description = "Deep Thought Scheme Type", defaultValue = "CDR_BANKING")
-  public DioSchemeType schemeType;
+  @Schema(description = "Deep Thought Scheme Type", defaultValue = "DIO_BANKING")
+  @Builder.Default
+  public DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @Schema(
       description = "Creation Date Time",
@@ -93,6 +95,10 @@ public class DioBankAccount {
   @Schema(description = "Associated Product")
   @JsonProperty("product")
   DioProduct product;
+  
+  @Schema(description = "Card List")
+  @JsonProperty("cardList")
+  List<DioBankAccountCard> cardList;
   
   @JsonProperty("cdrBanking")
   @Schema(description = "CDR Banking Account")
