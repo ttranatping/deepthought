@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFactory;
 
 @Slf4j
-public class AccountTermDepositDataMapper implements OrikaFactoryConfigurerInterface {
+public class BankAccountTermDepositDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {

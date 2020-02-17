@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccount;
+import io.biza.deepthought.data.payloads.requests.RequestBankAccount;
 
 public interface BankAccountAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
@@ -22,7 +23,7 @@ public interface BankAccountAdminApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioBankAccount> createBankAccount(UUID brandId, UUID branchId, DioBankAccount bankAccount)
+  default ResponseEntity<DioBankAccount> createBankAccount(UUID brandId, UUID branchId, RequestBankAccount bankAccountRequest)
       throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
@@ -32,7 +33,7 @@ public interface BankAccountAdminApiDelegate {
   }
 
   default ResponseEntity<DioBankAccount> updateBankAccount(UUID brandId, UUID branchId, UUID bankAccountId,
-      DioBankAccount bankAccount) throws ValidationListException {
+      RequestBankAccount bankAccountRequest) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

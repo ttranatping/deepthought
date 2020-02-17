@@ -16,10 +16,15 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccount;
+import io.biza.deepthought.data.payloads.requests.RequestBankAccount;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
+import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
+import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.BankAccountRepository;
 import io.biza.deepthought.data.repository.BankBranchRepository;
+import io.biza.deepthought.data.repository.ProductBankingBundleRepository;
+import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -37,36 +42,42 @@ public class BankAccountAdminApiDelegateImpl implements BankAccountAdminApiDeleg
   private BankBranchRepository branchRepository;
   
   @Autowired
+  private ProductRepository productRepository;
+  
+  @Autowired
+  private ProductBankingBundleRepository bundleRepository;
+  
+  @Autowired
   private Validator validator;
 
   @Override
   public ResponseEntity<List<DioBankAccount>> listBankAccounts(UUID brandId, UUID branchId) {
-    List<BankAccountData> bankAccountData = bankAccountRepository.findAllByBranchIdAndBranchBrandId(branchId, branchId);
-    LOG.debug("Listing all bankAccounts for branch id of {} and received {}", branchId, bankAccountData);
+    List<BankAccountData> bankAccountData = bankAccountRepository.findAllByBranchIdAndBranchBrandId(branchId, brandId);
+    LOG.debug("Listing all bank accounts for brand id of {} branch id of {} and received {}", brandId, branchId, bankAccountData);
     return ResponseEntity.ok(mapper.mapAsList(bankAccountData, DioBankAccount.class));
   }
 
   @Override
   public ResponseEntity<DioBankAccount> getBankAccount(UUID brandId, UUID branchId, UUID bankAccountId) {
-    Optional<BankAccountData> data = bankAccountRepository.findByIdAndBranchIdAndBranchBrandId(bankAccountId, branchId, branchId);
+    Optional<BankAccountData> data = bankAccountRepository.findByIdAndBranchIdAndBranchBrandId(bankAccountId, branchId, brandId);
 
     if (data.isPresent()) {
-      LOG.info("Retrieving a single bankAccount with branch of {} and id of {} and content of {}",
-          branchId, bankAccountId, data.get());
+      LOG.info("Retrieving a single bank account with branch of {} brand id {} and id of {} and content of {}",
+          branchId, brandId, bankAccountId, data.get());
       return ResponseEntity.ok(mapper.map(data.get(), DioBankAccount.class));
     } else {
       LOG.warn(
-          "Attempted to retrieve a single bankAccount but could not find with branch of {} and id of {}",
-          branchId, bankAccountId);
+          "Attempted to retrieve a single bank account but could not find with branch of {} brand id of {} and id of {}",
+          branchId, branchId, bankAccountId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 
   @Override
-  public ResponseEntity<DioBankAccount> createBankAccount(UUID brandId, UUID branchId, DioBankAccount createData)
+  public ResponseEntity<DioBankAccount> createBankAccount(UUID brandId, UUID branchId, RequestBankAccount createRequest)
       throws ValidationListException {
     
-    DeepThoughtValidator.validate(validator, createData);
+    DeepThoughtValidator.validate(validator, createRequest);
 
     Optional<BankBranchData> branch = branchRepository.findByIdAndBrandId(branchId, brandId);
 
@@ -74,11 +85,32 @@ public class BankAccountAdminApiDelegateImpl implements BankAccountAdminApiDeleg
       LOG.warn("Attempted to create a bank account with non existent brand of {} branch of {}", brandId, branchId);
       throw ValidationListException.builder().type(DioExceptionType.INVALID_BRAND).explanation(Labels.ERROR_INVALID_BRAND).build();
     }
-        
-    BankAccountData data = mapper.map(createData, BankAccountData.class);
+    
+    Optional<ProductData> product = productRepository.findById(createRequest.productId());
+    if (!product.isPresent()) {
+      LOG.warn("Attempted to create a bank account associated with non existent product of {}", createRequest.productId());
+      throw ValidationListException.builder().type(DioExceptionType.INVALID_PRODUCT).explanation(Labels.ERROR_INVALID_PRODUCT).build();
+    }
+    
+    BankAccountData data = mapper.map(createRequest, BankAccountData.class);
     data.branch(branch.get());
-    LOG.debug("Created a new bankAccount for branch {} branch {} with content of {}", branchId, branchId, data);
-    return getBankAccount(branchId, branchId, bankAccountRepository.save(data).id());
+    data.product(product.get());
+    
+    // TODO: Product Constraint and Eligibility Checking
+    
+    if(createRequest.bundleId() != null) {
+      Optional<ProductBundleData> bundle = bundleRepository.findById(createRequest.bundleId());
+      if (!bundle.isPresent()) {
+        LOG.warn("Attempted to create a bank account associated with non existent bundle of {}", createRequest.productId());
+        throw ValidationListException.builder().type(DioExceptionType.INVALID_BUNDLE).explanation(Labels.ERROR_INVALID_PRODUCT_BUNDLE).build();
+      }
+      data.bundle(bundle.get());
+    }
+    
+    BankAccountData account = bankAccountRepository.save(data);
+    
+    LOG.debug("Creating a new bank account for brand {} branch {} with content of {}", brandId, branchId, data);
+    return getBankAccount(brandId, branchId, account.id());
   }
 
   @Override
@@ -86,12 +118,12 @@ public class BankAccountAdminApiDelegateImpl implements BankAccountAdminApiDeleg
     Optional<BankAccountData> optionalData = bankAccountRepository.findByIdAndBranchIdAndBranchBrandId(bankAccountId, branchId, brandId);
 
     if (optionalData.isPresent()) {
-      LOG.warn("Attempted to delete a bank account with non existent brand of {} branch of {}", brandId, branchId);
+      LOG.info("Deleting account with id of {} brand of {} branch of {}", bankAccountId, brandId, branchId);
       bankAccountRepository.delete(optionalData.get());
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } else {
       LOG.warn(
-          "Attempted to delete a bankAccount but it couldn't be found with branch {} branch {} and bankAccount {}",
+          "Attempted to delete a bank account but it couldn't be found with branch {} branch {} and bankAccount {}",
           branchId, branchId, bankAccountId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -99,19 +131,40 @@ public class BankAccountAdminApiDelegateImpl implements BankAccountAdminApiDeleg
 
   @Override
   public ResponseEntity<DioBankAccount> updateBankAccount(UUID brandId, UUID branchId, UUID bankAccountId,
-      DioBankAccount updateData) throws ValidationListException {
+      RequestBankAccount createRequest) throws ValidationListException {
 
-    DeepThoughtValidator.validate(validator, updateData);
+    DeepThoughtValidator.validate(validator, createRequest);
     
-    Optional<BankAccountData> optionalData = bankAccountRepository.findByIdAndBranchIdAndBranchBrandId(bankAccountId, branchId, branchId);
+    Optional<BankAccountData> optionalData = bankAccountRepository.findByIdAndBranchIdAndBranchBrandId(bankAccountId, branchId, brandId);
 
     if (optionalData.isPresent()) {
       BankAccountData data = optionalData.get();
-      mapper.map(updateData, data);
-      bankAccountRepository.save(data);
-      LOG.debug("Updated bankAccount with branch {} branch {} and bankAccount {} containing content of {}", branchId, branchId,
+      
+      Optional<ProductData> product = productRepository.findById(createRequest.productId());
+      if (!product.isPresent()) {
+        LOG.warn("Attempted to create a bank account associated with non existent product of {}", createRequest.productId());
+        throw ValidationListException.builder().type(DioExceptionType.INVALID_PRODUCT).explanation(Labels.ERROR_INVALID_PRODUCT).build();
+      }
+      
+      mapper.map(createRequest, BankAccountData.class);
+      data.product(product.get());
+      
+      // TODO: Product Constraint and Eligibility Checking
+      
+      if(createRequest.bundleId() != null) {
+        Optional<ProductBundleData> bundle = bundleRepository.findById(createRequest.bundleId());
+        if (!bundle.isPresent()) {
+          LOG.warn("Attempted to create a bank account associated with non existent bundle of {}", createRequest.productId());
+          throw ValidationListException.builder().type(DioExceptionType.INVALID_BUNDLE).explanation(Labels.ERROR_INVALID_PRODUCT_BUNDLE).build();
+        }
+        data.bundle(bundle.get());
+      }
+      
+      BankAccountData account = bankAccountRepository.save(data);
+      
+      LOG.debug("Updated bank account with branch {} branch {} and bankAccount {} containing content of {}", branchId, branchId,
           bankAccountId, data);
-      return getBankAccount(branchId, branchId, data.id());
+      return getBankAccount(branchId, branchId, account.id());
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

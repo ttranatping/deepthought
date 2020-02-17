@@ -1,9 +1,19 @@
 package io.biza.deepthought.data.payloads.dio.common;
 
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -11,6 +21,9 @@ import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
 import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
 import io.biza.deepthought.data.enumerations.DioCustomerType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankAccount;
+import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
+import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
@@ -30,48 +43,26 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Schema(description = "A Deep Thought Customer Container")
-public class DioCustomer {
-
+@Schema(description = "A Deep Thought Customer Bank Account")
+public class DioCustomerBankAccount {
+  
   @JsonProperty("id")
   @NotNull
   @NonNull
-  @Schema(description = "Deep Thought Customer Identifier",
+  @Schema(description = "Deep Thought Customer Bank Account Association Identifier",
       defaultValue = "00000000-0000-0000-0000-000000000000")
   @Builder.Default
   public UUID id = new UUID(0, 0);
   
-  @JsonProperty("schemeType")
-  @NotNull
-  @NonNull
-  @Schema(description = "Deep Thought Scheme Type", defaultValue = "DIO_COMMON")
-  @Builder.Default
-  public DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
-
-  @JsonProperty("customerType")
-  @NotNull
-  @NonNull
-  @Schema(description = "Deep Thought Customer Type")
-  public DioCustomerType customerType;
+  @JsonProperty("customer")
+  @ToString.Exclude
+  public DioCustomer customer;
   
-  @Schema(
-      description = "Creation Date Time",
-      type = "string", format = "date-time", accessMode = AccessMode.READ_ONLY)
-  @JsonProperty("creationTime")
-  OffsetDateTime creationTime;
+  @JsonProperty("bankAccount")
+  @ToString.Exclude
+  public DioBankAccount bankAccount;
   
-  @Schema(
-      description = "Last Update Date Time",
-      type = "string", format = "date-time", accessMode = AccessMode.READ_ONLY)
-  @JsonProperty("lastUpdated")
-  OffsetDateTime lastUpdated;
-
-  @JsonProperty("person")
-  @Schema(description = "Deep Thought Person")
-  DioPerson person;
-  
-  @JsonProperty("organisation")
-  @Schema(description = "Deep Thought Organisation")
-  DioOrganisation organisation;
+  @JsonProperty("owner")
+  public Boolean owner;
   
 }

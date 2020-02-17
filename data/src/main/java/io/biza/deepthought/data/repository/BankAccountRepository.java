@@ -11,4 +11,5 @@ import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 public interface BankAccountRepository extends JpaRepository<BankAccountData, UUID> {
   public List<BankAccountData> findAllByBranchIdAndBranchBrandId(UUID branchId, UUID brandId);
   public Optional<BankAccountData> findByIdAndBranchIdAndBranchBrandId(UUID id, UUID branchId, UUID brandId);
+  public Optional<BankAccountData> findByIdAndBranchBrandId(UUID id, UUID brandId);
 }

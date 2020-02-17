@@ -80,7 +80,14 @@ public class Labels {
   /**
    * Error Descriptions
    */
+  public static final String ERROR_INVALID_ASSOCIATION = "Invalid Customer Bank Account Association Details";
   public static final String ERROR_INVALID_BRAND = "Invalid Brand Identifier specified";
+  public static final String ERROR_INVALID_ACCOUNT = "Invalid Account Identifier specified";
+  public static final String ERROR_INVALID_BRANCH = "Invalid Branch Identifier specified";
+  public static final String ERROR_INVALID_PRODUCT = "Invalid Product Identifier specified";
+  public static final String ERROR_INVALID_CUSTOMER = "Invalid Customer Identifier specified";
+  public static final String ERROR_INVALID_PRODUCT_BUNDLE = "Invalid Product Bundle Identifier specified";
+  public static final String ERROR_INVALID_BRANCH_ALREADY_ASSIGNED = "Invalid Branch Specified, Already Assigned";
   public static final String ERROR_INVALID_BRAND_AND_PRODUCT =
       "Invalid Brand and Product Identifier set specified";
   public static final String ERROR_UNSUPPORTED_PRODUCT_SCHEME_TYPE =

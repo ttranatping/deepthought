@@ -2,8 +2,11 @@ package io.biza.deepthought.admin.api.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
+import javax.validation.Valid;
 import javax.validation.Validator;
+import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +18,15 @@ import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;
 import io.biza.deepthought.data.payloads.dio.common.DioCustomer;
+import io.biza.deepthought.data.payloads.requests.RequestCustomerBankAccountConnection;
 import io.biza.deepthought.data.persistence.model.BrandData;
+import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
+import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
+import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
+import io.biza.deepthought.data.repository.BankAccountRepository;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +46,9 @@ public class CustomerAdminApiDelegateImpl implements CustomerAdminApiDelegate {
   private BrandRepository brandRepository;
   
   @Autowired
+  private BankAccountRepository bankAccountRepository;
+  
+  @Autowired
   private Validator validator;
 
   @Override
@@ -45,7 +57,7 @@ public class CustomerAdminApiDelegateImpl implements CustomerAdminApiDelegate {
     LOG.debug("Listing all customers for brand id of {} and received {}", brandId, customerData);
     return ResponseEntity.ok(mapper.mapAsList(customerData, DioCustomer.class));
   }
-
+  
   @Override
   public ResponseEntity<DioCustomer> getCustomer(UUID brandId, UUID customerId) {
     Optional<CustomerData> data = customerRepository.findByIdAndBrandId(customerId, brandId);
@@ -108,10 +120,10 @@ public class CustomerAdminApiDelegateImpl implements CustomerAdminApiDelegate {
     if (optionalData.isPresent()) {
       CustomerData data = optionalData.get();
       mapper.map(updateData, data);
-      customerRepository.save(data);
+      CustomerData updatedData = customerRepository.save(data);
       LOG.debug("Updated customer with brand {} and customer {} containing content of {}", brandId,
-          customerId, data);
-      return getCustomer(brandId, data.id());
+          customerId, updatedData);
+      return getCustomer(brandId, updatedData.id());
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

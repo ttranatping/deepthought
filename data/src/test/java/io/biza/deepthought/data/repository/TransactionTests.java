@@ -19,7 +19,6 @@ import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrBankingProduct;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccount;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountCard;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankTransaction;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankTransactionAPCS;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankTransactionBPAY;
@@ -51,7 +50,6 @@ import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransacti
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionData;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionNPPData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
-import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountCardData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressData;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressSimpleData;
@@ -96,10 +94,6 @@ public class TransactionTests extends TranslatorInitialisation {
 
   @Resource
   private BankAccountCreditCardRepository accountCreditCardRepository;
-
-
-  @Resource
-  private CustomerBankAccountCardRepository accountCardRepository;
 
   @Resource
   private BankAccountTermDepositRepository accountTermDepositRepository;
@@ -293,12 +287,9 @@ public class TransactionTests extends TranslatorInitialisation {
     CustomerBankAccountData customerAccount = CustomerBankAccountData.builder().owner(true).build();
     customerAccount.account(account);
     customerAccount.customer(customer);
-    CustomerBankAccountCardData accountCard =
-        CustomerBankAccountCardData.builder().issueDateTime(VariableConstants.OPEN_DATE_TIME)
-            .cardNumber(VariableConstants.CARD_NUMBER).build();
-    accountCard.account(customerAccount);
-    customerAccount.card(accountCard);
     account.customerAccounts(Set.of(customerAccount));
+    
+    LOG.warn("Created account with card details of {}", account);
 
     accountRepository.save(account);
 
@@ -334,10 +325,6 @@ public class TransactionTests extends TranslatorInitialisation {
             .accountNumber(account.accountNumber()).accountType(account.accountType())
             .bundle(dioProductBundleStatic).creationDateTime(VariableConstants.OPEN_DATE_TIME)
             .displayName(VariableConstants.DISPLAY_NAME).nickName(VariableConstants.NICK_NAME)
-            .cardList(
-                List.of(DioBankAccountCard.builder().issueDateTime(VariableConstants.OPEN_DATE_TIME)
-                    .cardNumber(VariableConstants.CARD_NUMBER)
-                    .id(account.customerAccounts().iterator().next().id()).build()))
             .product(dioProductStatic).status(account.status()).build();
 
     return dioAccountStatic;

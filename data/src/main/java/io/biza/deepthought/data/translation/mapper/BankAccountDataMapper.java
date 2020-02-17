@@ -8,12 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFactory;
 
 @Slf4j
-public class AccountDataMapper implements OrikaFactoryConfigurerInterface {
+public class BankAccountDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
     
-    orikaMapperFactory.classMap(BankAccountData.class, DioBankAccount.class).field("customerAccounts",  "cardList").fieldAToB("id", "id")
+    orikaMapperFactory.classMap(BankAccountData.class, DioBankAccount.class).fieldAToB("id", "id")
+    .fieldAToB("accountNumber", "accountNumber")
     .field("termDeposits", "cdrBanking.termDeposits")
     .field("loanAccounts", "cdrBanking.loanAccounts")
     .field("creditCards", "cdrBanking.creditCards")

@@ -14,19 +14,21 @@ public class CustomerDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
-    orikaMapperFactory.classMap(CustomerData.class, DioCustomer.class).fieldAToB("id", "id").customize(new CustomMapper<CustomerData, DioCustomer>() {
-      @Override
-      public void mapAtoB(CustomerData from, DioCustomer to,
-          MappingContext context) {
-        
-        if(from.person() != null) {
-          to.customerType(DioCustomerType.PERSON);
-        } else if(from.organisation() != null) {
-          to.customerType(DioCustomerType.ORGANISATION);
-        } else {
-          LOG.error("Neither Organisation nor Person are populated in CustomerData so cannot set customer type");
-        }
-      }
-    }).byDefault().register();
+    orikaMapperFactory.classMap(CustomerData.class, DioCustomer.class).fieldAToB("id", "id")
+        .fieldAToB("creationTime", "creationTime").fieldAToB("lastUpdated", "lastUpdated")
+        .customize(new CustomMapper<CustomerData, DioCustomer>() {
+          @Override
+          public void mapAtoB(CustomerData from, DioCustomer to, MappingContext context) {
+
+            if (from.person() != null) {
+              to.customerType(DioCustomerType.PERSON);
+            } else if (from.organisation() != null) {
+              to.customerType(DioCustomerType.ORGANISATION);
+            } else {
+              LOG.error(
+                  "Neither Organisation nor Person are populated in CustomerData so cannot set customer type");
+            }
+          }
+        }).byDefault().register();
   }
 }

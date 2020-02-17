@@ -1,9 +1,10 @@
-package io.biza.deepthought.data.component.loader;
+package io.biza.deepthought.data.loaders;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import io.biza.babelfish.cdr.support.customtypes.ApcaNumberType;
@@ -12,6 +13,7 @@ import io.biza.deepthought.data.repository.BankBranchRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Component
 public class BranchDataLoader {
   private BankBranchRepository branchRepository;
 

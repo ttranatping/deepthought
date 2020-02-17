@@ -1,6 +1,7 @@
 package io.biza.deepthought.data.persistence.model.bank.account;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -14,11 +15,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioAccountStatus;
@@ -71,7 +76,7 @@ public class BankAccountData {
    * Bundle Definition
    */
   @ManyToOne
-  @JoinColumn(name = "BUNDLE_ID", nullable = false)
+  @JoinColumn(name = "BUNDLE_ID", nullable = true)
   ProductBundleData bundle;
   
   /**
@@ -84,19 +89,15 @@ public class BankAccountData {
   /**
    * Account Number
    */
-  @Column(name = "ACCOUNT_NUMBER")
-  @GenericGenerator(name = "accountIdGenerator",
-      strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator",
-      parameters = {@Parameter(name = "sequence_name", value = "accountNumber_sequence"),
-          @Parameter(name = "initial_value", value = "100000"),
-          @Parameter(name = "increment_size", value = "1")})
-  @GeneratedValue(generator = "accountIdGenerator")
+  @Column(name = "ACCOUNT_NUMBER", unique = true)
+  @NotNull
   Integer accountNumber;
 
   /**
    * Account Opening Date
    */
   @Column(name = "CREATION_DATE_TIME")
+  @CreationTimestamp
   OffsetDateTime creationDateTime;
   
   /**
@@ -177,5 +178,34 @@ public class BankAccountData {
   @OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
   @ToString.Exclude
   Set<BankScheduledPaymentData> scheduledPayments;
+  
+  @PrePersist
+  public void prePersist() {
+    if(this.branch() != null) {
+      Set<BankAccountData> set = new HashSet<BankAccountData>();
+      if (this.branch().accounts() != null) {
+        set.addAll(this.branch().accounts());
+      }
+      set.add(this);
+      this.branch().accounts(set);
+    }
+    if (this.product() != null) {
+      Set<BankAccountData> set = new HashSet<BankAccountData>();
+      if (this.product().accounts() != null) {
+        set.addAll(this.product().accounts());
+      }
+      set.add(this);
+      this.product().accounts(set);
+    }
+    
+    if(this.bundle() != null) {
+      Set<BankAccountData> set = new HashSet<BankAccountData>();
+      if (this.bundle().accounts() != null) {
+        set.addAll(this.bundle().accounts());
+      }
+      set.add(this);
+      this.bundle().accounts(set);
+    }
+  }
   
 }

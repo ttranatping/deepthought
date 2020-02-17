@@ -40,78 +40,70 @@ public class BranchAdminApiDelegateImpl implements BranchAdminApiDelegate {
   private Validator validator;
 
   @Override
-  public ResponseEntity<List<DioBankBranch>> listBranches(UUID brandId) {
-    List<BankBranchData> branchData = branchRepository.findAllByBrandId(brandId);
-    LOG.debug("Listing all branchs for brand id of {} and received {}", brandId, branchData);
+  public ResponseEntity<List<DioBankBranch>> listBranches() {
+    List<BankBranchData> branchData = branchRepository.findAll();
+    LOG.debug("Listing all branchs and received {}", branchData);
     return ResponseEntity.ok(mapper.mapAsList(branchData, DioBankBranch.class));
   }
 
   @Override
-  public ResponseEntity<DioBankBranch> getBranch(UUID brandId, UUID branchId) {
-    Optional<BankBranchData> data = branchRepository.findByIdAndBrandId(branchId, brandId);
+  public ResponseEntity<DioBankBranch> getBranch(UUID branchId) {
+    Optional<BankBranchData> data = branchRepository.findById(branchId);
 
     if (data.isPresent()) {
-      LOG.info("Retrieving a single branch with brand of {} and id of {} and content of {}",
-          brandId, branchId, data.get());
+      LOG.info("Retrieving a single branch with id of {} and content of {}",
+          branchId, data.get());
       return ResponseEntity.ok(mapper.map(data.get(), DioBankBranch.class));
     } else {
       LOG.warn(
-          "Attempted to retrieve a single branch but could not find with brand of {} and id of {}",
-          brandId, branchId);
+          "Attempted to retrieve a single branch but could not find with id of {}",
+          branchId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 
   @Override
-  public ResponseEntity<DioBankBranch> createBranch(UUID brandId, DioBankBranch createData)
+  public ResponseEntity<DioBankBranch> createBranch(DioBankBranch createData)
       throws ValidationListException {
     
     DeepThoughtValidator.validate(validator, createData);
 
-    Optional<BrandData> brand = brandRepository.findById(brandId);
-
-    if (!brand.isPresent()) {
-      LOG.warn("Attempted to create a branch with non existent brand of {}", brandId);
-      throw ValidationListException.builder().type(DioExceptionType.INVALID_BRAND).explanation(Labels.ERROR_INVALID_BRAND).build();
-    }
-        
     BankBranchData data = mapper.map(createData, BankBranchData.class);
-    data.brand(brand.get());
-    LOG.debug("Created a new branch for brand {} with content of {}", brandId, data);
-    return getBranch(brandId, branchRepository.save(data).id());
+    LOG.debug("Created a new branch with content of {}", data);
+    return getBranch(branchRepository.save(data).id());
   }
 
   @Override
-  public ResponseEntity<Void> deleteBranch(UUID brandId, UUID branchId) {
-    Optional<BankBranchData> optionalData = branchRepository.findByIdAndBrandId(branchId, brandId);
+  public ResponseEntity<Void> deleteBranch(UUID branchId) {
+    Optional<BankBranchData> optionalData = branchRepository.findById(branchId);
 
     if (optionalData.isPresent()) {
-      LOG.debug("Deleting branch with brand of {} and branch id of {}", brandId, branchId);
+      LOG.debug("Deleting branch with branch id of {}", branchId);
       branchRepository.delete(optionalData.get());
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } else {
       LOG.warn(
-          "Attempted to delete a branch but it couldn't be found with brand {} and branch {}",
-          brandId, branchId);
+          "Attempted to delete a branch but it couldn't be found with branch {}",
+          branchId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 
   @Override
-  public ResponseEntity<DioBankBranch> updateBranch(UUID brandId, UUID branchId,
+  public ResponseEntity<DioBankBranch> updateBranch(UUID branchId,
       DioBankBranch updateData) throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, updateData);
     
-    Optional<BankBranchData> optionalData = branchRepository.findByIdAndBrandId(branchId, brandId);
+    Optional<BankBranchData> optionalData = branchRepository.findById(branchId);
 
     if (optionalData.isPresent()) {
       BankBranchData data = optionalData.get();
       mapper.map(updateData, data);
       branchRepository.save(data);
-      LOG.debug("Updated branch with brand {} and branch {} containing content of {}", brandId,
+      LOG.debug("Updated branch with branch {} containing content of {}",
           branchId, data);
-      return getBranch(brandId, data.id());
+      return getBranch(data.id());
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

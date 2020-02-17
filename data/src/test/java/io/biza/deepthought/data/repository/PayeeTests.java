@@ -86,10 +86,6 @@ public class PayeeTests extends TranslatorInitialisation {
   @Resource
   private BankAccountCreditCardRepository accountCreditCardRepository;
 
-
-  @Resource
-  private CustomerBankAccountCardRepository accountCardRepository;
-
   @Resource
   private BankAccountTermDepositRepository accountTermDepositRepository;
 

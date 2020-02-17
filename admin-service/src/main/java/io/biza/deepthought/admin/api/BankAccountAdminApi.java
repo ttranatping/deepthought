@@ -4,6 +4,7 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.BankAccountAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccount;
+import io.biza.deepthought.data.payloads.requests.RequestBankAccount;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -74,8 +75,8 @@ public interface BankAccountAdminApi {
   @PreAuthorize(Labels.OAUTH2_SCOPE_BANK_ACCOUNT_WRITE)
   default ResponseEntity<DioBankAccount> createBankAccount(
       @NotNull @Valid @PathVariable("brandId") UUID brandId, @NotNull @Valid @PathVariable("branchId") UUID branchId,
-      @NotNull @RequestBody DioBankAccount bankAccount) throws ValidationListException {
-    return getDelegate().createBankAccount(brandId, branchId, bankAccount);
+      @NotNull @RequestBody RequestBankAccount bankAccountRequest) throws ValidationListException {
+    return getDelegate().createBankAccount(brandId, branchId, bankAccountRequest);
   }
 
   @Operation(summary = "Update a single Bank Account",
@@ -95,8 +96,8 @@ public interface BankAccountAdminApi {
   default ResponseEntity<DioBankAccount> updateBankAccount(
       @NotNull @Valid @PathVariable("brandId") UUID brandId, @NotNull @Valid @PathVariable("branchId") UUID branchId,
       @NotNull @Valid @PathVariable("bankAccountId") UUID bankAccountId,
-      @NotNull @RequestBody DioBankAccount bankAccount) throws ValidationListException {
-    return getDelegate().updateBankAccount(brandId, branchId, bankAccountId, bankAccount);
+      @NotNull @RequestBody RequestBankAccount bankAccountRequest) throws ValidationListException {
+    return getDelegate().updateBankAccount(brandId, branchId, bankAccountId, bankAccountRequest);
   }
 
   @Operation(summary = "Delete a single Bank Account", description = "Deletes a Bank Account",

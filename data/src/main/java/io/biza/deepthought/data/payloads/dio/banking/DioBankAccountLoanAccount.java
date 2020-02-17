@@ -22,7 +22,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.biza.babelfish.cdr.converters.CurrencyToStringConverter;
+import io.biza.babelfish.cdr.converters.PeriodToStringConverter;
 import io.biza.babelfish.cdr.converters.StringToCurrencyConverter;
+import io.biza.babelfish.cdr.converters.StringToPeriodConverter;
 import io.biza.deepthought.data.enumerations.DioLoanRepaymentType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -67,27 +69,32 @@ public class DioBankAccountLoanAccount {
   @JsonProperty("creationAmount")
   BigDecimal creationAmount;
 
-  @Schema(description = "Original Loan Value Currency")
+  @Schema(description = "Original Loan Value Currency", type = "string")
   @JsonSerialize(converter = CurrencyToStringConverter.class)
   @JsonDeserialize(converter = StringToCurrencyConverter.class)
   @JsonProperty(value = "currency", defaultValue = "AUD")
   @Builder.Default
   Currency currency = Currency.getInstance("AUD");
   
-  @Schema(description = "Original length at creation", required = true)
+  @Schema(description = "Original length at creation", required = true, type = "string")
   @NotNull
   @JsonProperty("creationLength")
+  @JsonSerialize(converter = PeriodToStringConverter.class)
+  @JsonDeserialize(converter = StringToPeriodConverter.class)
   Period creationLength;
   
-  @Schema(description = "Repayment Frequency")
+  @Schema(description = "Repayment Frequency", type = "string", required = true)
   @NotNull
   @JsonProperty("repaymentFrequency")
+  @JsonSerialize(converter = PeriodToStringConverter.class)
+  @JsonDeserialize(converter = StringToPeriodConverter.class)
   Period repaymentFrequency;
   
-  @Schema(description = "Last Repayment")
+  @Schema(description = "Last Repayment", type = "string", format = "date-time")
   @NotNull
   @JsonProperty("lastRepayment")
-  OffsetDateTime lastRepayment;
+  @Builder.Default
+  OffsetDateTime lastRepayment = OffsetDateTime.now();
   
   @Schema(description = "Next Repayment Amount")
   @NotNull

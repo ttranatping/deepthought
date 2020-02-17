@@ -3,7 +3,10 @@ package io.biza.deepthought.admin.api;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.CustomerAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;
 import io.biza.deepthought.data.payloads.dio.common.DioCustomer;
+import io.biza.deepthought.data.payloads.requests.RequestBranchBrandConnection;
+import io.biza.deepthought.data.payloads.requests.RequestCustomerBankAccountConnection;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -115,6 +118,5 @@ public interface CustomerAdminApi {
       @NotNull @Valid @PathVariable("customerId") UUID customerId) {
     return getDelegate().deleteCustomer(brandId, customerId);
   }
-
 
 }

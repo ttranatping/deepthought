@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.BrandData;
+import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionAPCSData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,7 +54,7 @@ public class BankBranchData {
   
   @OneToMany(mappedBy = "branch")
   @ToString.Exclude
-  Set<BankTransactionAPCSData> transactions;
+  Set<BankAccountData> accounts;
   
   @Column(name = "BSB", unique = true)
   @NotNull

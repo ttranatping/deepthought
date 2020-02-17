@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -24,6 +26,13 @@ import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankPayeeData;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductCardArtData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductConstraintData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductEligibilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeatureData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.organisation.OrganisationData;
 import io.biza.deepthought.data.persistence.model.person.PersonData;
@@ -55,12 +64,12 @@ public class CustomerData {
   @Builder.Default
   private DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
   
-  @Column(name = "CREATION_TIME", nullable = false)
+  @Column(name = "CREATION_TIME", updatable = false, insertable = false)
   @CreationTimestamp
   @Builder.Default
   OffsetDateTime creationTime = OffsetDateTime.now();
 
-  @Column(name = "LAST_UPDATED", nullable = false)
+  @Column(name = "LAST_UPDATED", updatable = false, insertable = false)
   @UpdateTimestamp
   @Builder.Default
   OffsetDateTime lastUpdated = OffsetDateTime.now();
@@ -82,16 +91,27 @@ public class CustomerData {
   @ToString.Exclude
   Set<BankPayeeData> payees;
     
-  @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true)
+  @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER)
   PersonData person;
   
-  @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true)
+  @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER)
   OrganisationData organisation;
   
   @AssertTrue(
       message = "Only one of PersonData or OrganisationData can be populated")
   private boolean isPersonXorOrganisation() {
     return (person != null && organisation == null) || (person == null && organisation != null);
+  }
+  
+  @PrePersist
+  public void prePersist() {
+    if (this.person != null) {
+      this.person.customer(this);
+    }
+    
+    if(this.organisation != null) {
+      this.organisation.customer(this);
+    }
   }
   
 }

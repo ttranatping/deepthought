@@ -11,32 +11,32 @@ import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;
 import io.biza.deepthought.data.payloads.dio.common.DioCustomer;
+import io.biza.deepthought.data.payloads.dio.common.DioCustomerBankAccount;
 import io.biza.deepthought.data.payloads.requests.RequestCustomerBankAccountConnection;
 
-public interface CustomerAdminApiDelegate {
+public interface CustomerBankAccountAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
     return Optional.empty();
   }
 
-  default ResponseEntity<List<DioCustomer>> listCustomers(UUID brandId) {
+  default ResponseEntity<List<DioCustomerBankAccount>> listAssociations(UUID brandId,
+      UUID customerId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioCustomer> getCustomer(UUID brandId, UUID customerId) {
+  default ResponseEntity<DioCustomerBankAccount> associateAccount(UUID brandId, UUID customerId,
+      RequestCustomerBankAccountConnection accountRequest) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<DioCustomer> createCustomer(UUID brandId, DioCustomer customer)
+  default ResponseEntity<Void> unassociateAccount(UUID brandId, UUID customerId, UUID accountId)
       throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<Void> deleteCustomer(UUID brandId, UUID customerId) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-  }
 
-  default ResponseEntity<DioCustomer> updateCustomer(UUID brandId, UUID customerId,
-      DioCustomer customer) throws ValidationListException {
+  default ResponseEntity<DioCustomerBankAccount> getAssociation(UUID brandId, UUID customerId,
+      UUID associationId) throws ValidationListException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 }

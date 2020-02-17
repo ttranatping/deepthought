@@ -35,7 +35,6 @@ import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLe
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierApplicabilityData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
-import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountCardData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressData;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressSimpleData;
@@ -79,10 +78,6 @@ public class DirectDebitTests extends TranslatorInitialisation {
 
   @Resource
   private BankAccountCreditCardRepository accountCreditCardRepository;
-
-
-  @Resource
-  private CustomerBankAccountCardRepository accountCardRepository;
 
   @Resource
   private BankAccountTermDepositRepository accountTermDepositRepository;
@@ -162,11 +157,6 @@ public class DirectDebitTests extends TranslatorInitialisation {
     CustomerBankAccountData customerAccount = CustomerBankAccountData.builder().owner(true).build();
     customerAccount.account(account);
     customerAccount.customer(customer);
-    CustomerBankAccountCardData accountCard =
-        CustomerBankAccountCardData.builder().issueDateTime(VariableConstants.OPEN_DATE_TIME)
-            .cardNumber(VariableConstants.CARD_NUMBER).build();
-    accountCard.account(customerAccount);
-    customerAccount.card(accountCard);
     account.customerAccounts(Set.of(customerAccount));
 
     accountRepository.save(account);

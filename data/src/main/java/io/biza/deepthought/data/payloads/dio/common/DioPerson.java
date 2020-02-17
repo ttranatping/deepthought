@@ -11,6 +11,7 @@ import io.biza.deepthought.data.enumerations.DioPersonSuffix;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.cdr.CdrCommonPerson;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -42,9 +43,9 @@ public class DioPerson {
   @JsonProperty("schemeType")
   @NotNull
   @NonNull
-  @Schema(description = "Scheme Type", defaultValue = "DIO_COMMON")
+  @Schema(description = "Scheme Type", defaultValue = "CDR_COMMON")
   @Builder.Default
-  public DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  public DioSchemeType schemeType = DioSchemeType.CDR_COMMON;
   
   @Schema(
       description = "Also known as title or salutation.  The prefix to the name (e.g. Mr, Mrs, Ms, Miss, Sir, etc)")
@@ -73,15 +74,15 @@ public class DioPerson {
   @JsonProperty("suffix")
   DioPersonSuffix suffix;
   
-  @Schema(description = "Preferred Phone Number")
+  @Schema(description = "Preferred Phone Number", accessMode = AccessMode.READ_ONLY)
   @JsonProperty("phone")
   DioPhoneNumber phone;
   
-  @Schema(description = "Preferred Email")
+  @Schema(description = "Preferred Email", accessMode = AccessMode.READ_ONLY)
   @JsonProperty("email")
   DioEmail email;
   
-  @Schema(description = "Preferred Address")
+  @Schema(description = "Preferred Address", accessMode = AccessMode.READ_ONLY)
   @JsonProperty("address")
   DioAddress address;
   
