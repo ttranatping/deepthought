@@ -24,8 +24,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.BrandData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankPayeeData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankPayeeData;
+import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.organisation.OrganisationData;
 import io.biza.deepthought.data.persistence.model.person.PersonData;
@@ -78,11 +78,11 @@ public class CustomerData {
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<BankScheduledPaymentData> scheduledPayments;
+  Set<CustomerBankScheduledPaymentData> scheduledPayments;
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<BankPayeeData> payees;
+  Set<CustomerBankPayeeData> payees;
     
   @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER)
   PersonData person;

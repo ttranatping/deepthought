@@ -43,7 +43,7 @@ public class BankTransactionBPAYData {
   @JoinColumn(name = "TRANSACTION_ID")
   @ToString.Exclude
   @MapsId
-  BankTransactionData transaction;
+  BankAccountTransactionData transaction;
   
   @Column(name = "BILLER_CODE")
   String billerCode;

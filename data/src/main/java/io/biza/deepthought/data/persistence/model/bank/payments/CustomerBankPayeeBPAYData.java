@@ -1,22 +1,21 @@
-package io.biza.deepthought.data.persistence.model.bank.transaction;
+package io.biza.deepthought.data.persistence.model.bank.payments;
 
 import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,8 +29,9 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_TRANSACTION_APCS")
-public class BankTransactionAPCSData {
+@Table(name = "CUSTOMER_BANK_PAYEE_BPAY")
+@EqualsAndHashCode
+public class CustomerBankPayeeBPAYData {
 
   @Id
   @Type(type = "uuid-char")
@@ -43,14 +43,17 @@ public class BankTransactionAPCSData {
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "TRANSACTION_ID")
+  @JoinColumn(name = "PAYEE_ID")
   @ToString.Exclude
-  BankAccountTransactionData transaction;
+  CustomerBankPayeeData payee;
   
-  @ManyToOne
-  @JoinColumn(name = "BRANCH_ID", nullable = false)
-  @ToString.Exclude
-  @NotNull
-  private BankBranchData branch;
+  @Column(name = "BILLER_CODE")
+  String billerCode;
+  
+  @Column(name = "BILLER_NAME")
+  String billerName;
+  
+  @Column(name = "CRN")
+  String crn;
   
 }

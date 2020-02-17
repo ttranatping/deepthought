@@ -13,12 +13,12 @@ import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAuthorisedEntity;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankDirectDebit;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountDirectDebit;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankAuthorisedEntityData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankDirectDebitData;
+import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductAdditionalInformationData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductCardArtData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductConstraintData;
@@ -92,7 +92,7 @@ public class DirectDebitTests extends TranslatorInitialisation {
   private ProductBankingBundleRepository productBundleRepository;
   
   @Resource
-  private BankDirectDebitRepository directDebitRepository;
+  private BankAccountDirectDebitRepository directDebitRepository;
   
   @Resource
   private BankAuthorisedEntityRepository authorisedEntityRepository;
@@ -102,10 +102,10 @@ public class DirectDebitTests extends TranslatorInitialisation {
   @Test
   public void testDirectDebitAndCompare() {
 
-    BankDirectDebitData debit = createDirectDebit();
-    DioBankDirectDebit dioAccount = mapper.getMapperFacade().map(debit, DioBankDirectDebit.class);
+    BankAccountDirectDebitData debit = createDirectDebit();
+    DioBankAccountDirectDebit dioAccount = mapper.getMapperFacade().map(debit, DioBankAccountDirectDebit.class);
 
-    DioBankDirectDebit dioAccountStatic = getDirectDebitStaticBase(debit);
+    DioBankAccountDirectDebit dioAccountStatic = getDirectDebitStaticBase(debit);
 
     LOG.warn("Source: {}", dioAccount.toString());
     LOG.warn("Destination: {}", dioAccountStatic.toString());
@@ -121,7 +121,7 @@ public class DirectDebitTests extends TranslatorInitialisation {
     }
   }
 
-  public BankDirectDebitData createDirectDebit() {
+  public BankAccountDirectDebitData createDirectDebit() {
     BankAccountData account = createAccountWithCard();
 
     BankAuthorisedEntityData authorisedEntity = BankAuthorisedEntityData.builder().abn(VariableConstants.ORGANISATION_ABN)
@@ -131,7 +131,7 @@ public class DirectDebitTests extends TranslatorInitialisation {
     authorisedEntity.brand(account.branch().brand());
     authorisedEntityRepository.save(authorisedEntity);
     
-    BankDirectDebitData debit = BankDirectDebitData.builder()
+    BankAccountDirectDebitData debit = BankAccountDirectDebitData.builder()
         .lastDebitAmount(VariableConstants.DEBIT_LAST_AMOUNT)
         .lastDebitDateTime(VariableConstants.DEBIT_DATE_TIME)
         .build();
@@ -164,9 +164,9 @@ public class DirectDebitTests extends TranslatorInitialisation {
     return account;
   }
 
-  public DioBankDirectDebit getDirectDebitStaticBase(BankDirectDebitData debit) {
+  public DioBankAccountDirectDebit getDirectDebitStaticBase(BankAccountDirectDebitData debit) {
     LOG.warn("Debit details are: {}", debit.toString());
-    DioBankDirectDebit dioDebitStatic = DioBankDirectDebit.builder().id(debit.id())
+    DioBankAccountDirectDebit dioDebitStatic = DioBankAccountDirectDebit.builder().id(debit.id())
         .authorisedEntity(DioBankAuthorisedEntity.builder().abn(VariableConstants.ORGANISATION_ABN)
             .acn(VariableConstants.ORGANISATION_ACN).id(debit.authorisedEntity().id())
             .description(VariableConstants.ORGANISATION_NAME)

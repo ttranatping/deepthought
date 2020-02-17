@@ -45,7 +45,7 @@ public class BankTransactionNPPData {
   @JoinColumn(name = "TRANSACTION_ID")
   @MapsId
   @ToString.Exclude
-  BankTransactionData transaction;
+  BankAccountTransactionData transaction;
 
   @Column(name = "PAYER")
   String payer;

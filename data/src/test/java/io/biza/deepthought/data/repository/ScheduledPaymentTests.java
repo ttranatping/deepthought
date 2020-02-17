@@ -17,11 +17,11 @@ import io.biza.babelfish.cdr.models.payloads.banking.account.payee.scheduled.Ban
 import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankScheduledPayment;
+import io.biza.deepthought.data.payloads.dio.banking.DioCustomerScheduledPayment;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductAdditionalInformationData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductCardArtData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductConstraintData;
@@ -95,23 +95,23 @@ public class ScheduledPaymentTests extends TranslatorInitialisation {
   private ProductBankingBundleRepository productBundleRepository;
 
   @Resource
-  private BankDirectDebitRepository directDebitRepository;
+  private BankAccountDirectDebitRepository directDebitRepository;
 
   @Resource
   private BankAuthorisedEntityRepository authorisedEntityRepository;
 
   @Resource
-  private BankScheduledPaymentRepository scheduledPaymentRepository;
+  private CustomerScheduledPaymentRepository scheduledPaymentRepository;
 
   @Test
   public void testScheduledPaymentCreateAndCompare() {
 
-    BankScheduledPaymentData scheduledPayment = createScheduledPaymentBase();
+    CustomerBankScheduledPaymentData scheduledPayment = createScheduledPaymentBase();
 
-    DioBankScheduledPayment dioScheduledPayment =
-        mapper.getMapperFacade().map(scheduledPayment, DioBankScheduledPayment.class);
+    DioCustomerScheduledPayment dioScheduledPayment =
+        mapper.getMapperFacade().map(scheduledPayment, DioCustomerScheduledPayment.class);
 
-    DioBankScheduledPayment dioScheduledPaymentStatic = getScheduledPaymentStatic(scheduledPayment);
+    DioCustomerScheduledPayment dioScheduledPaymentStatic = getScheduledPaymentStatic(scheduledPayment);
 
     LOG.warn("Source: {}", dioScheduledPayment.toString());
     LOG.warn("Destination: {}", dioScheduledPaymentStatic.toString());
@@ -127,11 +127,11 @@ public class ScheduledPaymentTests extends TranslatorInitialisation {
     }
   }
 
-  public BankScheduledPaymentData createScheduledPaymentBase() {
+  public CustomerBankScheduledPaymentData createScheduledPaymentBase() {
 
     BankAccountData account = createAccountWithCard();
 
-    BankScheduledPaymentData scheduledPayment = BankScheduledPaymentData.builder()
+    CustomerBankScheduledPaymentData scheduledPayment = CustomerBankScheduledPaymentData.builder()
         .nickName(VariableConstants.NICK_NAME).payeeReference(VariableConstants.PAYEE_DESCRIPTION)
         .payerReference(VariableConstants.BENEFICIARY_DESCRIPTION)
         .status(BankingScheduledPaymentStatus.ACTIVE).nextPaymentDate(VariableConstants.PAYMENT_DUE_DATE_TIME).build();
@@ -141,10 +141,10 @@ public class ScheduledPaymentTests extends TranslatorInitialisation {
     return scheduledPaymentRepository.findById(scheduledPayment.id()).get();
   }
 
-  public DioBankScheduledPayment getScheduledPaymentStatic(BankScheduledPaymentData scheduledPayment) {
+  public DioCustomerScheduledPayment getScheduledPaymentStatic(CustomerBankScheduledPaymentData scheduledPayment) {
     LOG.warn("Scheduled Payment are: {}", scheduledPayment.toString());
-    DioBankScheduledPayment dioScheduledPaymentStatic =
-        DioBankScheduledPayment.builder().id(scheduledPayment.id())
+    DioCustomerScheduledPayment dioScheduledPaymentStatic =
+        DioCustomerScheduledPayment.builder().id(scheduledPayment.id())
             .cdrBanking(BankingScheduledPaymentV1.builder().nickname(VariableConstants.NICK_NAME)
                 .payeeReference(VariableConstants.PAYEE_DESCRIPTION)
                 .payerReference(VariableConstants.BENEFICIARY_DESCRIPTION)

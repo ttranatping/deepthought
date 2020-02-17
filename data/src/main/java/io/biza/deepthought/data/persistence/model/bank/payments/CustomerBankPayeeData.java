@@ -1,5 +1,6 @@
 package io.biza.deepthought.data.persistence.model.bank.payments;
 
+import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -11,15 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.model.BrandData;
+import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,9 +36,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_AUTHORISED_ENTITY")
-@EqualsAndHashCode
-public class BankAuthorisedEntityData {
+@Table(name = "CUSTOMER_BANK_PAYEE")
+public class CustomerBankPayeeData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -45,30 +47,34 @@ public class BankAuthorisedEntityData {
   
   @Transient
   @Builder.Default
-  DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
-  
+  private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
+
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false)
+  @JoinColumn(name = "CUSTOMER_ID", nullable = false)
   @ToString.Exclude
-  BrandData brand;
+  CustomerData customer;
+
+  @OneToMany(mappedBy = "payee", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<CustomerBankScheduledPaymentSetData> paymentSet;
   
-  @OneToMany(mappedBy = "authorisedEntity", cascade = CascadeType.ALL)
-  @ToString.Exclude
-  Set<BankAccountDirectDebitData> directDebits;
+  @Column(name = "NICK_NAME", nullable = false)
+  @NotNull
+  String nickName;
   
   @Column(name = "DESCRIPTION")
   String description;
   
-  @Column(name = "FINANCIAL_INSTITUTION")
-  String financialInstitution;
+  @Column(name = "CREATION_DATE_TIME")
+  @CreationTimestamp
+  OffsetDateTime creationDateTime;
   
-  @Column(name = "ABN")
-  String abn;
+  @OneToOne(mappedBy = "payee", cascade = CascadeType.ALL, optional = true)
+  CustomerBankPayeeDomesticData domestic;
   
-  @Column(name = "ACN")
-  String acn;
+  @OneToOne(mappedBy = "payee", cascade = CascadeType.ALL, optional = true)
+  CustomerBankPayeeBPAYData bpay;
   
-  @Column(name = "ARBN")
-  String arbn;
-
+  @OneToOne(mappedBy = "payee", cascade = CascadeType.ALL, optional = true)
+  CustomerBankPayeeInternationalData international;
 }

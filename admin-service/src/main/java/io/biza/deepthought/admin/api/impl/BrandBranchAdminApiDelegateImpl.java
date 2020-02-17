@@ -71,7 +71,7 @@ public class BrandBranchAdminApiDelegateImpl implements BrandBranchAdminApiDeleg
     
     BankBranchData branch = optionalBranch.get();
     
-    if(branch.brand() != null && !branch.brand().equals(brand)) {
+    if(branch.brand() != null && !branch.brand().equals(brand.get())) {
       throw ValidationListException.builder().explanation(Labels.ERROR_INVALID_BRANCH_ALREADY_ASSIGNED).type(DioExceptionType.INVALID_BRANCH).build();
     }
     

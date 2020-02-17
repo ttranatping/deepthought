@@ -27,7 +27,7 @@ import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
@@ -173,7 +173,7 @@ public class BankAccountData {
    */
   @OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<BankScheduledPaymentData> scheduledPayments;
+  Set<CustomerBankScheduledPaymentData> scheduledPayments;
   
   @PrePersist
   public void prePersist() {

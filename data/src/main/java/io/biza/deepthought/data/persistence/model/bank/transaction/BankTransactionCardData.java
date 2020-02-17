@@ -44,7 +44,7 @@ public class BankTransactionCardData {
   @MapsId
   @JoinColumn(name = "TRANSACTION_ID")
   @ToString.Exclude
-  BankTransactionData transaction;
+  BankAccountTransactionData transaction;
   
   @Column(name = "MERCHANT_NAME")
   String merchantName;

@@ -14,6 +14,14 @@ public class Labels {
   public final static String TAG_BRANCH_DESCRIPTION = "The Branch Administration API";
   public final static String TAG_BANK_ACCOUNT_NAME = "bank-account-admin";
   public final static String TAG_BANK_ACCOUNT_DESCRIPTION = "The Bank Account Administration API";
+  public final static String TAG_BANK_TRANSACTION_NAME = "bank-transaction-admin";
+  public final static String TAG_BANK_TRANSACTION_DESCRIPTION = "The Bank Transaction Administration API";
+  public final static String TAG_BANK_PAYEE_NAME = "bank-payee-admin";
+  public final static String TAG_BANK_PAYEE_DESCRIPTION = "The Bank Payee Administration API";
+  public final static String TAG_BANK_SCHEDULED_PAYMENT_NAME = "bank-scheduled-payment-admin";
+  public final static String TAG_BANK_SCHEDULED_PAYMENT_DESCRIPTION = "The Bank Scheduled Payment Administration API";  
+  public final static String TAG_BANK_DIRECT_DEBIT_NAME = "bank-direct-debits-admin";
+  public final static String TAG_BANK_DIRECT_DEBIT_DESCRIPTION = "The Bank Direct Debits Administration API";    
   public final static String TAG_PRODUCT_BUNDLE_NAME = "bundle-admin";
   public final static String TAG_PRODUCT_BUNDLE_DESCRIPTION =
       "The Product Bundle Administration API";
@@ -48,8 +56,30 @@ public class Labels {
   public final static String SECURITY_SCOPE_BANK_ACCOUNT_WRITE = "DEEPTHOUGHT:ADMIN:BANK_ACCOUNT:WRITE";
   public final static String OAUTH2_SCOPE_BANK_ACCOUNT_WRITE =
       "hasAuthority('SCOPE_" + SECURITY_SCOPE_BANK_ACCOUNT_WRITE + "')";
-
-
+  public final static String SECURITY_SCOPE_TRANSACTION_READ = "DEEPTHOUGHT:ADMIN:TRANSACTION:READ";
+  public final static String OAUTH2_SCOPE_TRANSACTION_READ =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_TRANSACTION_READ + "')";
+  public final static String SECURITY_SCOPE_TRANSACTION_WRITE = "DEEPTHOUGHT:ADMIN:TRANSACTION:WRITE";
+  public final static String OAUTH2_SCOPE_TRANSACTION_WRITE =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_TRANSACTION_WRITE + "')";
+  public final static String SECURITY_SCOPE_PAYEE_READ = "DEEPTHOUGHT:ADMIN:PAYEE:READ";
+  public final static String OAUTH2_SCOPE_PAYEE_READ =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_PAYEE_READ + "')";
+  public final static String SECURITY_SCOPE_PAYEE_WRITE = "DEEPTHOUGHT:ADMIN:PAYEE:WRITE";
+  public final static String OAUTH2_SCOPE_PAYEE_WRITE =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_PAYEE_WRITE + "')";
+  public final static String SECURITY_SCOPE_DIRECT_DEBIT_READ = "DEEPTHOUGHT:ADMIN:DIRECT_DEBIT:READ";
+  public final static String OAUTH2_SCOPE_DIRECT_DEBIT_READ =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_DIRECT_DEBIT_READ + "')";
+  public final static String SECURITY_SCOPE_DIRECT_DEBIT_WRITE = "DEEPTHOUGHT:ADMIN:DIRECT_DEBIT:WRITE";
+  public final static String OAUTH2_SCOPE_DIRECT_DEBIT_WRITE =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_DIRECT_DEBIT_WRITE + "')";
+  public final static String SECURITY_SCOPE_SCHEDULED_PAYMENT_READ = "DEEPTHOUGHT:ADMIN:SCHEDULED_PAYMENT:READ";
+  public final static String OAUTH2_SCOPE_SCHEDULED_PAYMENT_READ =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_SCHEDULED_PAYMENT_READ + "')";
+  public final static String SECURITY_SCOPE_SCHEDULED_PAYMENT_WRITE = "DEEPTHOUGHT:ADMIN:SCHEDULED_PAYMENT:WRITE";
+  public final static String OAUTH2_SCOPE_SCHEDULED_PAYMENT_WRITE =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_SCHEDULED_PAYMENT_WRITE + "')";
   /**
    * Response codes as strings
    */
