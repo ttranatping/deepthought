@@ -1,7 +1,6 @@
 package io.biza.deepthought.admin.api;
 
 import io.biza.deepthought.admin.Labels;
-import io.biza.deepthought.admin.api.delegate.BranchAdminApiDelegate;
 import io.biza.deepthought.admin.api.delegate.BrandBranchAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;

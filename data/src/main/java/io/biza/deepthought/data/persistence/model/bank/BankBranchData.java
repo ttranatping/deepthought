@@ -18,7 +18,6 @@ import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionAPCSData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

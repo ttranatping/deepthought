@@ -3,7 +3,6 @@ package io.biza.deepthought.data.repository;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.annotation.Resource;
