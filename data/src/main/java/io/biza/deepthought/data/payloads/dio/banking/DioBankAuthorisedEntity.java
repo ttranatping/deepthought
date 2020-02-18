@@ -46,10 +46,8 @@ public class DioBankAuthorisedEntity {
   @JsonProperty("description")
   String description;
 
-  @Schema(
-      description = "Name of the financial institution through which the direct debit will be executed. Is required unless the payment is made via a credit card scheme")
-  @JsonProperty("financialInstitution")
-  String financialInstitution;
+  @JsonProperty("branch")
+  DioBankBranch branch;
 
   @Schema(description = "Australian Business Number for the authorised entity")
   @JsonProperty("abn")

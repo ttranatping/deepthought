@@ -5,6 +5,7 @@ import java.util.Currency;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "CUSTOMER_SCHEDULED_PAYMENT_SET")
-@EqualsAndHashCode
 public class CustomerBankScheduledPaymentSetData {
 
   @Id
@@ -54,6 +54,9 @@ public class CustomerBankScheduledPaymentSetData {
   
   @Column(name = "AMOUNT")
   BigDecimal amount;
+  
+  @Column(name = "IS_AMOUNT_CALCULATED")
+  Boolean isAmountCalculated;
   
   @Column(name = "CURRENCY")
   @Builder.Default

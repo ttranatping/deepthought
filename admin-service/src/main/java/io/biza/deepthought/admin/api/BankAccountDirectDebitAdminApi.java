@@ -100,7 +100,7 @@ public interface BankAccountDirectDebitAdminApi {
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR,
           content = @Content(array = @ArraySchema(
               schema = @Schema(implementation = ValidationListException.class))))})
-  @PutMapping(path = "/{bankAccountId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
+  @PutMapping(path = "/{directDebitId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_DIRECT_DEBIT_WRITE)
   default ResponseEntity<DioBankAccountDirectDebit> updateDirectDebit(
@@ -116,12 +116,11 @@ public interface BankAccountDirectDebitAdminApi {
       security = {@SecurityRequirement(name = Labels.SECURITY_SCHEME_NAME,
           scopes = {Labels.SECURITY_SCOPE_DIRECT_DEBIT_WRITE})})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
-          description = Labels.RESPONSE_SUCCESSFUL_DELETE,
-          content = @Content(schema = @Schema(implementation = DioBankAccountDirectDebit.class))),
+      @ApiResponse(responseCode = Labels.RESPONSE_CODE_NO_CONTENT,
+          description = Labels.RESPONSE_SUCCESSFUL_DELETE),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
           description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
-  @DeleteMapping(path = "/{bankAccountId}")
+  @DeleteMapping(path = "/{directDebitId}")
   @PreAuthorize(Labels.OAUTH2_SCOPE_DIRECT_DEBIT_WRITE)
   default ResponseEntity<Void> deleteDirectDebit(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,

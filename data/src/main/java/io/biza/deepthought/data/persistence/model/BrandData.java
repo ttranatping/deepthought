@@ -68,9 +68,6 @@ public class BrandData {
   @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
   Set<BankBranchData> branch;
   
-  @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
-  Set<BankAuthorisedEntityData> authorisedEntity;
-
   @PrePersist
   public void prePersist() {
     if (product() != null) {

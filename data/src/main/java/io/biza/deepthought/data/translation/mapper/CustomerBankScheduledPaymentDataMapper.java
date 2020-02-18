@@ -19,6 +19,7 @@ public class CustomerBankScheduledPaymentDataMapper implements OrikaFactoryConfi
     orikaMapperFactory.classMap(CustomerBankScheduledPaymentData.class, BankingScheduledPaymentV1.class)
         .fieldAToB("id", "scheduledPaymentId")
         .field("nickName", "nickname")
+        .field("paymentSet", "paymentSet")
         .field("", "recurrence")
         .byDefault().register();
     

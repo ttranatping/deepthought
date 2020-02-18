@@ -2,6 +2,7 @@ package io.biza.deepthought.data.persistence.model.bank;
 
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
+import io.biza.deepthought.data.persistence.model.bank.payments.BankAuthorisedEntityData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,6 +52,9 @@ public class BankBranchData {
   @JoinColumn(name = "BRAND_ID")
   @ToString.Exclude
   BrandData brand;
+  
+  @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
+  Set<BankAuthorisedEntityData> authorisedEntity;
   
   @OneToMany(mappedBy = "branch")
   @ToString.Exclude

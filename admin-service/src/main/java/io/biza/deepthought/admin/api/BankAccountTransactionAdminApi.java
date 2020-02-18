@@ -100,7 +100,7 @@ public interface BankAccountTransactionAdminApi {
           description = Labels.RESPONSE_INPUT_VALIDATION_ERROR,
           content = @Content(array = @ArraySchema(
               schema = @Schema(implementation = ValidationListException.class))))})
-  @PutMapping(path = "/{bankAccountId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
+  @PutMapping(path = "/{transactionId}", consumes = {MediaType.APPLICATION_JSON_VALUE},
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Labels.OAUTH2_SCOPE_TRANSACTION_WRITE)
   default ResponseEntity<DioBankAccountTransaction> updateTransaction(
@@ -116,12 +116,11 @@ public interface BankAccountTransactionAdminApi {
       security = {@SecurityRequirement(name = Labels.SECURITY_SCHEME_NAME,
           scopes = {Labels.SECURITY_SCOPE_TRANSACTION_WRITE})})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
-          description = Labels.RESPONSE_SUCCESSFUL_DELETE,
-          content = @Content(schema = @Schema(implementation = DioBankAccountTransaction.class))),
+      @ApiResponse(responseCode = Labels.RESPONSE_CODE_NO_CONTENT,
+          description = Labels.RESPONSE_SUCCESSFUL_DELETE),
       @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
           description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
-  @DeleteMapping(path = "/{bankAccountId}")
+  @DeleteMapping(path = "/{transactionId}")
   @PreAuthorize(Labels.OAUTH2_SCOPE_TRANSACTION_WRITE)
   default ResponseEntity<Void> deleteTransaction(
       @NotNull @Valid @PathVariable("brandId") UUID brandId,

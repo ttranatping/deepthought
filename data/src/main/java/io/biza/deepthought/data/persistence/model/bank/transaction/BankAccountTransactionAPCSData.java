@@ -1,21 +1,20 @@
 package io.biza.deepthought.data.persistence.model.bank.transaction;
 
 import java.util.UUID;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
-import io.biza.babelfish.cdr.enumerations.BankingTransactionService;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
+import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,38 +30,27 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_TRANSACTION_NPP")
-public class BankTransactionNPPData {
+@Table(name = "BANK_TRANSACTION_APCS")
+public class BankAccountTransactionAPCSData {
 
   @Id
   @Type(type = "uuid-char")
   UUID id;
   
+  @Transient
   @Builder.Default
   private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "TRANSACTION_ID")
   @MapsId
+  @JoinColumn(name = "TRANSACTION_ID")
   @ToString.Exclude
   BankAccountTransactionData transaction;
-
-  @Column(name = "PAYER")
-  String payer;
-
-  @Column(name = "PAYEE")
-  String payee;
   
-  @Column(name = "END_TO_END_ID")
-  String endToEndId;
-  
-  @Column(name = "PURPOSE")
-  String purposeCode;
-  
-  @Column(name = "SERVICE")
-  @Enumerated(EnumType.STRING)
+  @ManyToOne
+  @JoinColumn(name = "BRANCH_ID", nullable = false)
+  @ToString.Exclude
   @NotNull
-  @Builder.Default
-  BankingTransactionService service = BankingTransactionService.X2P101;
+  private BankBranchData branch;
   
 }

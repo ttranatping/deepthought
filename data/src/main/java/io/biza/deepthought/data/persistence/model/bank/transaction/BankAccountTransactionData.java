@@ -3,6 +3,8 @@ package io.biza.deepthought.data.persistence.model.bank.transaction;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Currency;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -92,16 +95,30 @@ public class BankAccountTransactionData {
   private String reference = "";
   
   @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
-  private BankTransactionCardData card;
+  private BankAccountTransactionCardData card;
   
   @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
-  private BankTransactionBPAYData bpay;
+  private BankAccountTransactionBPAYData bpay;
   
   @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
-  private BankTransactionAPCSData apcs;
+  private BankAccountTransactionAPCSData apcs;
   
   @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
-  private BankTransactionNPPData npp;
-
-
+  private BankAccountTransactionNPPData npp;
+  
+  @PrePersist
+  public void prePersist() {
+    if(this.card() != null) {
+      this.card().transaction(this);
+    }
+    if(this.bpay() != null) {
+      this.bpay().transaction(this);
+    }
+    if(this.apcs() != null) {
+      this.apcs().transaction(this);
+    }
+    if(this.npp() != null) {
+      this.npp().transaction(this);
+    }
+  }
 }

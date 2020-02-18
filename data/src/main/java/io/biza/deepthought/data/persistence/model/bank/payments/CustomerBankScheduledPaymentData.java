@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -44,7 +45,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "CUSTOMER_SCHEDULED_PAYMENT")
-@EqualsAndHashCode
 public class CustomerBankScheduledPaymentData {
 
   @Id
@@ -85,7 +85,6 @@ public class CustomerBankScheduledPaymentData {
   BankAccountData from;
   
   @OneToMany(mappedBy = "scheduledPayment", cascade = CascadeType.ALL)
-  @ToString.Exclude
   Set<CustomerBankScheduledPaymentSetData> paymentSet;
   
   @Column(name = "NEXT_PAYMENT_DATE")
@@ -114,5 +113,14 @@ public class CustomerBankScheduledPaymentData {
   
   @Column(name = "SCHEDULE_DESCRIPTION")
   String scheduleDescription;
+  
+  @PrePersist
+  public void prePersist() {
+    if(this.paymentSet() != null) {
+      for(CustomerBankScheduledPaymentSetData item : this.paymentSet() ) {
+        item.scheduledPayment(this);
+      }
+    }
+  }
 
 }

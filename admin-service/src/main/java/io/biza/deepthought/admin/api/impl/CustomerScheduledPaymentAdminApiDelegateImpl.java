@@ -79,10 +79,9 @@ public class CustomerScheduledPaymentAdminApiDelegateImpl implements CustomerSch
     
     CustomerBankScheduledPaymentData requestScheduledPayment = mapper.map(createRequest, CustomerBankScheduledPaymentData.class);
     requestScheduledPayment.customer(customer.get());
-    
+
+    LOG.debug("Creating a new bank scheduled payment for brand {} customer {} with content of {}", brandId, customerId, requestScheduledPayment);
     CustomerBankScheduledPaymentData scheduledPayment = bankScheduledPaymentRepository.save(requestScheduledPayment);
-    
-    LOG.debug("Creating a new bank scheduled payment for brand {} customer {} with content of {}", brandId, customerId, scheduledPayment);
     return getScheduledPayment(brandId, customerId, scheduledPayment.id());
   }
 
@@ -112,7 +111,7 @@ public class CustomerScheduledPaymentAdminApiDelegateImpl implements CustomerSch
 
     if (optionalData.isPresent()) {
       CustomerBankScheduledPaymentData data = optionalData.get();
-      mapper.map(createRequest, CustomerBankScheduledPaymentData.class);
+      mapper.map(createRequest, data);
       bankScheduledPaymentRepository.save(data);
       
       LOG.debug("Updated scheduled payment with brand {} customer id {} and id {} containing content of {}", brandId,

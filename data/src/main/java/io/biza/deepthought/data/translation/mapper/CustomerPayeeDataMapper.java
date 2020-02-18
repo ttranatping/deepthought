@@ -13,7 +13,7 @@ public class CustomerPayeeDataMapper implements OrikaFactoryConfigurerInterface 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
     orikaMapperFactory.classMap(CustomerBankPayeeData.class, DioCustomerPayee.class)
-        .fieldAToB("id", "id").field("id", "cdrBanking.payeeId")
+        .fieldAToB("id", "id").fieldAToB("id", "cdrBanking.payeeId")
         .field("description", "cdrBanking.description")
         .field("nickName", "cdrBanking.nickname").field("creationDateTime", "cdrBanking.creationDate")
         .field("domestic", "cdrBanking.domestic")

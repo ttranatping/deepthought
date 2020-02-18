@@ -16,10 +16,12 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountDirectDebit;
+import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
 import io.biza.deepthought.data.repository.BankAccountDirectDebitRepository;
 import io.biza.deepthought.data.repository.BankAccountRepository;
+import io.biza.deepthought.data.repository.BankBranchRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -35,6 +37,9 @@ public class BankAccountDirectDebitAdminApiDelegateImpl implements BankAccountDi
   
   @Autowired
   private BankAccountRepository bankAccountRepository;
+  
+  @Autowired
+  private BankBranchRepository branchRepository;
   
   @Autowired
   private Validator validator;
@@ -71,12 +76,21 @@ public class BankAccountDirectDebitAdminApiDelegateImpl implements BankAccountDi
     Optional<BankAccountData> bankAccount = bankAccountRepository.findByIdAndBranchIdAndBranchBrandId(accountId, branchId, brandId);
     
     if (!bankAccount.isPresent()) {
-      LOG.warn("Attempted to create a directDebit for an account which could not be identified with brand {} branch {} and account id of {}", brandId, branchId, accountId);
+      LOG.warn("Attempted to create a direct debit for an account which could not be identified with brand {} branch {} and account id of {}", brandId, branchId, accountId);
       throw ValidationListException.builder().type(DioExceptionType.INVALID_ACCOUNT).explanation(Labels.ERROR_INVALID_ACCOUNT).build();
     }
     
     BankAccountDirectDebitData requestDirectDebit = mapper.map(createRequest, BankAccountDirectDebitData.class);
     requestDirectDebit.account(bankAccount.get());
+    
+    if(createRequest.authorisedEntity() != null) {
+      Optional<BankBranchData> destinationBranch = branchRepository.findById(createRequest.authorisedEntity().branch().id());
+      if(!destinationBranch.isPresent()) {
+        LOG.warn("Attempted to create a direct debit with authorised entity where the specified branch id of {} cannot be identified", createRequest.authorisedEntity().branch().id());
+        throw ValidationListException.builder().type(DioExceptionType.INVALID_BRANCH).explanation(Labels.ERROR_INVALID_BRANCH).build();        
+      }
+      requestDirectDebit.authorisedEntity().branch(destinationBranch.get());
+    }
     
     BankAccountDirectDebitData directDebit = bankDirectDebitRepository.save(requestDirectDebit);
     
@@ -94,8 +108,8 @@ public class BankAccountDirectDebitAdminApiDelegateImpl implements BankAccountDi
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     } else {
       LOG.warn(
-          "Attempted to delete a bank directDebit but it couldn't be found with branch {} branch {} account {} and id of {}",
-          branchId, branchId, accountId, directDebitId);
+          "Attempted to delete a bank direct debit but it couldn't be found with brand {} branch {} account {} and id of {}",
+          brandId, branchId, accountId, directDebitId);
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
@@ -110,12 +124,12 @@ public class BankAccountDirectDebitAdminApiDelegateImpl implements BankAccountDi
 
     if (optionalData.isPresent()) {
       BankAccountDirectDebitData data = optionalData.get();
-      mapper.map(createRequest, BankAccountDirectDebitData.class);
+      mapper.map(createRequest, data);
       bankDirectDebitRepository.save(data);
       
-      LOG.debug("Updated directDebit with branch {} branch {} account id {} and id {} containing content of {}", branchId, branchId,
+      LOG.debug("Updated direct debit with brand {} branch {} account id {} and id {} containing content of {}", branchId, branchId,
           accountId, directDebitId, data);
-      return getDirectDebit(branchId, branchId, accountId, directDebitId);
+      return getDirectDebit(brandId, branchId, accountId, directDebitId);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

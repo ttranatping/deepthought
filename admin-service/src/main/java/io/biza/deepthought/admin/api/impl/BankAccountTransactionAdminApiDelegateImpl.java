@@ -16,9 +16,11 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountTransaction;
+import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.data.repository.BankAccountTransactionRepository;
+import io.biza.deepthought.data.repository.BankBranchRepository;
 import io.biza.deepthought.data.repository.BankAccountRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,6 +37,9 @@ public class BankAccountTransactionAdminApiDelegateImpl implements BankAccountTr
   
   @Autowired
   private BankAccountRepository bankAccountRepository;
+  
+  @Autowired
+  private BankBranchRepository branchRepository;
   
   @Autowired
   private Validator validator;
@@ -78,6 +83,15 @@ public class BankAccountTransactionAdminApiDelegateImpl implements BankAccountTr
     BankAccountTransactionData requestTransaction = mapper.map(createRequest, BankAccountTransactionData.class);
     requestTransaction.account(bankAccount.get());
     
+    if(createRequest.apcs() != null) {
+      Optional<BankBranchData> destinationBranch = branchRepository.findByBsb(createRequest.apcs().branch().bsb());
+      if(!destinationBranch.isPresent()) {
+        LOG.warn("Attempted to create a transaction with APCS details where the Branch BSB {} cannot be identified", createRequest.apcs().branch().bsb());
+        throw ValidationListException.builder().type(DioExceptionType.INVALID_BRANCH).explanation(Labels.ERROR_INVALID_BRANCH).build();        
+      }
+      requestTransaction.apcs().branch(destinationBranch.get());
+    }
+    
     BankAccountTransactionData transaction = bankTransactionRepository.save(requestTransaction);
     
     LOG.debug("Creating a new bank account for brand {} branch {} account {} with content of {}", brandId, branchId, accountId, transaction);
@@ -102,20 +116,20 @@ public class BankAccountTransactionAdminApiDelegateImpl implements BankAccountTr
 
   @Override
   public ResponseEntity<DioBankAccountTransaction> updateTransaction(UUID brandId, UUID branchId, UUID accountId, UUID transactionId,
-      DioBankAccountTransaction createRequest) throws ValidationListException {
+      DioBankAccountTransaction updateRequest) throws ValidationListException {
 
-    DeepThoughtValidator.validate(validator, createRequest);
+    DeepThoughtValidator.validate(validator, updateRequest);
     
     Optional<BankAccountTransactionData> optionalData = bankTransactionRepository.findByIdAndAccountIdAndAccountBranchIdAndAccountBranchBrandId(transactionId, accountId, branchId, brandId);
 
     if (optionalData.isPresent()) {
       BankAccountTransactionData data = optionalData.get();
-      mapper.map(createRequest, BankAccountTransactionData.class);
-      bankTransactionRepository.save(data);
+      mapper.map(updateRequest, data);
+      BankAccountTransactionData responseData = bankTransactionRepository.save(data);
       
-      LOG.debug("Updated transaction with branch {} branch {} account id {} and id {} containing content of {}", branchId, branchId,
-          accountId, transactionId, data);
-      return getTransaction(branchId, branchId, accountId, transactionId);
+      LOG.debug("Updated transaction with brand {} branch {} account id {} and id {} containing content of {}", brandId, branchId,
+          accountId, transactionId, responseData);
+      return getTransaction(brandId, branchId, accountId, transactionId);
     } else {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

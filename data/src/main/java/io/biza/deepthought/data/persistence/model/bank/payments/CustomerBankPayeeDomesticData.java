@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -34,7 +35,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "CUSTOMER_BANK_PAYEE_DOMESTIC")
-@EqualsAndHashCode
 public class CustomerBankPayeeDomesticData {
 
   @Id
@@ -77,5 +77,11 @@ public class CustomerBankPayeeDomesticData {
   @Enumerated(EnumType.STRING)
   PayloadTypeBankingDomesticPayeePayId payIdType;
   
+  @PrePersist
+  public void prePersist() {
+    if (this.payee() != null) {
+      this.payee().domestic(this);
+    }
+  }
   
 }

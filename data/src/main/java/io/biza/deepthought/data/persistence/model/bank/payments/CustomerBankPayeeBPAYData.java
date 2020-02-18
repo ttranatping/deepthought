@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -30,7 +31,6 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "CUSTOMER_BANK_PAYEE_BPAY")
-@EqualsAndHashCode
 public class CustomerBankPayeeBPAYData {
 
   @Id
@@ -55,5 +55,13 @@ public class CustomerBankPayeeBPAYData {
   
   @Column(name = "CRN")
   String crn;
+  
+  @PrePersist
+  public void prePersist() {
+    if (this.payee() != null) {
+      this.payee().bpay(this);
+    }
+  }
+
   
 }

@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -77,4 +78,17 @@ public class CustomerBankPayeeData {
   
   @OneToOne(mappedBy = "payee", cascade = CascadeType.ALL, optional = true)
   CustomerBankPayeeInternationalData international;
+  
+  @PrePersist
+  public void prePersist() {
+    if (this.domestic() != null) {
+      this.domestic().payee(this);
+    }
+    if (this.bpay() != null) {
+      this.bpay().payee(this);
+    }
+    if (this.international() != null) {
+      this.international().payee(this);
+    }
+  }
 }

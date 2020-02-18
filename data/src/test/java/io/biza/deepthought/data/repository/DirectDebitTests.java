@@ -13,6 +13,7 @@ import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAuthorisedEntity;
+import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountDirectDebit;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
@@ -127,10 +128,8 @@ public class DirectDebitTests extends TranslatorInitialisation {
     BankAuthorisedEntityData authorisedEntity = BankAuthorisedEntityData.builder().abn(VariableConstants.ORGANISATION_ABN)
         .acn(VariableConstants.ORGANISATION_ACN)
         .description(VariableConstants.ORGANISATION_NAME)
-        .financialInstitution(VariableConstants.BANK_NAME).build();
-    authorisedEntity.brand(account.branch().brand());
-    authorisedEntityRepository.save(authorisedEntity);
-    
+        .build();
+    authorisedEntity.branch(account.branch());
     BankAccountDirectDebitData debit = BankAccountDirectDebitData.builder()
         .lastDebitAmount(VariableConstants.DEBIT_LAST_AMOUNT)
         .lastDebitDateTime(VariableConstants.DEBIT_DATE_TIME)
@@ -170,7 +169,8 @@ public class DirectDebitTests extends TranslatorInitialisation {
         .authorisedEntity(DioBankAuthorisedEntity.builder().abn(VariableConstants.ORGANISATION_ABN)
             .acn(VariableConstants.ORGANISATION_ACN).id(debit.authorisedEntity().id())
             .description(VariableConstants.ORGANISATION_NAME)
-            .financialInstitution(VariableConstants.BANK_NAME).build())
+            .branch(mapper.getMapperFacade().map(debit.account().branch(), DioBankBranch.class))
+            .build())
         .lastDebitAmount(VariableConstants.DEBIT_LAST_AMOUNT)
         .lastDebitDateTime(VariableConstants.DEBIT_DATE_TIME).build();
     

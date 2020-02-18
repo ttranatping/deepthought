@@ -43,11 +43,11 @@ import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDe
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierApplicabilityData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierData;
-import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionAPCSData;
-import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionBPAYData;
-import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionCardData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionAPCSData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionBPAYData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionCardData;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
-import io.biza.deepthought.data.persistence.model.bank.transaction.BankTransactionNPPData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionNPPData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressData;
@@ -113,7 +113,7 @@ public class TransactionTests extends TranslatorInitialisation {
   public void testTransactionNppCreateAndCompare() throws CsvValidationException, IOException {
 
     BankAccountTransactionData transaction = createTransactionBase();
-    transaction.npp(BankTransactionNPPData.builder()
+    transaction.npp(BankAccountTransactionNPPData.builder()
         .endToEndId(VariableConstants.TRANSACTION_NPP_END_TO_END.toString())
         .payee(VariableConstants.TRANSACTION_NPP_PAYEE)
         .payer(VariableConstants.TRANSACTION_NPP_PAYER)
@@ -152,7 +152,7 @@ public class TransactionTests extends TranslatorInitialisation {
   public void testTransactionApcsCreateAndCompare() throws CsvValidationException, IOException {
 
     BankAccountTransactionData transaction = createTransactionBase();
-    transaction.apcs(BankTransactionAPCSData.builder().branch(transaction.account().branch()).build()
+    transaction.apcs(BankAccountTransactionAPCSData.builder().branch(transaction.account().branch()).build()
         .transaction(transaction));
     transactionRepository.save(transaction);
 
@@ -184,7 +184,7 @@ public class TransactionTests extends TranslatorInitialisation {
 
     BankAccountTransactionData transaction = createTransactionBase();
     transaction
-        .bpay(BankTransactionBPAYData.builder().billerCode(VariableConstants.TRANSACTION_BILLER_CODE)
+        .bpay(BankAccountTransactionBPAYData.builder().billerCode(VariableConstants.TRANSACTION_BILLER_CODE)
             .billerName(VariableConstants.TRANSACTION_BILLER_NAME)
             .crn(VariableConstants.TRANSACTION_CRN).build().transaction(transaction));
     transactionRepository.save(transaction);
@@ -218,7 +218,7 @@ public class TransactionTests extends TranslatorInitialisation {
   public void testTransactionMerchantCreateAndCompare() throws CsvValidationException, IOException {
 
     BankAccountTransactionData transaction = createTransactionBase();
-    transaction.card(BankTransactionCardData.builder()
+    transaction.card(BankAccountTransactionCardData.builder()
         .merchantCategoryCode(
             MerchantCategoryCodeType.fromValue(VariableConstants.TRANSACTION_MERCHANT_CODE))
         .merchantName(VariableConstants.TRANSACTION_MERCHANT_NAME).build()

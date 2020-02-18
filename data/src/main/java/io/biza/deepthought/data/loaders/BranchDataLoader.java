@@ -31,7 +31,7 @@ public class BranchDataLoader {
       String[] line;
       while ((line = csvReader.readNext()) != null) {
         Integer bsb = Integer.parseInt(line[0].replaceAll("-", ""));
-        if (branchRepository.findByBsb(bsb) == null) {
+        if (!branchRepository.findByBsb(bsb).isPresent()) {
           branchRepository.save(BankBranchData.builder().bsb(bsb).bankName(line[1]).branchName(line[2])
               .branchAddress(line[3]).branchCity(line[4]).branchState(line[5])
               .branchPostcode(line[6]).build());

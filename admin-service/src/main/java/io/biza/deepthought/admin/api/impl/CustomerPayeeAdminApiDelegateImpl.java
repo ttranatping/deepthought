@@ -79,10 +79,8 @@ public class CustomerPayeeAdminApiDelegateImpl implements CustomerPayeeAdminApiD
     
     CustomerBankPayeeData requestPayee = mapper.map(createRequest, CustomerBankPayeeData.class);
     requestPayee.customer(customer.get());
-    
+    LOG.debug("Creating a new bank payee for brand {} customer {} with content of {}", brandId, customerId, requestPayee);    
     CustomerBankPayeeData payee = bankPayeeRepository.save(requestPayee);
-    
-    LOG.debug("Creating a new bank payee for brand {} customer {} with content of {}", brandId, customerId, payee);
     return getPayee(brandId, customerId, payee.id());
   }
 
@@ -112,7 +110,7 @@ public class CustomerPayeeAdminApiDelegateImpl implements CustomerPayeeAdminApiD
 
     if (optionalData.isPresent()) {
       CustomerBankPayeeData data = optionalData.get();
-      mapper.map(createRequest, CustomerBankPayeeData.class);
+      mapper.map(createRequest, data);
       bankPayeeRepository.save(data);
       
       LOG.debug("Updated payee with brand {} customer id {} and id {} containing content of {}", brandId,
