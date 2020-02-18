@@ -103,7 +103,7 @@
 
         <dependency>
             <groupId>io.biza</groupId>
-            <artifactId>deepthought-common</artifactId>
+            <artifactId>deepthought-shared</artifactId>
             <version>${project.version}</version>
         </dependency>
 

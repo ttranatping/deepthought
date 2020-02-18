@@ -12,7 +12,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import io.biza.babelfish.cdr.exceptions.PayloadConversionException;
 import io.biza.babelfish.cdr.exceptions.UnsupportedPayloadException;
 import io.biza.babelfish.cdr.support.BabelfishVersioner;
-import io.biza.deepthought.common.support.CDRVersioner;
+import io.biza.deepthought.shared.support.CDRVersioner;
 import lombok.extern.slf4j.Slf4j;
 
 @ControllerAdvice

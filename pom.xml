@@ -106,10 +106,11 @@
     <modules>
         <module>keycloak-theme</module>
         <module>data</module>
-        <module>common</module>
+        <module>shared</module>
         <module>admin-service</module>
         <module>admin-frontend</module>
-        <module>product-api-service</module>
+	<module>product-api-service</module>
+	<module>common-api-service</module>
     </modules>
 
     <build>

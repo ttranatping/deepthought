@@ -1,4 +1,4 @@
-package io.biza.deepthought.common.support;
+package io.biza.deepthought.shared.support;
 
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;

@@ -15,13 +15,13 @@ import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductV2;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV2;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductListV2;
 import io.biza.babelfish.cdr.models.responses.container.ResponseBankingProductListDataV2;
-import io.biza.deepthought.common.support.CDRContainerAttributes;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.ProductRepository;
 import io.biza.deepthought.data.specification.ProductBankingSpecifications;
 import io.biza.deepthought.product.api.delegate.ProductApiDelegate;
 import io.biza.deepthought.product.api.requests.RequestListProducts;
+import io.biza.deepthought.shared.support.CDRContainerAttributes;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated

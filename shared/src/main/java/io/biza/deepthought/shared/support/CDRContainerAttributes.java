@@ -1,4 +1,4 @@
-package io.biza.deepthought.common.support;
+package io.biza.deepthought.shared.support;
 
 import org.springframework.data.domain.Page;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
