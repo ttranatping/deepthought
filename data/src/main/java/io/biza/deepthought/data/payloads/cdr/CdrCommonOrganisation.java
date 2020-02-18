@@ -1,9 +1,16 @@
 package io.biza.deepthought.data.payloads.cdr;
 
+import java.time.LocalDate;
+import java.util.Locale;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import io.biza.babelfish.cdr.converters.CountryStringToLocaleConverter;
+import io.biza.babelfish.cdr.converters.LocaleToCountryStringConverter;
 import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
+import io.biza.deepthought.data.Constants;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,13 +54,16 @@ public class CdrCommonOrganisation {
   CommonOrganisationType organisationType;
 
   @Schema(
-      description = "Enumeration with values from [ISO 3166 Alpha-3](https://www.iso.org/iso-3166-country-codes.html) country codes.", type = "string")
+      description = "Enumeration with values from [ISO 3166 Alpha-3](https://www.iso.org/iso-3166-country-codes.html) country codes.", type = "string", defaultValue = "AUS")
   @JsonProperty("registeredCountry")
-  String registeredCountry;
+  @JsonSerialize(converter = LocaleToCountryStringConverter.class)
+  @JsonDeserialize(converter = CountryStringToLocaleConverter.class)
+  @NotNull
+  @Builder.Default
+  Locale registeredCountry = new Locale(Constants.DEFAULT_LANGUAGE, Constants.DEFAULT_LOCALE);
 
   @Schema(description = "The date the organisation described was established", type = "string", format = "date")
   @JsonProperty("establishmentDate")
-  String establishmentDate;
-
+  LocalDate establishmentDate;
 
 }

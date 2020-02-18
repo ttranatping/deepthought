@@ -23,8 +23,10 @@ import io.biza.deepthought.data.payloads.ValidationError;
 import lombok.extern.slf4j.Slf4j;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.RollbackException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 @Slf4j
@@ -39,6 +41,41 @@ public class ExceptionController {
             .explanation("Received an illegal state exception").build());
   }
 
+  @ExceptionHandler(RollbackException.class)
+  public ResponseEntity<Object> handleRollbackException(HttpServletRequest req,
+      RollbackException ex) {
+
+    ResponseValidationError errors = ResponseValidationError.builder()
+        .type(DioExceptionType.VALIDATION_ERROR)
+        .explanation("Input has invalid parameters, see validationErrors for explanation").build();
+
+    Throwable exThrowable = ex.getCause();
+
+    if (exThrowable != null && exThrowable instanceof ConstraintViolationException) {
+      ConstraintViolationException constraintException = (ConstraintViolationException) exThrowable;
+
+
+      constraintException.getConstraintViolations().forEach(violation -> {
+        try {
+          errors.validationErrors()
+              .add(ValidationError.builder().fields(List.of(violation.getPropertyPath().toString()))
+                  .message(StringUtils.capitalize(violation.getMessage()))
+                  .type(DioValidationErrorType.ATTRIBUTE_INVALID).build());
+        } catch (IllegalArgumentException e) {
+          LOG.error("Attempted to unwrap an error which is not supported: {}", violation);
+          errors.validationErrors()
+              .add(ValidationError.builder()
+                  .fields(List.of(violation.getConstraintDescriptor().toString()))
+                  .message(StringUtils.capitalize(violation.getMessage()))
+                  .type(DioValidationErrorType.ATTRIBUTE_INVALID).build());
+        }
+      });
+    } else {
+      LOG.error("Received RollbackException of unknown view with content of {}", ex.toString());
+    }
+
+    return ResponseEntity.unprocessableEntity().body(errors);
+  }
 
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<Object> handleHttpMessageNotReadable(HttpServletRequest req,

@@ -2,7 +2,7 @@ package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.dio.DioBrand;
-import io.biza.deepthought.data.persistence.model.bank.BrandData;
+import io.biza.deepthought.data.persistence.model.BrandData;
 import ma.glasnost.orika.MapperFactory;
 
 public class BrandDataMapper implements OrikaFactoryConfigurerInterface {

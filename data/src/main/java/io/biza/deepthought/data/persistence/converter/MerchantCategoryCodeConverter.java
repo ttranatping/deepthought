@@ -1,7 +1,6 @@
 package io.biza.deepthought.data.persistence.converter;
 
 import java.io.IOException;
-import java.util.Locale;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import com.opencsv.exceptions.CsvValidationException;

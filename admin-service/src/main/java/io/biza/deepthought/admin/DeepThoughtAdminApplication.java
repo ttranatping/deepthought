@@ -14,13 +14,14 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 
 @SpringBootApplication
 @EnableOAuth2Client
-@ComponentScan({"io.biza.deepthought.common.component", "io.biza.deepthought.data.component", "io.biza.deepthought.admin"})
+@ComponentScan({"io.biza.deepthought.common.component", "io.biza.deepthought.data.component",
+    "io.biza.deepthought.data.loaders", "io.biza.deepthought.admin"})
 public class DeepThoughtAdminApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(DeepThoughtAdminApplication.class, args);
   }
-  
+
   @Bean
   public OpenAPI customOpenAPI(@Value("${deepthought.version}") String appVersion) {
     /**

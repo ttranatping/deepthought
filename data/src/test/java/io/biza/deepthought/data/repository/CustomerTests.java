@@ -17,7 +17,7 @@ import io.biza.babelfish.cdr.enumerations.CommonOrganisationType;
 import io.biza.deepthought.data.Constants;
 import io.biza.deepthought.data.enumerations.DioCustomerType;
 import io.biza.deepthought.data.payloads.dio.common.DioCustomer;
-import io.biza.deepthought.data.persistence.model.bank.BrandData;
+import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.biza.deepthought.data.persistence.model.organisation.OrganisationAddressData;
 import io.biza.deepthought.data.persistence.model.organisation.OrganisationAddressSimpleData;

@@ -115,11 +115,29 @@ public class TranslatorInitialisation {
           || objectAType.getTypeName().startsWith("io.biza.babelfish.cdr.v2.model")) {
         createComparisonModel(objectAValue, objectBValue, cellTitle, table);
       } else if (objectAType.getTypeName().startsWith("java.util.List")) {
-        List<?> listAItems = objectAValue instanceof String ? List.of(objectAValue) : (List<?>) objectAValue;
-        List<?> listBItems = objectBValue instanceof String ? List.of(objectBValue) : (List<?>) objectBValue;
-        for (int i = 0; i < listAItems.size(); i++) {
-          createComparisonModel(listAItems.get(i), listBItems.get(i), cellTitle + "[" + i + "]",
-              table);
+        List<?> listAItems = List.of();
+        List<?> listBItems = List.of();
+        if(objectAValue instanceof String) {
+          listAItems = List.of(objectAValue);
+        }
+        
+        if(objectBValue instanceof String) {
+          listBItems = List.of(objectBValue);
+        }
+        
+        if(objectAValue instanceof List) {
+          listAItems = (List<?>) objectAValue;
+        }        
+
+        if(objectBValue instanceof List) {
+          listBItems = (List<?>)objectBValue;
+        }
+        
+        if(objectAValue instanceof List && objectBValue instanceof List) {
+          for (int i = 0; i < listAItems.size(); i++) {
+            createComparisonModel(listAItems.get(i), listBItems.get(i), cellTitle + "[" + i + "]",
+                table);
+          }
         }
       } else if (objectAType.getTypeName().startsWith("java.util.Set") && objectBValue instanceof Set) {
         Iterator<?> listAItems = ((Set<?>) objectAValue).iterator();

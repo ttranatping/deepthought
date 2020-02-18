@@ -9,9 +9,9 @@ import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateT
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductBankingRateLendingTierData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierData;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
@@ -22,18 +22,18 @@ public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigur
   public void configure(MapperFactory orikaMapperFactory) {
 
     orikaMapperFactory
-        .classMap(ProductBankingRateLendingData.class, BankingProductLendingRateV1.class)
+        .classMap(BankProductRateLendingData.class, BankingProductLendingRateV1.class)
         .exclude("tiers").byDefault()
-        .customize(new CustomMapper<ProductBankingRateLendingData, BankingProductLendingRateV1>() {
+        .customize(new CustomMapper<BankProductRateLendingData, BankingProductLendingRateV1>() {
           @Override
-          public void mapAtoB(ProductBankingRateLendingData from, BankingProductLendingRateV1 to,
+          public void mapAtoB(BankProductRateLendingData from, BankingProductLendingRateV1 to,
               MappingContext context) {
 
             List<BankingProductRateTierV1> tierList =
                 new ArrayList<BankingProductRateTierV1>();
 
             if (from.tiers() != null) {
-              for (ProductBankingRateLendingTierData tierData : from.tiers()) {
+              for (BankProductRateLendingTierData tierData : from.tiers()) {
                 BankingProductRateTierV1 rateTier = new BankingProductRateTierV1();
                 rateTier.maximumValue(tierData.maximumValue());
                 rateTier.minimumValue(tierData.minimumValue());
@@ -54,7 +54,7 @@ public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigur
           }
         }).register();
 
-    orikaMapperFactory.classMap(ProductBankingRateLendingData.class, DioProductRateLending.class)
+    orikaMapperFactory.classMap(BankProductRateLendingData.class, DioProductRateLending.class)
         .fieldAToB("id", "id").field("schemeType", "schemeType")
         .field("lendingRateType", "cdrBanking.lendingRateType").field("rate", "cdrBanking.rate")
         .field("comparisonRate", "cdrBanking.comparisonRate")
@@ -64,9 +64,9 @@ public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigur
         .field("additionalValue", "cdrBanking.additionalValue")
         .field("additionalInfo", "cdrBanking.additionalInfo")
         .field("additionalInfoUri", "cdrBanking.additionalInfoUri")
-        .customize(new CustomMapper<ProductBankingRateLendingData, DioProductRateLending>() {
+        .customize(new CustomMapper<BankProductRateLendingData, DioProductRateLending>() {
           @Override
-          public void mapAtoB(ProductBankingRateLendingData from, DioProductRateLending to,
+          public void mapAtoB(BankProductRateLendingData from, DioProductRateLending to,
               MappingContext context) {
 
             List<BankingProductRateTierV1> tierList =
@@ -74,7 +74,7 @@ public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigur
 
             if (from.tiers() != null) {
 
-              for (ProductBankingRateLendingTierData tierData : from.tiers()) {
+              for (BankProductRateLendingTierData tierData : from.tiers()) {
                 BankingProductRateTierV1 rateTier = new BankingProductRateTierV1();
                 rateTier.maximumValue(tierData.maximumValue());
                 rateTier.minimumValue(tierData.minimumValue());
@@ -95,17 +95,17 @@ public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigur
           }
 
           @Override
-          public void mapBtoA(DioProductRateLending from, ProductBankingRateLendingData to,
+          public void mapBtoA(DioProductRateLending from, BankProductRateLendingData to,
               MappingContext context) {
 
-            Set<ProductBankingRateLendingTierData> tierList =
-                new HashSet<ProductBankingRateLendingTierData>();
+            Set<BankProductRateLendingTierData> tierList =
+                new HashSet<BankProductRateLendingTierData>();
 
             if (from.cdrBanking().tiers() != null) {
               for (BankingProductRateTierV1 tierData : from
                   .cdrBanking().tiers()) {
-                ProductBankingRateLendingTierData rateTier =
-                    new ProductBankingRateLendingTierData();
+                BankProductRateLendingTierData rateTier =
+                    new BankProductRateLendingTierData();
                 rateTier.maximumValue(tierData.maximumValue());
                 rateTier.minimumValue(tierData.minimumValue());
                 rateTier.name(tierData.name());
@@ -113,7 +113,7 @@ public class ProductBankingRateLendingDataMapper implements OrikaFactoryConfigur
                 rateTier.unitOfMeasure(tierData.unitOfMeasure());
                 if (tierData.applicabilityConditions() != null) {
                   rateTier.applicabilityConditions(
-                      new ProductBankingRateLendingTierApplicabilityData()
+                      new BankProductRateLendingTierApplicabilityData()
                           .additionalInfo(tierData.applicabilityConditions().additionalInfo())
                           .additionalInfoUri(
                               tierData.applicabilityConditions().additionalInfoUri()));

@@ -1,7 +1,6 @@
 package io.biza.deepthought.data.payloads.dio.banking;
 
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -59,7 +58,7 @@ public class DioBankAccount {
       type = "string", format = "date-time", accessMode = AccessMode.READ_ONLY)
   @JsonSerialize(converter = OffsetDateTimeToDateTimeStringConverter.class)
   @JsonDeserialize(converter = DateTimeStringToOffsetDateTimeConverter.class)
-  @JsonProperty("lastUpdated")
+  @JsonProperty("creationDateTime")
   OffsetDateTime creationDateTime;
   
   @Schema(
@@ -95,10 +94,6 @@ public class DioBankAccount {
   @Schema(description = "Associated Product")
   @JsonProperty("product")
   DioProduct product;
-  
-  @Schema(description = "Card List")
-  @JsonProperty("cardList")
-  List<DioBankAccountCard> cardList;
   
   @JsonProperty("cdrBanking")
   @Schema(description = "CDR Banking Account")

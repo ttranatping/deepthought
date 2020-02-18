@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import io.biza.deepthought.data.payloads.dio.DioBrand;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
-import io.biza.deepthought.data.persistence.model.bank.BrandData;
+import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.support.DeepThoughtJpaConfig;
@@ -37,7 +37,7 @@ public class BrandAndBundleTests extends TranslatorInitialisation {
   private BrandRepository brandRepository;
 
   @Resource
-  private ProductBundleRepository productBundleRepository;
+  private ProductBankingBundleRepository productBundleRepository;
 
 
   public BrandData createBrand() {

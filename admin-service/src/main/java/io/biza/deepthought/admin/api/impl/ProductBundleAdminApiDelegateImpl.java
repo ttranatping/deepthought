@@ -19,11 +19,11 @@ import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.payloads.dio.product.DioProduct;
 import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
-import io.biza.deepthought.data.persistence.model.bank.BrandData;
+import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.repository.BrandRepository;
-import io.biza.deepthought.data.repository.ProductBundleRepository;
+import io.biza.deepthought.data.repository.ProductBankingBundleRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,7 +36,7 @@ public class ProductBundleAdminApiDelegateImpl implements ProductBundleAdminApiD
   private DeepThoughtMapper mapper;
 
   @Autowired
-  private ProductBundleRepository bundleRepository;
+  private ProductBankingBundleRepository bundleRepository;
 
   @Autowired
   private BrandRepository brandRepository;

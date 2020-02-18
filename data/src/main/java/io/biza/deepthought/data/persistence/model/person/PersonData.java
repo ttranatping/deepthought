@@ -53,7 +53,7 @@ public class PersonData {
   
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  private DioSchemeType schemeType = DioSchemeType.CDR_COMMON;
   
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "CUSTOMER_ID")

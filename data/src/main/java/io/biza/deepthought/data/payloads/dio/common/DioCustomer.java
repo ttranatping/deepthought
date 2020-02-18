@@ -5,10 +5,6 @@ import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
-import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
 import io.biza.deepthought.data.enumerations.DioCustomerType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -57,16 +53,12 @@ public class DioCustomer {
   @Schema(
       description = "Creation Date Time",
       type = "string", format = "date-time", accessMode = AccessMode.READ_ONLY)
-  @JsonSerialize(converter = OffsetDateTimeToDateTimeStringConverter.class)
-  @JsonDeserialize(converter = DateTimeStringToOffsetDateTimeConverter.class)
   @JsonProperty("creationTime")
   OffsetDateTime creationTime;
   
   @Schema(
       description = "Last Update Date Time",
       type = "string", format = "date-time", accessMode = AccessMode.READ_ONLY)
-  @JsonSerialize(converter = OffsetDateTimeToDateTimeStringConverter.class)
-  @JsonDeserialize(converter = DateTimeStringToOffsetDateTimeConverter.class)
   @JsonProperty("lastUpdated")
   OffsetDateTime lastUpdated;
 

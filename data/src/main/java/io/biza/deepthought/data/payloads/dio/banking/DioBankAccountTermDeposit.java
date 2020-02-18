@@ -5,27 +5,19 @@ import java.time.OffsetDateTime;
 import java.time.Period;
 import java.util.Currency;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.biza.babelfish.cdr.converters.DateTimeStringToOffsetDateTimeConverter;
-import io.biza.babelfish.cdr.converters.OffsetDateTimeToDateTimeStringConverter;
-import io.biza.deepthought.data.enumerations.DioAccountStatus;
-import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioMaturityInstructionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.cdr.CdrBankingAccount;
+import io.biza.babelfish.cdr.converters.CurrencyToStringConverter;
+import io.biza.babelfish.cdr.converters.PeriodToStringConverter;
+import io.biza.babelfish.cdr.converters.StringToCurrencyConverter;
+import io.biza.babelfish.cdr.converters.StringToPeriodConverter;
 import io.biza.deepthought.data.Constants;
-import io.biza.deepthought.data.payloads.dio.product.DioProduct;
-import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -68,8 +60,10 @@ public class DioBankAccountTermDeposit {
   BigDecimal amount;
   
   @Schema(
-      description = "Term Deposit Currency")
+      description = "Term Deposit Currency", type = "string")
   @Builder.Default
+  @JsonSerialize(converter = CurrencyToStringConverter.class)
+  @JsonDeserialize(converter = StringToCurrencyConverter.class)
   Currency currency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
   
   @Schema(
@@ -78,32 +72,38 @@ public class DioBankAccountTermDeposit {
   BigDecimal rate;
   
   @Schema(
-      description = "Term Deposit Start Date/Time")
+      description = "Term Deposit Start Date/Time", type = "string", format = "date-time")
   @NotNull
   OffsetDateTime lodgement;
   
   @Schema(
-      description = "Term Deposit Term Length")
+      description = "Term Deposit Term Length", type = "string")
   @NotNull
+  @JsonSerialize(converter = PeriodToStringConverter.class)
+  @JsonDeserialize(converter = StringToPeriodConverter.class)
   Period termLength;
   
   @Schema(
-      description = "Calculation Frequency")
+      description = "Calculation Frequency", type = "string")
   @NotNull
+  @JsonSerialize(converter = PeriodToStringConverter.class)
+  @JsonDeserialize(converter = StringToPeriodConverter.class)
   Period calculationFrequency;
   
   @Schema(
-      description = "Last Calculated Date/Time")
+      description = "Last Calculated Date/Time", format = "date-time", type = "string")
   @NotNull
   OffsetDateTime lastCalculated;
   
   @Schema(
-      description = "Application Frequency")
+      description = "Application Frequency", type = "string")
   @NotNull
+  @JsonSerialize(converter = PeriodToStringConverter.class)
+  @JsonDeserialize(converter = StringToPeriodConverter.class)
   Period applicationFrequency;
   
   @Schema(
-      description = "Last Time Interest was Applied")
+      description = "Last Time Interest was Applied", type = "string", format = "date-time")
   @NotNull
   OffsetDateTime lastApplied;
   
