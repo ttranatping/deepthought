@@ -20,11 +20,7 @@ public interface BankingAccountBalanceApiDelegate {
     return Optional.empty();
   }
 
-  default ResponseEntity<ResponseBankingAccountListV1> listAccounts(RequestListAccounts requestGetAccounts) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-  }
-  
-  default ResponseEntity<ResponseBankingAccountListV1> listBalancesBulk(RequestBalancesByBulk requestListBulkBalances) {
+  default ResponseEntity<ResponseBankingAccountsBalanceListV1> listBalancesBulk(RequestBalancesByBulk requestListBulkBalances) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
   
@@ -34,10 +30,6 @@ public interface BankingAccountBalanceApiDelegate {
   }
 
   default ResponseEntity<ResponseBankingAccountsBalanceByIdV1> getAccountBalance(UUID accountId) {
-    return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-  }
-
-  default ResponseEntity<ResponseBankingAccountByIdV1> getAccountDetail(@NotNull @Valid UUID accountId) {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

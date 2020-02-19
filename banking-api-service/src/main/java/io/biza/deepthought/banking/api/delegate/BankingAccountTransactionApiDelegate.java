@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountByIdV1;
+import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionListV1;
 import io.biza.deepthought.banking.requests.RequestTransactionsByBulk;
 
@@ -21,7 +22,7 @@ public interface BankingAccountTransactionApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
-  default ResponseEntity<ResponseBankingAccountByIdV1> getTransactionDetail(@NotNull @Valid UUID accountId,
+  default ResponseEntity<ResponseBankingTransactionByIdV1> getTransactionDetail(@NotNull @Valid UUID accountId,
       @NotNull @Valid UUID transactionId){
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
