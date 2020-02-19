@@ -16,11 +16,9 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.payloads.dio.banking.DioCustomerScheduledPayment;
-import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.biza.deepthought.data.repository.CustomerScheduledPaymentRepository;
-import io.biza.deepthought.data.repository.BankAccountRepository;
 import io.biza.deepthought.data.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 

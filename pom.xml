@@ -111,6 +111,8 @@
         <module>admin-frontend</module>
 	<module>product-api-service</module>
 	<module>common-api-service</module>
+	<module>discovery-api-service</module>
+	<module>banking-api-service</module>
     </modules>
 
     <build>

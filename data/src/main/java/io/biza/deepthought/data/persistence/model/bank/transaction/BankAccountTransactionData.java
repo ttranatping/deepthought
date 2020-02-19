@@ -3,8 +3,6 @@ package io.biza.deepthought.data.persistence.model.bank.transaction;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Currency;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

@@ -1,4 +1,4 @@
-package io.biza.deepthought.product;
+package io.biza.deepthought.discovery;
 
 public class Labels {
   /**

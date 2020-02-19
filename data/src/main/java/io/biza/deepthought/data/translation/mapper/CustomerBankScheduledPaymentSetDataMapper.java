@@ -1,12 +1,9 @@
 package io.biza.deepthought.data.translation.mapper;
 
-import io.biza.babelfish.cdr.enumerations.PayloadTypeBankingPayee;
 import io.biza.babelfish.cdr.enumerations.PayloadTypeBankingScheduledPaymentTo;
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.scheduled.BankingScheduledPaymentSetV1;
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.scheduled.BankingScheduledPaymentToV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.payloads.dio.banking.DioCustomerPayee;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankPayeeData;
 import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentSetData;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;

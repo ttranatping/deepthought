@@ -5,9 +5,9 @@ import io.biza.babelfish.cdr.enumerations.BankingProductEffectiveWithAll;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductByIdV2;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingProductListV2;
-import io.biza.deepthought.product.Labels;
 import io.biza.deepthought.product.api.delegate.ProductApiDelegate;
 import io.biza.deepthought.product.api.requests.RequestListProducts;
+import io.biza.deepthought.shared.support.CDRConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,9 +24,9 @@ import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
-@Tag(name = Labels.TAG_PRODUCT_NAME, description = Labels.TAG_PRODUCT_DESCRIPTION)
+@Tag(name = CDRConstants.TAG_PRODUCT_NAME, description = CDRConstants.TAG_PRODUCT_DESCRIPTION)
 @RequestMapping("/v1/banking/products")
-public interface ProductAdminApi {
+public interface ProductApi {
 
   default ProductApiDelegate getDelegate() {
     return new ProductApiDelegate() {};
@@ -34,8 +34,8 @@ public interface ProductAdminApi {
 
   @Operation(summary = "Obtain a List of Products",
       description = "Obtain a list of products available from the Data Holder")
-  @ApiResponses(value = {@ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
-      description = Labels.RESPONSE_SUCCESSFUL_LIST,
+  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
+      description = CDRConstants.RESPONSE_SUCCESSFUL_LIST,
       content = @Content(schema = @Schema(implementation = ResponseBankingProductListV2.class)))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   default ResponseEntity<ResponseBankingProductListV2> listProducts(
@@ -60,12 +60,12 @@ public interface ProductAdminApi {
       description = "Returns details product information based on the specified product identifier")
   @ApiResponses(
       value = {
-          @ApiResponse(responseCode = Labels.RESPONSE_CODE_OK,
-              description = Labels.RESPONSE_SUCCESSFUL_READ,
+          @ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
+              description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
               content = @Content(schema = @Schema(oneOf = {ResponseBankingProductByIdV1.class,
                   ResponseBankingProductByIdV2.class}))),
-          @ApiResponse(responseCode = Labels.RESPONSE_CODE_NOT_FOUND,
-              description = Labels.RESPONSE_OBJECT_NOT_FOUND)})
+          @ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_NOT_FOUND,
+              description = CDRConstants.RESPONSE_OBJECT_NOT_FOUND)})
   @GetMapping(value = "/{productId}", produces = {MediaType.APPLICATION_JSON_VALUE})
   default ResponseEntity<ResponseBankingProductByIdV2> getProductDetail(
       @NotNull @Valid @PathVariable("productId") UUID productId) {

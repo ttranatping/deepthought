@@ -1,4 +1,4 @@
-package io.biza.deepthought.product;
+package io.biza.deepthought.shared.controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @ControllerAdvice
 @Slf4j
-public class CdrResponseHandler implements ResponseBodyAdvice<Object> {
+public class CDRResponseAdvice implements ResponseBodyAdvice<Object> {
 
   @Override
   public boolean supports(MethodParameter returnType, @SuppressWarnings("rawtypes") Class converterType) {
