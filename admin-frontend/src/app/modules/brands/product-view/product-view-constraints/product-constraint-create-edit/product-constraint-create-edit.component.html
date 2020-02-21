@@ -1,8 +1,9 @@
 
 <cdr-form-control
+    *ngIf="constraintForm"
     [className]="'constraintForm'"
     [control]="constraintForm"
-    [showErrors]="constraintForm.submitted"
+    [showErrors]="isSubmitted"
 ></cdr-form-control>
 
 <div style="text-align: right;">

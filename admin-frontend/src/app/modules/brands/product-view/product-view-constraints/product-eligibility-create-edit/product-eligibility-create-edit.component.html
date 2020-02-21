@@ -1,8 +1,9 @@
 
 <cdr-form-control
+    *ngIf="eligibilityForm"
     [className]="'eligibilityForm'"
     [control]="eligibilityForm"
-    [showErrors]="eligibilityForm.submitted"
+    [showErrors]="isSubmitted"
 ></cdr-form-control>
 
 <div style="text-align: right;">

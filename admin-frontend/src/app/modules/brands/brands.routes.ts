@@ -15,6 +15,7 @@ import { BrandViewProductsComponent } from './brand-view/brand-view-products/bra
 import { BundleViewComponent } from './bundle-view/bundle-view.component';
 import { ProductViewCardArtComponent } from './product-view/product-view-card-art/product-view-card-art.component';
 import { ProductFeeCreateEditComponent } from './product-view/product-view-fees/product-fee-create-edit/product-fee-create-edit.component';
+import { ProductCreateEditPageComponent } from './product-create-edit-page/product-create-edit-page.component';
 
 const routes: Routes = [
 
@@ -32,6 +33,10 @@ const routes: Routes = [
         ]
     },
     {
+        path: ':brandId/products/create',
+        component: ProductCreateEditPageComponent,
+    },
+    {
         path: ':brandId/products/:productId',
         component: CatalogueProductViewComponent,
         children: [
@@ -43,6 +48,10 @@ const routes: Routes = [
             { path: 'deposit-rates',    component: ProductViewRatesDepositComponent },
             { path: 'card-arts',        component: ProductViewCardArtComponent },
         ]
+    },
+    {
+        path: ':brandId/products/:productId/edit',
+        component: ProductCreateEditPageComponent,
     },
     {
         path: ':brandId/bundles/:bundleId',

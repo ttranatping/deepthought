@@ -1,0 +1,74 @@
+
+::ng-deep {
+    &.effectiveFrom,
+    &.effectiveTo {
+        width: 50% !important;
+    }
+
+    .ui-steps-number {
+        height: 27px !important;
+        width: 27px !important;;
+    }
+
+    //.ui-steps .ui-steps-item {
+    //    width: calc(100% / 7);
+    //}
+    //
+    //.ui-steps.steps-custom {
+    //    margin-bottom: 30px;
+    //}
+    //
+    //.ui-steps.steps-custom .ui-steps-item .ui-menuitem-link {
+    //    padding: 0 1em;
+    //    overflow: visible;
+    //}
+    //
+    //.ui-steps.steps-custom .ui-steps-item .ui-steps-number {
+    //    background-color: #0081c2;
+    //    color: #FFFFFF;
+    //    display: inline-block;
+    //    width: 36px;
+    //    border-radius: 50%;
+    //    margin-top: -14px;
+    //    margin-bottom: 10px;
+    //}
+    //
+    //.ui-steps.steps-custom .ui-steps-item .ui-steps-title {
+    //    color: #555555;
+    //}
+}
+
+:host {
+    display: block;
+    padding-bottom: 100px;
+}
+
+.EligibilityAndConstraints {
+    display: flex;
+
+    > div {
+        padding-right: 10px;
+        width: 50%;
+    }
+}
+
+.Footer {
+    background: white;
+    bottom: 0;
+    position: fixed;
+    width: calc(100% - 76px);
+    left: 76px;
+    padding: 20px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 0 20px;
+    display: flex;
+
+    &-left {
+        width: 50%;
+    }
+
+    &-right {
+        text-align: right;
+        width: 50%;
+    }
+}

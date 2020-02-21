@@ -1,0 +1,80 @@
+<h1>{{ isNew ? 'Create product' : 'Edit product' }}</h1>
+
+<p-steps [model]="steps" [readonly]="false" [activeIndex]="activeStepIndex"></p-steps>
+
+<ng-container [ngSwitch]="activeStepIndex">
+    <div *ngSwitchCase="BASIC_DETAILS_INDEX">
+        <cdr-form-control
+            [className]="'basicDetailsForm'"
+            [control]="forms.basicDetails"
+            [showErrors]="isSubmitted"
+        ></cdr-form-control>
+    </div>
+    <div *ngSwitchCase="CARD_ARTS_INDEX">
+        <div *ngFor="let cardArtForm of forms.cardArts; let i = index;">
+            <h3>Card art #{{ i + 1 }}</h3>
+            <cdr-form-control
+                [className]="'cardArtForm'"
+                [control]="cardArtForm"
+                [showErrors]="isSubmitted"
+            ></cdr-form-control>
+        </div>
+
+        <p-button label="Add card art" (click)="addCardArt()"></p-button>
+    </div>
+    <div *ngSwitchCase="FEATURES_INDEX">
+        <div *ngFor="let featureForm of forms.features; let i = index;">
+            <h3>Feature #{{ i + 1 }}</h3>
+            <cdr-form-control
+                [className]="'featureForm'"
+                [control]="featureForm"
+                [showErrors]="isSubmitted"
+            ></cdr-form-control>
+        </div>
+
+        <p-button label="Add feature" (click)="addFeature()"></p-button>
+    </div>
+    <div *ngSwitchCase="ELIGIBILITY_CONSTRAINTS_INDEX" class="EligibilityAndConstraints">
+
+        <div>
+            <h2>Eligibilitys</h2>
+
+            <div *ngFor="let eligibilityForm of forms.eligibilitys; let i = index;">
+                <h3>Eligibility #{{ i + 1 }}</h3>
+                <cdr-form-control
+                    [className]="'eligibilityForm'"
+                    [control]="eligibilityForm"
+                    [showErrors]="isSubmitted"
+                ></cdr-form-control>
+            </div>
+
+            <p-button label="Add eligibility" (click)="addEligibility()"></p-button>
+        </div>
+        <div>
+            <h2>Constraints</h2>
+
+            <div *ngFor="let constraintForm of forms.constraints; let i = index;">
+                <h3>Constraint #{{ i + 1 }}</h3>
+                <cdr-form-control
+                    [className]="'constraintForm'"
+                    [control]="constraintForm"
+                    [showErrors]="isSubmitted"
+                ></cdr-form-control>
+            </div>
+
+            <p-button label="Add constraint" (click)="addConstraint()"></p-button>
+        </div>
+    </div>
+</ng-container>
+
+<div class="Footer">
+    <div class="Footer-left">
+        <p-button label="Cancel" (click)="goBack()"></p-button>
+    </div>
+    <div class="Footer-right">
+        <p-button label="Prev step" (click)="prevStep()" [disabled]="activeStepIndex === 0"></p-button>&nbsp;
+
+        <p-button *ngIf="activeStepIndex !== steps.length - 1" label="Next step" (click)="nextStep()" [disabled]="activeStepIndex === steps.length - 1"></p-button>&nbsp;
+        <p-button *ngIf="activeStepIndex === steps.length - 1" label="Save" (click)="onSave()"></p-button>
+    </div>
+</div>

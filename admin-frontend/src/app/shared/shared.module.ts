@@ -208,6 +208,7 @@ import { DurationPickerComponent } from './components/duration-picker/duration-p
         ProgressSpinnerModule,
         SpinnerModule,
         SplitButtonModule,
+        StepsModule,
         TableModule,
         TabViewModule,
         ToastModule,

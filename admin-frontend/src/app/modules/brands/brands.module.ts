@@ -31,6 +31,7 @@ import { ProductAddBundleComponent } from './product-view/product-view-details/p
 import { ProductViewCardArtComponent } from './product-view/product-view-card-art/product-view-card-art.component';
 import { ProductCardArtCreateEditComponent } from './product-view/product-view-card-art/product-card-art-create-edit/product-card-art-create-edit.component';
 import { ProductFeeDiscountCreateEditComponent } from './product-view/product-view-fees/product-fee-discount-create-edit/product-fee-discount-create-edit.component';
+import { ProductCreateEditPageComponent } from './product-create-edit-page/product-create-edit-page.component';
 
 @NgModule({
     declarations: [
@@ -59,7 +60,8 @@ import { ProductFeeDiscountCreateEditComponent } from './product-view/product-vi
         ProductAddBundleComponent,
         ProductViewCardArtComponent,
         ProductCardArtCreateEditComponent,
-        ProductFeeDiscountCreateEditComponent
+        ProductFeeDiscountCreateEditComponent,
+        ProductCreateEditPageComponent
     ],
     imports: [
         CommonModule,
