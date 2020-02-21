@@ -3,7 +3,6 @@ package io.biza.deepthought.banking.api;
 import io.biza.babelfish.cdr.enumerations.BankingAccountStatusWithAll;
 import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.models.requests.RequestAccountIdsV1;
-import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountsBalanceListV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingDirectDebitAuthorisationListV1;
 import io.biza.babelfish.cdr.models.responses.ResponseErrorListV1;
 import io.biza.deepthought.banking.api.delegate.BankingAccountDirectDebitApiDelegate;

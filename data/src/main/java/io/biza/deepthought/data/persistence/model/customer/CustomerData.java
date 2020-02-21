@@ -27,6 +27,8 @@ import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankPayeeData;
 import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
+import io.biza.deepthought.data.persistence.model.grant.GrantCustomerData;
+import io.biza.deepthought.data.persistence.model.grant.GrantData;
 import io.biza.deepthought.data.persistence.model.organisation.OrganisationData;
 import io.biza.deepthought.data.persistence.model.person.PersonData;
 import lombok.AllArgsConstructor;
@@ -83,6 +85,10 @@ public class CustomerData {
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
   Set<CustomerBankPayeeData> payees;
+  
+  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<GrantCustomerData> grants;
     
   @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER)
   PersonData person;

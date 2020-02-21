@@ -1,6 +1,5 @@
 package io.biza.deepthought.banking.api;
 
-import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionListV1;
 import io.biza.deepthought.banking.api.delegate.BankingAccountTransactionApiDelegate;

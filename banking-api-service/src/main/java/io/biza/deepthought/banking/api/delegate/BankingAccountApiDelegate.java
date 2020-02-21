@@ -10,6 +10,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountListV1;
 import io.biza.deepthought.banking.requests.RequestListAccounts;
+import io.biza.deepthought.shared.exception.NotFoundException;
 
 public interface BankingAccountApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
@@ -20,7 +21,7 @@ public interface BankingAccountApiDelegate {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
   
-  default ResponseEntity<ResponseBankingAccountByIdV1> getAccountDetail(@NotNull @Valid UUID accountId) {
+  default ResponseEntity<ResponseBankingAccountByIdV1> getAccountDetail(@NotNull @Valid UUID accountId) throws NotFoundException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

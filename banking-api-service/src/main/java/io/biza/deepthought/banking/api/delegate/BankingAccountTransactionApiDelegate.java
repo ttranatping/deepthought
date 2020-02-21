@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
-import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionListV1;
 import io.biza.deepthought.banking.requests.RequestTransactionsByBulk;
