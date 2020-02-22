@@ -8,6 +8,7 @@ import io.biza.babelfish.cdr.models.responses.ResponseErrorListV1;
 import io.biza.deepthought.banking.api.delegate.BankingAccountScheduledPaymentApiDelegate;
 import io.biza.deepthought.banking.requests.RequestScheduledPaymentsByAccounts;
 import io.biza.deepthought.banking.requests.RequestScheduledPaymentsByBulk;
+import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.support.CDRConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -89,7 +90,7 @@ public interface BankingAccountScheduledPaymentApi {
       @Valid @RequestParam(name = "page", required = false,
           defaultValue = "1") @Min(1) Integer page,
       @Valid @RequestParam(name = "page-size", required = false,
-          defaultValue = "25") Integer pageSize) {
+          defaultValue = "25") Integer pageSize) throws NotFoundException {
     return getDelegate().listByAccount(accountId,
         RequestScheduledPaymentsByAccounts.builder().page(page).pageSize(pageSize).build());
   }

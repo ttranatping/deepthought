@@ -8,6 +8,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingDirectDebitAuthorisationListV1;
 import io.biza.deepthought.banking.requests.RequestDirectDebitsByAccounts;
 import io.biza.deepthought.banking.requests.RequestDirectDebitsByBulk;
+import io.biza.deepthought.shared.exception.NotFoundException;
 
 public interface BankingAccountDirectDebitApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
@@ -15,7 +16,7 @@ public interface BankingAccountDirectDebitApiDelegate {
   }
 
   default ResponseEntity<ResponseBankingDirectDebitAuthorisationListV1> listByAccount(
-      UUID accountId, RequestDirectDebitsByAccounts requestDirectDebits) {
+      UUID accountId, RequestDirectDebitsByAccounts requestDirectDebits) throws NotFoundException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

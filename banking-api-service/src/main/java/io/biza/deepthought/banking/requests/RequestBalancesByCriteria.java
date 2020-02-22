@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class RequestBalancesByBulk {
+public class RequestBalancesByCriteria {
   BankingProductCategory productCategory;
   @Builder.Default
   BankingAccountStatusWithAll accountStatus = BankingAccountStatusWithAll.ALL;

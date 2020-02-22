@@ -9,7 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionListV1;
-import io.biza.deepthought.banking.requests.RequestTransactionsByBulk;
+import io.biza.deepthought.banking.requests.RequestListTransactions;
+import io.biza.deepthought.shared.exception.NotFoundException;
 
 public interface BankingAccountTransactionApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
@@ -17,12 +18,12 @@ public interface BankingAccountTransactionApiDelegate {
   }
 
   default ResponseEntity<ResponseBankingTransactionListV1> getTransactions(
-      @NotNull @Valid UUID accountId, RequestTransactionsByBulk build) {
+      @NotNull @Valid UUID accountId, RequestListTransactions build) throws NotFoundException {
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 
   default ResponseEntity<ResponseBankingTransactionByIdV1> getTransactionDetail(@NotNull @Valid UUID accountId,
-      @NotNull @Valid UUID transactionId){
+      @NotNull @Valid UUID transactionId) throws NotFoundException{
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

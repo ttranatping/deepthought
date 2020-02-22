@@ -22,9 +22,10 @@ import io.biza.babelfish.cdr.models.responses.container.ResponseBankingAccountLi
 import io.biza.babelfish.cdr.models.responses.container.ResponseBankingProductListDataV2;
 import io.biza.deepthought.banking.api.delegate.BankingAccountApiDelegate;
 import io.biza.deepthought.banking.requests.RequestListAccounts;
-import io.biza.deepthought.banking.service.BankingService;
+import io.biza.deepthought.banking.service.GrantService;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
+import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.support.CDRContainerAttributes;
@@ -36,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BankingAccountApiDelegateImpl implements BankingAccountApiDelegate {
 
   @Autowired
-  BankingService bankingService;
+  GrantService bankingService;
 
   @Autowired
   private DeepThoughtMapper mapper;
@@ -44,7 +45,7 @@ public class BankingAccountApiDelegateImpl implements BankingAccountApiDelegate 
   @Override
   public ResponseEntity<ResponseBankingAccountByIdV1> getAccountDetail(UUID accountId)
       throws NotFoundException {
-    BankAccountData accountResult = bankingService.getAccount(accountId);
+    GrantAccountData accountResult = bankingService.getGrantAccount(accountId);
     ResponseBankingAccountByIdV1 accountResponse = new ResponseBankingAccountByIdV1();
     accountResponse.meta(CDRContainerAttributes.toMeta());
     accountResponse.links(CDRContainerAttributes.toLinks());
@@ -55,7 +56,7 @@ public class BankingAccountApiDelegateImpl implements BankingAccountApiDelegate 
   @Override
   public ResponseEntity<ResponseBankingAccountListV1> listAccounts(
       RequestListAccounts requestList) {
-    Page<BankAccountData> accountList = bankingService.listProducts(requestList);
+    Page<GrantAccountData> accountList = bankingService.listGrantAccountsPaginated(requestList);
 
     /**
      * Build response components

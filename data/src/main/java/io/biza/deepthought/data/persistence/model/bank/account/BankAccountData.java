@@ -28,6 +28,7 @@ import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
 import io.biza.deepthought.data.persistence.model.organisation.OrganisationPersonData;
@@ -76,6 +77,13 @@ public class BankAccountData {
   @ManyToOne
   @JoinColumn(name = "BUNDLE_ID", nullable = true)
   ProductBundleData bundle;
+  
+  /**
+   * Transactions in Account
+   */
+  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+  @ToString.Exclude
+  Set<BankAccountTransactionData> transactions;
   
   /**
    * Customer access to Account

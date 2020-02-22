@@ -3,6 +3,8 @@ package io.biza.deepthought.data.persistence.model.bank.transaction;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Currency;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,7 +50,7 @@ public class BankAccountTransactionData {
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Type(type = "uuid-char")
   UUID id;
-  
+
   @Builder.Default
   private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
 
@@ -57,17 +59,17 @@ public class BankAccountTransactionData {
   @ToString.Exclude
   @NotNull
   private BankAccountData account;
-  
+
   @Column(name = "TRANSACTION_TYPE")
   @Enumerated(EnumType.STRING)
   @NotNull
   private BankingTransactionType type;
-  
+
   @Column(name = "STATUS")
   @Enumerated(EnumType.STRING)
   @NotNull
   private BankingTransactionStatus status;
-  
+
   @Column(name = "DESCRIPTION")
   private String description;
 
@@ -76,46 +78,56 @@ public class BankAccountTransactionData {
 
   @Column(name = "POSTED")
   private OffsetDateTime posted;
-  
+
   @Column(name = "APPLIED")
   private OffsetDateTime applied;
-  
+
   @Column(name = "AMOUNT")
   private BigDecimal amount;
-  
+
   @Column(name = "CURRENCY")
   @Builder.Default
   private Currency currency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
-  
+
   @Column(name = "REFERENCE")
   @NotNull
   @Builder.Default
   private String reference = "";
-  
+
   @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
   private BankAccountTransactionCardData card;
-  
+
   @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
   private BankAccountTransactionBPAYData bpay;
-  
+
   @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
   private BankAccountTransactionAPCSData apcs;
-  
+
   @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, optional = true)
   private BankAccountTransactionNPPData npp;
-  
+
   @PrePersist
   public void prePersist() {
-    if(this.card() != null) {
+
+    if (this.account() != null) {
+      Set<BankAccountTransactionData> set = new HashSet<BankAccountTransactionData>();
+      if (this.account().transactions() != null) {
+        set.addAll(this.account().transactions());
+      }
+      set.add(this);
+      this.account().transactions(set);
+    }
+
+    if (this.card() != null) {
       this.card().transaction(this);
     }
-    if(this.bpay() != null) {
+    if (this.bpay() != null) {
       this.bpay().transaction(this);
     }
-    if(this.apcs() != null) {
+    if (this.apcs() != null) {
       this.apcs().transaction(this);
     }
-    if(this.npp() != null) {
+    if (this.npp() != null) {
       this.npp().transaction(this);
     }
   }

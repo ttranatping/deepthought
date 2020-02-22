@@ -8,7 +8,8 @@ import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountsBalanceList
 import io.biza.babelfish.cdr.models.responses.ResponseErrorListV1;
 import io.biza.deepthought.banking.api.delegate.BankingAccountBalanceApiDelegate;
 import io.biza.deepthought.banking.requests.RequestBalancesByAccounts;
-import io.biza.deepthought.banking.requests.RequestBalancesByBulk;
+import io.biza.deepthought.banking.requests.RequestBalancesByCriteria;
+import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.support.CDRConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -95,7 +96,7 @@ public interface BankingAccountBalanceApi {
       @Valid @RequestParam(name = "page-size", required = false,
           defaultValue = "25") Integer pageSize) {
     return getDelegate()
-        .listBalancesBulk(RequestBalancesByBulk.builder().productCategory(productCategory)
+        .listBalancesByCriteria(RequestBalancesByCriteria.builder().productCategory(productCategory)
             .accountStatus(accountStatus).isOwned(isOwned).page(page).pageSize(pageSize).build());
   }
 
@@ -137,7 +138,7 @@ public interface BankingAccountBalanceApi {
       @Valid @RequestParam(name = "page-size", required = false,
           defaultValue = "25") Integer pageSize,
       @Valid @RequestBody RequestAccountIdsV1 requestAccountIds) {
-    return getDelegate().listAccountBalances(RequestBalancesByAccounts.builder()
+    return getDelegate().listBalancesByAccounts(RequestBalancesByAccounts.builder()
         .accountIds(requestAccountIds).page(page).pageSize(pageSize).build());
   }
 
@@ -175,7 +176,7 @@ public interface BankingAccountBalanceApi {
   @GetMapping(value = "/{accountId}/balance", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_ACCOUNT_BASIC_READ)
   default ResponseEntity<ResponseBankingAccountsBalanceByIdV1> getBalance(
-      @NotNull @Valid @PathVariable("accountId") UUID accountId) {
+      @NotNull @Valid @PathVariable("accountId") UUID accountId) throws NotFoundException {
     return getDelegate().getAccountBalance(accountId);
   }
 

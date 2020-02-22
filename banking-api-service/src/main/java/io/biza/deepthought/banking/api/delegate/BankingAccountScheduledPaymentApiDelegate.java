@@ -8,6 +8,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingScheduledPaymentsListV1;
 import io.biza.deepthought.banking.requests.RequestScheduledPaymentsByAccounts;
 import io.biza.deepthought.banking.requests.RequestScheduledPaymentsByBulk;
+import io.biza.deepthought.shared.exception.NotFoundException;
 
 public interface BankingAccountScheduledPaymentApiDelegate {
   default Optional<NativeWebRequest> getRequest() {
@@ -15,7 +16,7 @@ public interface BankingAccountScheduledPaymentApiDelegate {
   }
 
   default ResponseEntity<ResponseBankingScheduledPaymentsListV1> listByAccount(
-      UUID accountId, RequestScheduledPaymentsByAccounts requestList){
+      UUID accountId, RequestScheduledPaymentsByAccounts requestList) throws NotFoundException{
     return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
   }
 

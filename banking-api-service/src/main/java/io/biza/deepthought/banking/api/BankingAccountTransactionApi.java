@@ -3,7 +3,8 @@ package io.biza.deepthought.banking.api;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingTransactionListV1;
 import io.biza.deepthought.banking.api.delegate.BankingAccountTransactionApiDelegate;
-import io.biza.deepthought.banking.requests.RequestTransactionsByBulk;
+import io.biza.deepthought.banking.requests.RequestListTransactions;
+import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.support.CDRConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -83,9 +84,9 @@ public interface BankingAccountTransactionApi {
       @Valid @RequestParam(name = "page", required = false,
           defaultValue = "1") @Min(1) Integer page,
       @Valid @RequestParam(name = "page-size", required = false,
-          defaultValue = "25") Integer pageSize) {
+          defaultValue = "25") Integer pageSize) throws NotFoundException {
     return getDelegate().getTransactions(accountId,
-        RequestTransactionsByBulk.builder().oldestDateTime(oldestTime).newestDateTime(newestTime)
+        RequestListTransactions.builder().oldestDateTime(oldestTime).newestDateTime(newestTime)
             .minAmount(minAmount).maxAmount(maxAmount).stringFilter(stringFilter).page(page)
             .pageSize(pageSize).build());
   }
@@ -124,7 +125,7 @@ public interface BankingAccountTransactionApi {
   @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_TRANSACTIONS_READ)
   default ResponseEntity<ResponseBankingTransactionByIdV1> getTransactionDetail(
       @NotNull @Valid @PathVariable("accountId") UUID accountId,
-      @NotNull @Valid @PathVariable("transactionId") UUID transactionId) {
+      @NotNull @Valid @PathVariable("transactionId") UUID transactionId) throws NotFoundException {
     return getDelegate().getTransactionDetail(accountId, transactionId);
   }
 }

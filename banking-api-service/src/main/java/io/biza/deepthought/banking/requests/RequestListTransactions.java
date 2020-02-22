@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class RequestTransactionsByBulk {
+public class RequestListTransactions {
   OffsetDateTime oldestDateTime;
   @Builder.Default
   OffsetDateTime newestDateTime = OffsetDateTime.now();

@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
+import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.grant.GrantResourceData;
 
 @Repository
-public interface BankAccountDirectDebitRepository extends JpaRepository<BankAccountDirectDebitData, UUID>, JpaSpecificationExecutor<BankAccountDirectDebitData> {
-  public List<BankAccountDirectDebitData> findAllByAccountIdAndAccountBranchIdAndAccountBranchBrandId(UUID accountId, UUID branchId, UUID brandId);
-  public Optional<BankAccountDirectDebitData> findByIdAndAccountIdAndAccountBranchIdAndAccountBranchBrandId(UUID id, UUID accountId, UUID branchId, UUID brandId);
+public interface CustomerBankScheduledPaymentRepository extends JpaRepository<CustomerBankScheduledPaymentData, UUID>, JpaSpecificationExecutor<CustomerBankScheduledPaymentData> {
 
 }
