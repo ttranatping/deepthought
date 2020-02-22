@@ -7,10 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountsBalanceByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountsBalanceListV1;
-import io.biza.babelfish.cdr.models.responses.ResponseBankingDirectDebitAuthorisationListV1;
 import io.biza.deepthought.banking.requests.RequestBalancesByAccounts;
 import io.biza.deepthought.banking.requests.RequestBalancesByCriteria;
-import io.biza.deepthought.banking.requests.RequestDirectDebitsByAccounts;
 import io.biza.deepthought.shared.exception.NotFoundException;
 
 public interface BankingAccountBalanceApiDelegate {

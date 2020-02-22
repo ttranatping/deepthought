@@ -32,7 +32,6 @@ import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPayment
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
-import io.biza.deepthought.data.persistence.model.organisation.OrganisationPersonData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import lombok.AllArgsConstructor;

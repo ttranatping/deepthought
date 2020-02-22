@@ -29,7 +29,6 @@ import io.biza.deepthought.data.persistence.model.bank.payments.PayeeData;
 import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.grant.GrantCustomerData;
-import io.biza.deepthought.data.persistence.model.grant.GrantData;
 import io.biza.deepthought.data.persistence.model.organisation.OrganisationData;
 import io.biza.deepthought.data.persistence.model.person.PersonData;
 import lombok.AllArgsConstructor;

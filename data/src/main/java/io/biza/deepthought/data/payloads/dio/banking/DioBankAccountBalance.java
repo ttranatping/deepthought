@@ -2,15 +2,11 @@ package io.biza.deepthought.data.payloads.dio.banking;
 
 import java.math.BigDecimal;
 import java.util.Currency;
-import java.util.List;
 import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import io.biza.babelfish.cdr.converters.AmountStringToBigDecimalConverter;
-import io.biza.babelfish.cdr.converters.BigDecimalToAmountStringConverter;
 import io.biza.babelfish.cdr.converters.CurrencyToStringConverter;
 import io.biza.babelfish.cdr.converters.StringToCurrencyConverter;
 import io.swagger.v3.oas.annotations.media.Schema;
