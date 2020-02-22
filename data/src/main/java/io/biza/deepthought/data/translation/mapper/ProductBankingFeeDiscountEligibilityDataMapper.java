@@ -2,7 +2,7 @@ package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductDiscountEligibilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeeDiscountEligibilityData;
 import ma.glasnost.orika.MapperFactory;
 
 public class ProductBankingFeeDiscountEligibilityDataMapper

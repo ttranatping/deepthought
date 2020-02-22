@@ -9,9 +9,9 @@ import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateT
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductRateTierApplicabilityV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingTierData;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;

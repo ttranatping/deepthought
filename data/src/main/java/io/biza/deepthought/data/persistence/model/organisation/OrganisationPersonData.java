@@ -3,6 +3,7 @@ package io.biza.deepthought.data.persistence.model.organisation;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,11 +34,11 @@ public class OrganisationPersonData {
   UUID id;
   
   @ManyToOne
-  @JoinColumn(name = "PERSON_ID", nullable = false)
+  @JoinColumn(name = "PERSON_ID", nullable = false, foreignKey = @ForeignKey(name = "ORGANISATION_PERSON_PERSON_ID_FK"))
   PersonData person;
   
   @ManyToOne
-  @JoinColumn(name = "ORGANISATION_ID", nullable = false)
+  @JoinColumn(name = "ORGANISATION_ID", nullable = false, foreignKey = @ForeignKey(name = "ORGANISATION_PERSON_ORGANISATION_ID_FK"))
   OrganisationData organisation;
   
   @Column(name="ROLE")

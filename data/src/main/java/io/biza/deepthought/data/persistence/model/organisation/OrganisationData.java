@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,7 +57,7 @@ public class OrganisationData {
   private DioSchemeType schemeType = DioSchemeType.CDR_COMMON;
   
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "CUSTOMER_ID")
+  @JoinColumn(name = "CUSTOMER_ID", foreignKey = @ForeignKey(name = "ORGANISATION_CUSTOMER_ID_FK"))
   @ToString.Exclude
   CustomerData customer;
   

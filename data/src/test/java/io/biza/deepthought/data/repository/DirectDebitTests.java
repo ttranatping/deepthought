@@ -18,23 +18,8 @@ import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountDirectDebit;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankAuthorisedEntityData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductAdditionalInformationData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductCardArtData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductConstraintData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductEligibilityData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeatureData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountEligibilityData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositTierData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierData;
+import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitAuthorisedEntityData;
+import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressData;
@@ -44,6 +29,21 @@ import io.biza.deepthought.data.persistence.model.person.PersonEmailData;
 import io.biza.deepthought.data.persistence.model.person.PersonPhoneData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductAdditionalInformationData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductCardArtData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductConstraintData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeatureData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeeData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeeDiscountData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeeDiscountEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateDepositData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateDepositTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateDepositTierData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingTierData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.support.DeepThoughtJpaConfig;
 import io.biza.deepthought.data.support.TranslatorInitialisation;
@@ -103,7 +103,7 @@ public class DirectDebitTests extends TranslatorInitialisation {
   @Test
   public void testDirectDebitAndCompare() {
 
-    BankAccountDirectDebitData debit = createDirectDebit();
+    DirectDebitData debit = createDirectDebit();
     DioBankAccountDirectDebit dioAccount = mapper.getMapperFacade().map(debit, DioBankAccountDirectDebit.class);
 
     DioBankAccountDirectDebit dioAccountStatic = getDirectDebitStaticBase(debit);
@@ -122,15 +122,15 @@ public class DirectDebitTests extends TranslatorInitialisation {
     }
   }
 
-  public BankAccountDirectDebitData createDirectDebit() {
+  public DirectDebitData createDirectDebit() {
     BankAccountData account = createAccountWithCard();
 
-    BankAuthorisedEntityData authorisedEntity = BankAuthorisedEntityData.builder().abn(VariableConstants.ORGANISATION_ABN)
+    DirectDebitAuthorisedEntityData authorisedEntity = DirectDebitAuthorisedEntityData.builder().abn(VariableConstants.ORGANISATION_ABN)
         .acn(VariableConstants.ORGANISATION_ACN)
         .description(VariableConstants.ORGANISATION_NAME)
         .build();
     authorisedEntity.branch(account.branch());
-    BankAccountDirectDebitData debit = BankAccountDirectDebitData.builder()
+    DirectDebitData debit = DirectDebitData.builder()
         .lastDebitAmount(VariableConstants.DEBIT_LAST_AMOUNT)
         .lastDebitDateTime(VariableConstants.DEBIT_DATE_TIME)
         .build();
@@ -163,7 +163,7 @@ public class DirectDebitTests extends TranslatorInitialisation {
     return account;
   }
 
-  public DioBankAccountDirectDebit getDirectDebitStaticBase(BankAccountDirectDebitData debit) {
+  public DioBankAccountDirectDebit getDirectDebitStaticBase(DirectDebitData debit) {
     LOG.warn("Debit details are: {}", debit.toString());
     DioBankAccountDirectDebit dioDebitStatic = DioBankAccountDirectDebit.builder().id(debit.id())
         .authorisedEntity(DioBankAuthorisedEntity.builder().abn(VariableConstants.ORGANISATION_ABN)

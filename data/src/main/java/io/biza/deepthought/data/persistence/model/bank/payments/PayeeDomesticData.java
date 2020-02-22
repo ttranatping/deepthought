@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -33,8 +34,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "CUSTOMER_BANK_PAYEE_DOMESTIC")
-public class CustomerBankPayeeDomesticData {
+@Table(name = "PAYEE_DOMESTIC")
+public class PayeeDomesticData {
 
   @Id
   @Type(type = "uuid-char")
@@ -46,9 +47,9 @@ public class CustomerBankPayeeDomesticData {
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "PAYEE_ID")
+  @JoinColumn(name = "PAYEE_ID", foreignKey = @ForeignKey(name = "PAYEE_DOMESTIC_PAYEE_ID_FK"))
   @ToString.Exclude
-  CustomerBankPayeeData payee;
+  PayeeData payee;
   
   @Column(name = "PAYEE_DOMESTIC_TYPE")
   @Enumerated(EnumType.STRING)

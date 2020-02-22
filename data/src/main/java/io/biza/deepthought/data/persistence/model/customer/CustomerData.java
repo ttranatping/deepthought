@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,8 +25,8 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.BrandData;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankPayeeData;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.payments.PayeeData;
+import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.grant.GrantCustomerData;
 import io.biza.deepthought.data.persistence.model.grant.GrantData;
@@ -57,7 +58,7 @@ public class CustomerData {
   
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
   
   @Column(name = "CREATION_TIME", updatable = false, insertable = false)
   @CreationTimestamp
@@ -70,7 +71,7 @@ public class CustomerData {
   OffsetDateTime lastUpdated = OffsetDateTime.now();
   
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false)
+  @JoinColumn(name = "BRAND_ID", nullable = false, foreignKey = @ForeignKey(name = "CUSTOMER_BRAND_ID_FK"))
   @ToString.Exclude
   BrandData brand;
   
@@ -80,11 +81,11 @@ public class CustomerData {
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<CustomerBankScheduledPaymentData> scheduledPayments;
+  Set<ScheduledPaymentData> scheduledPayments;
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<CustomerBankPayeeData> payees;
+  Set<PayeeData> payees;
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude

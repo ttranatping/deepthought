@@ -1,4 +1,4 @@
-package io.biza.deepthought.data.persistence.model.bank.product;
+package io.biza.deepthought.data.persistence.model.product.banking;
 
 import java.net.URI;
 import java.util.UUID;
@@ -6,12 +6,13 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
@@ -33,8 +34,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_PRODUCT_ADDITIONAL_INFORMATION")
-public class BankProductAdditionalInformationData {
+@Table(name = "PRODUCT_BANK_RATE_LENDING_TIER_APPLICABILITY")
+public class BankProductRateLendingTierApplicabilityData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -47,34 +48,16 @@ public class BankProductAdditionalInformationData {
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "PRODUCT_CDR_ID")
+  @JoinColumn(name = "LENDING_TIER_ID", foreignKey = @ForeignKey(name = "PRODUCT_BANK_RATE_LENDING_TIER_APPLICABILITY_LENDING_TIER_ID_FK"))
   @ToString.Exclude
-  BankProductData product;
+  BankProductRateLendingTierData rateTier;
 
-  @Column(name = "OVERVIEW_URI")
+  @Column(name = "ADDITIONAL_INFO")
+  @Lob
+  String additionalInfo;
+
+  @Column(name = "ADDITIONAL_INFO_URI")
   @Convert(converter = URIDataConverter.class)
-  URI overviewUri;
+  URI additionalInfoUri;
 
-  @Column(name = "TERMS_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI termsUri;
-
-  @Column(name = "ELIGIBILITY_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI eligibilityUri;
-
-  @Column(name = "FEES_PRICING_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI feesPricingUri;
-
-  @Column(name = "BUNDLE_URI")
-  @Convert(converter = URIDataConverter.class)
-  URI bundleUri;
-
-  @PrePersist
-  public void prePersist() {
-    if(this.product() != null) {
-      this.product.additionalInformation(this);
-    }
-  }
 }

@@ -15,7 +15,6 @@ import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.BrandData_;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData_;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductData_;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData_;
@@ -29,6 +28,7 @@ import io.biza.deepthought.data.persistence.model.grant.GrantData;
 import io.biza.deepthought.data.persistence.model.grant.GrantData_;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.persistence.model.product.ProductData_;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductData;
 
 public class GrantAccountSpecifications {
 

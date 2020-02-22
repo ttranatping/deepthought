@@ -1,8 +1,7 @@
-package io.biza.deepthought.data.persistence.model.bank.product;
+package io.biza.deepthought.data.persistence.model.product.banking;
 
 import java.math.BigDecimal;
 import java.net.URI;
-import java.time.Period;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -11,28 +10,24 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.biza.babelfish.cdr.enumerations.BankingProductDepositRateType;
+import io.biza.babelfish.cdr.enumerations.BankingProductDiscountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.converter.PeriodDataConverter;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -44,8 +39,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_PRODUCT_RATE_DEPOSIT")
-public class BankProductRateDepositData {
+@Table(name = "PRODUCT_BANK_FEE_DISCOUNT")
+public class BankProductFeeDiscountData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -55,45 +50,46 @@ public class BankProductRateDepositData {
 
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
+  DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
-  @JoinColumn(name = "PRODUCT_ID", nullable = false)
-  @JsonIgnore
+  @JoinColumn(name = "FEE_ID", nullable = false, foreignKey = @ForeignKey(name = "PRODUCT_BANK_FEE_DISCOUNT_FEE_ID_FK"))
   @ToString.Exclude
-  private BankProductData product;
+  BankProductFeeData fee;
 
-  @NonNull
-  @NotNull
-  @Column(name = "RATE_TYPE")
+  @OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
+  Set<BankProductFeeDiscountEligibilityData> eligibility;
+
+  @Column(name = "DESCRIPTION", length = 2048)
+  String description;
+
+  @Column(name = "DISCOUNT_TYPE")
   @Enumerated(EnumType.STRING)
-  BankingProductDepositRateType depositRateType;
+  BankingProductDiscountType discountType;
 
-  @NonNull
-  @NotNull
-  @Column(name = "RATE", precision = 17, scale = 16)
-  BigDecimal rate;
+  @Column(name = "AMOUNT", precision = 24, scale = 8)
+  BigDecimal amount;
 
-  @Column(name = "CALCULATION_FREQUENCY")
-  @Convert(converter = PeriodDataConverter.class)
-  Period calculationFrequency;
+  @Column(name = "BALANCE_RATE", precision = 17, scale = 16)
+  BigDecimal balanceRate;
 
-  @Column(name = "APPLICATION_FREQUENCY")
-  @Convert(converter = PeriodDataConverter.class)
-  Period applicationFrequency;
+  @Column(name = "TRANSACTION_RATE", precision = 17, scale = 16)
+  BigDecimal transactionRate;
 
-  @OneToMany(mappedBy = "depositRate", cascade = CascadeType.ALL)
-  Set<BankProductRateDepositTierData> tiers;
+  @Column(name = "ACCRUED_RATE", precision = 17, scale = 16)
+  BigDecimal accruedRate;
 
-  @Column(name = "ADDITIONAL_VALUE", length = 4096)
-  String additionalValue;
+  @Column(name = "FEE_RATE", precision = 17, scale = 16)
+  BigDecimal feeRate;
 
-  @Column(name = "ADDITIONAL_INFO")
-  @Lob
+  @Column(name = "INFO", length = 4096)
   String additionalInfo;
 
-  @Column(name = "ADDITIONAL_INFO_URL")
+  @Column(name = "URI")
   @Convert(converter = URIDataConverter.class)
   URI additionalInfoUri;
+
+  @Column(name = "VALUE", length = 4096)
+  String additionalValue;
 
 }

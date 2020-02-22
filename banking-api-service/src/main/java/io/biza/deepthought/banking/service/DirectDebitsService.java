@@ -26,14 +26,14 @@ import io.biza.deepthought.banking.requests.RequestListAccounts;
 import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountBalance;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
+import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductData_;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
 import io.biza.deepthought.data.persistence.model.grant.GrantData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.persistence.model.product.ProductData_;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductData;
 import io.biza.deepthought.data.repository.BankAccountDirectDebitRepository;
 import io.biza.deepthought.data.repository.BankAccountRepository;
 import io.biza.deepthought.data.repository.BankAccountTransactionRepository;
@@ -60,11 +60,11 @@ public class DirectDebitsService {
   private BankAccountDirectDebitRepository directDebitRepository;
 
 
-  public Page<BankAccountDirectDebitData> listDirectDebitsByAccount(UUID accountId,
+  public Page<DirectDebitData> listDirectDebitsByAccount(UUID accountId,
       RequestDirectDebitsByAccounts requestListAccounts) throws NotFoundException {
 
     GrantAccountData grantAccount = grantService.getGrantAccount(accountId);
-    Specification<BankAccountDirectDebitData> filterSpecifications =
+    Specification<DirectDebitData> filterSpecifications =
         Specification.where(DirectDebitSpecifications.accountId(grantAccount.account().id()));
 
     return directDebitRepository.findAll(filterSpecifications,
@@ -72,7 +72,7 @@ public class DirectDebitsService {
 
   }
 
-  public Page<BankAccountDirectDebitData> listDirectDebitsByAccountList(
+  public Page<DirectDebitData> listDirectDebitsByAccountList(
       RequestDirectDebitsByAccounts requestList) {
     LOG.debug("Retrieving a list of direct debits with input request of {}", requestList);
 
@@ -86,7 +86,7 @@ public class DirectDebitsService {
         PageRequest.of(requestList.page() - 1, requestList.pageSize()));
   }
 
-  public Page<BankAccountDirectDebitData> listDirectDebitsWithFilter(
+  public Page<DirectDebitData> listDirectDebitsWithFilter(
       RequestDirectDebitsByBulk requestList) {
     LOG.debug("Retrieving a list of direct debits with input request of {}", requestList);
 

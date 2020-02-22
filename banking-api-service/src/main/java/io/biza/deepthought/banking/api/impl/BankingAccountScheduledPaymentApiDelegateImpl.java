@@ -45,7 +45,7 @@ import io.biza.deepthought.banking.service.ScheduledPaymentsService;
 import io.biza.deepthought.banking.service.GrantService;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.shared.exception.NotFoundException;
@@ -69,7 +69,7 @@ public class BankingAccountScheduledPaymentApiDelegateImpl
   public ResponseEntity<ResponseBankingScheduledPaymentsListV1> listByAccount(UUID accountId,
       RequestScheduledPaymentsByAccounts requestScheduledPayments) throws NotFoundException {
 
-    Page<CustomerBankScheduledPaymentData> directDebitsList =
+    Page<ScheduledPaymentData> directDebitsList =
         directDebitService.listScheduledPaymentsByAccount(accountId, requestScheduledPayments);
 
     /**
@@ -91,7 +91,7 @@ public class BankingAccountScheduledPaymentApiDelegateImpl
   @Override
   public ResponseEntity<ResponseBankingScheduledPaymentsListV1> listByAccountList(
       RequestScheduledPaymentsByAccounts requestScheduledPayments) {
-    Page<CustomerBankScheduledPaymentData> directDebitsList =
+    Page<ScheduledPaymentData> directDebitsList =
         directDebitService.listScheduledPaymentsByAccountList(requestScheduledPayments);
 
     /**
@@ -113,7 +113,7 @@ public class BankingAccountScheduledPaymentApiDelegateImpl
   @Override
   public ResponseEntity<ResponseBankingScheduledPaymentsListV1> listAll(
       RequestScheduledPaymentsByBulk requestScheduledPayments) {
-    Page<CustomerBankScheduledPaymentData> directDebitsList =
+    Page<ScheduledPaymentData> directDebitsList =
         directDebitService.listScheduledPaymentsWithFilter(requestScheduledPayments);
 
     /**

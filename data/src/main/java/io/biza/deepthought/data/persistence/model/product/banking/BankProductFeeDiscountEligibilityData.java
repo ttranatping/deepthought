@@ -1,21 +1,24 @@
-package io.biza.deepthought.data.persistence.model.bank.product;
+package io.biza.deepthought.data.persistence.model.product.banking;
 
 import java.net.URI;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
+import io.biza.babelfish.cdr.enumerations.BankingProductDiscountEligibilityType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;
@@ -33,8 +36,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_PRODUCT_RATE_DEPOSIT_TIER_APPLICABILITY")
-public class BankProductRateDepositTierApplicabilityData {
+@Table(name = "PRODUCT_BANK_FEE_DISCOUNT_ELIGIBILITY")
+public class BankProductFeeDiscountEligibilityData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -44,19 +47,26 @@ public class BankProductRateDepositTierApplicabilityData {
 
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
+  DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
-  @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "DEPOSIT_TIER_ID")
+  @ManyToOne
+  @JoinColumn(name = "DISCOUNT_ID", nullable = false, foreignKey = @ForeignKey(name = "PRODUCT_BANK_FEE_DISCOUNT_ELIGIBILITY_DISCOUNT_ID_FK"))
   @ToString.Exclude
-  BankProductRateDepositTierData rateTier;
+  BankProductFeeDiscountData discount;
 
-  @Column(name = "ADDITIONAL_INFO")
+  @Column(name = "TYPE")
+  @Enumerated(EnumType.STRING)
+  BankingProductDiscountEligibilityType discountEligibilityType;
+
+  @Column(name = "INFO")
   @Lob
   String additionalInfo;
 
-  @Column(name = "ADDITIONAL_INFO_URI")
+  @Column(name = "URI")
   @Convert(converter = URIDataConverter.class)
   URI additionalInfoUri;
+
+  @Column(name = "VALUE", length = 4096)
+  String additionalValue;
 
 }

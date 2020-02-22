@@ -21,22 +21,7 @@ import io.biza.deepthought.data.payloads.dio.banking.DioCustomerScheduledPayment
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductAdditionalInformationData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductCardArtData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductConstraintData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductEligibilityData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeatureData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountEligibilityData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositTierData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierApplicabilityData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateLendingTierData;
+import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.person.PersonAddressData;
@@ -46,6 +31,21 @@ import io.biza.deepthought.data.persistence.model.person.PersonEmailData;
 import io.biza.deepthought.data.persistence.model.person.PersonPhoneData;
 import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductAdditionalInformationData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductCardArtData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductConstraintData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeatureData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeeData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeeDiscountData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeeDiscountEligibilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateDepositData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateDepositTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateDepositTierData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingTierApplicabilityData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingTierData;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.support.DeepThoughtJpaConfig;
 import io.biza.deepthought.data.support.TranslatorInitialisation;
@@ -106,7 +106,7 @@ public class ScheduledPaymentTests extends TranslatorInitialisation {
   @Test
   public void testScheduledPaymentCreateAndCompare() {
 
-    CustomerBankScheduledPaymentData scheduledPayment = createScheduledPaymentBase();
+    ScheduledPaymentData scheduledPayment = createScheduledPaymentBase();
 
     DioCustomerScheduledPayment dioScheduledPayment =
         mapper.getMapperFacade().map(scheduledPayment, DioCustomerScheduledPayment.class);
@@ -127,11 +127,11 @@ public class ScheduledPaymentTests extends TranslatorInitialisation {
     }
   }
 
-  public CustomerBankScheduledPaymentData createScheduledPaymentBase() {
+  public ScheduledPaymentData createScheduledPaymentBase() {
 
     BankAccountData account = createAccountWithCard();
 
-    CustomerBankScheduledPaymentData scheduledPayment = CustomerBankScheduledPaymentData.builder()
+    ScheduledPaymentData scheduledPayment = ScheduledPaymentData.builder()
         .nickName(VariableConstants.NICK_NAME).payeeReference(VariableConstants.PAYEE_DESCRIPTION)
         .payerReference(VariableConstants.BENEFICIARY_DESCRIPTION)
         .status(BankingScheduledPaymentStatus.ACTIVE).nextPaymentDate(VariableConstants.PAYMENT_DUE_DATE_TIME).build();
@@ -141,7 +141,7 @@ public class ScheduledPaymentTests extends TranslatorInitialisation {
     return scheduledPaymentRepository.findById(scheduledPayment.id()).get();
   }
 
-  public DioCustomerScheduledPayment getScheduledPaymentStatic(CustomerBankScheduledPaymentData scheduledPayment) {
+  public DioCustomerScheduledPayment getScheduledPaymentStatic(ScheduledPaymentData scheduledPayment) {
     LOG.warn("Scheduled Payment are: {}", scheduledPayment.toString());
     DioCustomerScheduledPayment dioScheduledPaymentStatic =
         DioCustomerScheduledPayment.builder().id(scheduledPayment.id())

@@ -26,14 +26,14 @@ import io.biza.deepthought.banking.requests.RequestListAccounts;
 import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountBalance;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
+import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductData_;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
 import io.biza.deepthought.data.persistence.model.grant.GrantData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.persistence.model.product.ProductData_;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductData;
 import io.biza.deepthought.data.repository.BankAccountRepository;
 import io.biza.deepthought.data.repository.BankAccountTransactionRepository;
 import io.biza.deepthought.data.repository.CustomerBankScheduledPaymentRepository;
@@ -60,11 +60,11 @@ public class ScheduledPaymentsService {
   private CustomerBankScheduledPaymentRepository scheduledPaymentRepository;
 
 
-  public Page<CustomerBankScheduledPaymentData> listScheduledPaymentsByAccount(UUID accountId,
+  public Page<ScheduledPaymentData> listScheduledPaymentsByAccount(UUID accountId,
       RequestScheduledPaymentsByAccounts requestScheduledPayments) throws NotFoundException {
 
     GrantAccountData grantAccount = grantService.getGrantAccount(accountId);
-    Specification<CustomerBankScheduledPaymentData> filterSpecifications =
+    Specification<ScheduledPaymentData> filterSpecifications =
         Specification.where(ScheduledPaymentSpecifications.accountId(grantAccount.account().id()));
 
     return scheduledPaymentRepository.findAll(filterSpecifications,
@@ -72,7 +72,7 @@ public class ScheduledPaymentsService {
 
   }
 
-  public Page<CustomerBankScheduledPaymentData> listScheduledPaymentsByAccountList(
+  public Page<ScheduledPaymentData> listScheduledPaymentsByAccountList(
       RequestScheduledPaymentsByAccounts requestList) {
     LOG.debug("Retrieving a list of direct debits with input request of {}", requestList);
 
@@ -86,7 +86,7 @@ public class ScheduledPaymentsService {
         PageRequest.of(requestList.page() - 1, requestList.pageSize()));
   }
 
-  public Page<CustomerBankScheduledPaymentData> listScheduledPaymentsWithFilter(
+  public Page<ScheduledPaymentData> listScheduledPaymentsWithFilter(
       RequestScheduledPaymentsByBulk requestList) {
     LOG.debug("Retrieving a list of direct debits with input request of {}", requestList);
 

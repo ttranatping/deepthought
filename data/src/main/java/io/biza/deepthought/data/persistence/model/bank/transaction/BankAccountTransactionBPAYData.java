@@ -4,6 +4,7 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -40,7 +41,7 @@ public class BankAccountTransactionBPAYData {
   private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "TRANSACTION_ID")
+  @JoinColumn(name = "TRANSACTION_ID", foreignKey = @ForeignKey(name = "BANK_TRANSACTION_BPAY_TRANSACTION_ID_FK"))
   @ToString.Exclude
   @MapsId
   BankAccountTransactionData transaction;

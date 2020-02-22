@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -42,7 +43,7 @@ public class BankAccountTransactionCardData {
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "TRANSACTION_ID")
+  @JoinColumn(name = "TRANSACTION_ID", foreignKey = @ForeignKey(name = "BANK_TRANSACTION_BPAY_TRANSACTION_ID_FK"))
   @ToString.Exclude
   BankAccountTransactionData transaction;
   

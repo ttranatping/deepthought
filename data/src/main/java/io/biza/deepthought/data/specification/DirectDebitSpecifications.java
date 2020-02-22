@@ -17,9 +17,8 @@ import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.BrandData_;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData_;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
+import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitData;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData_;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductData_;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData_;
@@ -35,19 +34,20 @@ import io.biza.deepthought.data.persistence.model.grant.GrantData;
 import io.biza.deepthought.data.persistence.model.grant.GrantData_;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.persistence.model.product.ProductData_;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductData;
 
 public class DirectDebitSpecifications {
 
-  public static Specification<BankAccountDirectDebitData> accountId(UUID accountId) {
+  public static Specification<DirectDebitData> accountId(UUID accountId) {
     return (root, query, cb) -> {
-      Join<BankAccountDirectDebitData, BankAccountData> grantJoin = root.join(BankAccountDirectDebitData_.account);
+      Join<DirectDebitData, BankAccountData> grantJoin = root.join(BankAccountDirectDebitData_.account);
       return cb.equal(grantJoin.get(BankAccountData_.id), accountId);
     };
   }
   
-  public static Specification<BankAccountDirectDebitData> accountIds(UUID... accountIds) {
+  public static Specification<DirectDebitData> accountIds(UUID... accountIds) {
     return (root, query, cb) -> {
-      Join<BankAccountDirectDebitData, BankAccountData> grantJoin = root.join(BankAccountDirectDebitData_.account);
+      Join<DirectDebitData, BankAccountData> grantJoin = root.join(BankAccountDirectDebitData_.account);
       return grantJoin.get(BankAccountData_.id).in(Arrays.asList(accountIds));
     };
   }

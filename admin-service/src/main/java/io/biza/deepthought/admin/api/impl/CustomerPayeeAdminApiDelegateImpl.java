@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.payloads.dio.banking.DioCustomerPayee;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankPayeeData;
+import io.biza.deepthought.data.persistence.model.bank.payments.PayeeData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.biza.deepthought.data.repository.CustomerPayeeRepository;
 import io.biza.deepthought.data.repository.CustomerRepository;
@@ -41,14 +41,14 @@ public class CustomerPayeeAdminApiDelegateImpl implements CustomerPayeeAdminApiD
 
   @Override
   public ResponseEntity<List<DioCustomerPayee>> listPayees(UUID brandId, UUID customerId) {
-    List<CustomerBankPayeeData> bankAccountData = bankPayeeRepository.findAllByCustomerIdAndCustomerBrandId(customerId, brandId);
+    List<PayeeData> bankAccountData = bankPayeeRepository.findAllByCustomerIdAndCustomerBrandId(customerId, brandId);
     LOG.debug("Listing all bank payees for brand id of {} customer id of {} and received {}", brandId, customerId, bankAccountData);
     return ResponseEntity.ok(mapper.mapAsList(bankAccountData, DioCustomerPayee.class));
   }
 
   @Override
   public ResponseEntity<DioCustomerPayee> getPayee(UUID brandId, UUID customerId, UUID payeeId) {
-    Optional<CustomerBankPayeeData> data = bankPayeeRepository.findByIdAndCustomerIdAndCustomerBrandId(payeeId, customerId, brandId);
+    Optional<PayeeData> data = bankPayeeRepository.findByIdAndCustomerIdAndCustomerBrandId(payeeId, customerId, brandId);
 
     if (data.isPresent()) {
       LOG.info("Retrieving a single bank payee with brand id {} and customer id of {} and id of {} and content of {}",
@@ -75,16 +75,16 @@ public class CustomerPayeeAdminApiDelegateImpl implements CustomerPayeeAdminApiD
       throw ValidationListException.builder().type(DioExceptionType.INVALID_CUSTOMER).explanation(Labels.ERROR_INVALID_CUSTOMER).build();
     }
     
-    CustomerBankPayeeData requestPayee = mapper.map(createRequest, CustomerBankPayeeData.class);
+    PayeeData requestPayee = mapper.map(createRequest, PayeeData.class);
     requestPayee.customer(customer.get());
     LOG.debug("Creating a new bank payee for brand {} customer {} with content of {}", brandId, customerId, requestPayee);    
-    CustomerBankPayeeData payee = bankPayeeRepository.save(requestPayee);
+    PayeeData payee = bankPayeeRepository.save(requestPayee);
     return getPayee(brandId, customerId, payee.id());
   }
 
   @Override
   public ResponseEntity<Void> deletePayee(UUID brandId, UUID customerId, UUID payeeId) {
-    Optional<CustomerBankPayeeData> optionalData = bankPayeeRepository.findByIdAndCustomerIdAndCustomerBrandId(payeeId, customerId, brandId);
+    Optional<PayeeData> optionalData = bankPayeeRepository.findByIdAndCustomerIdAndCustomerBrandId(payeeId, customerId, brandId);
 
     if (optionalData.isPresent()) {
       LOG.info("Deleting payee with id of {} brand of {} customer of {}", payeeId, brandId, customerId);
@@ -104,10 +104,10 @@ public class CustomerPayeeAdminApiDelegateImpl implements CustomerPayeeAdminApiD
 
     DeepThoughtValidator.validate(validator, createRequest);
     
-    Optional<CustomerBankPayeeData> optionalData = bankPayeeRepository.findByIdAndCustomerIdAndCustomerBrandId(payeeId, customerId, brandId);
+    Optional<PayeeData> optionalData = bankPayeeRepository.findByIdAndCustomerIdAndCustomerBrandId(payeeId, customerId, brandId);
 
     if (optionalData.isPresent()) {
-      CustomerBankPayeeData data = optionalData.get();
+      PayeeData data = optionalData.get();
       mapper.map(createRequest, data);
       bankPayeeRepository.save(data);
       

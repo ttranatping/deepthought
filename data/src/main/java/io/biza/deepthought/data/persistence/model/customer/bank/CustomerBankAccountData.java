@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,14 +44,14 @@ public class CustomerBankAccountData {
   UUID id;
 
   @ManyToOne
-  @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+  @JoinColumn(name = "CUSTOMER_ID", nullable = false, foreignKey = @ForeignKey(name = "CUSTOMER_BANK_ACCOUNT_CUSTOMER_ID_FK"))
   @ToString.Exclude
-  private CustomerData customer;
+  CustomerData customer;
 
   @ManyToOne
-  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false, foreignKey = @ForeignKey(name = "CUSTOMER_BANK_ACCOUNT_ACCOUNT_ID_FK"))
   @ToString.Exclude
-  private BankAccountData account;
+  BankAccountData account;
 
   @Column(name = "OWNER")
   @Type(type = "true_false")

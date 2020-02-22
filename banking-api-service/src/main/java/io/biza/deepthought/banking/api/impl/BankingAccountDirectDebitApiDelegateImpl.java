@@ -44,7 +44,7 @@ import io.biza.deepthought.banking.service.GrantService;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountBalance;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
+import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitData;
 import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.shared.exception.NotFoundException;
@@ -68,7 +68,7 @@ public class BankingAccountDirectDebitApiDelegateImpl
   public ResponseEntity<ResponseBankingDirectDebitAuthorisationListV1> listByAccount(UUID accountId,
       RequestDirectDebitsByAccounts requestDirectDebits) throws NotFoundException {
 
-    Page<BankAccountDirectDebitData> directDebitsList =
+    Page<DirectDebitData> directDebitsList =
         directDebitService.listDirectDebitsByAccount(accountId, requestDirectDebits);
 
     /**
@@ -90,7 +90,7 @@ public class BankingAccountDirectDebitApiDelegateImpl
   @Override
   public ResponseEntity<ResponseBankingDirectDebitAuthorisationListV1> listByAccountList(
       RequestDirectDebitsByAccounts requestDirectDebits) {
-    Page<BankAccountDirectDebitData> directDebitsList =
+    Page<DirectDebitData> directDebitsList =
         directDebitService.listDirectDebitsByAccountList(requestDirectDebits);
 
     /**
@@ -112,7 +112,7 @@ public class BankingAccountDirectDebitApiDelegateImpl
   @Override
   public ResponseEntity<ResponseBankingDirectDebitAuthorisationListV1> listAll(
       RequestDirectDebitsByBulk requestDirectDebits) {
-    Page<BankAccountDirectDebitData> directDebitsList =
+    Page<DirectDebitData> directDebitsList =
         directDebitService.listDirectDebitsWithFilter(requestDirectDebits);
 
     /**

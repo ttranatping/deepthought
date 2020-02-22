@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ import io.biza.deepthought.data.enumerations.DioAccountStatus;
 import io.biza.deepthought.data.enumerations.DioBankAccountType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.data.persistence.model.customer.bank.CustomerBankAccountData;
 import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
@@ -62,20 +63,20 @@ public class BankAccountData {
   
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
+  DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
 
   /**
    * Product Definition
    */
   @ManyToOne
-  @JoinColumn(name = "PRODUCT_ID", nullable = false)
+  @JoinColumn(name = "PRODUCT_ID", nullable = false, foreignKey = @ForeignKey(name = "BANK_ACCOUNT_PRODUCT_ID_FK"))
   ProductData product;
 
   /**
    * Bundle Definition
    */
   @ManyToOne
-  @JoinColumn(name = "BUNDLE_ID", nullable = true)
+  @JoinColumn(name = "PRODUCT_BUNDLE_ID", nullable = true, foreignKey = @ForeignKey(name = "BANK_ACCOUNT_PRODUCT_BUNDLE_ID_FK"))
   ProductBundleData bundle;
   
   /**
@@ -135,7 +136,7 @@ public class BankAccountData {
    * Branch Details
    */
   @ManyToOne
-  @JoinColumn(name = "BRANCH_ID", nullable = false)
+  @JoinColumn(name = "BRANCH_ID", nullable = false, foreignKey = @ForeignKey(name = "BANK_ACCOUNT_BRANCH_ID_FK"))
   @ToString.Exclude
   @NotNull
   BankBranchData branch;
@@ -183,7 +184,7 @@ public class BankAccountData {
    */
   @OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<CustomerBankScheduledPaymentData> scheduledPayments;
+  Set<ScheduledPaymentData> scheduledPayments;
   
   /**
    * Grants assigned to this account

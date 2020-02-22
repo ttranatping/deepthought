@@ -1,4 +1,4 @@
-package io.biza.deepthought.data.persistence.model.bank.product;
+package io.biza.deepthought.data.persistence.model.product.banking;
 
 import java.net.URI;
 import java.time.OffsetDateTime;
@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_PRODUCT")
+@Table(name = "PRODUCT_BANK")
 public class BankProductData {
 
   @Id
@@ -52,7 +53,7 @@ public class BankProductData {
   UUID id;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "PRODUCT_ID")
+  @JoinColumn(name = "PRODUCT_ID", foreignKey = @ForeignKey(name = "PRODUCT_BANK_PRODUCT_ID_FK"))
   @ToString.Exclude
   ProductData product;
 
@@ -63,22 +64,22 @@ public class BankProductData {
   Set<BankProductConstraintData> constraint;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<BankProductEligibilityData> eligibility;
+  Set<BankProductEligibilityData> eligibility;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<BankProductFeeData> fee;
+  Set<BankProductFeeData> fee;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<BankProductRateDepositData> depositRate;
+  Set<BankProductRateDepositData> depositRate;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<BankProductRateLendingData> lendingRate;
+  Set<BankProductRateLendingData> lendingRate;
 
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-  private Set<BankProductCardArtData> cardArt;
+  Set<BankProductCardArtData> cardArt;
 
   @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, optional = true)
-  private BankProductAdditionalInformationData additionalInformation;
+  BankProductAdditionalInformationData additionalInformation;
 
   @Column(name = "EFFECTIVE_FROM")
   OffsetDateTime effectiveFrom;

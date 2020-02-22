@@ -8,10 +8,10 @@ import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.enumerations.BankingProductEffectiveWithAll;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.BrandData_;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductData_;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.persistence.model.product.ProductData_;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductData;
 
 public class ProductBankingSpecifications {
 

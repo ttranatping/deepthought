@@ -1,4 +1,4 @@
-package io.biza.deepthought.data.persistence.model.bank.product;
+package io.biza.deepthought.data.persistence.model.product.banking;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +38,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_PRODUCT_RATE_DEPOSIT_TIER")
+@Table(name = "PRODUCT_BANK_RATE_DEPOSIT_TIER")
 public class BankProductRateDepositTierData {
 
   @Id
@@ -48,15 +49,15 @@ public class BankProductRateDepositTierData {
 
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
+  DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
-  @JoinColumn(name = "DEPOSIT_RATE_ID", nullable = false)
+  @JoinColumn(name = "DEPOSIT_RATE_ID", nullable = false, foreignKey = @ForeignKey(name = "PRODUCT_BANK_RATE_DEPOSIT_TIER_DEPOSIT_RATE_ID_FK"))
   @ToString.Exclude
-  private BankProductRateDepositData depositRate;
+  BankProductRateDepositData depositRate;
 
   @OneToOne(mappedBy = "rateTier", cascade = CascadeType.ALL, optional = true)
-  private BankProductRateDepositTierApplicabilityData applicabilityConditions;
+  BankProductRateDepositTierApplicabilityData applicabilityConditions;
 
   @Column(name = "NAME", length = 255, nullable = false)
   @NotNull

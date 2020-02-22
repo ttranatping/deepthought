@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +26,7 @@ import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -52,7 +53,7 @@ public class ProductData {
   UUID id;
 
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false)
+  @JoinColumn(name = "BRAND_ID", nullable = false, foreignKey = @ForeignKey(name = "PRODUCT_BRAND_ID_FK"))
   @ToString.Exclude
   BrandData brand;
   

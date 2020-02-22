@@ -4,6 +4,7 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -32,9 +33,9 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_ACCOUNT_DIRECT_DEBIT_AUTHORISED_ENTITY")
+@Table(name = "DIRECT_DEBIT_AUTHORISED_ENTITY")
 @EqualsAndHashCode
-public class BankAuthorisedEntityData {
+public class DirectDebitAuthorisedEntityData {
 
   @Id
   @Type(type = "uuid-char")
@@ -45,15 +46,15 @@ public class BankAuthorisedEntityData {
   DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @ManyToOne
-  @JoinColumn(name = "BRANCH_ID")
+  @JoinColumn(name = "BRANCH_ID", foreignKey = @ForeignKey(name = "DIRECT_DEBIT_AUTHORISED_ENTITY_BRANCH_ID_FK"))
   @ToString.Exclude
   BankBranchData branch;
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "DIRECT_DEBIT_ID")
+  @JoinColumn(name = "DIRECT_DEBIT_ID", foreignKey = @ForeignKey(name = "DIRECT_DEBIT_AUTHORISED_ENTITY_DIRECT_DEBIT_ID_FK"))
   @ToString.Exclude
-  BankAccountDirectDebitData directDebit;
+  DirectDebitData directDebit;
   
   @Column(name = "DESCRIPTION")
   String description;

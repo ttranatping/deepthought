@@ -4,14 +4,14 @@ import io.biza.babelfish.cdr.abstracts.payloads.banking.account.payee.internatio
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.international.BankingInternationalPayeeBeneficiaryDetailsV1;
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.international.BankingInternationalPayeeV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankPayeeInternationalData;
+import io.biza.deepthought.data.persistence.model.bank.payments.PayeeInternationalData;
 import ma.glasnost.orika.MapperFactory;
 
 public class CustomerPayeeInternationalDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
-    orikaMapperFactory.classMap(CustomerBankPayeeInternationalData.class, BankingInternationalPayeeV1.class)
+    orikaMapperFactory.classMap(PayeeInternationalData.class, BankingInternationalPayeeV1.class)
         .field("beneficiaryName", "beneficiaryDetails.name")
         .field("beneficiaryCountry", "beneficiaryDetails.country")
         .field("beneficiaryMessage", "beneficiaryDetails.message")

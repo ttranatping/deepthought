@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -52,7 +53,7 @@ public class PersonAddressPAFData {
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "PERSON_ADDRESS_ID")
+  @JoinColumn(name = "PERSON_ADDRESS_ID", foreignKey = @ForeignKey(name = "PERSON_ADDRESS_PAF_PERSON_ADDRESS_ID_FK"))
   @ToString.Exclude
   PersonAddressData address;
   

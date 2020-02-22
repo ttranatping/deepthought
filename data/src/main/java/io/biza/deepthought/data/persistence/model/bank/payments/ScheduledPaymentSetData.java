@@ -1,23 +1,21 @@
 package io.biza.deepthought.data.persistence.model.bank.payments;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.util.Currency;
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
+import io.biza.deepthought.data.Constants;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import lombok.AllArgsConstructor;
@@ -35,8 +33,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_ACCOUNT_DIRECT_DEBIT")
-public class BankAccountDirectDebitData {
+@Table(name = "SCHEDULED_PAYMENT_SET")
+public class ScheduledPaymentSetData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -46,28 +44,32 @@ public class BankAccountDirectDebitData {
   
   @Transient
   @Builder.Default
-  DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
-
+  private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
+  
   @ManyToOne
-  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+  @JoinColumn(name = "SCHEDULED_PAYMENT_ID", nullable = false, foreignKey = @ForeignKey(name = "SCHEDULED_PAYMENT_SET_SCHEDULED_PAYMENT_ID_FK"))
   @ToString.Exclude
-  @NotNull
+  ScheduledPaymentData scheduledPayment;
+  
+  @Column(name = "AMOUNT")
+  BigDecimal amount;
+  
+  @Column(name = "IS_AMOUNT_CALCULATED")
+  Boolean isAmountCalculated;
+  
+  @Column(name = "CURRENCY")
+  @Builder.Default
+  Currency currency = Currency.getInstance(Constants.DEFAULT_CURRENCY);
+  
+  @ManyToOne
+  @JoinColumn(name = "ACCOUNT_ID", foreignKey = @ForeignKey(name = "SCHEDULED_PAYMENT_SET_ACCOUNT_ID_FK"))
+  @ToString.Exclude
   BankAccountData account;
   
-  @OneToOne(mappedBy = "directDebit", cascade = CascadeType.ALL, optional = false)
-  BankAuthorisedEntityData authorisedEntity;
-  
-  @Column(name = "LAST_DEBIT_DATETIME")
-  OffsetDateTime lastDebitDateTime;
-  
-  @Column(name = "LAST_DEBIT_AMOUNT")
-  BigDecimal lastDebitAmount;
-  
-  @PrePersist
-  public void prePersist() {
-    if (this.authorisedEntity() != null) {
-      this.authorisedEntity().directDebit(this);
-    }
-  }
+  @ManyToOne
+  @JoinColumn(name = "PAYEE_ID", foreignKey = @ForeignKey(name = "SCHEDULED_PAYMENT_SET_PAYEE_ID_FK"))
+  @ToString.Exclude
+  PayeeData payee;
+
   
 }

@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -33,7 +34,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Entity
 @ToString
 @Valid
-@Table(name = "CUSTOMER_PERSON_ADDRESS_SIMPLE")
+@Table(name = "PERSON_ADDRESS_SIMPLE")
 public class PersonAddressSimpleData {
 
   @Id
@@ -49,7 +50,7 @@ public class PersonAddressSimpleData {
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "PERSON_ADDRESS_ID")
+  @JoinColumn(name = "PERSON_ADDRESS_ID", foreignKey = @ForeignKey(name = "PERSON_ADDRESS_SIMPLE_PERSON_ADDRESS_ID_FK"))
   @ToString.Exclude
   PersonAddressData address;
   

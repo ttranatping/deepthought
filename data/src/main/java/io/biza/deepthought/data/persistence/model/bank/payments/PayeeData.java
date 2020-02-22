@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,8 +38,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "CUSTOMER_BANK_PAYEE")
-public class CustomerBankPayeeData {
+@Table(name = "PAYEE")
+public class PayeeData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -51,13 +52,13 @@ public class CustomerBankPayeeData {
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
-  @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+  @JoinColumn(name = "CUSTOMER_ID", nullable = false, foreignKey = @ForeignKey(name = "PAYEE_CUSTOMER_ID_FK"))
   @ToString.Exclude
   CustomerData customer;
 
   @OneToMany(mappedBy = "payee", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<CustomerBankScheduledPaymentSetData> paymentSet;
+  Set<ScheduledPaymentSetData> paymentSet;
   
   @Column(name = "NICK_NAME", nullable = false)
   @NotNull
@@ -71,13 +72,13 @@ public class CustomerBankPayeeData {
   OffsetDateTime creationDateTime;
   
   @OneToOne(mappedBy = "payee", cascade = CascadeType.ALL, optional = true)
-  CustomerBankPayeeDomesticData domestic;
+  PayeeDomesticData domestic;
   
   @OneToOne(mappedBy = "payee", cascade = CascadeType.ALL, optional = true)
-  CustomerBankPayeeBPAYData bpay;
+  PayeeBPAYData bpay;
   
   @OneToOne(mappedBy = "payee", cascade = CascadeType.ALL, optional = true)
-  CustomerBankPayeeInternationalData international;
+  PayeeInternationalData international;
   
   @PrePersist
   public void prePersist() {

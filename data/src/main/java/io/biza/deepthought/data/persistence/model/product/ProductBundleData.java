@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -51,7 +52,7 @@ public class ProductBundleData {
   UUID id;
 
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false)
+  @JoinColumn(name = "BRAND_ID", nullable = false, foreignKey = @ForeignKey(name = "PRODUCT_BUNDLE_BRAND_ID_FK"))
   @ToString.Exclude
   private BrandData brand;
   
@@ -79,8 +80,8 @@ public class ProductBundleData {
   URI additionalInfoUri;
 
   @ManyToMany(cascade = CascadeType.PERSIST)
-  @JoinTable(name = "PRODUCT_BUNDLE_PRODUCT", joinColumns = {@JoinColumn(name = "PRODUCT_ID")},
-      inverseJoinColumns = {@JoinColumn(name = "BUNDLE_ID")})
+  @JoinTable(name = "PRODUCT_BUNDLE_PRODUCT", joinColumns = {@JoinColumn(name = "PRODUCT_ID", foreignKey = @ForeignKey(name = "PRODUCT_BUNDLE_PRODUCT_PRODUCT_ID_FK"))},
+      inverseJoinColumns = {@JoinColumn(name = "BUNDLE_ID", foreignKey = @ForeignKey(name = "PRODUCT_BUNDLE_BUNDLE_ID_FK"))})
   @Builder.Default
   Set<ProductData> products = new HashSet<ProductData>();
 

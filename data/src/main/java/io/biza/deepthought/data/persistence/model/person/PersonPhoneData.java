@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,12 +44,12 @@ public class PersonPhoneData {
   
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
+  DioSchemeType schemeType = DioSchemeType.DIO_COMMON;
   
   @ManyToOne
-  @JoinColumn(name = "PERSON_ID", nullable = false)
+  @JoinColumn(name = "PERSON_ID", nullable = false, foreignKey = @ForeignKey(name = "PERSON_PHONE_PERSON_ID_FK"))
   @ToString.Exclude
-  private PersonData person;
+  PersonData person;
 
   @Column(name = "IS_PREFERRED", nullable = false)
   @NotNull

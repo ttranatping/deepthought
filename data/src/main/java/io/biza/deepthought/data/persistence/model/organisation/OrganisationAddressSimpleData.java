@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -28,7 +29,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "CUSTOMER_ORGANISATION_ADDRESS_SIMPLE")
+@Table(name = "ORGANISATION_ADDRESS_SIMPLE")
 public class OrganisationAddressSimpleData {
 
   @Id
@@ -37,7 +38,7 @@ public class OrganisationAddressSimpleData {
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "ORGANISATION_ADDRESS_ID")
+  @JoinColumn(name = "ORGANISATION_ADDRESS_ID", foreignKey = @ForeignKey(name = "ORGANISATION_ADDRESS_SIMPLE_ORGANISATION_ADDRESS_FK"))
   @ToString.Exclude
   OrganisationAddressData address;
   

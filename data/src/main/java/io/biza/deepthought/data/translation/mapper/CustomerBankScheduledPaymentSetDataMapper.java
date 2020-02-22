@@ -4,7 +4,7 @@ import io.biza.babelfish.cdr.enumerations.PayloadTypeBankingScheduledPaymentTo;
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.scheduled.BankingScheduledPaymentSetV1;
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.scheduled.BankingScheduledPaymentToV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentSetData;
+import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentSetData;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
@@ -14,11 +14,11 @@ public class CustomerBankScheduledPaymentSetDataMapper implements OrikaFactoryCo
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
     orikaMapperFactory
-        .classMap(CustomerBankScheduledPaymentSetData.class, BankingScheduledPaymentSetV1.class)
+        .classMap(ScheduledPaymentSetData.class, BankingScheduledPaymentSetV1.class)
         .customize(
-            new CustomMapper<CustomerBankScheduledPaymentSetData, BankingScheduledPaymentSetV1>() {
+            new CustomMapper<ScheduledPaymentSetData, BankingScheduledPaymentSetV1>() {
               @Override
-              public void mapAtoB(CustomerBankScheduledPaymentSetData from,
+              public void mapAtoB(ScheduledPaymentSetData from,
                   BankingScheduledPaymentSetV1 to, MappingContext context) {
                 if (from.account() != null) {
                   to.to(BankingScheduledPaymentToV1.builder()

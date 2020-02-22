@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,8 +44,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "CUSTOMER_SCHEDULED_PAYMENT")
-public class CustomerBankScheduledPaymentData {
+@Table(name = "SCHEDULED_PAYMENT")
+public class ScheduledPaymentData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -57,7 +58,7 @@ public class CustomerBankScheduledPaymentData {
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
   
   @ManyToOne
-  @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+  @JoinColumn(name = "CUSTOMER_ID", nullable = false, foreignKey = @ForeignKey(name = "SCHEDULED_PAYMENT_CUSTOMER_ID_FK"))
   @ToString.Exclude
   CustomerData customer;
   
@@ -79,12 +80,12 @@ public class CustomerBankScheduledPaymentData {
   BankingScheduledPaymentStatus status;
   
   @ManyToOne
-  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false, foreignKey = @ForeignKey(name = "SCHEDULED_PAYMENT_FROM_ACCOUNT_ID_FK"))
   @ToString.Exclude
   BankAccountData from;
   
   @OneToMany(mappedBy = "scheduledPayment", cascade = CascadeType.ALL)
-  Set<CustomerBankScheduledPaymentSetData> paymentSet;
+  Set<ScheduledPaymentSetData> paymentSet;
   
   @Column(name = "NEXT_PAYMENT_DATE")
   OffsetDateTime nextPaymentDate;
@@ -116,7 +117,7 @@ public class CustomerBankScheduledPaymentData {
   @PrePersist
   public void prePersist() {
     if(this.paymentSet() != null) {
-      for(CustomerBankScheduledPaymentSetData item : this.paymentSet() ) {
+      for(ScheduledPaymentSetData item : this.paymentSet() ) {
         item.scheduledPayment(this);
       }
     }

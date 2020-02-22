@@ -17,11 +17,10 @@ import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.BrandData_;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData_;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
+import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitData;
 import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData_;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData_;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductData;
 import io.biza.deepthought.data.persistence.model.bank.product.BankProductData_;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData_;
@@ -37,19 +36,20 @@ import io.biza.deepthought.data.persistence.model.grant.GrantData;
 import io.biza.deepthought.data.persistence.model.grant.GrantData_;
 import io.biza.deepthought.data.persistence.model.product.ProductData;
 import io.biza.deepthought.data.persistence.model.product.ProductData_;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductData;
 
 public class ScheduledPaymentSpecifications {
 
-  public static Specification<CustomerBankScheduledPaymentData> accountId(UUID accountId) {
+  public static Specification<ScheduledPaymentData> accountId(UUID accountId) {
     return (root, query, cb) -> {
-      Join<CustomerBankScheduledPaymentData, BankAccountData> grantJoin = root.join(CustomerBankScheduledPaymentData_.from);
+      Join<ScheduledPaymentData, BankAccountData> grantJoin = root.join(CustomerBankScheduledPaymentData_.from);
       return cb.equal(grantJoin.get(BankAccountData_.id), accountId);
     };
   }
   
-  public static Specification<CustomerBankScheduledPaymentData> accountIds(UUID... accountIds) {
+  public static Specification<ScheduledPaymentData> accountIds(UUID... accountIds) {
     return (root, query, cb) -> {
-      Join<CustomerBankScheduledPaymentData, BankAccountData> grantJoin = root.join(CustomerBankScheduledPaymentData_.from);
+      Join<ScheduledPaymentData, BankAccountData> grantJoin = root.join(CustomerBankScheduledPaymentData_.from);
       return grantJoin.get(BankAccountData_.id).in(Arrays.asList(accountIds));
     };
   }

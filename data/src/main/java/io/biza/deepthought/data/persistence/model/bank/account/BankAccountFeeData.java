@@ -4,6 +4,7 @@ import java.time.OffsetDateTime;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ import javax.validation.Valid;
 import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductFeeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -45,13 +46,13 @@ public class BankAccountFeeData {
   DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
-  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false, foreignKey = @ForeignKey(name = "BANK_ACCOUNT_FEE_ACCOUNT_ID_FK"))
   @JsonIgnore
   @ToString.Exclude
   BankAccountData account;
   
   @ManyToOne
-  @JoinColumn(name = "FEE_ID", nullable = false)
+  @JoinColumn(name = "FEE_ID", nullable = false, foreignKey = @ForeignKey(name = "BANK_ACCOUNT_FEE_FEE_ID_FK"))
   BankProductFeeData fee;
   
   @Column(name = "LAST_APPLIED")

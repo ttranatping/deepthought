@@ -3,6 +3,7 @@ package io.biza.deepthought.data.persistence.model.bank.transaction;
 import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,12 +44,12 @@ public class BankAccountTransactionAPCSData {
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "TRANSACTION_ID")
+  @JoinColumn(name = "TRANSACTION_ID", foreignKey = @ForeignKey(name = "BANK_TRANSACTION_APCS_TRANSACTION_ID_FK"))
   @ToString.Exclude
   BankAccountTransactionData transaction;
   
   @ManyToOne
-  @JoinColumn(name = "BRANCH_ID", nullable = false)
+  @JoinColumn(name = "BRANCH_ID", nullable = false, foreignKey = @ForeignKey(name = "BANK_TRANSACTION_APCS_BRANCH_ID_FK"))
   @ToString.Exclude
   @NotNull
   private BankBranchData branch;

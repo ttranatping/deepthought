@@ -2,7 +2,7 @@ package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountDirectDebit;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
+import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitData;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFactory;
 
@@ -12,7 +12,7 @@ public class BankAccountDirectDebitDataMapper implements OrikaFactoryConfigurerI
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
     
-    orikaMapperFactory.classMap(BankAccountDirectDebitData.class, DioBankAccountDirectDebit.class).fieldAToB("id", "id")
+    orikaMapperFactory.classMap(DirectDebitData.class, DioBankAccountDirectDebit.class).fieldAToB("id", "id")
         .byDefault().register();
 
   }

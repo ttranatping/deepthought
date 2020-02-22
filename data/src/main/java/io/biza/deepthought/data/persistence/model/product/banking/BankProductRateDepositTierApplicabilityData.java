@@ -1,4 +1,4 @@
-package io.biza.deepthought.data.persistence.model.bank.product;
+package io.biza.deepthought.data.persistence.model.product.banking;
 
 import java.net.URI;
 import java.util.UUID;
@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,8 +34,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_PRODUCT_RATE_LENDING_TIER_APPLICABILITY")
-public class BankProductRateLendingTierApplicabilityData {
+@Table(name = "PRODUCT_BANK_RATE_DEPOSIT_TIER_APPLICABILITY")
+public class BankProductRateDepositTierApplicabilityData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -44,12 +45,12 @@ public class BankProductRateLendingTierApplicabilityData {
 
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
+  DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "LENDING_TIER_ID")
+  @JoinColumn(name = "DEPOSIT_TIER_ID", foreignKey = @ForeignKey(name = "PRODUCT_BANK_RATE_DEPOSIT_TIER_APPLICABILITY_DEPOSIT_TIER_ID_FK"))
   @ToString.Exclude
-  BankProductRateLendingTierData rateTier;
+  BankProductRateDepositTierData rateTier;
 
   @Column(name = "ADDITIONAL_INFO")
   @Lob

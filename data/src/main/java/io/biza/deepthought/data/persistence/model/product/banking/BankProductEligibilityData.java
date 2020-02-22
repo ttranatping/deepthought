@@ -1,26 +1,28 @@
-package io.biza.deepthought.data.persistence.model.bank.product;
+package io.biza.deepthought.data.persistence.model.product.banking;
 
-import java.math.BigDecimal;
 import java.net.URI;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import org.hibernate.annotations.Type;
-import io.biza.babelfish.cdr.enumerations.BankingProductDiscountType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.biza.babelfish.cdr.enumerations.BankingProductEligibilityType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.converter.URIDataConverter;
 import lombok.AllArgsConstructor;
@@ -38,8 +40,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "BANK_PRODUCT_FEE_DISCOUNT")
-public class BankProductFeeDiscountData {
+@Table(name = "PRODUCT_BANK_ELIGIBILITY")
+public class BankProductEligibilityData {
 
   @Id
   @Column(name = "ID", insertable = false, updatable = false)
@@ -52,43 +54,36 @@ public class BankProductFeeDiscountData {
   private DioSchemeType schemeType = DioSchemeType.CDR_BANKING;
 
   @ManyToOne
-  @JoinColumn(name = "FEE_ID", nullable = false)
+  @JoinColumn(name = "PRODUCT_BANK_ID", nullable = false, foreignKey = @ForeignKey(name = "PRODUCT_BANK_ELIGIBILITY_PRODUCT_BANK_ID_FK"))
+  @JsonIgnore
   @ToString.Exclude
-  private BankProductFeeData fee;
+  private BankProductData product;
 
-  @OneToMany(mappedBy = "discount", cascade = CascadeType.ALL)
-  private Set<BankProductFeeDiscountEligibilityData> eligibility;
-
-  @Column(name = "DESCRIPTION", length = 2048)
-  private String description;
-
-  @Column(name = "DISCOUNT_TYPE")
+  @Column(name = "ELIGIBILITY_TYPE")
   @Enumerated(EnumType.STRING)
-  private BankingProductDiscountType discountType;
+  private BankingProductEligibilityType eligibilityType;
 
-  @Column(name = "AMOUNT", precision = 24, scale = 8)
-  private BigDecimal amount;
+  @Column(name = "ADDITIONAL_VALUE", length = 4096)
+  private String additionalValue;
 
-  @Column(name = "BALANCE_RATE", precision = 17, scale = 16)
-  private BigDecimal balanceRate;
-
-  @Column(name = "TRANSACTION_RATE", precision = 17, scale = 16)
-  private BigDecimal transactionRate;
-
-  @Column(name = "ACCRUED_RATE", precision = 17, scale = 16)
-  private BigDecimal accruedRate;
-
-  @Column(name = "FEE_RATE", precision = 17, scale = 16)
-  private BigDecimal feeRate;
-
-  @Column(name = "INFO", length = 4096)
+  @Column(name = "ADDITIONAL_INFO")
+  @Lob
   private String additionalInfo;
 
-  @Column(name = "URI")
+  @Column(name = "ADDITIONAL_INFO_URI")
   @Convert(converter = URIDataConverter.class)
   private URI additionalInfoUri;
-
-  @Column(name = "VALUE", length = 4096)
-  private String additionalValue;
+  
+  @PrePersist
+  public void prePersist() {
+    if (this.product() != null) {
+      Set<BankProductEligibilityData> set = new HashSet<BankProductEligibilityData>();
+      if (this.product().eligibility() != null) {
+        set.addAll(this.product.eligibility());
+      }
+      set.add(this);
+      this.product().eligibility(set);
+    }
+  }
 
 }

@@ -16,7 +16,7 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.payloads.dio.banking.DioCustomerScheduledPayment;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankScheduledPaymentData;
+import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.data.persistence.model.customer.CustomerData;
 import io.biza.deepthought.data.repository.CustomerScheduledPaymentRepository;
 import io.biza.deepthought.data.repository.CustomerRepository;
@@ -41,14 +41,14 @@ public class CustomerScheduledPaymentAdminApiDelegateImpl implements CustomerSch
 
   @Override
   public ResponseEntity<List<DioCustomerScheduledPayment>> listScheduledPayments(UUID brandId, UUID customerId) {
-    List<CustomerBankScheduledPaymentData> bankAccountData = bankScheduledPaymentRepository.findAllByCustomerIdAndCustomerBrandId(customerId, brandId);
+    List<ScheduledPaymentData> bankAccountData = bankScheduledPaymentRepository.findAllByCustomerIdAndCustomerBrandId(customerId, brandId);
     LOG.debug("Listing all bank scheduledPayments for brand id of {} customer id of {} and received {}", brandId, customerId, bankAccountData);
     return ResponseEntity.ok(mapper.mapAsList(bankAccountData, DioCustomerScheduledPayment.class));
   }
 
   @Override
   public ResponseEntity<DioCustomerScheduledPayment> getScheduledPayment(UUID brandId, UUID customerId, UUID scheduledPaymentId) {
-    Optional<CustomerBankScheduledPaymentData> data = bankScheduledPaymentRepository.findByIdAndCustomerIdAndCustomerBrandId(scheduledPaymentId, customerId, brandId);
+    Optional<ScheduledPaymentData> data = bankScheduledPaymentRepository.findByIdAndCustomerIdAndCustomerBrandId(scheduledPaymentId, customerId, brandId);
 
     if (data.isPresent()) {
       LOG.info("Retrieving a single bank scheduled payment with brand id {} and customer id of {} and id of {} and content of {}",
@@ -75,17 +75,17 @@ public class CustomerScheduledPaymentAdminApiDelegateImpl implements CustomerSch
       throw ValidationListException.builder().type(DioExceptionType.INVALID_CUSTOMER).explanation(Labels.ERROR_INVALID_CUSTOMER).build();
     }
     
-    CustomerBankScheduledPaymentData requestScheduledPayment = mapper.map(createRequest, CustomerBankScheduledPaymentData.class);
+    ScheduledPaymentData requestScheduledPayment = mapper.map(createRequest, ScheduledPaymentData.class);
     requestScheduledPayment.customer(customer.get());
 
     LOG.debug("Creating a new bank scheduled payment for brand {} customer {} with content of {}", brandId, customerId, requestScheduledPayment);
-    CustomerBankScheduledPaymentData scheduledPayment = bankScheduledPaymentRepository.save(requestScheduledPayment);
+    ScheduledPaymentData scheduledPayment = bankScheduledPaymentRepository.save(requestScheduledPayment);
     return getScheduledPayment(brandId, customerId, scheduledPayment.id());
   }
 
   @Override
   public ResponseEntity<Void> deleteScheduledPayment(UUID brandId, UUID customerId, UUID scheduledPaymentId) {
-    Optional<CustomerBankScheduledPaymentData> optionalData = bankScheduledPaymentRepository.findByIdAndCustomerIdAndCustomerBrandId(scheduledPaymentId, customerId, brandId);
+    Optional<ScheduledPaymentData> optionalData = bankScheduledPaymentRepository.findByIdAndCustomerIdAndCustomerBrandId(scheduledPaymentId, customerId, brandId);
 
     if (optionalData.isPresent()) {
       LOG.info("Deleting scheduled payment with id of {} brand of {} customer of {}", scheduledPaymentId, brandId, customerId);
@@ -105,10 +105,10 @@ public class CustomerScheduledPaymentAdminApiDelegateImpl implements CustomerSch
 
     DeepThoughtValidator.validate(validator, createRequest);
     
-    Optional<CustomerBankScheduledPaymentData> optionalData = bankScheduledPaymentRepository.findByIdAndCustomerIdAndCustomerBrandId(scheduledPaymentId, customerId, brandId);
+    Optional<ScheduledPaymentData> optionalData = bankScheduledPaymentRepository.findByIdAndCustomerIdAndCustomerBrandId(scheduledPaymentId, customerId, brandId);
 
     if (optionalData.isPresent()) {
-      CustomerBankScheduledPaymentData data = optionalData.get();
+      ScheduledPaymentData data = optionalData.get();
       mapper.map(createRequest, data);
       bankScheduledPaymentRepository.save(data);
       

@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.ForeignKey;
 import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ import org.hibernate.annotations.Type;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.persistence.model.BrandData;
 import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankAuthorisedEntityData;
+import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitAuthorisedEntityData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,12 +50,12 @@ public class BankBranchData {
   private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID")
+  @JoinColumn(name = "BRAND_ID", foreignKey = @ForeignKey(name = "BANK_BRANCH_BRAND_ID_FK"))
   @ToString.Exclude
   BrandData brand;
   
   @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL)
-  Set<BankAuthorisedEntityData> authorisedEntity;
+  Set<DirectDebitAuthorisedEntityData> authorisedEntity;
   
   @OneToMany(mappedBy = "branch")
   @ToString.Exclude

@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ import lombok.ToString;
 @ToString
 @Valid
 @Table(name = "GRANT_RESOURCE",
-uniqueConstraints = {@UniqueConstraint(columnNames = {"GRANT_ID", "RESOURCE_ID"})})
+uniqueConstraints = {@UniqueConstraint(columnNames = {"GRANT_ID", "OBJECT_ID"})})
 public class GrantResourceData {
 
   @Id
@@ -52,7 +53,7 @@ public class GrantResourceData {
   UUID id;
   
   @ManyToOne
-  @JoinColumn(name = "GRANT_ID", nullable = false)
+  @JoinColumn(name = "GRANT_ID", nullable = false, foreignKey = @ForeignKey(name = "GRANT_RESOURCE_GRANT_ID_FK"))
   @NotNull
   @ToString.Exclude
   GrantData grant;

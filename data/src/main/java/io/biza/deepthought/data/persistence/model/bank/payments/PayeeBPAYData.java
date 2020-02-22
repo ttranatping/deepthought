@@ -4,6 +4,7 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
@@ -29,8 +30,8 @@ import lombok.ToString;
 @Entity
 @ToString
 @Valid
-@Table(name = "CUSTOMER_BANK_PAYEE_BPAY")
-public class CustomerBankPayeeBPAYData {
+@Table(name = "PAYEE_BPAY")
+public class PayeeBPAYData {
 
   @Id
   @Type(type = "uuid-char")
@@ -42,9 +43,9 @@ public class CustomerBankPayeeBPAYData {
   
   @OneToOne(fetch = FetchType.LAZY)
   @MapsId
-  @JoinColumn(name = "PAYEE_ID")
+  @JoinColumn(name = "PAYEE_ID", foreignKey = @ForeignKey(name = "PAYEE_BPAY_PAYEE_ID_FK"))
   @ToString.Exclude
-  CustomerBankPayeeData payee;
+  PayeeData payee;
   
   @Column(name = "BILLER_CODE")
   String billerCode;

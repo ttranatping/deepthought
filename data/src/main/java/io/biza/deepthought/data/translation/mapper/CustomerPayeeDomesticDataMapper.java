@@ -2,14 +2,14 @@ package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.babelfish.cdr.models.payloads.banking.account.payee.domestic.BankingDomesticPayeeV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.persistence.model.bank.payments.CustomerBankPayeeDomesticData;
+import io.biza.deepthought.data.persistence.model.bank.payments.PayeeDomesticData;
 import ma.glasnost.orika.MapperFactory;
 
 public class CustomerPayeeDomesticDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
-    orikaMapperFactory.classMap(CustomerBankPayeeDomesticData.class, BankingDomesticPayeeV1.class)
+    orikaMapperFactory.classMap(PayeeDomesticData.class, BankingDomesticPayeeV1.class)
     .field("type", "payeeAccountType")
     .field("accountName", "account.accountName")
     .field("accountBsb", "account.bsb")

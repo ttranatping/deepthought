@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,13 +53,13 @@ public class GrantCustomerData {
   UUID id;
   
   @ManyToOne
-  @JoinColumn(name = "GRANT_ID", nullable = false)
+  @JoinColumn(name = "GRANT_ID", nullable = false, foreignKey = @ForeignKey(name = "GRANT_CUSTOMER_GRANT_ID_FK"))
   @NotNull
   @ToString.Exclude
   GrantData grant;
   
   @ManyToOne
-  @JoinColumn(name = "CUSTOMER_ID", nullable = false)
+  @JoinColumn(name = "CUSTOMER_ID", nullable = false, foreignKey = @ForeignKey(name = "GRANT_CUSTOMER_CUSTOMER_ID_FK"))
   @NotNull
   @ToString.Exclude
   CustomerData customer;

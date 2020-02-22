@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,10 +49,10 @@ public class BankAccountCreditCardData {
   
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
+  DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @ManyToOne
-  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false, foreignKey = @ForeignKey(name = "BANK_ACCOUNT_CREDIT_CARD_ACCOUNT_ID_FK"))
   @ToString.Exclude
   BankAccountData account;
   

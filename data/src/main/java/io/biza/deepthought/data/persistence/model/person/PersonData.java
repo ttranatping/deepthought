@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,10 +54,10 @@ public class PersonData {
   
   @Transient
   @Builder.Default
-  private DioSchemeType schemeType = DioSchemeType.CDR_COMMON;
+  DioSchemeType schemeType = DioSchemeType.CDR_COMMON;
   
   @OneToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "CUSTOMER_ID")
+  @JoinColumn(name = "CUSTOMER_ID", foreignKey = @ForeignKey(name = "PERSON_CUSTOMER_ID_FK"))
   @ToString.Exclude
   CustomerData customer;
 
@@ -91,14 +92,14 @@ public class PersonData {
   
   @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
   @ToString.Exclude
-  private Set<PersonPhoneData> phoneNumber;
+  Set<PersonPhoneData> phoneNumber;
   
   @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
   @ToString.Exclude
-  private Set<PersonEmailData> emailAddress;
+  Set<PersonEmailData> emailAddress;
   
   @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
   @ToString.Exclude
-  private Set<PersonAddressData> physicalAddress;
+  Set<PersonAddressData> physicalAddress;
 
 }

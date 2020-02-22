@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class OrganisationAddressData {
   UUID id;
   
   @ManyToOne
-  @JoinColumn(name = "ORGANISATION_ID", nullable = false)
+  @JoinColumn(name = "ORGANISATION_ID", nullable = false, foreignKey = @ForeignKey(name = "ORGANISATION_ADDRESS_ORGANISATION_ID_FK"))
   @ToString.Exclude
   OrganisationData organisation;
   

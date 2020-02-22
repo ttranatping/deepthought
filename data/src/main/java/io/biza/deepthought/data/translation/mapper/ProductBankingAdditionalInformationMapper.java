@@ -2,7 +2,7 @@ package io.biza.deepthought.data.translation.mapper;
 
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductAdditionalInformationV1;
 import io.biza.deepthought.data.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductAdditionalInformationData;
+import io.biza.deepthought.data.persistence.model.product.banking.BankProductAdditionalInformationData;
 import ma.glasnost.orika.MapperFactory;
 
 public class ProductBankingAdditionalInformationMapper

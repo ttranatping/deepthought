@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,9 +55,9 @@ public class BankAccountTermDepositData {
   DioSchemeType schemeType = DioSchemeType.DIO_BANKING;
   
   @ManyToOne
-  @JoinColumn(name = "ACCOUNT_ID", nullable = false)
+  @JoinColumn(name = "ACCOUNT_ID", nullable = false, foreignKey = @ForeignKey(name = "BANK_ACCOUNT_TERM_DEPOSIT_ACCOUNT_ID_FK"))
   @ToString.Exclude
-  private BankAccountData account;
+  BankAccountData account;
   
   @Column(name = "AMOUNT", nullable = false)
   @NotNull
