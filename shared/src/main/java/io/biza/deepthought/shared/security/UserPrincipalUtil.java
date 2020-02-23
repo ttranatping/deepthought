@@ -1,7 +1,6 @@
 package io.biza.deepthought.shared.security;
 
 import java.util.Map;
-import java.util.UUID;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

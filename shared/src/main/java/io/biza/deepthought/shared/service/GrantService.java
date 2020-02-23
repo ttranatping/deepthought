@@ -1,4 +1,4 @@
-package io.biza.deepthought.banking.service;
+package io.biza.deepthought.shared.service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -10,12 +10,16 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import io.biza.babelfish.cdr.enumerations.BankingAccountStatusWithAll;
-import io.biza.deepthought.banking.requests.RequestListAccounts;
+import io.biza.deepthought.shared.requests.RequestListAccounts;
 import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
+import io.biza.deepthought.data.persistence.model.grant.GrantCustomerData;
 import io.biza.deepthought.data.persistence.model.grant.GrantResourceData;
 import io.biza.deepthought.data.repository.GrantAccountRepository;
+import io.biza.deepthought.data.repository.GrantCustomerRepository;
 import io.biza.deepthought.data.repository.GrantResourceRepository;
 import io.biza.deepthought.data.specification.GrantAccountSpecifications;
+import io.biza.deepthought.data.specification.GrantCustomerSpecifications;
+import io.biza.deepthought.shared.exception.InvalidSubjectException;
 import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.security.UserPrincipalUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +32,21 @@ public class GrantService {
   private GrantAccountRepository accountRepository;
   
   @Autowired
+  private GrantCustomerRepository customerRepository;
+  
+  @Autowired
   private GrantResourceRepository resourceRepository;
+  
+  public UUID getObjectIdByResourceId(UUID id) throws NotFoundException, InvalidSubjectException {
+    GrantCustomerData customer = getGrantCustomer();
+    Optional<GrantResourceData> resourceData = resourceRepository.findByGrantIdAndId(customer.grant().id(), id);
+    
+    if(resourceData.isPresent()) {
+      return resourceData.get().objectId();
+    } else {
+      throw new NotFoundException("Requested Grant Resource not found");
+    }
+  }
   
   public UUID getObjectIdByAccountIdAndResourceId(UUID accountId, UUID id) throws NotFoundException {
     GrantAccountData account = getGrantAccount(accountId);
@@ -65,6 +83,24 @@ public class GrantService {
         .accountIds(accountIds)
         .and(GrantAccountSpecifications.expiryBefore(OffsetDateTime.now()))
         .and(GrantAccountSpecifications.subject(UserPrincipalUtil.getSubject())), PageRequest.of(page - 1, pageSize));
+  }
+  
+  public GrantCustomerData getGrantCustomer() throws InvalidSubjectException {
+    LOG.debug("Retrieving customer with subject identifier of {}", UserPrincipalUtil.getSubject());
+
+    Specification<GrantCustomerData> filterSpecification =
+        GrantCustomerSpecifications.expiryBefore(OffsetDateTime.now())
+            .and(GrantCustomerSpecifications.subject(UserPrincipalUtil.getSubject()));
+
+    List<GrantCustomerData> grantList = customerRepository.findAll(filterSpecification);
+
+    // Despite being a list we currently limit one grant to one customer so we just pull the first
+    // record of the first account returned (there should only be zero or one tuple)
+    if (grantList != null && grantList.size() > 0) {
+      return grantList.iterator().next();
+    } else {
+      throw new InvalidSubjectException("Customer for subject " + UserPrincipalUtil.getSubject() + " cannot be found");
+    }
   }
 
   public GrantAccountData getGrantAccount(UUID accountId) throws NotFoundException {

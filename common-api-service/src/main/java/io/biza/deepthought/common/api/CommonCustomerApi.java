@@ -3,6 +3,7 @@ package io.biza.deepthought.common.api;
 import io.biza.babelfish.cdr.models.responses.ResponseCommonCustomerDetailV1;
 import io.biza.babelfish.cdr.models.responses.ResponseCommonCustomerV1;
 import io.biza.deepthought.common.api.delegate.CommonCustomerApiDelegate;
+import io.biza.deepthought.shared.exception.InvalidSubjectException;
 import io.biza.deepthought.shared.support.CDRConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,7 +36,7 @@ public interface CommonCustomerApi {
       content = @Content(schema = @Schema(implementation = ResponseCommonCustomerV1.class)))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(CDRConstants.OAUTH2_SCOPE_CUSTOMER_BASIC_READ)
-  default ResponseEntity<ResponseCommonCustomerV1> getCustomer() {
+  default ResponseEntity<ResponseCommonCustomerV1> getCustomer() throws InvalidSubjectException {
     return getDelegate().getCustomer();
   }
 
@@ -46,7 +47,7 @@ public interface CommonCustomerApi {
       content = @Content(schema = @Schema(implementation = ResponseCommonCustomerDetailV1.class)))})
   @GetMapping(value = "/detail", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(CDRConstants.OAUTH2_SCOPE_CUSTOMER_DETAIL_READ)
-  default ResponseEntity<ResponseCommonCustomerDetailV1> getCustomerDetail() {
+  default ResponseEntity<ResponseCommonCustomerDetailV1> getCustomerDetail() throws InvalidSubjectException {
     return getDelegate().getCustomerDetail();
   }
 }

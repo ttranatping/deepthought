@@ -1,4 +1,4 @@
-package io.biza.deepthought.banking.requests;
+package io.biza.deepthought.shared.requests;
 
 import javax.validation.constraints.Min;
 import io.biza.babelfish.cdr.enumerations.BankingAccountStatusWithAll;

@@ -5,6 +5,8 @@ import io.biza.babelfish.cdr.models.responses.ResponseBankingPayeeByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingPayeeListV1;
 import io.biza.deepthought.banking.api.delegate.BankingPayeeApiDelegate;
 import io.biza.deepthought.banking.requests.RequestListPayees;
+import io.biza.deepthought.shared.exception.InvalidSubjectException;
+import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.support.CDRConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -76,7 +78,7 @@ public interface BankingPayeeApi {
       @Valid @RequestParam(name = "page", required = false,
           defaultValue = "1") @Min(1) Integer page,
       @Valid @RequestParam(name = "page-size", required = false,
-          defaultValue = "25") Integer pageSize) {
+          defaultValue = "25") Integer pageSize) throws InvalidSubjectException {
     return getDelegate().listPayees(
         RequestListPayees.builder().payeeType(payeeType).page(page).pageSize(pageSize).build());
   }
@@ -114,7 +116,7 @@ public interface BankingPayeeApi {
   @GetMapping(value = "/{payeeId}", produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_BANK_PAYEES_READ)
   default ResponseEntity<ResponseBankingPayeeByIdV1> getPayeeDetail(
-      @NotNull @Valid @PathVariable("payeeId") UUID payeeId) {
+      @NotNull @Valid @PathVariable("payeeId") UUID payeeId) throws NotFoundException, InvalidSubjectException {
     return getDelegate().getPayeeDetail(payeeId);
   }
 }
