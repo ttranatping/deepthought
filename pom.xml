@@ -105,7 +105,6 @@
     </scm>
     <modules>
         <module>keycloak-theme</module>
-        <module>data</module>
         <module>shared</module>
         <module>admin-service</module>
         <module>admin-frontend</module>

@@ -13,8 +13,8 @@ import io.biza.deepthought.banking.api.delegate.BankingAccountDirectDebitApiDele
 import io.biza.deepthought.banking.requests.RequestDirectDebitsByAccounts;
 import io.biza.deepthought.banking.requests.RequestDirectDebitsByBulk;
 import io.biza.deepthought.banking.service.DirectDebitService;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitData;
+import io.biza.deepthought.shared.controller.DeepThoughtMapper;
 import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.support.CDRContainerAttributes;
 import lombok.extern.slf4j.Slf4j;

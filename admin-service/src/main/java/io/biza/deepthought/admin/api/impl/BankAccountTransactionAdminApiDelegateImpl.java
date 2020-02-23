@@ -13,7 +13,6 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.BankAccountTransactionAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountTransaction;
 import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
@@ -21,6 +20,7 @@ import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.data.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.data.repository.BankAccountTransactionRepository;
 import io.biza.deepthought.data.repository.BankBranchRepository;
+import io.biza.deepthought.shared.controller.DeepThoughtMapper;
 import io.biza.deepthought.data.repository.BankAccountRepository;
 import lombok.extern.slf4j.Slf4j;
 

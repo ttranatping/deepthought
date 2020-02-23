@@ -56,7 +56,7 @@
         </dependency>
         <dependency>
             <groupId>io.biza</groupId>
-            <artifactId>deepthought-data</artifactId>
+            <artifactId>deepthought-shared</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

@@ -13,7 +13,6 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductRateDepositAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.enumerations.DioSchemeType;
 import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
@@ -23,6 +22,7 @@ import io.biza.deepthought.data.persistence.model.product.banking.BankProductRat
 import io.biza.deepthought.data.repository.ProductBankingRateDepositRepository;
 import io.biza.deepthought.data.repository.ProductBankingRateDepositTierRepository;
 import io.biza.deepthought.data.repository.ProductRepository;
+import io.biza.deepthought.shared.controller.DeepThoughtMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

@@ -14,8 +14,8 @@ import io.biza.babelfish.cdr.models.responses.container.ResponseBankingPayeeList
 import io.biza.deepthought.banking.api.delegate.BankingPayeeApiDelegate;
 import io.biza.deepthought.banking.requests.RequestListPayees;
 import io.biza.deepthought.banking.service.PayeeService;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.persistence.model.bank.payments.PayeeData;
+import io.biza.deepthought.shared.controller.DeepThoughtMapper;
 import io.biza.deepthought.shared.exception.InvalidSubjectException;
 import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.support.CDRContainerAttributes;

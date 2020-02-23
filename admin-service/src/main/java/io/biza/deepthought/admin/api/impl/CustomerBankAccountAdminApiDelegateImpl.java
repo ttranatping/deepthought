@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.CustomerBankAccountAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
 import io.biza.deepthought.data.enumerations.DioExceptionType;
 import io.biza.deepthought.data.payloads.dio.common.DioCustomerBankAccount;
 import io.biza.deepthought.data.payloads.requests.RequestCustomerBankAccountConnection;
@@ -24,6 +23,7 @@ import io.biza.deepthought.data.repository.BankAccountRepository;
 import io.biza.deepthought.data.repository.BrandRepository;
 import io.biza.deepthought.data.repository.CustomerBankAccountRepository;
 import io.biza.deepthought.data.repository.CustomerRepository;
+import io.biza.deepthought.shared.controller.DeepThoughtMapper;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated

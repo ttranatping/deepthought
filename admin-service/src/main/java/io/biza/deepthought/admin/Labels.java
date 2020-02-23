@@ -10,6 +10,8 @@ public class Labels {
   public final static String TAG_PRODUCT_DESCRIPTION = "The Product Administration API";
   public final static String TAG_CUSTOMER_NAME = "customer-admin";
   public final static String TAG_CUSTOMER_DESCRIPTION = "The Customer Administration API";
+  public final static String TAG_GRANT_NAME = "grant-admin";
+  public final static String TAG_GRANT_DESCRIPTION = "The Grant Administration API";
   public final static String TAG_BRANCH_NAME = "branch-admin";
   public final static String TAG_BRANCH_DESCRIPTION = "The Branch Administration API";
   public final static String TAG_BANK_ACCOUNT_NAME = "bank-account-admin";
@@ -44,6 +46,12 @@ public class Labels {
   public final static String SECURITY_SCOPE_CUSTOMER_WRITE = "DEEPTHOUGHT:ADMIN:CUSTOMER:WRITE";
   public final static String OAUTH2_SCOPE_CUSTOMER_WRITE =
       "hasAuthority('SCOPE_" + SECURITY_SCOPE_CUSTOMER_WRITE + "')";
+  public final static String SECURITY_SCOPE_GRANT_READ = "DEEPTHOUGHT:ADMIN:GRANT:READ";
+  public final static String OAUTH2_SCOPE_GRANT_READ =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_GRANT_READ + "')";
+  public final static String SECURITY_SCOPE_GRANT_WRITE = "DEEPTHOUGHT:ADMIN:GRANT:WRITE";
+  public final static String OAUTH2_SCOPE_GRANT_WRITE =
+      "hasAuthority('SCOPE_" + SECURITY_SCOPE_GRANT_WRITE + "')";
   public final static String SECURITY_SCOPE_BRANCH_READ = "DEEPTHOUGHT:ADMIN:BRANCH:READ";
   public final static String OAUTH2_SCOPE_BRANCH_READ =
       "hasAuthority('SCOPE_" + SECURITY_SCOPE_BRANCH_READ + "')";
