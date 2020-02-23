@@ -12,11 +12,11 @@ import org.springframework.validation.annotation.Validated;
 import io.biza.deepthought.admin.api.delegate.BranchAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;
-import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
-import io.biza.deepthought.data.repository.BrandRepository;
-import io.biza.deepthought.shared.controller.DeepThoughtMapper;
-import io.biza.deepthought.data.repository.BankBranchRepository;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.banking.DioBankBranch;
+import io.biza.deepthought.shared.persistence.model.bank.BankBranchData;
+import io.biza.deepthought.shared.persistence.repository.BankBranchRepository;
+import io.biza.deepthought.shared.persistence.repository.BrandRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated

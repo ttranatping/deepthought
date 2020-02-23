@@ -10,7 +10,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountListV1;
 import io.biza.deepthought.shared.exception.NotFoundException;
-import io.biza.deepthought.shared.requests.RequestListAccounts;
+import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
 
 public interface BankingAccountApiDelegate {
   default Optional<NativeWebRequest> getRequest() {

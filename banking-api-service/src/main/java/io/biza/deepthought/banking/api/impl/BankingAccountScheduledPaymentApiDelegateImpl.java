@@ -13,10 +13,10 @@ import io.biza.deepthought.banking.api.delegate.BankingAccountScheduledPaymentAp
 import io.biza.deepthought.banking.requests.RequestScheduledPaymentsByAccounts;
 import io.biza.deepthought.banking.requests.RequestScheduledPaymentsByBulk;
 import io.biza.deepthought.banking.service.ScheduledPaymentService;
-import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
-import io.biza.deepthought.shared.controller.DeepThoughtMapper;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
 import io.biza.deepthought.shared.exception.NotFoundException;
-import io.biza.deepthought.shared.support.CDRContainerAttributes;
+import io.biza.deepthought.shared.persistence.model.bank.payments.ScheduledPaymentData;
+import io.biza.deepthought.shared.util.CDRContainerAttributes;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated

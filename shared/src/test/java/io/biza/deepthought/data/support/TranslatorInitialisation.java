@@ -20,7 +20,7 @@ import org.springframework.shell.table.SimpleHorizontalAligner;
 import org.springframework.shell.table.SimpleVerticalAligner;
 import org.springframework.shell.table.TableBuilder;
 import org.springframework.shell.table.TableModelBuilder;
-import io.biza.deepthought.data.OrikaFactoryConfigurer;
+import io.biza.deepthought.shared.mapper.OrikaFactoryConfigurer;
 import ma.glasnost.orika.MapperFactory;
 
 @DisplayName("Deep Thought Payload Translation Tests")

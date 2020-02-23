@@ -3,7 +3,7 @@ package io.biza.deepthought.discovery.api;
 import io.biza.babelfish.cdr.models.responses.ResponseCommonDiscoveryOutagesListV1;
 import io.biza.babelfish.cdr.models.responses.ResponseCommonDiscoveryStatusV1;
 import io.biza.deepthought.discovery.api.delegate.CommonDiscoveryApiDelegate;
-import io.biza.deepthought.shared.support.CDRConstants;
+import io.biza.deepthought.shared.Constants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Tags({
-  @Tag(name = CDRConstants.TAG_COMMON_NAME, description = CDRConstants.TAG_COMMON_DESCRIPTION),
-  @Tag(name = CDRConstants.TAG_DISCOVERY_NAME, description = CDRConstants.TAG_DISCOVERY_DESCRIPTION)
+  @Tag(name = Constants.TAG_COMMON_NAME, description = Constants.TAG_COMMON_DESCRIPTION),
+  @Tag(name = Constants.TAG_DISCOVERY_NAME, description = Constants.TAG_DISCOVERY_DESCRIPTION)
 })
 @RequestMapping("/v1/discovery")
 public interface CommonDiscoveryApi {
@@ -29,8 +29,8 @@ public interface CommonDiscoveryApi {
 
   @Operation(summary = "Get Status",
       description = "Obtain a health check status for the implementation")
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
+      description = Constants.RESPONSE_SUCCESSFUL_READ,
       content = @Content(schema = @Schema(implementation = ResponseCommonDiscoveryStatusV1.class)))})
   @GetMapping(value = "/status", produces = {MediaType.APPLICATION_JSON_VALUE})
   default ResponseEntity<ResponseCommonDiscoveryStatusV1> getStatus() {
@@ -39,8 +39,8 @@ public interface CommonDiscoveryApi {
   
   @Operation(summary = "Get Outages",
       description = "Obtain a list of scheduled outages for the implementation")
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
+      description = Constants.RESPONSE_SUCCESSFUL_READ,
       content = @Content(schema = @Schema(implementation = ResponseCommonDiscoveryOutagesListV1.class)))})
   @GetMapping(value = "/status", produces = {MediaType.APPLICATION_JSON_VALUE})
   default ResponseEntity<ResponseCommonDiscoveryOutagesListV1> getOutages() {

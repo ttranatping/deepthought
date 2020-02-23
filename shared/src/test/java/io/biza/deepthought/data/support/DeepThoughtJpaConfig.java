@@ -18,7 +18,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "io.biza.deepthought.data.repository")
+@EnableJpaRepositories(basePackages = "io.biza.deepthought.shared.persistence.repository")
 @PropertySource("persistence-data.properties")
 @EnableTransactionManagement
 public class DeepThoughtJpaConfig {
@@ -48,9 +48,8 @@ public class DeepThoughtJpaConfig {
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
     em.setDataSource(dataSource());
-    em.setPackagesToScan(new String[] {"io.biza.deepthought.data.persistence.model",
-        "io.biza.deepthought.data.persistence.model.cdr",
-        "io.biza.deepthought.data.persistence.model.converter"});
+    em.setPackagesToScan(new String[] {"io.biza.deepthought.shared.persistence.model",
+        "io.biza.deepthought.shared.persistence.converter"});
 
     final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
     em.setJpaVendorAdapter(vendorAdapter);

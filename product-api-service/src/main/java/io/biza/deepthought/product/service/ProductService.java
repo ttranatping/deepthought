@@ -8,10 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.ProductRepository;
-import io.biza.deepthought.data.specification.ProductBankingSpecifications;
 import io.biza.deepthought.product.api.requests.RequestListProducts;
+import io.biza.deepthought.shared.persistence.model.product.ProductData;
+import io.biza.deepthought.shared.persistence.repository.ProductRepository;
+import io.biza.deepthought.shared.persistence.specification.ProductBankingSpecifications;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

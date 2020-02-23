@@ -10,13 +10,13 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import io.biza.babelfish.cdr.enumerations.BankingTransactionStatus;
-import io.biza.deepthought.shared.requests.RequestListAccounts;
-import io.biza.deepthought.shared.service.GrantService;
 import io.biza.deepthought.banking.requests.RequestBalancesByAccounts;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountBalance;
-import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
-import io.biza.deepthought.data.repository.BankAccountTransactionRepository;
+import io.biza.deepthought.shared.component.service.GrantService;
 import io.biza.deepthought.shared.exception.NotFoundException;
+import io.biza.deepthought.shared.payloads.dio.banking.DioBankAccountBalance;
+import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
+import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
+import io.biza.deepthought.shared.persistence.repository.BankAccountTransactionRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -13,13 +13,13 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.CustomerPayeeAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payloads.dio.banking.DioCustomerPayee;
-import io.biza.deepthought.data.persistence.model.bank.payments.PayeeData;
-import io.biza.deepthought.data.persistence.model.customer.CustomerData;
-import io.biza.deepthought.data.repository.CustomerPayeeRepository;
-import io.biza.deepthought.data.repository.CustomerRepository;
-import io.biza.deepthought.shared.controller.DeepThoughtMapper;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.banking.DioCustomerPayee;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.persistence.model.bank.payments.PayeeData;
+import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
+import io.biza.deepthought.shared.persistence.repository.CustomerPayeeRepository;
+import io.biza.deepthought.shared.persistence.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated

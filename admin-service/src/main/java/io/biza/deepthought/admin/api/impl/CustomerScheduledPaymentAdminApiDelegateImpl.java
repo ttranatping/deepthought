@@ -13,13 +13,13 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.CustomerScheduledPaymentAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payloads.dio.banking.DioCustomerScheduledPayment;
-import io.biza.deepthought.data.persistence.model.bank.payments.ScheduledPaymentData;
-import io.biza.deepthought.data.persistence.model.customer.CustomerData;
-import io.biza.deepthought.data.repository.CustomerScheduledPaymentRepository;
-import io.biza.deepthought.shared.controller.DeepThoughtMapper;
-import io.biza.deepthought.data.repository.CustomerRepository;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.banking.DioCustomerScheduledPayment;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.persistence.model.bank.payments.ScheduledPaymentData;
+import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
+import io.biza.deepthought.shared.persistence.repository.CustomerRepository;
+import io.biza.deepthought.shared.persistence.repository.CustomerScheduledPaymentRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated

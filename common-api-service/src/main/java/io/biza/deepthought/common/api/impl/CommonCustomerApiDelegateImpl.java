@@ -10,10 +10,10 @@ import io.biza.babelfish.cdr.models.responses.container.ResponseCommonCustomerDa
 import io.biza.babelfish.cdr.models.responses.container.ResponseCommonCustomerDetailDataV1;
 import io.biza.deepthought.common.api.delegate.CommonCustomerApiDelegate;
 import io.biza.deepthought.common.service.CustomerService;
-import io.biza.deepthought.data.persistence.model.customer.CustomerData;
-import io.biza.deepthought.shared.controller.DeepThoughtMapper;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
 import io.biza.deepthought.shared.exception.InvalidSubjectException;
-import io.biza.deepthought.shared.support.CDRContainerAttributes;
+import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
+import io.biza.deepthought.shared.util.CDRContainerAttributes;
 
 @Validated
 @Controller

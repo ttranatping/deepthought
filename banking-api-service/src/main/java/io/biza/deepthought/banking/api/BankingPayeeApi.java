@@ -5,9 +5,9 @@ import io.biza.babelfish.cdr.models.responses.ResponseBankingPayeeByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingPayeeListV1;
 import io.biza.deepthought.banking.api.delegate.BankingPayeeApiDelegate;
 import io.biza.deepthought.banking.requests.RequestListPayees;
+import io.biza.deepthought.shared.Constants;
 import io.biza.deepthought.shared.exception.InvalidSubjectException;
 import io.biza.deepthought.shared.exception.NotFoundException;
-import io.biza.deepthought.shared.support.CDRConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -32,8 +32,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Tags({
-    @Tag(name = CDRConstants.TAG_BANKING_NAME, description = CDRConstants.TAG_BANKING_DESCRIPTION),
-    @Tag(name = CDRConstants.TAG_PAYEES_NAME, description = CDRConstants.TAG_PAYEES_DESCRIPTION)})
+    @Tag(name = Constants.TAG_BANKING_NAME, description = Constants.TAG_BANKING_DESCRIPTION),
+    @Tag(name = Constants.TAG_PAYEES_NAME, description = Constants.TAG_PAYEES_DESCRIPTION)})
 @RequestMapping("/v1/banking/payees")
 public interface BankingPayeeApi {
 
@@ -61,9 +61,9 @@ public interface BankingPayeeApi {
               description = "The customer's original standard http headers Base64 encoded, including the original User Agent header, if the customer is currently logged in to the data recipient. ",
               required = false, schema = @Schema(type = "byte")),},
       security = {@SecurityRequirement(name = "cdr-auth",
-          scopes = CDRConstants.SECURITY_SCOPE_BANK_ACCOUNT_BASIC_READ)})
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
+          scopes = Constants.SECURITY_SCOPE_BANK_ACCOUNT_BASIC_READ)})
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
+      description = Constants.RESPONSE_SUCCESSFUL_READ,
       headers = {@Header(name = "x-v",
           description = "The version of the API end point that the data holder has responded with.",
           required = true),
@@ -71,7 +71,7 @@ public interface BankingPayeeApi {
               description = "An RFC4122 UUID used as a correlation id.", required = true)},
       content = @Content(schema = @Schema(implementation = ResponseBankingPayeeListV1.class)))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-  @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_BANK_PAYEES_READ)
+  @PreAuthorize(Constants.OAUTH2_SCOPE_BANK_BANK_PAYEES_READ)
   default ResponseEntity<ResponseBankingPayeeListV1> listPayees(
       @Valid @RequestParam(name = "type", required = false,
           defaultValue = "ALL") BankingPayeeTypeWithAll payeeType,
@@ -104,9 +104,9 @@ public interface BankingPayeeApi {
               description = "The customer's original standard http headers Base64 encoded, including the original User Agent header, if the customer is currently logged in to the data recipient. ",
               required = false, schema = @Schema(type = "byte")),},
       security = {@SecurityRequirement(name = "cdr-auth",
-          scopes = CDRConstants.SECURITY_SCOPE_BANK_ACCOUNT_BASIC_READ)})
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
+          scopes = Constants.SECURITY_SCOPE_BANK_ACCOUNT_BASIC_READ)})
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
+      description = Constants.RESPONSE_SUCCESSFUL_READ,
       headers = {@Header(name = "x-v",
           description = "The version of the API end point that the data holder has responded with.",
           required = true),
@@ -114,7 +114,7 @@ public interface BankingPayeeApi {
               description = "An RFC4122 UUID used as a correlation id.", required = true)},
       content = @Content(schema = @Schema(implementation = ResponseBankingPayeeByIdV1.class)))})
   @GetMapping(value = "/{payeeId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-  @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_BANK_PAYEES_READ)
+  @PreAuthorize(Constants.OAUTH2_SCOPE_BANK_BANK_PAYEES_READ)
   default ResponseEntity<ResponseBankingPayeeByIdV1> getPayeeDetail(
       @NotNull @Valid @PathVariable("payeeId") UUID payeeId) throws NotFoundException, InvalidSubjectException {
     return getDelegate().getPayeeDetail(payeeId);

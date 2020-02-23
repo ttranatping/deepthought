@@ -3,8 +3,8 @@ package io.biza.deepthought.common.api;
 import io.biza.babelfish.cdr.models.responses.ResponseCommonCustomerDetailV1;
 import io.biza.babelfish.cdr.models.responses.ResponseCommonCustomerV1;
 import io.biza.deepthought.common.api.delegate.CommonCustomerApiDelegate;
+import io.biza.deepthought.shared.Constants;
 import io.biza.deepthought.shared.exception.InvalidSubjectException;
-import io.biza.deepthought.shared.support.CDRConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Tags({
-  @Tag(name = CDRConstants.TAG_COMMON_NAME, description = CDRConstants.TAG_COMMON_DESCRIPTION),
-  @Tag(name = CDRConstants.TAG_CUSTOMER_NAME, description = CDRConstants.TAG_CUSTOMER_DESCRIPTION)
+  @Tag(name = Constants.TAG_COMMON_NAME, description = Constants.TAG_COMMON_DESCRIPTION),
+  @Tag(name = Constants.TAG_CUSTOMER_NAME, description = Constants.TAG_CUSTOMER_DESCRIPTION)
 })
 @RequestMapping("/v1/common/customer")
 public interface CommonCustomerApi {
@@ -31,22 +31,22 @@ public interface CommonCustomerApi {
 
   @Operation(summary = "Get Customer",
       description = "Obtain basic information on the customer that has authorised the current session")
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
+      description = Constants.RESPONSE_SUCCESSFUL_READ,
       content = @Content(schema = @Schema(implementation = ResponseCommonCustomerV1.class)))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-  @PreAuthorize(CDRConstants.OAUTH2_SCOPE_CUSTOMER_BASIC_READ)
+  @PreAuthorize(Constants.OAUTH2_SCOPE_CUSTOMER_BASIC_READ)
   default ResponseEntity<ResponseCommonCustomerV1> getCustomer() throws InvalidSubjectException {
     return getDelegate().getCustomer();
   }
 
   @Operation(summary = "Get Customer Detail",
       description = "Obtain detailed information on the authorised customer within the current session.")
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
+      description = Constants.RESPONSE_SUCCESSFUL_READ,
       content = @Content(schema = @Schema(implementation = ResponseCommonCustomerDetailV1.class)))})
   @GetMapping(value = "/detail", produces = {MediaType.APPLICATION_JSON_VALUE})
-  @PreAuthorize(CDRConstants.OAUTH2_SCOPE_CUSTOMER_DETAIL_READ)
+  @PreAuthorize(Constants.OAUTH2_SCOPE_CUSTOMER_DETAIL_READ)
   default ResponseEntity<ResponseCommonCustomerDetailV1> getCustomerDetail() throws InvalidSubjectException {
     return getDelegate().getCustomerDetail();
   }

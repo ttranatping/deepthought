@@ -15,16 +15,16 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductBundleAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payloads.dio.product.DioProduct;
-import io.biza.deepthought.data.payloads.dio.product.DioProductBundle;
-import io.biza.deepthought.data.persistence.model.BrandData;
-import io.biza.deepthought.data.persistence.model.product.ProductBundleData;
-import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.BrandRepository;
-import io.biza.deepthought.data.repository.ProductBankingBundleRepository;
-import io.biza.deepthought.data.repository.ProductRepository;
-import io.biza.deepthought.shared.controller.DeepThoughtMapper;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.payloads.dio.product.DioProduct;
+import io.biza.deepthought.shared.payloads.dio.product.DioProductBundle;
+import io.biza.deepthought.shared.persistence.model.BrandData;
+import io.biza.deepthought.shared.persistence.model.product.ProductBundleData;
+import io.biza.deepthought.shared.persistence.model.product.ProductData;
+import io.biza.deepthought.shared.persistence.repository.BrandRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductBankingBundleRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated

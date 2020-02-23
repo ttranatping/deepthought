@@ -13,14 +13,14 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductConstraintAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductConstraint;
-import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.persistence.model.product.banking.BankProductConstraintData;
-import io.biza.deepthought.data.repository.ProductBankingConstraintRepository;
-import io.biza.deepthought.data.repository.ProductRepository;
-import io.biza.deepthought.shared.controller.DeepThoughtMapper;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioSchemeType;
+import io.biza.deepthought.shared.payloads.dio.product.DioProductConstraint;
+import io.biza.deepthought.shared.persistence.model.product.ProductData;
+import io.biza.deepthought.shared.persistence.model.product.banking.BankProductConstraintData;
+import io.biza.deepthought.shared.persistence.repository.ProductBankingConstraintRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

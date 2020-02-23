@@ -13,16 +13,16 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductRateLendingAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductRateLending;
-import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingData;
-import io.biza.deepthought.data.persistence.model.product.banking.BankProductRateLendingTierData;
-import io.biza.deepthought.data.repository.ProductBankingRateLendingRepository;
-import io.biza.deepthought.data.repository.ProductBankingRateLendingTierRepository;
-import io.biza.deepthought.data.repository.ProductRepository;
-import io.biza.deepthought.shared.controller.DeepThoughtMapper;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioSchemeType;
+import io.biza.deepthought.shared.payloads.dio.product.DioProductRateLending;
+import io.biza.deepthought.shared.persistence.model.product.ProductData;
+import io.biza.deepthought.shared.persistence.model.product.banking.BankProductRateLendingData;
+import io.biza.deepthought.shared.persistence.model.product.banking.BankProductRateLendingTierData;
+import io.biza.deepthought.shared.persistence.repository.ProductBankingRateLendingRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductBankingRateLendingTierRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller

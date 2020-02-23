@@ -8,16 +8,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-import io.biza.deepthought.shared.requests.RequestListAccounts;
-import io.biza.deepthought.shared.service.GrantService;
 import io.biza.deepthought.banking.requests.RequestDirectDebitsByAccounts;
 import io.biza.deepthought.banking.requests.RequestDirectDebitsByBulk;
-import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.DirectDebitData;
-import io.biza.deepthought.data.persistence.model.grant.GrantAccountData;
-import io.biza.deepthought.data.repository.BankAccountDirectDebitRepository;
-import io.biza.deepthought.data.specification.DirectDebitSpecifications;
+import io.biza.deepthought.shared.component.service.GrantService;
 import io.biza.deepthought.shared.exception.NotFoundException;
+import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
+import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData;
+import io.biza.deepthought.shared.persistence.model.bank.payments.DirectDebitData;
+import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
+import io.biza.deepthought.shared.persistence.repository.BankAccountDirectDebitRepository;
+import io.biza.deepthought.shared.persistence.specification.DirectDebitSpecifications;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

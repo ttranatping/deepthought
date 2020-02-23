@@ -9,13 +9,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import io.biza.babelfish.cdr.enumerations.BankingPayeeTypeWithAll;
-import io.biza.deepthought.shared.service.GrantService;
 import io.biza.deepthought.banking.requests.RequestListPayees;
-import io.biza.deepthought.data.persistence.model.bank.payments.PayeeData;
-import io.biza.deepthought.data.repository.CustomerPayeeRepository;
-import io.biza.deepthought.data.specification.PayeeSpecifications;
+import io.biza.deepthought.shared.component.service.GrantService;
 import io.biza.deepthought.shared.exception.InvalidSubjectException;
 import io.biza.deepthought.shared.exception.NotFoundException;
+import io.biza.deepthought.shared.persistence.model.bank.payments.PayeeData;
+import io.biza.deepthought.shared.persistence.repository.CustomerPayeeRepository;
+import io.biza.deepthought.shared.persistence.specification.PayeeSpecifications;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

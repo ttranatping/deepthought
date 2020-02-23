@@ -8,8 +8,8 @@ import io.biza.babelfish.cdr.models.responses.ResponseErrorListV1;
 import io.biza.deepthought.banking.api.delegate.BankingAccountDirectDebitApiDelegate;
 import io.biza.deepthought.banking.requests.RequestDirectDebitsByAccounts;
 import io.biza.deepthought.banking.requests.RequestDirectDebitsByBulk;
+import io.biza.deepthought.shared.Constants;
 import io.biza.deepthought.shared.exception.NotFoundException;
-import io.biza.deepthought.shared.support.CDRConstants;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -36,9 +36,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Tags({
-    @Tag(name = CDRConstants.TAG_BANKING_NAME, description = CDRConstants.TAG_BANKING_DESCRIPTION),
-    @Tag(name = CDRConstants.TAG_DIRECT_DEBITS_NAME,
-        description = CDRConstants.TAG_DIRECT_DEBITS_DESCRIPTION)})
+    @Tag(name = Constants.TAG_BANKING_NAME, description = Constants.TAG_BANKING_DESCRIPTION),
+    @Tag(name = Constants.TAG_DIRECT_DEBITS_NAME,
+        description = Constants.TAG_DIRECT_DEBITS_DESCRIPTION)})
 @RequestMapping("/v1/banking/accounts")
 public interface BankingAccountDirectDebitApi {
 
@@ -67,17 +67,17 @@ public interface BankingAccountDirectDebitApi {
               description = "The customer's original standard http headers Base64 encoded, including the original User Agent header, if the customer is currently logged in to the data recipient. ",
               required = false, schema = @Schema(type = "byte")),},
       security = {@SecurityRequirement(name = "cdr-auth",
-          scopes = CDRConstants.SECURITY_SCOPE_BANK_REGULAR_PAYMENTS_READ)})
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
+          scopes = Constants.SECURITY_SCOPE_BANK_REGULAR_PAYMENTS_READ)})
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
       headers = {@Header(name = "x-v",
           description = "The version of the API end point that the data holder has responded with.",
           required = true),
           @Header(name = "x-fapi-interaction-id",
               description = "An RFC4122 UUID used as a correlation id.", required = true)},
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ, content = @Content(
+      description = Constants.RESPONSE_SUCCESSFUL_READ, content = @Content(
           schema = @Schema(implementation = ResponseBankingDirectDebitAuthorisationListV1.class)))})
   @GetMapping(value = "/{accountId}/direct-debits", produces = {MediaType.APPLICATION_JSON_VALUE})
-  @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_REGULAR_PAYMENTS_READ)
+  @PreAuthorize(Constants.OAUTH2_SCOPE_BANK_REGULAR_PAYMENTS_READ)
   default ResponseEntity<ResponseBankingDirectDebitAuthorisationListV1> listDirectDebits(
       @NotNull @Valid @PathVariable("accountId") UUID accountId,
       @Valid @RequestParam(name = "page", required = false,
@@ -109,17 +109,17 @@ public interface BankingAccountDirectDebitApi {
               description = "The customer's original standard http headers Base64 encoded, including the original User Agent header, if the customer is currently logged in to the data recipient. ",
               required = false, schema = @Schema(type = "byte")),},
       security = {@SecurityRequirement(name = "cdr-auth",
-          scopes = CDRConstants.SECURITY_SCOPE_BANK_REGULAR_PAYMENTS_READ)})
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
+          scopes = Constants.SECURITY_SCOPE_BANK_REGULAR_PAYMENTS_READ)})
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
       headers = {@Header(name = "x-v",
           description = "The version of the API end point that the data holder has responded with.",
           required = true),
           @Header(name = "x-fapi-interaction-id",
               description = "An RFC4122 UUID used as a correlation id.", required = true)},
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ, content = @Content(
+      description = Constants.RESPONSE_SUCCESSFUL_READ, content = @Content(
           schema = @Schema(implementation = ResponseBankingDirectDebitAuthorisationListV1.class)))})
   @GetMapping(value = "/direct-debits", produces = {MediaType.APPLICATION_JSON_VALUE})
-  @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_REGULAR_PAYMENTS_READ)
+  @PreAuthorize(Constants.OAUTH2_SCOPE_BANK_REGULAR_PAYMENTS_READ)
   default ResponseEntity<ResponseBankingDirectDebitAuthorisationListV1> listDirectDebitsBulk(
       @Valid @RequestParam(name = "product-category",
           required = false) BankingProductCategory productCategory,
@@ -156,23 +156,23 @@ public interface BankingAccountDirectDebitApi {
               description = "The customer's original standard http headers Base64 encoded, including the original User Agent header, if the customer is currently logged in to the data recipient. ",
               required = false, schema = @Schema(type = "byte")),},
       security = {@SecurityRequirement(name = "cdr-auth",
-          scopes = CDRConstants.SECURITY_SCOPE_BANK_REGULAR_PAYMENTS_READ)})
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
+          scopes = Constants.SECURITY_SCOPE_BANK_REGULAR_PAYMENTS_READ)})
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
       headers = {@Header(name = "x-v",
           description = "The version of the API end point that the data holder has responded with.",
           required = true),
           @Header(name = "x-fapi-interaction-id",
               description = "An RFC4122 UUID used as a correlation id.", required = true)},
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
+      description = Constants.RESPONSE_SUCCESSFUL_READ,
       content = @Content(
           schema = @Schema(implementation = ResponseBankingDirectDebitAuthorisationListV1.class))),
-      @ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
+      @ApiResponse(responseCode = Constants.RESPONSE_CODE_UNPROCESSABLE_ENTITY,
           headers = {@Header(name = "x-fapi-interaction-id",
               description = "An RFC4122 UUID used as a correlation id.", required = true)},
-          description = CDRConstants.RESPONSE_INPUT_VALIDATION_ERROR,
+          description = Constants.RESPONSE_INPUT_VALIDATION_ERROR,
           content = @Content(schema = @Schema(implementation = ResponseErrorListV1.class)))})
   @PostMapping(value = "/direct-debits", produces = {MediaType.APPLICATION_JSON_VALUE})
-  @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_REGULAR_PAYMENTS_READ)
+  @PreAuthorize(Constants.OAUTH2_SCOPE_BANK_REGULAR_PAYMENTS_READ)
   default ResponseEntity<ResponseBankingDirectDebitAuthorisationListV1> listDirectDebitsSpecificAccounts(
       @Valid @RequestParam(name = "page", required = false,
           defaultValue = "1") @Min(1) Integer page,

@@ -5,9 +5,9 @@ import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountByIdV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingAccountListV1;
 import io.biza.deepthought.banking.api.delegate.BankingAccountApiDelegate;
+import io.biza.deepthought.shared.Constants;
 import io.biza.deepthought.shared.exception.NotFoundException;
-import io.biza.deepthought.shared.requests.RequestListAccounts;
-import io.biza.deepthought.shared.support.CDRConstants;
+import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -32,9 +32,9 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 
 @Tags({
-    @Tag(name = CDRConstants.TAG_BANKING_NAME, description = CDRConstants.TAG_BANKING_DESCRIPTION),
-    @Tag(name = CDRConstants.TAG_ACCOUNTS_NAME,
-        description = CDRConstants.TAG_ACCOUNTS_DESCRIPTION)})
+    @Tag(name = Constants.TAG_BANKING_NAME, description = Constants.TAG_BANKING_DESCRIPTION),
+    @Tag(name = Constants.TAG_ACCOUNTS_NAME,
+        description = Constants.TAG_ACCOUNTS_DESCRIPTION)})
 @RequestMapping("/v1/banking/accounts")
 public interface BankingAccountApi {
 
@@ -62,9 +62,9 @@ public interface BankingAccountApi {
           description = "The customer's original standard http headers Base64 encoded, including the original User Agent header, if the customer is currently logged in to the data recipient. ",
           required = false, schema = @Schema(type = "byte")),},
       security = {@SecurityRequirement(name = "cdr-auth",
-          scopes = CDRConstants.SECURITY_SCOPE_BANK_ACCOUNT_BASIC_READ)})
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
+          scopes = Constants.SECURITY_SCOPE_BANK_ACCOUNT_BASIC_READ)})
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
+      description = Constants.RESPONSE_SUCCESSFUL_READ,
       headers = {@Header(name = "x-v",
           description = "The version of the API end point that the data holder has responded with.",
           required = true),
@@ -72,7 +72,7 @@ public interface BankingAccountApi {
               description = "An RFC4122 UUID used as a correlation id.", required = true)},
       content = @Content(schema = @Schema(implementation = ResponseBankingAccountListV1.class)))})
   @GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE})
-  @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_ACCOUNT_BASIC_READ)
+  @PreAuthorize(Constants.OAUTH2_SCOPE_BANK_ACCOUNT_BASIC_READ)
   default ResponseEntity<ResponseBankingAccountListV1> listAccounts(
       @Valid @RequestParam(name = "product-category",
           required = false) BankingProductCategory productCategory,
@@ -107,9 +107,9 @@ public interface BankingAccountApi {
               description = "The customer's original standard http headers Base64 encoded, including the original User Agent header, if the customer is currently logged in to the data recipient. ",
               required = false, schema = @Schema(type = "byte")),},
       security = {@SecurityRequirement(name = "cdr-auth",
-          scopes = CDRConstants.SECURITY_SCOPE_BANK_ACCOUNT_BASIC_READ)})
-  @ApiResponses(value = {@ApiResponse(responseCode = CDRConstants.RESPONSE_CODE_OK,
-      description = CDRConstants.RESPONSE_SUCCESSFUL_READ,
+          scopes = Constants.SECURITY_SCOPE_BANK_ACCOUNT_BASIC_READ)})
+  @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
+      description = Constants.RESPONSE_SUCCESSFUL_READ,
       headers = {@Header(name = "x-v",
           description = "The version of the API end point that the data holder has responded with.",
           required = true),
@@ -117,7 +117,7 @@ public interface BankingAccountApi {
               description = "An RFC4122 UUID used as a correlation id.", required = true)},
       content = @Content(schema = @Schema(implementation = ResponseBankingAccountByIdV1.class)))})
   @GetMapping(value = "/{accountId}", produces = {MediaType.APPLICATION_JSON_VALUE})
-  @PreAuthorize(CDRConstants.OAUTH2_SCOPE_BANK_ACCOUNT_DETAIL_READ)
+  @PreAuthorize(Constants.OAUTH2_SCOPE_BANK_ACCOUNT_DETAIL_READ)
   default ResponseEntity<ResponseBankingAccountByIdV1> getAccountDetail(
       @NotNull @Valid @PathVariable("accountId") UUID accountId) throws NotFoundException {
     return getDelegate().getAccountDetail(accountId);
