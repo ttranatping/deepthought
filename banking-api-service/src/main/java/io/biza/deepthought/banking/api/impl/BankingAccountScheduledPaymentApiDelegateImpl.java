@@ -26,7 +26,7 @@ public class BankingAccountScheduledPaymentApiDelegateImpl
     implements BankingAccountScheduledPaymentApiDelegate {
 
   @Autowired
-  ScheduledPaymentService directDebitService;
+  ScheduledPaymentService scheduledPaymentService;
 
   @Autowired
   private DeepThoughtMapper mapper;
@@ -36,19 +36,19 @@ public class BankingAccountScheduledPaymentApiDelegateImpl
   public ResponseEntity<ResponseBankingScheduledPaymentsListV1> listByAccount(UUID accountId,
       RequestScheduledPaymentsByAccounts requestScheduledPayments) throws NotFoundException {
 
-    Page<ScheduledPaymentData> directDebitsList =
-        directDebitService.listScheduledPaymentsByAccount(accountId, requestScheduledPayments);
+    Page<ScheduledPaymentData> scheduledPayments =
+        scheduledPaymentService.listScheduledPaymentsByAccount(accountId, requestScheduledPayments);
 
     /**
      * Build response components
      */
     ResponseBankingScheduledPaymentsListV1 listResponse =
         ResponseBankingScheduledPaymentsListV1.builder()
-            .meta(CDRContainerAttributes.toMetaPaginated(directDebitsList))
-            .links(CDRContainerAttributes.toLinksPaginated(directDebitsList))
+            .meta(CDRContainerAttributes.toMetaPaginated(scheduledPayments))
+            .links(CDRContainerAttributes.toLinksPaginated(scheduledPayments))
             .data(ResponseBankingScheduledPaymentsListDataV1.builder()
                 .scheduledPayments(
-                    mapper.mapAsList(directDebitsList.getContent(), BankingScheduledPaymentV1.class))
+                    mapper.mapAsList(scheduledPayments.getContent(), BankingScheduledPaymentV1.class))
                 .build())
             .build();
     LOG.debug("List response came back with: {}", listResponse);
@@ -59,7 +59,7 @@ public class BankingAccountScheduledPaymentApiDelegateImpl
   public ResponseEntity<ResponseBankingScheduledPaymentsListV1> listByAccountList(
       RequestScheduledPaymentsByAccounts requestScheduledPayments) {
     Page<ScheduledPaymentData> directDebitsList =
-        directDebitService.listScheduledPaymentsByAccountList(requestScheduledPayments);
+        scheduledPaymentService.listScheduledPaymentsByAccountList(requestScheduledPayments);
 
     /**
      * Build response components
@@ -81,7 +81,7 @@ public class BankingAccountScheduledPaymentApiDelegateImpl
   public ResponseEntity<ResponseBankingScheduledPaymentsListV1> listAll(
       RequestScheduledPaymentsByBulk requestScheduledPayments) {
     Page<ScheduledPaymentData> directDebitsList =
-        directDebitService.listScheduledPaymentsWithFilter(requestScheduledPayments);
+        scheduledPaymentService.listScheduledPaymentsWithFilter(requestScheduledPayments);
 
     /**
      * Build response components

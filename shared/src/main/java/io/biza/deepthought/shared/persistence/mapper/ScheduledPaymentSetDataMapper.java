@@ -9,7 +9,7 @@ import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
 
-public class CustomerBankScheduledPaymentSetDataMapper implements OrikaFactoryConfigurerInterface {
+public class ScheduledPaymentSetDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
