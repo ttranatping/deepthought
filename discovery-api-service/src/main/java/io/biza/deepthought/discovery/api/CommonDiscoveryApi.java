@@ -42,7 +42,7 @@ public interface CommonDiscoveryApi {
   @ApiResponses(value = {@ApiResponse(responseCode = Constants.RESPONSE_CODE_OK,
       description = Constants.RESPONSE_SUCCESSFUL_READ,
       content = @Content(schema = @Schema(implementation = ResponseCommonDiscoveryOutagesListV1.class)))})
-  @GetMapping(value = "/status", produces = {MediaType.APPLICATION_JSON_VALUE})
+  @GetMapping(value = "/outages", produces = {MediaType.APPLICATION_JSON_VALUE})
   default ResponseEntity<ResponseCommonDiscoveryOutagesListV1> getOutages() {
     return getDelegate().getOutages();
   }

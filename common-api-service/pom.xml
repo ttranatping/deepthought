@@ -237,7 +237,7 @@
                 <artifactId>springdoc-openapi-maven-plugin</artifactId>
                 <version>${springdoc-openapi-maven-plugin.version}</version>
                 <configuration>
-                    <apiDocsUrl>http://localhost:8080/dio-au/v3/api-docs</apiDocsUrl>
+                    <apiDocsUrl>http://localhost:8080/cds-au/v3/api-docs</apiDocsUrl>
                 </configuration>
                 <executions>
                     <execution>

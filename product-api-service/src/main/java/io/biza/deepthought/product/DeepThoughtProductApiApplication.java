@@ -10,7 +10,8 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 
 @SpringBootApplication
-@ComponentScan({"io.biza.deepthought.shared.component", "io.biza.deepthought.data.component", "io.biza.deepthought.product"})
+@ComponentScan({"io.biza.deepthought.shared.component.persistence",
+  "io.biza.deepthought.shared.component.mapper", "io.biza.deepthought.product"})
 public class DeepThoughtProductApiApplication {
 
   public static void main(String[] args) {

@@ -12,8 +12,7 @@ import io.swagger.v3.oas.models.info.License;
 
 @SpringBootApplication
 @EnableOAuth2Client
-@ComponentScan({"io.biza.deepthought.shared.component", "io.biza.deepthought.shared.security",
-  "io.biza.deepthought.data.component", "io.biza.deepthought.common"})
+@ComponentScan({"io.biza.deepthought.shared.component", "io.biza.deepthought.common"})
 public class CommonApiApplication {
 
   public static void main(String[] args) {

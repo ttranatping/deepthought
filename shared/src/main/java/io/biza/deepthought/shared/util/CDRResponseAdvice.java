@@ -1,4 +1,4 @@
-package io.biza.deepthought.shared.component;
+package io.biza.deepthought.shared.util;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import io.biza.babelfish.cdr.exceptions.PayloadConversionException;
 import io.biza.babelfish.cdr.exceptions.UnsupportedPayloadException;
 import io.biza.babelfish.cdr.support.BabelfishVersioner;
-import io.biza.deepthought.shared.util.CDRVersioner;
 import lombok.extern.slf4j.Slf4j;
 
 @ControllerAdvice

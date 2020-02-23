@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EntityScan(basePackages = "io.biza.deepthought.data.persistence.model")
-@EnableJpaRepositories(basePackages = "io.biza.deepthought.data.repository")
+@EntityScan(basePackages = "io.biza.deepthought.shared.persistence.model")
+@EnableJpaRepositories(basePackages = "io.biza.deepthought.shared.persistence.repository")
 @EnableTransactionManagement
 public class RepositoryConfiguration {
 
 
 }
+
+
