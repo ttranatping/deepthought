@@ -1,5 +1,7 @@
 package io.biza.deepthought.shared.persistence.model.grant;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,12 +13,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.shared.payloads.dio.enumerations.DioGrantAccess;
+import io.biza.deepthought.shared.persistence.model.bank.transaction.BankAccountTransactionData;
 import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -59,5 +63,26 @@ public class GrantCustomerData {
   @Enumerated(EnumType.STRING)
   @Builder.Default
   DioGrantAccess access = DioGrantAccess.ALL;
+  
+  @PrePersist
+  public void prePersist() {
+    if (this.grant() != null) {
+      Set<GrantCustomerData> set = new HashSet<GrantCustomerData>();
+      if (this.grant().customers() != null) {
+        set.addAll(this.grant().customers());
+      }
+      set.add(this);
+      this.grant().customers(set);
+    }
+    
+    if (this.customer() != null) {
+      Set<GrantCustomerData> set = new HashSet<GrantCustomerData>();
+      if (this.customer().grants() != null) {
+        set.addAll(this.customer().grants());
+      }
+      set.add(this);
+      this.customer().grants(set);
+    }
+  }
   
 }

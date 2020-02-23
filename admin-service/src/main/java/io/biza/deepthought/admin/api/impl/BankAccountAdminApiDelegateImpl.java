@@ -23,7 +23,7 @@ import io.biza.deepthought.shared.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.shared.persistence.model.product.ProductData;
 import io.biza.deepthought.shared.persistence.repository.BankAccountRepository;
 import io.biza.deepthought.shared.persistence.repository.BankBranchRepository;
-import io.biza.deepthought.shared.persistence.repository.ProductBankingBundleRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductBundleRepository;
 import io.biza.deepthought.shared.persistence.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -45,7 +45,7 @@ public class BankAccountAdminApiDelegateImpl implements BankAccountAdminApiDeleg
   private ProductRepository productRepository;
   
   @Autowired
-  private ProductBankingBundleRepository bundleRepository;
+  private ProductBundleRepository bundleRepository;
   
   @Autowired
   private Validator validator;

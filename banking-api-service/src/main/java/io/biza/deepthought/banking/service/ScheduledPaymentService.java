@@ -16,7 +16,7 @@ import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.shared.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
-import io.biza.deepthought.shared.persistence.repository.CustomerBankScheduledPaymentRepository;
+import io.biza.deepthought.shared.persistence.repository.ScheduledPaymentRepository;
 import io.biza.deepthought.shared.persistence.specification.ScheduledPaymentSpecifications;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,7 +28,7 @@ public class ScheduledPaymentService {
   private GrantService grantService;
 
   @Autowired
-  private CustomerBankScheduledPaymentRepository scheduledPaymentRepository;
+  private ScheduledPaymentRepository scheduledPaymentRepository;
 
 
   public Page<ScheduledPaymentData> listScheduledPaymentsByAccount(UUID accountId,

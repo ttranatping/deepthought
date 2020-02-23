@@ -19,7 +19,7 @@ import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
 import io.biza.deepthought.shared.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
 import io.biza.deepthought.shared.persistence.repository.CustomerRepository;
-import io.biza.deepthought.shared.persistence.repository.CustomerScheduledPaymentRepository;
+import io.biza.deepthought.shared.persistence.repository.ScheduledPaymentRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -31,7 +31,7 @@ public class CustomerScheduledPaymentAdminApiDelegateImpl implements CustomerSch
   private DeepThoughtMapper mapper;
 
   @Autowired
-  private CustomerScheduledPaymentRepository bankScheduledPaymentRepository;
+  private ScheduledPaymentRepository bankScheduledPaymentRepository;
   
   @Autowired
   private CustomerRepository customerRepository;

@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import org.hibernate.annotations.Type;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.biza.deepthought.shared.payloads.dio.enumerations.DioSchemeType;
-import io.biza.deepthought.shared.persistence.model.product.banking.BankProductFeeData;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankFeeData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -53,7 +53,7 @@ public class BankAccountFeeData {
   
   @ManyToOne
   @JoinColumn(name = "FEE_ID", nullable = false, foreignKey = @ForeignKey(name = "BANK_ACCOUNT_FEE_FEE_ID_FK"))
-  BankProductFeeData fee;
+  ProductBankFeeData fee;
   
   @Column(name = "LAST_APPLIED")
   OffsetDateTime lastApplied;

@@ -13,6 +13,7 @@ import io.biza.babelfish.cdr.models.payloads.banking.account.BankingLoanAccountV
 import io.biza.babelfish.cdr.models.payloads.banking.account.BankingTermDepositAccountV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeatureWithActivatedV1;
 import io.biza.deepthought.shared.mapper.OrikaFactoryConfigurerInterface;
+import io.biza.deepthought.shared.payloads.dio.grant.DioGrantAccount;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountCreditCardData;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountFeatureData;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountLoanAccountData;
@@ -28,6 +29,8 @@ public class GrantAccountDataMapper implements OrikaFactoryConfigurerInterface {
 
   @Override
   public void configure(MapperFactory orikaMapperFactory) {
+    orikaMapperFactory.classMap(GrantAccountData.class, DioGrantAccount.class)
+      .field("account.id", "accountId").field("access", "access").register();
     orikaMapperFactory.classMap(GrantAccountData.class, BankingAccountV1.class)
         .fieldAToB("id", "accountId").fieldAToB("account.creationDateTime", "creationDate")
         .fieldAToB("account.displayName", "displayName").fieldAToB("account.nickName", "nickname")

@@ -1,6 +1,7 @@
 package io.biza.deepthought.shared.persistence.model.grant;
 
 import java.time.OffsetDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 import javax.persistence.CascadeType;
@@ -11,12 +12,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import io.biza.deepthought.shared.persistence.model.bank.transaction.BankAccountTransactionData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -58,12 +61,25 @@ public class GrantData {
   @Column(name = "CREATED", insertable = false, updatable = false)
   @CreationTimestamp
   @Builder.Default
-  @NotNull
   OffsetDateTime created = OffsetDateTime.now();
   
   @Column(name = "EXPIRY")
   @NotNull
   @Builder.Default
   OffsetDateTime expiry = OffsetDateTime.now().plusDays(30);
+  
+  @PrePersist
+  public void prePersist() {
+    if (this.customers() != null) {
+      for(GrantCustomerData grantCustomer : this.customers()) {
+        grantCustomer.grant(this);
+      }
+    }
+    if (this.accounts() != null) {
+      for(GrantAccountData grantAccount : this.accounts()) {
+        grantAccount.grant(this);
+      }
+    }
+  }
 
 }

@@ -50,11 +50,21 @@ public class DirectDebitService {
     List<GrantAccountData> accountsByList = grantService.listGrantAccountByIds(requestList
         .accountIds().data().accountIds().stream().map(UUID::fromString).toArray(UUID[]::new));
 
-    return directDebitRepository.findAll(
+    Page<DirectDebitData> data = directDebitRepository.findAll(
         DirectDebitSpecifications.accountIds(accountsByList.stream().map(GrantAccountData::account)
             .collect(Collectors.toList()).stream().map(BankAccountData::id)
             .collect(Collectors.toList()).toArray(UUID[]::new)),
         PageRequest.of(requestList.page() - 1, requestList.pageSize()));
+    
+    data.get().forEach(debit -> {
+      try {
+        debit.id(grantService.getOrCreateResourceIdByAccountIdAndObjectId(debit.account().id(), debit.id()));
+      } catch (NotFoundException e) {
+        LOG.error("Received a NotFoundException for an account that should have been identifiable for account {} and debit {}", debit.account().id(), debit.id());
+      }
+    });
+    
+    return data;
   }
 
   public Page<DirectDebitData> listDirectDebitsWithFilter(

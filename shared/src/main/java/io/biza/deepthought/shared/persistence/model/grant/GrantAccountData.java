@@ -1,5 +1,7 @@
 package io.biza.deepthought.shared.persistence.model.grant;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.Valid;
@@ -58,4 +61,25 @@ public class GrantAccountData {
   @Column(name = "ACCESS")
   @Enumerated(EnumType.STRING)
   DioGrantAccess access;
+  
+  @PrePersist
+  public void prePersist() {
+    if (this.grant() != null) {
+      Set<GrantAccountData> set = new HashSet<GrantAccountData>();
+      if (this.grant().accounts() != null) {
+        set.addAll(this.grant().accounts());
+      }
+      set.add(this);
+      this.grant().accounts(set);
+    }
+    
+    if (this.account() != null) {
+      Set<GrantAccountData> set = new HashSet<GrantAccountData>();
+      if (this.account().grants() != null) {
+        set.addAll(this.account().grants());
+      }
+      set.add(this);
+      this.account().grants(set);
+    }
+  }
 }

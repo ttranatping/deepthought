@@ -14,7 +14,7 @@ import io.biza.deepthought.shared.component.service.GrantService;
 import io.biza.deepthought.shared.exception.InvalidSubjectException;
 import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.persistence.model.bank.payments.PayeeData;
-import io.biza.deepthought.shared.persistence.repository.CustomerPayeeRepository;
+import io.biza.deepthought.shared.persistence.repository.PayeeRepository;
 import io.biza.deepthought.shared.persistence.specification.PayeeSpecifications;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ public class PayeeService {
   private GrantService grantService;
 
   @Autowired
-  private CustomerPayeeRepository payeeRepository;
+  private PayeeRepository payeeRepository;
 
   public Page<PayeeData> listPayeesWithFilter(RequestListPayees requestList)
       throws InvalidSubjectException {

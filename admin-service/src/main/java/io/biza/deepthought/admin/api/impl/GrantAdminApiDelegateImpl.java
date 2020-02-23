@@ -82,7 +82,7 @@ public class GrantAdminApiDelegateImpl implements GrantAdminApiDelegate {
     GrantData data = GrantData.builder().subject(createData.subject())
         .expiry(OffsetDateTime.now().plusSeconds(createData.length())).build();
 
-    Optional<CustomerData> customer = customerRepository.findById(createData.customer());
+    Optional<CustomerData> customer = customerRepository.findById(createData.customerId());
 
     Set<GrantCustomerData> grantCustomers = new HashSet<GrantCustomerData>();
 
@@ -93,14 +93,14 @@ public class GrantAdminApiDelegateImpl implements GrantAdminApiDelegate {
       grantCustomers.add(grantCustomer);
     } else {
       throw ValidationListException.builder()
-          .explanation("Requested Customer Identifier of " + createData.customer() + " not found")
+          .explanation("Requested Customer Identifier of " + createData.customerId() + " not found")
           .type(DioExceptionType.INVALID_CUSTOMER).build();
     }
     data.customers(grantCustomers);
 
     Set<GrantAccountData> grantAccounts = new HashSet<GrantAccountData>();
 
-    for (UUID accountId : createData.accounts()) {
+    for (UUID accountId : createData.accountIds()) {
       Optional<BankAccountData> account = accountRepository.findById(accountId);
 
       if (account.isPresent()) {
@@ -145,7 +145,7 @@ public class GrantAdminApiDelegateImpl implements GrantAdminApiDelegate {
 
     if (optionalData.isPresent()) {
       GrantData data = optionalData.get();
-      Optional<CustomerData> customer = customerRepository.findById(updateData.customer());
+      Optional<CustomerData> customer = customerRepository.findById(updateData.customerId());
       Set<GrantCustomerData> grantCustomers = new HashSet<GrantCustomerData>();
       if (customer.isPresent()) {
         GrantCustomerData grantCustomer =
@@ -154,7 +154,7 @@ public class GrantAdminApiDelegateImpl implements GrantAdminApiDelegate {
         grantCustomers.add(grantCustomer);
       } else {
         throw ValidationListException.builder()
-            .explanation("Requested Customer Identifier of " + updateData.customer() + " not found")
+            .explanation("Requested Customer Identifier of " + updateData.customerId() + " not found")
             .type(DioExceptionType.INVALID_CUSTOMER).build();
       }
       
@@ -162,7 +162,7 @@ public class GrantAdminApiDelegateImpl implements GrantAdminApiDelegate {
 
       Set<GrantAccountData> grantAccounts = new HashSet<GrantAccountData>();
       
-      for (UUID accountId : updateData.accounts()) {
+      for (UUID accountId : updateData.accountIds()) {
         Optional<BankAccountData> account = accountRepository.findById(accountId);
 
         if (account.isPresent()) {

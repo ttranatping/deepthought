@@ -17,7 +17,7 @@ import io.biza.deepthought.shared.payloads.dio.product.DioProductBundle;
 import io.biza.deepthought.shared.persistence.model.BrandData;
 import io.biza.deepthought.shared.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.shared.persistence.repository.BrandRepository;
-import io.biza.deepthought.shared.persistence.repository.ProductBankingBundleRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductBundleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.test.context.ContextConfiguration;
@@ -38,7 +38,7 @@ public class BrandAndBundleTests extends TranslatorInitialisation {
   private BrandRepository brandRepository;
 
   @Resource
-  private ProductBankingBundleRepository productBundleRepository;
+  private ProductBundleRepository productBundleRepository;
 
 
   public BrandData createBrand() {

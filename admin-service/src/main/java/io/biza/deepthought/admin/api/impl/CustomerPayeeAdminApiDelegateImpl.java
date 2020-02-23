@@ -18,7 +18,7 @@ import io.biza.deepthought.shared.payloads.dio.banking.DioCustomerPayee;
 import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
 import io.biza.deepthought.shared.persistence.model.bank.payments.PayeeData;
 import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
-import io.biza.deepthought.shared.persistence.repository.CustomerPayeeRepository;
+import io.biza.deepthought.shared.persistence.repository.PayeeRepository;
 import io.biza.deepthought.shared.persistence.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -31,7 +31,7 @@ public class CustomerPayeeAdminApiDelegateImpl implements CustomerPayeeAdminApiD
   private DeepThoughtMapper mapper;
 
   @Autowired
-  private CustomerPayeeRepository bankPayeeRepository;
+  private PayeeRepository bankPayeeRepository;
   
   @Autowired
   private CustomerRepository customerRepository;

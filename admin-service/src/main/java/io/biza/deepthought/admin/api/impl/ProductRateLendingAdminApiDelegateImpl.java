@@ -18,10 +18,10 @@ import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
 import io.biza.deepthought.shared.payloads.dio.enumerations.DioSchemeType;
 import io.biza.deepthought.shared.payloads.dio.product.DioProductRateLending;
 import io.biza.deepthought.shared.persistence.model.product.ProductData;
-import io.biza.deepthought.shared.persistence.model.product.banking.BankProductRateLendingData;
-import io.biza.deepthought.shared.persistence.model.product.banking.BankProductRateLendingTierData;
-import io.biza.deepthought.shared.persistence.repository.ProductBankingRateLendingRepository;
-import io.biza.deepthought.shared.persistence.repository.ProductBankingRateLendingTierRepository;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankRateLendingData;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankRateLendingTierData;
+import io.biza.deepthought.shared.persistence.repository.ProductBankRateLendingRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductBankRateLendingTierRepository;
 import io.biza.deepthought.shared.persistence.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,10 +34,10 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
   private DeepThoughtMapper mapper;
 
   @Autowired
-  ProductBankingRateLendingRepository rateRepository;
+  ProductBankRateLendingRepository rateRepository;
 
   @Autowired
-  ProductBankingRateLendingTierRepository tierRepository;
+  ProductBankRateLendingTierRepository tierRepository;
 
   @Autowired
   ProductRepository productRepository;
@@ -48,7 +48,7 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
   @Override
   public ResponseEntity<List<DioProductRateLending>> listProductRateLendings(UUID brandId, UUID productId) {
 
-    List<BankProductRateLendingData> feeList =
+    List<ProductBankRateLendingData> feeList =
         rateRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing fees and have database result of {}", feeList);
     return ResponseEntity.ok(mapper.mapAsList(feeList, DioProductRateLending.class));
@@ -56,7 +56,7 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
 
   @Override
   public ResponseEntity<DioProductRateLending> getProductRateLending(UUID brandId, UUID productId, UUID id) {
-    Optional<BankProductRateLendingData> data = rateRepository
+    Optional<ProductBankRateLendingData> data = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
@@ -82,12 +82,12 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
           .explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    BankProductRateLendingData data = mapper.map(createData, BankProductRateLendingData.class);
+    ProductBankRateLendingData data = mapper.map(createData, ProductBankRateLendingData.class);
     
     LOG.debug("Preparing to create data: {}", data);
 
     if (data.tiers() != null) {
-      for(BankProductRateLendingTierData tier : data.tiers()) {
+      for(ProductBankRateLendingTierData tier : data.tiers()) {
         if (tier.applicabilityConditions() != null) {
           tier.applicabilityConditions().rateTier(tier);
         }
@@ -116,7 +116,7 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
 
   @Override
   public ResponseEntity<Void> deleteProductRateLending(UUID brandId, UUID productId, UUID id) {
-    Optional<BankProductRateLendingData> optionalData = rateRepository
+    Optional<ProductBankRateLendingData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -134,14 +134,14 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
 
     DeepThoughtValidator.validate(validator, updateData);
 
-    Optional<BankProductRateLendingData> optionalData = rateRepository
+    Optional<ProductBankRateLendingData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      BankProductRateLendingData data = optionalData.get();
+      ProductBankRateLendingData data = optionalData.get();
       
       if (data.tiers() != null) {
-        for(BankProductRateLendingTierData tier : data.tiers()) {
+        for(ProductBankRateLendingTierData tier : data.tiers()) {
           data.tiers().remove(tier);
           tierRepository.deleteById(tier.id());
         }
@@ -154,7 +154,7 @@ public class ProductRateLendingAdminApiDelegateImpl implements ProductRateLendin
       mapper.map(updateData, data);
       
       if (data.tiers() != null) {
-        for(BankProductRateLendingTierData tier : data.tiers()) {
+        for(ProductBankRateLendingTierData tier : data.tiers()) {
           if (tier.applicabilityConditions() != null) {
             tier.applicabilityConditions().rateTier(tier);
           }

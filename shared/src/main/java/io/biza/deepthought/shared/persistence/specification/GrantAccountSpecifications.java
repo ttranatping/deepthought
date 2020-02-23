@@ -23,7 +23,7 @@ import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
 import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerData;
 import io.biza.deepthought.shared.persistence.model.grant.GrantData;
 import io.biza.deepthought.shared.persistence.model.product.ProductData;
-import io.biza.deepthought.shared.persistence.model.product.banking.BankProductData;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankData;
 
 public class GrantAccountSpecifications {
 
@@ -61,7 +61,7 @@ public class GrantAccountSpecifications {
     return (root, query, cb) -> {
       Join<GrantAccountData, BankAccountData> accountJoin = root.join(GrantAccountData_.account);
       Join<BankAccountData, ProductData> rootProductJoin = accountJoin.join(BankAccountData_.product);
-      Join<ProductData, BankProductData> productJoin = rootProductJoin.join(ProductData_.cdrBanking);
+      Join<ProductData, ProductBankData> productJoin = rootProductJoin.join(ProductData_.cdrBanking);
       return cb.equal(productJoin.get(BankProductData_.productCategory), productCategory);
     };
   }
