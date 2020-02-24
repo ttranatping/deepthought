@@ -4,6 +4,7 @@
 
 <ng-container [ngSwitch]="activeStepIndex">
     <div *ngSwitchCase="BASIC_DETAILS_INDEX">
+        <h2>Basic details</h2>
         <cdr-form-control
             [className]="'basicDetailsForm'"
             [control]="forms.basicDetails"
@@ -11,6 +12,7 @@
         ></cdr-form-control>
     </div>
     <div *ngSwitchCase="CARD_ARTS_INDEX">
+        <h2>Card arts</h2>
         <div *ngFor="let cardArtForm of forms.cardArts; let i = index;">
             <h3>Card art #{{ i + 1 }}</h3>
             <cdr-form-control
@@ -23,6 +25,7 @@
         <p-button label="Add card art" (click)="addCardArt()"></p-button>
     </div>
     <div *ngSwitchCase="FEATURES_INDEX">
+        <h2>Features</h2>
         <div *ngFor="let featureForm of forms.features; let i = index;">
             <h3>Feature #{{ i + 1 }}</h3>
             <cdr-form-control

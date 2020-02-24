@@ -2,8 +2,15 @@ import {Injectable} from '@angular/core';
 import {CurrencyPipe, PercentPipe} from '@angular/common';
 import { SelectItem } from 'primeng/api';
 import {
-    BankingProductCategory, BankingProductConstraintType,
-    BankingProductEligibilityType, BankingProductFeatureType,
+    BankingProductCategory,
+    BankingProductConstraintType,
+    BankingProductDepositRateType,
+    BankingProductDiscountEligibilityType,
+    BankingProductDiscountType,
+    BankingProductEligibilityType,
+    BankingProductFeatureType,
+    BankingProductFeeType,
+    BankingProductLendingRateType,
     DioSchemeType,
     FormFieldType
 } from '@bizaoss/deepthought-admin-angular-client';
@@ -86,6 +93,44 @@ export class TypeUtilityService {
         return Object.keys(BankingProductFeatureType).map((key) => ({
             value: BankingProductFeatureType[key],
             label: this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTFEATURETYPE, BankingProductFeatureType[key]),
+        }));
+    }
+
+    getLendingRateTypeOptions(): SelectItem[] {
+        return Object.keys(BankingProductLendingRateType).map((key) => ({
+            value: BankingProductLendingRateType[key],
+            label: this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTLENDINGRATETYPE, BankingProductLendingRateType[key]),
+        }));
+    }
+
+    getDepositRateTypeOptions(): SelectItem[] {
+        return Object.keys(BankingProductDepositRateType).map((key) => ({
+            value: BankingProductDepositRateType[key],
+            label: this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTDEPOSITRATETYPE, BankingProductDepositRateType[key]),
+        }));
+    }
+
+    getFeeTypeOptions(): SelectItem[] {
+        return Object.keys(BankingProductFeeType).map((key) => ({
+            value: BankingProductFeeType[key],
+            label: this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTFEETYPE, BankingProductFeeType[key]),
+        }));
+    }
+
+    getDiscountTypeOptions(): SelectItem[] {
+        return Object.keys(BankingProductDiscountType).map((key) => ({
+            value: BankingProductDiscountType[key],
+            label: this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTDISCOUNTTYPE, BankingProductDiscountType[key]),
+        }));
+    }
+
+    getDiscountEligibilityTypeOptions(): SelectItem[] {
+        return Object.keys(BankingProductDiscountEligibilityType).map((key) => ({
+            value: BankingProductDiscountEligibilityType[key],
+            label: this.typeManager.getLabel(
+                FormFieldType.BANKINGPRODUCTDISCOUNTELIGIBILITYTYPE,
+                BankingProductDiscountEligibilityType[key]
+            ),
         }));
     }
 }

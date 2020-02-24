@@ -3,20 +3,20 @@
     <cdr-form-control
         [className]="'discountForm'"
         [control]="discountForm"
-        [showErrors]="discountForm.submitted"
+        [showErrors]="isSubmitted"
     ></cdr-form-control>
 </section>
 
 <section>
     <h2>Eligibilitys</h2>
 
-    <div *ngFor="let eligibilityForm of eligibilitysForm.controls; let i = index;"
+    <div *ngFor="let eligibilityForm of eligibilitysFormArray.controls; let i = index;"
          style="margin-bottom: 10px;"
     >
         <cdr-form-control
             [className]="'eligibilityForm'"
             [control]="eligibilityForm"
-            [showErrors]="discountForm.submitted"
+            [showErrors]="isSubmitted"
         ></cdr-form-control>
 
         <div style="text-align: right;">

@@ -11,7 +11,7 @@ import {
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
 import { CdrFormInput, CdrFormSelect } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
-import { CdrFormGroup } from '@app/shared/forms/crd-form-group.class';
+import { CdrFormArray, CdrFormGroup } from '@app/shared/forms/crd-form-group.class';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { finalize, map, mergeMap, switchMap } from 'rxjs/operators';
 import { iif, of, Subject } from 'rxjs';
@@ -20,6 +20,7 @@ import { BreadcrumbService } from '@app/layout/breadcrumb.service';
 import { ProductEligibilityCreateEditComponent } from '../../product-view-constraints/product-eligibility-create-edit/product-eligibility-create-edit.component';
 import { ProductFeeDiscountCreateEditComponent } from '../product-fee-discount-create-edit/product-fee-discount-create-edit.component';
 import { ConfirmationService, DialogService } from 'primeng/api';
+import { ProductFeeFormCreatorService } from '@app/core/services/product-forms/product-fee-form-creator.service';
 
 @Component({
   selector: 'app-product-fee-create-edit',
@@ -28,30 +29,16 @@ import { ConfirmationService, DialogService } from 'primeng/api';
 })
 export class ProductFeeCreateEditComponent implements OnInit {
 
+    isSubmitted = false;
+
     brandId: string;
     productId: string;
     feeId: string;
 
-    feeForm = new CdrFormGroup({
-        id:     new CdrFormInput(null, '', [Validators.required]),
-        schemeType:   new CdrFormSelect(null, 'Scheme type', [Validators.required], []),
-    });
-
-    cdrBankingForm = new CdrFormGroup({
-        feeType:            new CdrFormSelect(null, 'Type', [Validators.required]),
-        name:               new CdrFormInput('', 'Name', []),
-        amount:             new CdrFormInput('', 'Amount', []),
-        balanceRate:        new CdrFormInput('', 'Balance rate', []),
-        transactionRate:    new CdrFormInput('', 'Transaction rate', []),
-        accruedRate:        new CdrFormInput('', 'Accrued rate', []),
-        accrualFrequency:   new CdrFormInput('', 'Accrual frequency', []),
-        currency:           new CdrFormInput('', 'Currency'),
-        additionalValue:    new CdrFormInput(null, 'Additional value'),
-        additionalInfo:     new CdrFormInput('', 'Additional info'),
-        additionalInfoUri:  new CdrFormInput('', 'Additional info URI'),
-    });
-
     fee: DioProductFee;
+
+    feeForm: CdrFormGroup;
+
     discounts: BankingProductDiscountV1[] = [];
     discountsErrors: { [key: string]: string } = {};
 
@@ -76,6 +63,7 @@ export class ProductFeeCreateEditComponent implements OnInit {
         private layout: LayoutService,
         private confirmationService: ConfirmationService,
         private dialogService: DialogService,
+        private productFeeFormCreator: ProductFeeFormCreatorService
     ) { }
 
     ngOnInit() {
@@ -99,37 +87,11 @@ export class ProductFeeCreateEditComponent implements OnInit {
 
     init(fee) {
         this.fee = fee;
+        this.feeForm = this.productFeeFormCreator.createForm(this.fee);
 
-        this.feeForm.addControl('cdrBanking', this.cdrBankingForm);
-
-        const idControl = this.feeForm.controls.id as CdrFormInput;
-        idControl.isVisible = false;
-
-        const schemeTypeControlOptions = Object.keys(DioSchemeType).map((key) => ({
-            value: DioSchemeType[key],
-            label: DioSchemeType[key],
-        }));
-
-        const schemeTypeControl = this.feeForm.controls.schemeType as CdrFormSelect;
-        schemeTypeControl.options = schemeTypeControlOptions;
-        schemeTypeControl.setValue(schemeTypeControlOptions[0].value);
-        schemeTypeControl.disable();
-        schemeTypeControl.isVisible = false;
-
-        const feeTypeOptions = Object.keys(BankingProductFeeType).map((key) => ({
-            value: BankingProductFeeType[key],
-            label: this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTFEETYPE, BankingProductFeeType[key]),
-        }));
-
-        const feeTypeControl = this.cdrBankingForm.controls.feeType as CdrFormSelect;
-        feeTypeControl.options = feeTypeOptions;
-        feeTypeControl.setValue(feeTypeOptions[0].value);
-
-        if (this.fee) {
-            this.fillForm(this.fee);
-        } else {
-            this.feeForm.removeControl('id');
-        }
+        const discountsControl = this.feeForm.get('cdrBanking.discounts') as CdrFormArray;
+        discountsControl.isVisible = false;
+        this.discounts = discountsControl.value;
     }
 
     fetchFee() {
@@ -137,42 +99,6 @@ export class ProductFeeCreateEditComponent implements OnInit {
             return void 0;
         }
         return this.productsApi.getProductFee(this.brandId, this.productId, this.feeId);
-    }
-
-    fillForm(fee: DioProductFee) {
-        const { id, schemeType, cdrBanking = {} as BankingProductFeeV1 } = fee;
-
-        this.feeForm.get('id').setValue(id);
-        this.feeForm.get('schemeType').setValue(schemeType);
-
-        const {
-            feeType,
-            name,
-            amount,
-            balanceRate,
-            transactionRate,
-            accruedRate,
-            accrualFrequency,
-            currency,
-            additionalValue,
-            additionalInfo,
-            additionalInfoUri,
-            discounts = []
-        } = cdrBanking;
-
-        this.cdrBankingForm.get('feeType').setValue(feeType);
-        this.cdrBankingForm.get('name').setValue(name);
-        this.cdrBankingForm.get('amount').setValue(amount);
-        this.cdrBankingForm.get('balanceRate').setValue(balanceRate);
-        this.cdrBankingForm.get('transactionRate').setValue(transactionRate);
-        this.cdrBankingForm.get('accruedRate').setValue(accruedRate);
-        this.cdrBankingForm.get('accrualFrequency').setValue(accrualFrequency);
-        this.cdrBankingForm.get('currency').setValue(currency);
-        this.cdrBankingForm.get('additionalValue').setValue(additionalValue);
-        this.cdrBankingForm.get('additionalInfo').setValue(additionalInfo);
-        this.cdrBankingForm.get('additionalInfoUri').setValue(additionalInfoUri);
-
-        this.discounts = discounts;
     }
 
     createEditDiscount(discount?: BankingProductDiscountV1) {
@@ -241,14 +167,13 @@ export class ProductFeeCreateEditComponent implements OnInit {
 
     onSave() {
         this.discountsErrors = {};
-        this.feeForm.setSubmitted(true);
+        this.isSubmitted = true;
 
         if (!this.feeForm.valid) {
             return;
         }
 
         const data = this.feeForm.getRawValue();
-
         data.cdrBanking.discounts = this.discounts;
 
         const saving$ = this.fee
@@ -258,38 +183,18 @@ export class ProductFeeCreateEditComponent implements OnInit {
 
         saving$.subscribe(
             _ => this.redirectToFeesPage(),
-            this.onSavingError.bind(this)
+            (errors) => this.onSavingError(errors)
         );
 
     }
 
-    onSavingError({ error: { type, validationErrors: errors } }) {
-        if (type === 'VALIDATION_ERROR') {
+    onSavingError(errors: any) {
+        this.feeForm.setServerErrors(errors);
 
-            const mapErrorFieldControl: { [key: string]: AbstractControl } = {
-                'cdrBanking.name':              this.cdrBankingForm.get('name'),
-                'cdrBanking.amount':            this.cdrBankingForm.get('amount'),
-                'cdrBanking.balanceRate':       this.cdrBankingForm.get('balanceRate'),
-                'cdrBanking.transactionRate':   this.cdrBankingForm.get('transactionRate'),
-                'cdrBanking.accruedRate':       this.cdrBankingForm.get('accruedRate'),
-                'cdrBanking.accrualFrequency':  this.cdrBankingForm.get('accrualFrequency'),
-                'cdrBanking.currency':          this.cdrBankingForm.get('currency'),
-                'cdrBanking.value':             this.cdrBankingForm.get('additionalValue'),
-                'cdrBanking.additionalValue':   this.cdrBankingForm.get('additionalValue'),
-                'cdrBanking.additionalInfo':    this.cdrBankingForm.get('additionalInfo'),
-                'cdrBanking.additionalInfoUri': this.cdrBankingForm.get('additionalInfoUri'),
-            };
-
-            for (const error of errors) {
-                for (const field of error.fields) {
-                    if (mapErrorFieldControl[field]) {
-                        mapErrorFieldControl[field].setErrors({ SERVER: error.message });
-                    }
-                }
-            }
+        if (errors.error.type === 'VALIDATION_ERROR') {
 
             for (let i = 0; i < this.discounts.length; i++) {
-                for (const error of errors) {
+                for (const error of errors.error.validationErrors) {
                     for (const field of error.fields) {
                         if (field.startsWith(`cdrBanking.discounts[${i}]`)) {
                             this.discountsErrors[i] = error.message;

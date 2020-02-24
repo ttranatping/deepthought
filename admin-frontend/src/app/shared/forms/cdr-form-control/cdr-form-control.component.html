@@ -1,4 +1,4 @@
-<ng-container *ngIf="control.controls;">
+<ng-container *ngIf="control.controls && control.isVisible;">
     <form [formGroup]="control" class="ui-fluid">
         <cdr-form-control
             *ngFor="let _control of control.controls | keyvalue: originalOrder"

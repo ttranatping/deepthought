@@ -1,17 +1,15 @@
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormGroup } from '@angular/forms';
 import { CdrFormInput } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
+
+export class CdrFormArray extends FormArray {
+    isVisible = true;
+}
 
 export class CdrFormGroup extends FormGroup {
 
     private _submitted = false;
 
-    hideAllControls() {
-        Object.keys(this.controls).forEach((key) => (this.controls[key] as CdrFormInput).isVisible = false);
-    }
-
-    showControl(controlName: string): void {
-        (this.controls[controlName] as CdrFormInput).isVisible = true;
-    }
+    isVisible = true;
 
     get submitted() { return this._submitted; };
 

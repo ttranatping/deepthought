@@ -1,12 +1,12 @@
 
 <h1>{{ !feeId ? 'Create fee' : 'Edit fee' }}</h1>
 
-<div class="Form">
+<div class="Form" *ngIf="feeForm">
     <div class="Form-fee">
         <cdr-form-control
             [className]="'feeForm'"
             [control]="feeForm"
-            [showErrors]="feeForm.submitted"
+            [showErrors]="isSubmitted"
         ></cdr-form-control>
     </div>
 
