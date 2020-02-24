@@ -11,7 +11,7 @@ import io.biza.deepthought.banking.requests.RequestListTransactions;
 import io.biza.deepthought.shared.component.service.GrantService;
 import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.persistence.model.bank.transaction.BankAccountTransactionData;
-import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
+import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData;
 import io.biza.deepthought.shared.persistence.repository.BankAccountTransactionRepository;
 import io.biza.deepthought.shared.persistence.specification.TransactionSpecifications;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +40,9 @@ public class TransactionService {
 
   public Page<BankAccountTransactionData> listTransactions(UUID accountId, RequestListTransactions requestListTransactions) throws NotFoundException {
     
-    GrantAccountData grantAccount = accountService.getGrantAccount(accountId);
+    GrantCustomerAccountData grantAccount = accountService.getGrantAccount(accountId);
     
-    Specification<BankAccountTransactionData> filterSpecifications = Specification.where(TransactionSpecifications.accountId(grantAccount.id()));
+    Specification<BankAccountTransactionData> filterSpecifications = Specification.where(TransactionSpecifications.accountId(grantAccount.customerAccount().bankAccount().id()));
     
     /**
      * Oldest/Newest Time
@@ -71,7 +71,7 @@ public class TransactionService {
     if(requestListTransactions.stringFilter() != null && requestListTransactions.stringFilter() != "") {
       filterSpecifications = filterSpecifications.and(TransactionSpecifications.textFilter(requestListTransactions.stringFilter()));
     }
-
+    
     return transactionRepository.findAll(filterSpecifications, PageRequest.of(requestListTransactions.page() - 1, requestListTransactions.pageSize()));
     
   }

@@ -34,15 +34,10 @@ public class RequestGrant {
       defaultValue = "2592000")
   @JsonProperty(value = "length")
   Integer length;
-
-  @Schema(description = "Customer ID to Associate with Grant")
-  @JsonProperty(value = "customerId")
+  
+  @Schema(description = "Customer Accounts with Permissions")
+  @JsonProperty(value = "customerAccounts")
   @NotNull
-  UUID customerId;
-
-  @Schema(description = "List of Account IDs to Associate with Grant")
-  @JsonProperty(value = "accountIds")
-  @NotEmpty
-  List<UUID> accountIds;
+  List<RequestGrantCustomerAccount> customerAccounts;
 
 }

@@ -53,10 +53,11 @@ public class ProductData {
   UUID id;
 
   @ManyToOne
-  @JoinColumn(name = "BRAND_ID", nullable = false, foreignKey = @ForeignKey(name = "PRODUCT_BRAND_ID_FK"))
+  @JoinColumn(name = "BRAND_ID", nullable = false,
+      foreignKey = @ForeignKey(name = "PRODUCT_BRAND_ID_FK"))
   @ToString.Exclude
   BrandData brand;
-  
+
   @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
   @ToString.Exclude
   Set<BankAccountData> accounts;
@@ -97,8 +98,8 @@ public class ProductData {
   public void prePersist() {
     if (this.cdrBanking() != null) {
       this.cdrBanking().product(this);
-      
-      if(this.cdrBanking().additionalInformation() != null) {
+
+      if (this.cdrBanking().additionalInformation() != null) {
         this.cdrBanking().additionalInformation().product(this.cdrBanking());
       }
     }

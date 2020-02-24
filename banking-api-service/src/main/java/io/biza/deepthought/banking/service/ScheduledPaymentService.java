@@ -15,7 +15,8 @@ import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.shared.persistence.model.bank.payments.ScheduledPaymentData;
-import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
+import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
+import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData;
 import io.biza.deepthought.shared.persistence.repository.ScheduledPaymentRepository;
 import io.biza.deepthought.shared.persistence.specification.ScheduledPaymentSpecifications;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +35,9 @@ public class ScheduledPaymentService {
   public Page<ScheduledPaymentData> listScheduledPaymentsByAccount(UUID accountId,
       RequestScheduledPaymentsByAccounts requestScheduledPayments) throws NotFoundException {
 
-    GrantAccountData grantAccount = grantService.getGrantAccount(accountId);
+    GrantCustomerAccountData grantAccount = grantService.getGrantAccount(accountId);
     Specification<ScheduledPaymentData> filterSpecifications =
-        Specification.where(ScheduledPaymentSpecifications.accountId(grantAccount.account().id()));
+        Specification.where(ScheduledPaymentSpecifications.accountId(grantAccount.customerAccount().bankAccount().id()));
 
     return scheduledPaymentRepository.findAll(filterSpecifications,
         PageRequest.of(requestScheduledPayments.page() - 1, requestScheduledPayments.pageSize()));
@@ -47,11 +48,12 @@ public class ScheduledPaymentService {
       RequestScheduledPaymentsByAccounts requestList) {
     LOG.debug("Retrieving a list of direct debits with input request of {}", requestList);
 
-    List<GrantAccountData> accountsByList = grantService.listGrantAccountByIds(requestList
+    List<GrantCustomerAccountData> accountsByList = grantService.listGrantAccountByIds(requestList
         .accountIds().data().accountIds().stream().map(UUID::fromString).toArray(UUID[]::new));
-
+    
     return scheduledPaymentRepository.findAll(
-        ScheduledPaymentSpecifications.accountIds(accountsByList.stream().map(GrantAccountData::account)
+        ScheduledPaymentSpecifications.accountIds(accountsByList.stream().map(GrantCustomerAccountData::customerAccount)
+            .collect(Collectors.toList()).stream().map(CustomerAccountData::bankAccount)
             .collect(Collectors.toList()).stream().map(BankAccountData::id)
             .collect(Collectors.toList()).toArray(UUID[]::new)),
         PageRequest.of(requestList.page() - 1, requestList.pageSize()));
@@ -61,12 +63,13 @@ public class ScheduledPaymentService {
       RequestScheduledPaymentsByBulk requestList) {
     LOG.debug("Retrieving a list of direct debits with input request of {}", requestList);
 
-    List<GrantAccountData> accountsByList = grantService
+    List<GrantCustomerAccountData> accountsByList = grantService
         .listGrantAccounts(RequestListAccounts.builder().accountStatus(requestList.accountStatus())
             .isOwned(requestList.isOwned()).productCategory(requestList.productCategory()).build());
 
     return scheduledPaymentRepository.findAll(
-        ScheduledPaymentSpecifications.accountIds(accountsByList.stream().map(GrantAccountData::account)
+        ScheduledPaymentSpecifications.accountIds(accountsByList.stream().map(GrantCustomerAccountData::customerAccount)
+            .collect(Collectors.toList()).stream().map(CustomerAccountData::bankAccount)
             .collect(Collectors.toList()).stream().map(BankAccountData::id)
             .collect(Collectors.toList()).toArray(UUID[]::new)),
         PageRequest.of(requestList.page() - 1, requestList.pageSize()));

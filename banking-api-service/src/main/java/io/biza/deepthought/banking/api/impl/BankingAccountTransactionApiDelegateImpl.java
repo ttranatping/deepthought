@@ -1,5 +1,6 @@
 package io.biza.deepthought.banking.api.impl;
 
+import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,6 +43,19 @@ public class BankingAccountTransactionApiDelegateImpl
       UUID accountId, RequestListTransactions requestListTransactions) throws NotFoundException {
     
     Page<BankAccountTransactionData> transactionData = transactionService.listTransactions(accountId,  requestListTransactions);
+    
+    /**
+     * Do baseline mapping
+     */
+    List<BankingTransactionV1> transactionList = mapper.mapAsList(transactionData.getContent(), BankingTransactionV1.class);
+    transactionList.forEach(transaction -> {
+      transaction.accountId(accountId.toString());
+      try {
+        transaction.transactionId(accountService.getOrCreateResourceIdByAccountIdAndObjectId(accountId, UUID.fromString(transaction.transactionId())).toString());
+      } catch (NotFoundException e) {
+        LOG.error("Received not found error despite having already used this accountId, bueller?!");
+      }
+    });
 
     /**
      * Build response components
@@ -49,7 +63,7 @@ public class BankingAccountTransactionApiDelegateImpl
     ResponseBankingTransactionListV1 listResponse = ResponseBankingTransactionListV1
         .builder().meta(CDRContainerAttributes.toMetaPaginated(transactionData))
         .links(CDRContainerAttributes.toLinksPaginated(transactionData))
-        .data(ResponseBankingTransactionListDataV1.builder().transactions(mapper.mapAsList(transactionData.getContent(), BankingTransactionV1.class)).build())
+        .data(ResponseBankingTransactionListDataV1.builder().transactions(transactionList).build())
         .build();
     LOG.debug("List response came back with: {}", listResponse);
     return ResponseEntity.ok(listResponse);
@@ -62,7 +76,7 @@ public class BankingAccountTransactionApiDelegateImpl
     ResponseBankingTransactionByIdV1 transactionResponse = new ResponseBankingTransactionByIdV1();
     transactionResponse.meta(CDRContainerAttributes.toMeta());
     transactionResponse.links(CDRContainerAttributes.toLinks());
-    transactionResponse.data(mapper.map(transaction, BankingTransactionDetailV1.class));
+    transactionResponse.data(mapper.map(transaction, BankingTransactionDetailV1.class).accountId(accountId.toString()).transactionId(transactionId.toString()));
     return ResponseEntity.ok(transactionResponse);
   }
 }

@@ -31,8 +31,8 @@ import io.biza.deepthought.shared.payloads.dio.enumerations.DioSchemeType;
 import io.biza.deepthought.shared.persistence.model.bank.BankBranchData;
 import io.biza.deepthought.shared.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.shared.persistence.model.bank.transaction.BankAccountTransactionData;
-import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerBankAccountData;
-import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
+import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
+import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData;
 import io.biza.deepthought.shared.persistence.model.product.ProductBundleData;
 import io.biza.deepthought.shared.persistence.model.product.ProductData;
 import lombok.AllArgsConstructor;
@@ -89,9 +89,9 @@ public class BankAccountData {
   /**
    * Customer access to Account
    */
-  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<CustomerBankAccountData> customerAccounts;
+  Set<CustomerAccountData> customerAccounts;
   
   /**
    * Account Number
@@ -185,14 +185,7 @@ public class BankAccountData {
   @OneToMany(mappedBy = "from", cascade = CascadeType.ALL)
   @ToString.Exclude
   Set<ScheduledPaymentData> scheduledPayments;
-  
-  /**
-   * Grants assigned to this account
-   */
-  @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
-  @ToString.Exclude
-  Set<GrantAccountData> grants;
-  
+    
   @PrePersist
   public void prePersist() {
     if(this.branch() != null) {

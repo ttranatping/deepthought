@@ -55,7 +55,7 @@ public class CDRResponseAdvice implements ResponseBodyAdvice<Object> {
         }
       }
     } catch (UnsupportedPayloadException ex) {
-      LOG.error("Attempted to perform conversion and got exception: {}", ex);
+      LOG.error("Attempted to perform conversion and got exception: {}", ex.getMessage());
       response.setStatusCode(HttpStatus.NOT_ACCEPTABLE);
       return null;
     }

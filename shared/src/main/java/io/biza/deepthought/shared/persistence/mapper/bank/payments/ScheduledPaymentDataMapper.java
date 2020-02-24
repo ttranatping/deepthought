@@ -1,0 +1,62 @@
+package io.biza.deepthought.shared.persistence.mapper.bank.payments;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import io.biza.babelfish.cdr.models.payloads.banking.account.directdebit.BankingDirectDebitV1;
+import io.biza.babelfish.cdr.models.payloads.banking.account.payee.scheduled.BankingScheduledPaymentV1;
+import io.biza.deepthought.shared.component.service.GrantService;
+import io.biza.deepthought.shared.mapper.OrikaFactoryConfigurerInterface;
+import io.biza.deepthought.shared.payloads.dio.banking.DioCustomerScheduledPayment;
+import io.biza.deepthought.shared.payloads.dio.common.DioCustomer;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioCustomerType;
+import io.biza.deepthought.shared.persistence.model.bank.payments.DirectDebitData;
+import io.biza.deepthought.shared.persistence.model.bank.payments.ScheduledPaymentData;
+import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
+import ma.glasnost.orika.CustomMapper;
+import ma.glasnost.orika.MapperFactory;
+import ma.glasnost.orika.MappingContext;
+
+public class ScheduledPaymentDataMapper implements OrikaFactoryConfigurerInterface {
+
+  @Override
+  public void configure(MapperFactory orikaMapperFactory) {
+    orikaMapperFactory.classMap(ScheduledPaymentData.class, DioCustomerScheduledPayment.class)
+        .fieldAToB("id", "cdrBanking.scheduledPaymentId").fieldAToB("id", "id")
+        .fieldAToB("from.id", "cdrBanking.from.accountId").field("nickName", "cdrBanking.nickname")
+        .field("payerReference", "cdrBanking.payerReference")
+        .field("payeeReference", "cdrBanking.payeeReference").field("status", "cdrBanking.status")
+        .field("nextPaymentDate", "cdrBanking.recurrence.nextPaymentDate")
+        .field("scheduleType", "cdrBanking.recurrence.type")
+        .field("nextPaymentDate", "cdrBanking.recurrence.onceOff.paymentDate")
+        .field("finalPaymentDate", "cdrBanking.recurrence.intervalSchedule.finalPaymentDate")
+        .field("paymentsRemaining", "cdrBanking.recurrence.intervalSchedule.paymentsRemaining")
+        .field("nonBusinessDayTreatment",
+            "cdrBanking.recurrence.intervalSchedule.nonBusinessDayTreatment")
+        .field("finalPaymentDate", "cdrBanking.recurrence.lastWeekDay.finalPaymentDate")
+        .field("paymentsRemaining", "cdrBanking.recurrence.lastWeekDay.paymentsRemaining")
+        .field("paymentFrequency", "cdrBanking.recurrence.lastWeekDay.interval")
+        .field("dayOfWeek", "cdrBanking.recurrence.lastWeekDay.lastWeekDay")
+        .field("nonBusinessDayTreatment",
+            "cdrBanking.recurrence.lastWeekDay.nonBusinessDayTreatment")
+        .field("scheduleDescription", "cdrBanking.recurrence.eventBased.description").register();
+
+    orikaMapperFactory.classMap(ScheduledPaymentData.class, BankingScheduledPaymentV1.class)
+        .fieldAToB("nickName", "nickname").fieldAToB("payerReference", "payerReference")
+        .fieldAToB("payeeReference", "payeeReference").fieldAToB("status", "status")
+        .fieldAToB("nextPaymentDate", "recurrence.nextPaymentDate")
+        .fieldAToB("scheduleType", "recurrence.type")
+        .field("nextPaymentDate", "recurrence.onceOff.paymentDate")
+        .fieldAToB("finalPaymentDate", "recurrence.intervalSchedule.finalPaymentDate")
+        .fieldAToB("paymentsRemaining", "recurrence.intervalSchedule.paymentsRemaining")
+        .fieldAToB("nonBusinessDayTreatment", "recurrence.intervalSchedule.nonBusinessDayTreatment")
+        .fieldAToB("finalPaymentDate", "recurrence.lastWeekDay.finalPaymentDate")
+        .fieldAToB("paymentsRemaining", "recurrence.lastWeekDay.paymentsRemaining")
+        .fieldAToB("paymentFrequency", "recurrence.lastWeekDay.interval")
+        .fieldAToB("dayOfWeek", "recurrence.lastWeekDay.lastWeekDay")
+        .fieldAToB("nonBusinessDayTreatment", "recurrence.lastWeekDay.nonBusinessDayTreatment")
+        .fieldAToB("scheduleDescription", "recurrence.eventBased.description").register();
+
+    // TODO: from mapping
+    // TODO: id mapping
+
+  }
+}

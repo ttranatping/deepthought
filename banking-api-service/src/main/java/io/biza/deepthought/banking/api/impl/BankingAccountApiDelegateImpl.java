@@ -16,7 +16,7 @@ import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
 import io.biza.deepthought.shared.component.service.GrantService;
 import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
-import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
+import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData;
 import io.biza.deepthought.shared.util.CDRContainerAttributes;
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,7 +34,7 @@ public class BankingAccountApiDelegateImpl implements BankingAccountApiDelegate 
   @Override
   public ResponseEntity<ResponseBankingAccountByIdV1> getAccountDetail(UUID accountId)
       throws NotFoundException {
-    GrantAccountData accountResult = bankingService.getGrantAccount(accountId);
+    GrantCustomerAccountData accountResult = bankingService.getGrantAccount(accountId);
     ResponseBankingAccountByIdV1 accountResponse = new ResponseBankingAccountByIdV1();
     accountResponse.meta(CDRContainerAttributes.toMeta());
     accountResponse.links(CDRContainerAttributes.toLinks());
@@ -45,7 +45,9 @@ public class BankingAccountApiDelegateImpl implements BankingAccountApiDelegate 
   @Override
   public ResponseEntity<ResponseBankingAccountListV1> listAccounts(
       RequestListAccounts requestList) {
-    Page<GrantAccountData> accountList = bankingService.listGrantAccountsPaginated(requestList);
+    Page<GrantCustomerAccountData> accountList = bankingService.listGrantAccountsPaginated(requestList);
+    
+    LOG.debug("Paginated account list returned: {}", accountList.getContent());
 
     /**
      * Build response components

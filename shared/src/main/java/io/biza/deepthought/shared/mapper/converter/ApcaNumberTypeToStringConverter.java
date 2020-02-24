@@ -10,13 +10,13 @@ public class ApcaNumberTypeToStringConverter extends BidirectionalConverter<Apca
   @Override
   public String convertTo(ApcaNumberType source, Type<String> destinationType,
       MappingContext mappingContext) {
-    return source.bsb();
+    return source.bsb().replaceAll("-", "");
   }
 
   @Override
   public ApcaNumberType convertFrom(String source, Type<ApcaNumberType> destinationType,
       MappingContext mappingContext) {
-    return ApcaNumberType.fromValue(source);
+    return ApcaNumberType.builder().bsb(source).build();
   }
 
 }

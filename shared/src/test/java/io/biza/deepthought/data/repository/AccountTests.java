@@ -34,7 +34,7 @@ import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountLoanAccountData;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountTermDepositData;
 import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
-import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerBankAccountData;
+import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
 import io.biza.deepthought.shared.persistence.model.person.PersonAddressData;
 import io.biza.deepthought.shared.persistence.model.person.PersonAddressSimpleData;
 import io.biza.deepthought.shared.persistence.model.person.PersonData;
@@ -124,8 +124,8 @@ public class AccountTests extends TranslatorInitialisation {
     account.branch(branch);
     account.product(product);
     account.bundle(product.bundle().iterator().next());
-    CustomerBankAccountData customerAccount = CustomerBankAccountData.builder().owner(true).build();
-    customerAccount.account(account);
+    CustomerAccountData customerAccount = CustomerAccountData.builder().owner(true).build();
+    customerAccount.bankAccount(account);
     customerAccount.customer(customer);
     account.customerAccounts(Set.of(customerAccount));
 

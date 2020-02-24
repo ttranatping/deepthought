@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
@@ -20,6 +21,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import io.biza.deepthought.shared.persistence.model.bank.transaction.BankAccountTransactionData;
+import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -46,17 +48,11 @@ public class GrantData {
 
   @Column(name = "SUBJECT")
   @NotNull
-  private String subject;
-
-  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-  @ToString.Exclude
-  @NotNull
-  @Size(max = 1) // TODO: Support just 1:1 subject to customer for now but setup Hibernate to do 1:M for the future
-  Set<GrantCustomerData> customers;
-
+  String subject;
+  
   @OneToMany(mappedBy = "grant", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<GrantAccountData> accounts;
+  Set<GrantCustomerAccountData> customerAccounts;
   
   @Column(name = "CREATED", insertable = false, updatable = false)
   @CreationTimestamp
@@ -68,18 +64,4 @@ public class GrantData {
   @Builder.Default
   OffsetDateTime expiry = OffsetDateTime.now().plusDays(30);
   
-  @PrePersist
-  public void prePersist() {
-    if (this.customers() != null) {
-      for(GrantCustomerData grantCustomer : this.customers()) {
-        grantCustomer.grant(this);
-      }
-    }
-    if (this.accounts() != null) {
-      for(GrantAccountData grantAccount : this.accounts()) {
-        grantAccount.grant(this);
-      }
-    }
-  }
-
 }

@@ -27,8 +27,7 @@ import io.biza.deepthought.shared.payloads.dio.enumerations.DioSchemeType;
 import io.biza.deepthought.shared.persistence.model.BrandData;
 import io.biza.deepthought.shared.persistence.model.bank.payments.PayeeData;
 import io.biza.deepthought.shared.persistence.model.bank.payments.ScheduledPaymentData;
-import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerBankAccountData;
-import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerData;
+import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
 import io.biza.deepthought.shared.persistence.model.organisation.OrganisationData;
 import io.biza.deepthought.shared.persistence.model.person.PersonData;
 import lombok.AllArgsConstructor;
@@ -76,7 +75,7 @@ public class CustomerData {
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
-  Set<CustomerBankAccountData> accounts;
+  Set<CustomerAccountData> accounts;
   
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
@@ -85,10 +84,6 @@ public class CustomerData {
   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
   @ToString.Exclude
   Set<PayeeData> payees;
-  
-  @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-  @ToString.Exclude
-  Set<GrantCustomerData> grants;
     
   @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL, optional = true, fetch = FetchType.EAGER)
   PersonData person;

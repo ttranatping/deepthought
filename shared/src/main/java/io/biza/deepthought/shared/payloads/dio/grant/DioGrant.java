@@ -37,18 +37,11 @@ public class DioGrant {
   @NotNull
   public String subject;
 
-  @Schema(description = "Customers in Grant", required = true)
-  @JsonProperty("customers")
+  @Schema(description = "Customer Account Associations contained in Grant", required = true)
+  @JsonProperty("customerAccounts")
   @ToString.Exclude
   @NotNull
-  // TODO: Support more than one customer in a single grant
-  @Size(message = "Only one customer per grant is currently supported", max = 1) 
-  Set<DioGrantCustomer> customers;
-
-  @Schema(description = "Accounts included in Grant", required = true)
-  @JsonProperty("accounts")
-  @NotNull
-  Set<DioGrantAccount> accounts;
+  Set<DioGrantAccount> customerAccounts;
   
   @Schema(description = "Creation time of Grant", accessMode = AccessMode.READ_ONLY, type = "string", format = "date-time")
   OffsetDateTime created;

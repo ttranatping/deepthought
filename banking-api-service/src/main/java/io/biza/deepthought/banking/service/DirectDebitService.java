@@ -15,7 +15,8 @@ import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.shared.persistence.model.bank.payments.DirectDebitData;
-import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
+import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
+import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData;
 import io.biza.deepthought.shared.persistence.repository.BankAccountDirectDebitRepository;
 import io.biza.deepthought.shared.persistence.specification.DirectDebitSpecifications;
 import lombok.extern.slf4j.Slf4j;
@@ -34,9 +35,9 @@ public class DirectDebitService {
   public Page<DirectDebitData> listDirectDebitsByAccount(UUID accountId,
       RequestDirectDebitsByAccounts requestListAccounts) throws NotFoundException {
 
-    GrantAccountData grantAccount = grantService.getGrantAccount(accountId);
+    GrantCustomerAccountData grantAccount = grantService.getGrantAccount(accountId);
     Specification<DirectDebitData> filterSpecifications =
-        Specification.where(DirectDebitSpecifications.accountId(grantAccount.account().id()));
+        Specification.where(DirectDebitSpecifications.accountId(grantAccount.customerAccount().bankAccount().id()));
 
     return directDebitRepository.findAll(filterSpecifications,
         PageRequest.of(requestListAccounts.page() - 1, requestListAccounts.pageSize()));
@@ -47,11 +48,12 @@ public class DirectDebitService {
       RequestDirectDebitsByAccounts requestList) {
     LOG.debug("Retrieving a list of direct debits with input request of {}", requestList);
 
-    List<GrantAccountData> accountsByList = grantService.listGrantAccountByIds(requestList
+    List<GrantCustomerAccountData> accountsByList = grantService.listGrantAccountByIds(requestList
         .accountIds().data().accountIds().stream().map(UUID::fromString).toArray(UUID[]::new));
 
     Page<DirectDebitData> data = directDebitRepository.findAll(
-        DirectDebitSpecifications.accountIds(accountsByList.stream().map(GrantAccountData::account)
+        DirectDebitSpecifications.accountIds(accountsByList.stream().map(GrantCustomerAccountData::customerAccount)
+            .collect(Collectors.toList()).stream().map(CustomerAccountData::bankAccount)
             .collect(Collectors.toList()).stream().map(BankAccountData::id)
             .collect(Collectors.toList()).toArray(UUID[]::new)),
         PageRequest.of(requestList.page() - 1, requestList.pageSize()));
@@ -71,12 +73,13 @@ public class DirectDebitService {
       RequestDirectDebitsByBulk requestList) {
     LOG.debug("Retrieving a list of direct debits with input request of {}", requestList);
 
-    List<GrantAccountData> accountsByList = grantService
+    List<GrantCustomerAccountData> accountsByList = grantService
         .listGrantAccounts(RequestListAccounts.builder().accountStatus(requestList.accountStatus())
             .isOwned(requestList.isOwned()).productCategory(requestList.productCategory()).build());
 
     return directDebitRepository.findAll(
-        DirectDebitSpecifications.accountIds(accountsByList.stream().map(GrantAccountData::account)
+        DirectDebitSpecifications.accountIds(accountsByList.stream().map(GrantCustomerAccountData::customerAccount)
+            .collect(Collectors.toList()).stream().map(CustomerAccountData::bankAccount)
             .collect(Collectors.toList()).stream().map(BankAccountData::id)
             .collect(Collectors.toList()).toArray(UUID[]::new)),
         PageRequest.of(requestList.page() - 1, requestList.pageSize()));

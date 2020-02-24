@@ -21,14 +21,16 @@ import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
 import io.biza.deepthought.shared.payloads.dio.enumerations.DioGrantAccess;
 import io.biza.deepthought.shared.payloads.dio.grant.DioGrant;
 import io.biza.deepthought.shared.payloads.requests.RequestGrant;
+import io.biza.deepthought.shared.payloads.requests.RequestGrantCustomerAccount;
 import io.biza.deepthought.shared.persistence.model.BrandData;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
-import io.biza.deepthought.shared.persistence.model.grant.GrantAccountData;
-import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerData;
+import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
+import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData;
 import io.biza.deepthought.shared.persistence.model.grant.GrantData;
 import io.biza.deepthought.shared.persistence.repository.BankAccountRepository;
 import io.biza.deepthought.shared.persistence.repository.BrandRepository;
+import io.biza.deepthought.shared.persistence.repository.CustomerAccountRepository;
 import io.biza.deepthought.shared.persistence.repository.CustomerRepository;
 import io.biza.deepthought.shared.persistence.repository.GrantRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +51,9 @@ public class GrantAdminApiDelegateImpl implements GrantAdminApiDelegate {
 
   @Autowired
   private BankAccountRepository accountRepository;
+  
+  @Autowired
+  private CustomerAccountRepository customerAccountRepository;
 
   @Autowired
   private Validator validator;
@@ -78,45 +83,29 @@ public class GrantAdminApiDelegateImpl implements GrantAdminApiDelegate {
       throws ValidationListException {
 
     DeepThoughtValidator.validate(validator, createData);
-
+    
     GrantData data = GrantData.builder().subject(createData.subject())
         .expiry(OffsetDateTime.now().plusSeconds(createData.length())).build();
 
-    Optional<CustomerData> customer = customerRepository.findById(createData.customerId());
-
-    Set<GrantCustomerData> grantCustomers = new HashSet<GrantCustomerData>();
-
-    if (customer.isPresent()) {
-      GrantCustomerData grantCustomer =
-          GrantCustomerData.builder().access(DioGrantAccess.ALL).build();
-      grantCustomer.customer(customer.get());
-      grantCustomers.add(grantCustomer);
-    } else {
-      throw ValidationListException.builder()
-          .explanation("Requested Customer Identifier of " + createData.customerId() + " not found")
-          .type(DioExceptionType.INVALID_CUSTOMER).build();
-    }
-    data.customers(grantCustomers);
-
-    Set<GrantAccountData> grantAccounts = new HashSet<GrantAccountData>();
-
-    for (UUID accountId : createData.accountIds()) {
-      Optional<BankAccountData> account = accountRepository.findById(accountId);
-
-      if (account.isPresent()) {
-        GrantAccountData grantAccount =
-            GrantAccountData.builder().access(DioGrantAccess.ALL).build();
-        grantAccount.account(account.get());
-        grantAccounts.add(grantAccount);
+    Set<GrantCustomerAccountData> accountList = new HashSet<GrantCustomerAccountData>();
+    for(RequestGrantCustomerAccount customerAccount : createData.customerAccounts()) {
+      Optional<CustomerAccountData> customer = customerAccountRepository.findById(customerAccount.customerAccountId());
+      
+      if(customer.isPresent()) {
+        GrantCustomerAccountData grantData = GrantCustomerAccountData.builder().permissions(new HashSet<DioGrantAccess>(customerAccount.permissions())).build();
+      grantData.customerAccount(customer.get());
+      grantData.grant(data);
+      
+      accountList.add(grantData);
       } else {
         throw ValidationListException.builder()
-            .explanation("Requested Account Identifier of " + accountId + " not found")
-            .type(DioExceptionType.INVALID_ACCOUNT).build();
+        .explanation("Requested Customer Bank Association identifier of " + customerAccount.customerAccountId() + " not found")
+        .type(DioExceptionType.INVALID_ASSOCIATION).build();
       }
     }
     
-    data.accounts(grantAccounts);
-
+    data.customerAccounts(accountList);
+    
     LOG.debug("Created a new grant with content of {}", data);
     return getGrant(grantRepository.save(data).id());
   }
@@ -145,39 +134,25 @@ public class GrantAdminApiDelegateImpl implements GrantAdminApiDelegate {
 
     if (optionalData.isPresent()) {
       GrantData data = optionalData.get();
-      Optional<CustomerData> customer = customerRepository.findById(updateData.customerId());
-      Set<GrantCustomerData> grantCustomers = new HashSet<GrantCustomerData>();
-      if (customer.isPresent()) {
-        GrantCustomerData grantCustomer =
-            GrantCustomerData.builder().access(DioGrantAccess.ALL).build();
-        grantCustomer.customer(customer.get());
-        grantCustomers.add(grantCustomer);
-      } else {
-        throw ValidationListException.builder()
-            .explanation("Requested Customer Identifier of " + updateData.customerId() + " not found")
-            .type(DioExceptionType.INVALID_CUSTOMER).build();
-      }
+      data.expiry(data.expiry().plusSeconds(updateData.length()));
       
-      data.customers(grantCustomers);
-
-      Set<GrantAccountData> grantAccounts = new HashSet<GrantAccountData>();
-      
-      for (UUID accountId : updateData.accountIds()) {
-        Optional<BankAccountData> account = accountRepository.findById(accountId);
-
-        if (account.isPresent()) {
-          GrantAccountData grantAccount =
-              GrantAccountData.builder().access(DioGrantAccess.ALL).build();
-          grantAccount.account(account.get());
-          grantAccounts.add(grantAccount);
+      Set<GrantCustomerAccountData> accountList = new HashSet<GrantCustomerAccountData>();
+      for(RequestGrantCustomerAccount customerAccount : updateData.customerAccounts()) {
+        Optional<CustomerAccountData> customer = customerAccountRepository.findById(customerAccount.customerAccountId());
+        
+        if(customer.isPresent()) {
+          GrantCustomerAccountData grantData = GrantCustomerAccountData.builder().permissions(new HashSet<DioGrantAccess>(customerAccount.permissions())).build();
+        grantData.customerAccount(customer.get());
+        grantData.grant(data);
+        
+        accountList.add(grantData);
         } else {
           throw ValidationListException.builder()
-              .explanation("Requested Account Identifier of " + accountId + " not found")
-              .type(DioExceptionType.INVALID_ACCOUNT).build();
+          .explanation("Requested Customer Bank Association identifier of " + customerAccount.customerAccountId() + " not found")
+          .type(DioExceptionType.INVALID_ASSOCIATION).build();
         }
       }
       
-      data.accounts(grantAccounts);
       GrantData updatedData = grantRepository.save(data);
       LOG.debug("Updated grant with grant {} containing content of {}", grantId, updatedData);
       return getGrant(updatedData.id());

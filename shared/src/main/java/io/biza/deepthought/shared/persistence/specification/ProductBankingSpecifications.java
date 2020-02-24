@@ -8,7 +8,7 @@ import io.biza.babelfish.cdr.enumerations.BankingProductCategory;
 import io.biza.babelfish.cdr.enumerations.BankingProductEffectiveWithAll;
 import io.biza.deepthought.shared.persistence.model.BrandData_;
 import io.biza.deepthought.shared.persistence.model.product.ProductData_;
-import io.biza.deepthought.shared.persistence.model.product.banking.BankProductData_;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankData_;
 import io.biza.deepthought.shared.persistence.model.BrandData;
 import io.biza.deepthought.shared.persistence.model.product.ProductData;
 import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankData;
@@ -18,7 +18,7 @@ public class ProductBankingSpecifications {
   public static Specification<ProductData> updatedSince(OffsetDateTime updatedSince) {
     return (root, query, cb) -> {
       Join<ProductData, ProductBankData> bankingJoin = root.join(ProductData_.cdrBanking);
-      return cb.greaterThan(bankingJoin.get(BankProductData_.lastUpdated), updatedSince);
+      return cb.greaterThan(bankingJoin.get(ProductBankData_.lastUpdated), updatedSince);
     };
   }
   
@@ -33,7 +33,7 @@ public class ProductBankingSpecifications {
       BankingProductCategory productCategory) {
     return (root, query, cb) -> {
       Join<ProductData, ProductBankData> bankingJoin = root.join(ProductData_.cdrBanking);
-      return cb.equal(bankingJoin.get(BankProductData_.productCategory), productCategory);
+      return cb.equal(bankingJoin.get(ProductBankData_.productCategory), productCategory);
     };
   } 
 
@@ -45,11 +45,11 @@ public class ProductBankingSpecifications {
         Join<ProductData, ProductBankData> bankingJoin = root.join(ProductData_.cdrBanking);
         
         Predicate effectiveFromNow =
-            cb.lessThanOrEqualTo(bankingJoin.get(BankProductData_.effectiveFrom), OffsetDateTime.now());
-        Predicate effectiveFromNull = cb.isNull(bankingJoin.get(BankProductData_.effectiveFrom));
+            cb.lessThanOrEqualTo(bankingJoin.get(ProductBankData_.effectiveFrom), OffsetDateTime.now());
+        Predicate effectiveFromNull = cb.isNull(bankingJoin.get(ProductBankData_.effectiveFrom));
         Predicate effectiveToNow =
-            cb.greaterThanOrEqualTo(bankingJoin.get(BankProductData_.effectiveTo), OffsetDateTime.now());
-        Predicate effectiveToNull = cb.isNull(bankingJoin.get(BankProductData_.effectiveTo));
+            cb.greaterThanOrEqualTo(bankingJoin.get(ProductBankData_.effectiveTo), OffsetDateTime.now());
+        Predicate effectiveToNull = cb.isNull(bankingJoin.get(ProductBankData_.effectiveTo));
         return cb.and(cb.or(effectiveFromNow, effectiveFromNull),
             cb.or(effectiveToNow, effectiveToNull));
       };
@@ -61,11 +61,11 @@ public class ProductBankingSpecifications {
         Join<ProductData, ProductBankData> bankingJoin = root.join(ProductData_.cdrBanking);
 
         Predicate effectiveFromNow =
-            cb.greaterThanOrEqualTo(bankingJoin.get(BankProductData_.effectiveFrom), OffsetDateTime.now());
-        Predicate effectiveFromNull = cb.isNull(bankingJoin.get(BankProductData_.effectiveFrom));
+            cb.greaterThanOrEqualTo(bankingJoin.get(ProductBankData_.effectiveFrom), OffsetDateTime.now());
+        Predicate effectiveFromNull = cb.isNull(bankingJoin.get(ProductBankData_.effectiveFrom));
         Predicate effectiveToNow =
-            cb.greaterThanOrEqualTo(bankingJoin.get(BankProductData_.effectiveTo), OffsetDateTime.now());
-        Predicate effectiveToNull = cb.isNull(bankingJoin.get(BankProductData_.effectiveTo));
+            cb.greaterThanOrEqualTo(bankingJoin.get(ProductBankData_.effectiveTo), OffsetDateTime.now());
+        Predicate effectiveToNull = cb.isNull(bankingJoin.get(ProductBankData_.effectiveTo));
         return cb.and(cb.or(effectiveFromNow, effectiveFromNull),
             cb.or(effectiveToNow, effectiveToNull));
       };
