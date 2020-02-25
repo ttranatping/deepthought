@@ -52,6 +52,127 @@
     }
 }
 
+.RateCreateEdit {
+    display: flex;
+    flex-wrap: wrap;
+
+    &-title {
+        width: 100%;
+    }
+
+    &-base,
+    &-tiers {
+        width: 50%;
+
+        h2 {
+            margin-left: 12px;
+            margin-top: 0;
+
+            p-button {
+                float: right;
+            }
+        }
+    }
+
+    &-tiers {}
+
+    ::ng-deep {
+        .calculationFrequency,
+        .applicationFrequency {
+            width: 50% !important;
+        }
+
+        .minimumValue,
+        .maximumValue {
+            width: 50% !important;
+        }
+
+        .name,
+        .unitOfMeasure {
+            width: 50% !important;
+        }
+    }
+}
+
+.TierFormContainer {
+    background: #f0f2f5;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding-top: 10px;
+    position: relative;
+
+    &:hover {
+        .TierFormContainer-removeBtn {
+            display: block;
+        }
+    }
+
+    &-removeBtn {
+        display: none;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+}
+
+.FeeCreateEdit {
+    display: flex;
+    flex-wrap: wrap;
+
+    &-title {
+        width: 100%;
+    }
+
+    &-base,
+    &-discounts {
+        width: 50%;
+    }
+
+    &-base {
+        ::ng-deep {
+            .balanceRate,
+            .transactionRate,
+            .accruedRate,
+            .accrualFrequency {
+                width: 50% !important;
+            }
+        }
+    }
+
+    &-discounts {
+        p-button {
+            margin-left: 5px;
+        }
+    }
+}
+
+.Discount {
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+
+    &-content {
+        display: flex;
+        flex-wrap: wrap;
+        line-height: 22px;
+        width: calc(100% - 150px);
+    }
+
+    &-detailName {
+        font-weight: bold;
+        width: 40%;
+    }
+
+    &-detailValue {
+        width: 60%;
+    }
+
+    &-actions {
+        width: 150px;
+    }
+}
+
 .Footer {
     background: white;
     bottom: 0;
@@ -60,7 +181,7 @@
     left: 76px;
     padding: 20px;
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 0 0 0 20px;
+    border-radius: 0 0 0 15px;
     display: flex;
 
     &-left {

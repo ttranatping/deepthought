@@ -11,7 +11,7 @@ export class TypeManagementService {
 
     constructor(private typeService: TypeService) {}
 
-    public populateTypes(typeNames: FormFieldType[] & string[], overwrite: boolean = false) {
+    public populateTypes(typeNames: FormFieldType[] & string[], overwrite: boolean = false, onLoad?) {
         // Strip out types we have already retrieved
         if (!overwrite) {
             typeNames = typeNames.filter((typeName) => !this.typeMap[typeName]);
@@ -25,6 +25,10 @@ export class TypeManagementService {
                     this.typeMap[oneType] = returnedTypes[oneType];
                 }
                 this.loading = false;
+
+                if (onLoad && typeof onLoad === 'function') {
+                    onLoad();
+                }
             });
         }
     }

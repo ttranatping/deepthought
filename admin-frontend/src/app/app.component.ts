@@ -4,7 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { environment } from '@env';
 import { filter } from 'rxjs/operators';
 import { TypeManagementService } from '@app/core/services/type-management.service';
-import {BASE_PATH, FormFieldType} from '@bizaoss/deepthought-admin-angular-client';
+import {FormFieldType} from '@bizaoss/deepthought-admin-angular-client';
 import {RuntimeConfigLoaderService} from 'runtime-config-loader';
 
 export const STORAGE_REDIRECT_URI_KEY = 'redirectUri';
@@ -16,6 +16,8 @@ export const STORAGE_REDIRECT_URI_KEY = 'redirectUri';
 export class AppComponent implements OnInit {
 
     public previousUrl: string;
+
+    public isTypesLoaded = false;
 
     constructor(
         private configService: RuntimeConfigLoaderService,
@@ -84,7 +86,7 @@ export class AppComponent implements OnInit {
             FormFieldType.BANKINGPRODUCTRATETIERAPPLICATIONMETHOD,
             FormFieldType.BANKINGPRODUCTDISCOUNTTYPE,
             FormFieldType.BANKINGPRODUCTDISCOUNTELIGIBILITYTYPE,
-        ]);
+        ], false, () => this.isTypesLoaded = true);
     }
 
     saveRedirectPage() {

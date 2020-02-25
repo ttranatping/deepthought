@@ -1,23 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, Validators } from '@angular/forms';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import {
-    BankingProductDiscountType,
-    BankingProductFeeV1,
     BankingProductDiscountV1,
-    BankingProductFeeType,
     DioProductFee,
-    DioSchemeType, FormFieldType,
+    FormFieldType,
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
-import { CdrFormInput, CdrFormSelect } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 import { CdrFormArray, CdrFormGroup } from '@app/shared/forms/crd-form-group.class';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { finalize, map, mergeMap, switchMap } from 'rxjs/operators';
-import { iif, of, Subject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { finalize, map } from 'rxjs/operators';
 import { LayoutService } from '@app/layout/layout.service';
-import { BreadcrumbService } from '@app/layout/breadcrumb.service';
-import { ProductEligibilityCreateEditComponent } from '../../product-view-constraints/product-eligibility-create-edit/product-eligibility-create-edit.component';
 import { ProductFeeDiscountCreateEditComponent } from '../product-fee-discount-create-edit/product-fee-discount-create-edit.component';
 import { ConfirmationService, DialogService } from 'primeng/api';
 import { ProductFeeFormCreatorService } from '@app/core/services/product-forms/product-fee-form-creator.service';

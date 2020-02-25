@@ -11,6 +11,7 @@
             [showErrors]="isSubmitted"
         ></cdr-form-control>
     </div>
+
     <div *ngSwitchCase="CARD_ARTS_INDEX">
         <h2>Card arts</h2>
         <div *ngFor="let cardArtForm of forms.cardArts; let i = index;">
@@ -24,6 +25,7 @@
 
         <p-button label="Add card art" (click)="addCardArt()"></p-button>
     </div>
+
     <div *ngSwitchCase="FEATURES_INDEX">
         <h2>Features</h2>
         <div *ngFor="let featureForm of forms.features; let i = index;">
@@ -37,6 +39,7 @@
 
         <p-button label="Add feature" (click)="addFeature()"></p-button>
     </div>
+
     <div *ngSwitchCase="ELIGIBILITY_CONSTRAINTS_INDEX" class="EligibilityAndConstraints">
 
         <div>
@@ -67,6 +70,152 @@
 
             <p-button label="Add constraint" (click)="addConstraint()"></p-button>
         </div>
+    </div>
+
+    <div *ngSwitchCase="FEES_INDEX">
+        <h2>Fees</h2>
+        <div class="FeeCreateEdit" *ngFor="let feeForm of forms.fees; let i = index; trackBy: trackByFn;">
+            <div class="FeeCreateEdit-title">
+                <h3>Fee {{ i + 1 }}</h3>
+            </div>
+
+            <div class="FeeCreateEdit-base">
+                <h4>Details</h4>
+
+                <cdr-form-control
+                    [className]="'feeForm'"
+                    [control]="feeForm"
+                    [showErrors]="isSubmitted"
+                ></cdr-form-control>
+            </div>
+
+            <div class="FeeCreateEdit-discounts">
+                <h4>Discounts</h4>
+
+                <div class="Discount" *ngFor="let discountForm of feeForm.get('cdrBanking.discounts').controls; let j = index;">
+                    <div class="Discount-content">
+                        <!--TODO-->
+                        <!--<p *ngIf="discountsErrors[j]" style="color: red; width: 100%;">{{ discountsErrors[j] }}</p>-->
+                        <ng-container *ngFor="let detail of discountDetailsOptions;">
+                            <ng-container *ngIf="discountForm.get(detail.key) && discountForm.get(detail.key).value">
+                                <div class="Discount-detailName">{{ detail.label }}</div>
+                                <div class="Discount-detailValue" [ngSwitch]="detail.key">
+                                    <ng-container *ngSwitchCase="'discountType'">{{ getDiscountType(discountForm.get(detail.key).value) }}</ng-container>
+                                    <ng-container *ngSwitchDefault>{{ discountForm.get(detail.key).value }}</ng-container>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+
+                        <ng-container *ngIf="discountForm.get('eligibility') && discountForm.get('eligibility').controls.length">
+                            <h3 style="width: 100%;">Eligibilitys</h3>
+
+                            <ng-container *ngFor="let eligibility of discountForm.get('eligibility').value;">
+                                <div class="Discount-detailName">Type</div>
+                                <div class="Discount-detailValue">{{ getDiscountEligibilityType(eligibility.discountEligibilityType) }}</div>
+
+                                <div class="Discount-detailName">Additional value</div>
+                                <div class="Discount-detailValue">{{ eligibility.additionalValue }}</div>
+
+                                <div class="Discount-detailName">Additional info</div>
+                                <div class="Discount-detailValue">{{ eligibility.additionalInfo }}</div>
+
+                                <div class="Discount-detailName" style="margin-bottom: 20px;">Additional info URI</div>
+                                <div class="Discount-detailValue" style="margin-bottom: 20px;">{{ eligibility.additionalInfoUri }}</div>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                    <div class="Discount-actions">
+                        <p-button label="Edit" (click)="createEditFeeDiscount(feeForm, discountForm)"></p-button>
+                        <p-button label="Remove" (click)="removeFeeDiscount(feeForm, j)"></p-button>
+                    </div>
+                </div>
+
+                <p-button label="Add discount" (click)="createEditFeeDiscount(feeForm)"></p-button>
+            </div>
+        </div>
+        <p-button label="Add fee" (click)="addFee()"></p-button>
+    </div>
+
+    <div *ngSwitchCase="LENDING_RATES_INDEX">
+        <h2>Lending rates</h2>
+
+        <div class="RateCreateEdit" *ngFor="let lendingRateForm of forms.lendingRates; let i = index; trackBy: trackByFn;">
+            <div class="RateCreateEdit-title">
+                <h3>Lending rate #{{ i + 1 }}</h3>
+            </div>
+
+            <div class="RateCreateEdit-base">
+                <h4>Details</h4>
+
+                <cdr-form-control
+                    [className]="'lendingRateForm'"
+                    [control]="lendingRateForm"
+                    [showErrors]="isSubmitted"
+                ></cdr-form-control>
+            </div>
+
+            <div class="RateCreateEdit-tiers">
+                <h4>Tiers</h4>
+
+                <div class="TierFormContainer" *ngFor="let tierForm of lendingRateForm.get('cdrBanking.tiers').controls; let j = index; trackBy: trackByFn;">
+                    <p-button class="TierFormContainer-removeBtn" label="Remove" (click)="removeRateTier(lendingRateForm, j)"></p-button>
+
+                    <cdr-form-control
+                        [className]="'tierForm'"
+                        [control]="tierForm"
+                        [showErrors]="isSubmitted"
+                    ></cdr-form-control>
+                </div>
+
+                <p-button
+                    label="Add tier"
+                    (click)="addRateTier(lendingRateForm)"
+                ></p-button>
+            </div>
+        </div>
+
+        <p-button label="Add lending rate" (click)="addLendingRate()"></p-button>
+    </div>
+
+    <div *ngSwitchCase="DEPOSIT_RATES_INDEX">
+        <h2>Deposit rates</h2>
+
+        <div class="RateCreateEdit" *ngFor="let depositRatesForm of forms.depositRates; let i = index; trackBy: trackByFn;">
+            <div class="RateCreateEdit-title">
+                <h3>Deposit rate #{{ i + 1 }}</h3>
+            </div>
+
+            <div class="RateCreateEdit-base">
+                <h4>Details</h4>
+
+                <cdr-form-control
+                    [className]="'depositRatesForm'"
+                    [control]="depositRatesForm"
+                    [showErrors]="isSubmitted"
+                ></cdr-form-control>
+            </div>
+
+            <div class="RateCreateEdit-tiers">
+                <h4>Tiers</h4>
+
+                <div class="TierFormContainer" *ngFor="let tierForm of depositRatesForm.get('cdrBanking.tiers').controls; let j = index; trackBy: trackByFn;">
+                    <p-button class="TierFormContainer-removeBtn" label="Remove" (click)="removeRateTier(depositRatesForm, j)"></p-button>
+
+                    <cdr-form-control
+                        [className]="'tierForm'"
+                        [control]="tierForm"
+                        [showErrors]="isSubmitted"
+                    ></cdr-form-control>
+                </div>
+
+                <p-button
+                    label="Add tier"
+                    (click)="addRateTier(depositRatesForm)"
+                ></p-button>
+            </div>
+        </div>
+
+        <p-button label="Add deposit rate" (click)="addDepositRates()"></p-button>
     </div>
 </ng-container>
 
