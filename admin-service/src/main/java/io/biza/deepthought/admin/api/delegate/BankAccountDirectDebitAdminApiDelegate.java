@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountDirectDebit;
+import io.biza.deepthought.shared.payloads.dio.banking.DioBankAccountDirectDebit;
 
 public interface BankAccountDirectDebitAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {

@@ -13,14 +13,14 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductCardArtAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductCardArt;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductCardArtData;
-import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.ProductBankingCardArtRepository;
-import io.biza.deepthought.data.repository.ProductRepository;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioSchemeType;
+import io.biza.deepthought.shared.payloads.dio.product.DioProductCardArt;
+import io.biza.deepthought.shared.persistence.model.product.ProductData;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankCardArtData;
+import io.biza.deepthought.shared.persistence.repository.ProductBankCardArtRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -32,7 +32,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
   private DeepThoughtMapper mapper;
 
   @Autowired
-  ProductBankingCardArtRepository cardArtRepository;
+  ProductBankCardArtRepository cardArtRepository;
 
   @Autowired
   ProductRepository productRepository;
@@ -43,7 +43,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
   @Override
   public ResponseEntity<List<DioProductCardArt>> listProductCardArts(UUID brandId, UUID productId) {
 
-    List<BankProductCardArtData> cardArtList =
+    List<ProductBankCardArtData> cardArtList =
         cardArtRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing cardArts and have database result of {}", cardArtList);
     return ResponseEntity.ok(mapper.mapAsList(cardArtList, DioProductCardArt.class));
@@ -51,7 +51,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
 
   @Override
   public ResponseEntity<DioProductCardArt> getProductCardArt(UUID brandId, UUID productId, UUID id) {
-    Optional<BankProductCardArtData> data = cardArtRepository
+    Optional<ProductBankCardArtData> data = cardArtRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
@@ -77,7 +77,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
           .explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    BankProductCardArtData data = mapper.map(createData, BankProductCardArtData.class);
+    ProductBankCardArtData data = mapper.map(createData, ProductBankCardArtData.class);
 
     LOG.debug("Attempting to save: {}", data);
 
@@ -99,7 +99,7 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
 
   @Override
   public ResponseEntity<Void> deleteProductCardArt(UUID brandId, UUID productId, UUID id) {
-    Optional<BankProductCardArtData> optionalData = cardArtRepository
+    Optional<ProductBankCardArtData> optionalData = cardArtRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -117,11 +117,11 @@ public class ProductCardArtAdminApiDelegateImpl implements ProductCardArtAdminAp
 
     DeepThoughtValidator.validate(validator, updateData);
 
-    Optional<BankProductCardArtData> optionalData = cardArtRepository
+    Optional<ProductBankCardArtData> optionalData = cardArtRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      BankProductCardArtData data = optionalData.get();
+      ProductBankCardArtData data = optionalData.get();
       data = cardArtRepository.save(data);
       mapper.map(updateData, data);
       data = cardArtRepository.save(data);

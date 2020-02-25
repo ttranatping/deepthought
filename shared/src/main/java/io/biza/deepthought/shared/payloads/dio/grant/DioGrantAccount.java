@@ -1,0 +1,68 @@
+package io.biza.deepthought.shared.payloads.dio.grant;
+
+import java.time.OffsetDateTime;
+import java.util.Set;
+import java.util.UUID;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ForeignKey;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.biza.deepthought.shared.payloads.dio.banking.DioBankAccount;
+import io.biza.deepthought.shared.payloads.dio.common.DioCustomer;
+import io.biza.deepthought.shared.payloads.dio.common.DioCustomerAccount;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioGrantAccess;
+import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.ToString;
+
+@Valid
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Schema(description = "An access list for a Customer Account within a Grant")
+public class DioGrantAccount {
+
+  @JsonProperty("id")
+  @NotNull
+  @NonNull
+  @Schema(description = "Deep Thought Customer Account Association Identifier",
+      defaultValue = "00000000-0000-0000-0000-000000000000")
+  @Builder.Default
+  public UUID id = new UUID(0, 0);
+  
+  @JsonProperty("customer")
+  @ToString.Exclude
+  public DioCustomer customer;
+  
+  @JsonProperty("bankAccount")
+  @ToString.Exclude
+  public DioBankAccount bankAccount;
+  
+  @JsonProperty("owner")
+  public Boolean owner;
+  
+  @Schema(description = "Granted Permissions")
+  @JsonProperty("permissions")
+  Set<DioGrantAccess> permissions;
+
+}

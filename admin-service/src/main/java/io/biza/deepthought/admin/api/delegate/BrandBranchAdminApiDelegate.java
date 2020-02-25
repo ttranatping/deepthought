@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.context.request.NativeWebRequest;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankBranch;
-import io.biza.deepthought.data.payloads.requests.RequestBranchBrandConnection;
+import io.biza.deepthought.shared.payloads.dio.banking.DioBankBranch;
+import io.biza.deepthought.shared.payloads.requests.RequestBranchBrandConnection;
 
 public interface BrandBranchAdminApiDelegate {
   default Optional<NativeWebRequest> getRequest() {

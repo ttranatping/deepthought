@@ -13,14 +13,14 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.CustomerAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payloads.dio.common.DioCustomer;
-import io.biza.deepthought.data.persistence.model.BrandData;
-import io.biza.deepthought.data.persistence.model.customer.CustomerData;
-import io.biza.deepthought.data.repository.BankAccountRepository;
-import io.biza.deepthought.data.repository.BrandRepository;
-import io.biza.deepthought.data.repository.CustomerRepository;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.common.DioCustomer;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.persistence.model.BrandData;
+import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
+import io.biza.deepthought.shared.persistence.repository.BankAccountRepository;
+import io.biza.deepthought.shared.persistence.repository.BrandRepository;
+import io.biza.deepthought.shared.persistence.repository.CustomerRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated

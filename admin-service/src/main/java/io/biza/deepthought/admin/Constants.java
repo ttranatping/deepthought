@@ -2,7 +2,7 @@ package io.biza.deepthought.admin;
 
 import java.util.Map;
 import io.biza.babelfish.cdr.enumerations.*;
-import io.biza.deepthought.data.enumerations.FormFieldType;
+import io.biza.deepthought.shared.payloads.dio.enumerations.FormFieldType;
 
 public class Constants {
   public static final String OPENID_CONNECT_URL =

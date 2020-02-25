@@ -3,9 +3,7 @@ package io.biza.deepthought.admin.api.controller;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import io.biza.deepthought.admin.api.CustomerAdminApi;
 import io.biza.deepthought.admin.api.CustomerScheduledPaymentAdminApi;
-import io.biza.deepthought.admin.api.delegate.CustomerAdminApiDelegate;
 import io.biza.deepthought.admin.api.delegate.CustomerScheduledPaymentAdminApiDelegate;
 
 @Controller

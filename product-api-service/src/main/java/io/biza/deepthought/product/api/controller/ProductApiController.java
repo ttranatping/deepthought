@@ -3,11 +3,11 @@ package io.biza.deepthought.product.api.controller;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import io.biza.deepthought.product.api.ProductAdminApi;
+import io.biza.deepthought.product.api.ProductApi;
 import io.biza.deepthought.product.api.delegate.ProductApiDelegate;
 
 @Controller
-public class ProductApiController implements ProductAdminApi {
+public class ProductApiController implements ProductApi {
   private final ProductApiDelegate delegate;
 
 

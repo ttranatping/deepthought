@@ -1,7 +1,7 @@
 package io.biza.deepthought.admin.exceptions;
 
 import javax.validation.Valid;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

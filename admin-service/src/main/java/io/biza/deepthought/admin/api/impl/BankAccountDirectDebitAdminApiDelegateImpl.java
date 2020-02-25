@@ -13,15 +13,15 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.BankAccountDirectDebitAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.payloads.dio.banking.DioBankAccountDirectDebit;
-import io.biza.deepthought.data.persistence.model.bank.BankBranchData;
-import io.biza.deepthought.data.persistence.model.bank.account.BankAccountData;
-import io.biza.deepthought.data.persistence.model.bank.payments.BankAccountDirectDebitData;
-import io.biza.deepthought.data.repository.BankAccountDirectDebitRepository;
-import io.biza.deepthought.data.repository.BankAccountRepository;
-import io.biza.deepthought.data.repository.BankBranchRepository;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.banking.DioBankAccountDirectDebit;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.persistence.model.bank.BankBranchData;
+import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData;
+import io.biza.deepthought.shared.persistence.model.bank.payments.DirectDebitData;
+import io.biza.deepthought.shared.persistence.repository.BankAccountDirectDebitRepository;
+import io.biza.deepthought.shared.persistence.repository.BankAccountRepository;
+import io.biza.deepthought.shared.persistence.repository.BankBranchRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Validated
@@ -46,14 +46,14 @@ public class BankAccountDirectDebitAdminApiDelegateImpl implements BankAccountDi
 
   @Override
   public ResponseEntity<List<DioBankAccountDirectDebit>> listDirectDebits(UUID brandId, UUID branchId, UUID accountId) {
-    List<BankAccountDirectDebitData> bankAccountData = bankDirectDebitRepository.findAllByAccountIdAndAccountBranchIdAndAccountBranchBrandId(accountId, branchId, brandId);
+    List<DirectDebitData> bankAccountData = bankDirectDebitRepository.findAllByAccountIdAndAccountBranchIdAndAccountBranchBrandId(accountId, branchId, brandId);
     LOG.debug("Listing all bank directDebits for brand id of {} branch id of {} account id of {} and received {}", brandId, branchId, accountId, bankAccountData);
     return ResponseEntity.ok(mapper.mapAsList(bankAccountData, DioBankAccountDirectDebit.class));
   }
 
   @Override
   public ResponseEntity<DioBankAccountDirectDebit> getDirectDebit(UUID brandId, UUID branchId, UUID accountId, UUID directDebitId) {
-    Optional<BankAccountDirectDebitData> data = bankDirectDebitRepository.findByIdAndAccountIdAndAccountBranchIdAndAccountBranchBrandId(directDebitId, accountId, branchId, brandId);
+    Optional<DirectDebitData> data = bankDirectDebitRepository.findByIdAndAccountIdAndAccountBranchIdAndAccountBranchBrandId(directDebitId, accountId, branchId, brandId);
 
     if (data.isPresent()) {
       LOG.info("Retrieving a single bank directDebit with branch of {} brand id {} and account id of {} and id of {} and content of {}",
@@ -80,7 +80,7 @@ public class BankAccountDirectDebitAdminApiDelegateImpl implements BankAccountDi
       throw ValidationListException.builder().type(DioExceptionType.INVALID_ACCOUNT).explanation(Labels.ERROR_INVALID_ACCOUNT).build();
     }
     
-    BankAccountDirectDebitData requestDirectDebit = mapper.map(createRequest, BankAccountDirectDebitData.class);
+    DirectDebitData requestDirectDebit = mapper.map(createRequest, DirectDebitData.class);
     requestDirectDebit.account(bankAccount.get());
     
     if(createRequest.authorisedEntity() != null) {
@@ -92,7 +92,7 @@ public class BankAccountDirectDebitAdminApiDelegateImpl implements BankAccountDi
       requestDirectDebit.authorisedEntity().branch(destinationBranch.get());
     }
     
-    BankAccountDirectDebitData directDebit = bankDirectDebitRepository.save(requestDirectDebit);
+    DirectDebitData directDebit = bankDirectDebitRepository.save(requestDirectDebit);
     
     LOG.debug("Creating a new bank account for brand {} branch {} account {} with content of {}", brandId, branchId, accountId, directDebit);
     return getDirectDebit(brandId, branchId, accountId, directDebit.id());
@@ -100,7 +100,7 @@ public class BankAccountDirectDebitAdminApiDelegateImpl implements BankAccountDi
 
   @Override
   public ResponseEntity<Void> deleteDirectDebit(UUID brandId, UUID branchId, UUID accountId, UUID directDebitId) {
-    Optional<BankAccountDirectDebitData> optionalData = bankDirectDebitRepository.findByIdAndAccountIdAndAccountBranchIdAndAccountBranchBrandId(directDebitId, accountId, branchId, brandId);
+    Optional<DirectDebitData> optionalData = bankDirectDebitRepository.findByIdAndAccountIdAndAccountBranchIdAndAccountBranchBrandId(directDebitId, accountId, branchId, brandId);
 
     if (optionalData.isPresent()) {
       LOG.info("Deleting directDebit with id of {} brand of {} branch of {} account of {}", directDebitId, brandId, branchId, accountId);
@@ -120,10 +120,10 @@ public class BankAccountDirectDebitAdminApiDelegateImpl implements BankAccountDi
 
     DeepThoughtValidator.validate(validator, createRequest);
     
-    Optional<BankAccountDirectDebitData> optionalData = bankDirectDebitRepository.findByIdAndAccountIdAndAccountBranchIdAndAccountBranchBrandId(directDebitId, accountId, branchId, brandId);
+    Optional<DirectDebitData> optionalData = bankDirectDebitRepository.findByIdAndAccountIdAndAccountBranchIdAndAccountBranchBrandId(directDebitId, accountId, branchId, brandId);
 
     if (optionalData.isPresent()) {
-      BankAccountDirectDebitData data = optionalData.get();
+      DirectDebitData data = optionalData.get();
       mapper.map(createRequest, data);
       bankDirectDebitRepository.save(data);
       

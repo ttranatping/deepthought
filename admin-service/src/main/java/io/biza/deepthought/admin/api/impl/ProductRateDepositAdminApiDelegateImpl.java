@@ -13,16 +13,16 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductRateDepositAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductRateDeposit;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductRateDepositTierData;
-import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.ProductBankingRateDepositRepository;
-import io.biza.deepthought.data.repository.ProductBankingRateDepositTierRepository;
-import io.biza.deepthought.data.repository.ProductRepository;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioSchemeType;
+import io.biza.deepthought.shared.payloads.dio.product.DioProductRateDeposit;
+import io.biza.deepthought.shared.persistence.model.product.ProductData;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankRateDepositData;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankRateDepositTierData;
+import io.biza.deepthought.shared.persistence.repository.ProductBankRateDepositRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductBankRateDepositTierRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -34,10 +34,10 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
   private DeepThoughtMapper mapper;
 
   @Autowired
-  ProductBankingRateDepositRepository rateRepository;
+  ProductBankRateDepositRepository rateRepository;
 
   @Autowired
-  ProductBankingRateDepositTierRepository tierRepository;
+  ProductBankRateDepositTierRepository tierRepository;
 
   @Autowired
   ProductRepository productRepository;
@@ -48,7 +48,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
   @Override
   public ResponseEntity<List<DioProductRateDeposit>> listProductRateDeposits(UUID brandId, UUID productId) {
 
-    List<BankProductRateDepositData> feeList =
+    List<ProductBankRateDepositData> feeList =
         rateRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing fees and have database result of {}", feeList);
     return ResponseEntity.ok(mapper.mapAsList(feeList, DioProductRateDeposit.class));
@@ -56,7 +56,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
 
   @Override
   public ResponseEntity<DioProductRateDeposit> getProductRateDeposit(UUID brandId, UUID productId, UUID id) {
-    Optional<BankProductRateDepositData> data = rateRepository
+    Optional<ProductBankRateDepositData> data = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
@@ -82,10 +82,10 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
           .explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    BankProductRateDepositData data = mapper.map(createData, BankProductRateDepositData.class);
+    ProductBankRateDepositData data = mapper.map(createData, ProductBankRateDepositData.class);
 
     if (data.tiers() != null) {
-      for(BankProductRateDepositTierData tier : data.tiers()) {
+      for(ProductBankRateDepositTierData tier : data.tiers()) {
         if (tier.applicabilityConditions() != null) {
           tier.applicabilityConditions().rateTier(tier);
         }
@@ -114,7 +114,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
 
   @Override
   public ResponseEntity<Void> deleteProductRateDeposit(UUID brandId, UUID productId, UUID id) {
-    Optional<BankProductRateDepositData> optionalData = rateRepository
+    Optional<ProductBankRateDepositData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -132,14 +132,14 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
 
     DeepThoughtValidator.validate(validator, updateData);
 
-    Optional<BankProductRateDepositData> optionalData = rateRepository
+    Optional<ProductBankRateDepositData> optionalData = rateRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      BankProductRateDepositData data = optionalData.get();
+      ProductBankRateDepositData data = optionalData.get();
       
       if (data.tiers() != null) {
-        for(BankProductRateDepositTierData tier : data.tiers()) {
+        for(ProductBankRateDepositTierData tier : data.tiers()) {
           data.tiers().remove(tier);
           tierRepository.deleteById(tier.id());
         }
@@ -152,7 +152,7 @@ public class ProductRateDepositAdminApiDelegateImpl implements ProductRateDeposi
       mapper.map(updateData, data);
       
       if (data.tiers() != null) {
-        for(BankProductRateDepositTierData tier : data.tiers()) {
+        for(ProductBankRateDepositTierData tier : data.tiers()) {
           if (tier.applicabilityConditions() != null) {
             tier.applicabilityConditions().rateTier(tier);
           }

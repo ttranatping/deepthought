@@ -11,9 +11,9 @@ import io.biza.deepthought.admin.Constants;
 import io.biza.deepthought.admin.api.delegate.TypeApiDelegate;
 import io.biza.deepthought.admin.support.LabelValueDerivedInterface;
 import io.biza.deepthought.admin.support.LabelValueGeneratorOpenApiDescription;
-import io.biza.deepthought.data.enumerations.FormFieldType;
-import io.biza.deepthought.data.payloads.FormLabelValue;
-import io.biza.deepthought.data.payloads.ResponseGetTypes;
+import io.biza.deepthought.shared.payloads.FormLabelValue;
+import io.biza.deepthought.shared.payloads.ResponseGetTypes;
+import io.biza.deepthought.shared.payloads.dio.enumerations.FormFieldType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.extern.slf4j.Slf4j;
 

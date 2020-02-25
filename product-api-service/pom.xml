@@ -103,16 +103,9 @@
 
         <dependency>
             <groupId>io.biza</groupId>
-            <artifactId>deepthought-common</artifactId>
+            <artifactId>deepthought-shared</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>io.biza</groupId>
-            <artifactId>deepthought-data</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

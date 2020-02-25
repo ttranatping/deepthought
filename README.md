@@ -17,9 +17,17 @@ Deep Thought is currently developed and maintained by [Biza.io](https://www.biza
   - Ansible configuration and Packer rules for DevOps enabled deployment
   - Self Contained Amazon AMI for rapid deployment
   - OpenAPI 3 Support for all components
+  - Support for all [Banking API Endpoints](https://consumerdatastandardsaustralia.github.io/standards/#consumer-data-standards-banking-apis)
+  - Support for [Customer API Endpoints](https://consumerdatastandardsaustralia.github.io/standards/#get-customer)
+  - Grant/Consent association support
+  - Pairwise Identifier support for Customer, Account, Transaction, Direct Debit, Payments identifiers
+  - Postman Collections as follows:
+    - [Consumer Data Standards](https://documenter.getpostman.com/view/8730833/SzKWswP4?version=latest)
+    - [Deep Thought Administration](https://documenter.getpostman.com/view/8730833/SzKWswP6?version=latest)
 
 We are currently working on adding the following:
-   - Support for all Authenticated Endpoints
+   - Support for [Discovery Endpoints](https://consumerdatastandardsaustralia.github.io/standards/#get-status)
+   - Support for [Admin APIs](https://consumerdatastandardsaustralia.github.io/standards/#admin-apis)
    - Integration with the CDR Consent flow
 
 ## Screenshots

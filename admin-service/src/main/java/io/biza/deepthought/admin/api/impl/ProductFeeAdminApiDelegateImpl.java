@@ -13,18 +13,18 @@ import io.biza.deepthought.admin.Labels;
 import io.biza.deepthought.admin.api.delegate.ProductFeeAdminApiDelegate;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
 import io.biza.deepthought.admin.support.DeepThoughtValidator;
-import io.biza.deepthought.data.component.DeepThoughtMapper;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.enumerations.DioSchemeType;
-import io.biza.deepthought.data.payloads.dio.product.DioProductFee;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountData;
-import io.biza.deepthought.data.persistence.model.bank.product.BankProductFeeDiscountEligibilityData;
-import io.biza.deepthought.data.persistence.model.product.ProductData;
-import io.biza.deepthought.data.repository.ProductBankingFeeDiscountEligibilityRepository;
-import io.biza.deepthought.data.repository.ProductBankingFeeDiscountRepository;
-import io.biza.deepthought.data.repository.ProductBankingFeeRepository;
-import io.biza.deepthought.data.repository.ProductRepository;
+import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioSchemeType;
+import io.biza.deepthought.shared.payloads.dio.product.DioProductFee;
+import io.biza.deepthought.shared.persistence.model.product.ProductData;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankFeeData;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankFeeDiscountData;
+import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankFeeDiscountEligibilityData;
+import io.biza.deepthought.shared.persistence.repository.ProductBankFeeDiscountEligibilityRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductBankFeeDiscountRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductBankFeeRepository;
+import io.biza.deepthought.shared.persistence.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -36,13 +36,13 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
   private DeepThoughtMapper mapper;
 
   @Autowired
-  ProductBankingFeeRepository feeRepository;
+  ProductBankFeeRepository feeRepository;
 
   @Autowired
-  ProductBankingFeeDiscountRepository discountRepository;
+  ProductBankFeeDiscountRepository discountRepository;
   
   @Autowired
-  ProductBankingFeeDiscountEligibilityRepository eligibilityRepository;
+  ProductBankFeeDiscountEligibilityRepository eligibilityRepository;
 
 
   @Autowired
@@ -54,7 +54,7 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
   @Override
   public ResponseEntity<List<DioProductFee>> listProductFees(UUID brandId, UUID productId) {
 
-    List<BankProductFeeData> feeList =
+    List<ProductBankFeeData> feeList =
         feeRepository.findAllByProduct_Product_Brand_IdAndProduct_Product_Id(brandId, productId);
     LOG.debug("Listing fees and have database result of {}", feeList);
     return ResponseEntity.ok(mapper.mapAsList(feeList, DioProductFee.class));
@@ -62,7 +62,7 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
 
   @Override
   public ResponseEntity<DioProductFee> getProductFee(UUID brandId, UUID productId, UUID id) {
-    Optional<BankProductFeeData> data = feeRepository
+    Optional<ProductBankFeeData> data = feeRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (data.isPresent()) {
@@ -88,12 +88,12 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
           .explanation(Labels.ERROR_INVALID_BRAND_AND_PRODUCT).build();
     }
 
-    BankProductFeeData data = mapper.map(createData, BankProductFeeData.class);
+    ProductBankFeeData data = mapper.map(createData, ProductBankFeeData.class);
 
     if (data.discounts() != null) {
-      for(BankProductFeeDiscountData discount : data.discounts()) {
+      for(ProductBankFeeDiscountData discount : data.discounts()) {
         if (discount.eligibility() != null) {
-          for(BankProductFeeDiscountEligibilityData eligibility : discount.eligibility()) {
+          for(ProductBankFeeDiscountEligibilityData eligibility : discount.eligibility()) {
             eligibility.discount(discount);
           }
         }
@@ -121,7 +121,7 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
 
   @Override
   public ResponseEntity<Void> deleteProductFee(UUID brandId, UUID productId, UUID id) {
-    Optional<BankProductFeeData> optionalData = feeRepository
+    Optional<ProductBankFeeData> optionalData = feeRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
@@ -139,16 +139,16 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
 
     DeepThoughtValidator.validate(validator, updateData);
 
-    Optional<BankProductFeeData> optionalData = feeRepository
+    Optional<ProductBankFeeData> optionalData = feeRepository
         .findByIdAndProduct_Product_Brand_IdAndProduct_Product_Id(id, brandId, productId);
 
     if (optionalData.isPresent()) {
-      BankProductFeeData data = optionalData.get();
+      ProductBankFeeData data = optionalData.get();
       
       if (data.discounts() != null) {
-        for(BankProductFeeDiscountData discount : data.discounts()) {
+        for(ProductBankFeeDiscountData discount : data.discounts()) {
           if (discount.eligibility() != null) {
-            for(BankProductFeeDiscountEligibilityData eligibility : discount.eligibility()) {
+            for(ProductBankFeeDiscountEligibilityData eligibility : discount.eligibility()) {
               discount.eligibility().remove(eligibility);
               eligibilityRepository.deleteById(eligibility.id());
             }
@@ -165,9 +165,9 @@ public class ProductFeeAdminApiDelegateImpl implements ProductFeeAdminApiDelegat
       mapper.map(updateData, data);
       
       if (data.discounts() != null) {
-        for(BankProductFeeDiscountData discount : data.discounts()) {
+        for(ProductBankFeeDiscountData discount : data.discounts()) {
           if (discount.eligibility() != null) {
-            for(BankProductFeeDiscountEligibilityData eligibility : discount.eligibility()) {
+            for(ProductBankFeeDiscountEligibilityData eligibility : discount.eligibility()) {
               eligibility.discount(discount);
             }
           }

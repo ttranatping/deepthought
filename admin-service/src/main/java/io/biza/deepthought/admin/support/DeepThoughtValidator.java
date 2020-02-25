@@ -7,9 +7,9 @@ import javax.validation.Validator;
 import org.springframework.util.StringUtils;
 import io.biza.babelfish.cdr.support.AssertTrueBabelfish;
 import io.biza.deepthought.admin.exceptions.ValidationListException;
-import io.biza.deepthought.data.enumerations.DioExceptionType;
-import io.biza.deepthought.data.enumerations.DioValidationErrorType;
-import io.biza.deepthought.data.payloads.ValidationError;
+import io.biza.deepthought.shared.payloads.ValidationError;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.payloads.dio.enumerations.DioValidationErrorType;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
