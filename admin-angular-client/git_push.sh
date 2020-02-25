@@ -1,4 +1,17 @@
 #!/bin/sh
+#*******************************************************************************
+# Copyright (C) 2020 Biza Pty Ltd
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#*******************************************************************************
 # ref: https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/
 #
 # Usage example: /bin/sh ./git_push.sh wing328 swagger-petstore-perl "minor update"
