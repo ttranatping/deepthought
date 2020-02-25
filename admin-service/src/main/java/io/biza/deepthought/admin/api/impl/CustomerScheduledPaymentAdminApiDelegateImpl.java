@@ -16,8 +16,10 @@ import io.biza.deepthought.admin.support.DeepThoughtValidator;
 import io.biza.deepthought.shared.component.mapper.DeepThoughtMapper;
 import io.biza.deepthought.shared.payloads.dio.banking.DioCustomerScheduledPayment;
 import io.biza.deepthought.shared.payloads.dio.enumerations.DioExceptionType;
+import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.shared.persistence.model.bank.payments.ScheduledPaymentData;
 import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
+import io.biza.deepthought.shared.persistence.repository.BankAccountRepository;
 import io.biza.deepthought.shared.persistence.repository.CustomerRepository;
 import io.biza.deepthought.shared.persistence.repository.ScheduledPaymentRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +37,9 @@ public class CustomerScheduledPaymentAdminApiDelegateImpl implements CustomerSch
   
   @Autowired
   private CustomerRepository customerRepository;
+  
+  @Autowired
+  private BankAccountRepository accountRepository;
   
   @Autowired
   private Validator validator;
@@ -75,8 +80,15 @@ public class CustomerScheduledPaymentAdminApiDelegateImpl implements CustomerSch
       throw ValidationListException.builder().type(DioExceptionType.INVALID_CUSTOMER).explanation(Labels.ERROR_INVALID_CUSTOMER).build();
     }
     
+    Optional<BankAccountData> bankAccount = accountRepository.findByIdAndCustomerAccountsCustomerId(UUID.fromString(createRequest.cdrBanking().from().accountId()), customer.get().id());
+    if (!bankAccount.isPresent()) {
+      LOG.warn("Attempted to create a scheduled payment for a bank account which could not be identified with account id {} and customer id of {}",  UUID.fromString(createRequest.cdrBanking().from().accountId()), customer.get().id());
+      throw ValidationListException.builder().type(DioExceptionType.INVALID_ACCOUNT).explanation(Labels.ERROR_INVALID_ACCOUNT).build();
+    }
+    
     ScheduledPaymentData requestScheduledPayment = mapper.map(createRequest, ScheduledPaymentData.class);
     requestScheduledPayment.customer(customer.get());
+    requestScheduledPayment.from(bankAccount.get());
 
     LOG.debug("Creating a new bank scheduled payment for brand {} customer {} with content of {}", brandId, customerId, requestScheduledPayment);
     ScheduledPaymentData scheduledPayment = bankScheduledPaymentRepository.save(requestScheduledPayment);

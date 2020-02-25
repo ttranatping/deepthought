@@ -32,7 +32,7 @@ public class BankingAccountTransactionApiDelegateImpl
   TransactionService transactionService;
   
   @Autowired
-  GrantService accountService;
+  GrantService grantService;
   
   @Autowired
   private DeepThoughtMapper mapper;
@@ -51,7 +51,7 @@ public class BankingAccountTransactionApiDelegateImpl
     transactionList.forEach(transaction -> {
       transaction.accountId(accountId.toString());
       try {
-        transaction.transactionId(accountService.getOrCreateResourceIdByAccountIdAndObjectId(accountId, UUID.fromString(transaction.transactionId())).toString());
+        transaction.transactionId(grantService.getOrCreateResourceIdByAccountIdAndObjectId(accountId, UUID.fromString(transaction.transactionId())).toString());
       } catch (NotFoundException e) {
         LOG.error("Received not found error despite having already used this accountId, bueller?!");
       }

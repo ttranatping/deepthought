@@ -14,8 +14,10 @@ import io.biza.deepthought.shared.exception.InvalidSubjectException;
 import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
 import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData;
+import io.biza.deepthought.shared.persistence.model.grant.GrantData;
 import io.biza.deepthought.shared.persistence.model.grant.GrantResourceData;
 import io.biza.deepthought.shared.persistence.repository.GrantCustomerAccountRepository;
+import io.biza.deepthought.shared.persistence.repository.GrantRepository;
 import io.biza.deepthought.shared.persistence.repository.GrantResourceRepository;
 import io.biza.deepthought.shared.persistence.specification.GrantCustomerAccountSpecifications;
 import io.biza.deepthought.shared.util.UserPrincipalUtil;
@@ -26,10 +28,14 @@ import lombok.extern.slf4j.Slf4j;
 public class GrantService {
 
   @Autowired
-  private GrantCustomerAccountRepository accountRepository;
+  private GrantCustomerAccountRepository customerAccountRepository;
 
   @Autowired
   private GrantResourceRepository resourceRepository;
+
+  @Autowired
+  private GrantRepository grantRepository;
+
 
   public UUID getObjectIdByResourceId(UUID id) throws NotFoundException, InvalidSubjectException {
     Optional<GrantResourceData> resourceData = resourceRepository.findById(id);
@@ -54,6 +60,25 @@ public class GrantService {
     }
   }
 
+  public UUID getOrCreateResourceIdByGrantIdAndObjectId(UUID grantId, UUID objectId)
+      throws NotFoundException {
+    Optional<GrantResourceData> resourceData =
+        resourceRepository.findByGrantIdAndObjectId(grantId, objectId);
+
+    if (resourceData.isPresent()) {
+      return resourceData.get().id();
+    } else {
+      Optional<GrantData> grant = grantRepository.findById(grantId);
+      if (grant.isPresent()) {
+        GrantResourceData grantResource = resourceRepository
+            .save(GrantResourceData.builder().objectId(objectId).grant(grant.get()).build());
+        return grantResource.id();
+      } else {
+        throw new NotFoundException("Requested Grant not found");
+      }
+    }
+  }
+
   public UUID getOrCreateResourceIdByAccountIdAndObjectId(UUID accountId, UUID objectId)
       throws NotFoundException {
     GrantCustomerAccountData account = getGrantAccount(accountId);
@@ -70,14 +95,15 @@ public class GrantService {
   }
 
   public List<GrantCustomerAccountData> listGrantAccountByIds(UUID... accountIds) {
-    return accountRepository.findAll(GrantCustomerAccountSpecifications.accountIds(accountIds)
-        .and(GrantCustomerAccountSpecifications.expiryBefore(OffsetDateTime.now()))
-        .and(GrantCustomerAccountSpecifications.subject(UserPrincipalUtil.getSubject())));
+    return customerAccountRepository
+        .findAll(GrantCustomerAccountSpecifications.accountIds(accountIds)
+            .and(GrantCustomerAccountSpecifications.expiryBefore(OffsetDateTime.now()))
+            .and(GrantCustomerAccountSpecifications.subject(UserPrincipalUtil.getSubject())));
   }
 
-  public Page<GrantCustomerAccountData> listPaginatedGrantAccountByIds(Integer page, Integer pageSize,
-      UUID... accountIds) {
-    return accountRepository.findAll(
+  public Page<GrantCustomerAccountData> listPaginatedGrantAccountByIds(Integer page,
+      Integer pageSize, UUID... accountIds) {
+    return customerAccountRepository.findAll(
         GrantCustomerAccountSpecifications.accountIds(accountIds)
             .and(GrantCustomerAccountSpecifications.expiryBefore(OffsetDateTime.now()))
             .and(GrantCustomerAccountSpecifications.subject(UserPrincipalUtil.getSubject())),
@@ -87,11 +113,13 @@ public class GrantService {
   public GrantCustomerAccountData getGrantAccount(UUID accountId) throws NotFoundException {
     LOG.debug("Retrieving account with grant identifier of {}", accountId);
 
-    Specification<GrantCustomerAccountData> filterSpecification = GrantCustomerAccountSpecifications
-        .accountId(accountId).and(GrantCustomerAccountSpecifications.expiryBefore(OffsetDateTime.now()))
-        .and(GrantCustomerAccountSpecifications.subject(UserPrincipalUtil.getSubject()));
+    Specification<GrantCustomerAccountData> filterSpecification =
+        GrantCustomerAccountSpecifications.accountId(accountId)
+            .and(GrantCustomerAccountSpecifications.expiryBefore(OffsetDateTime.now()))
+            .and(GrantCustomerAccountSpecifications.subject(UserPrincipalUtil.getSubject()));
 
-    List<GrantCustomerAccountData> grantList = accountRepository.findAll(filterSpecification);
+    List<GrantCustomerAccountData> grantList =
+        customerAccountRepository.findAll(filterSpecification);
 
     // Despite being a list the accountId filter should be exclusive so we just pull the first
     // record of the first account returned (there should only be zero or one tuple)
@@ -137,15 +165,16 @@ public class GrantService {
     return filterSpecifications;
   }
 
-  public Page<GrantCustomerAccountData> listGrantAccountsPaginated(RequestListAccounts requestList) {
+  public Page<GrantCustomerAccountData> listGrantAccountsPaginated(
+      RequestListAccounts requestList) {
     LOG.debug("Retrieving a paginated list of accounts with input request of {}", requestList);
 
-    return accountRepository.findAll(generateListAccountsSpecification(requestList),
+    return customerAccountRepository.findAll(generateListAccountsSpecification(requestList),
         PageRequest.of(requestList.page() - 1, requestList.pageSize()));
   }
 
   public List<GrantCustomerAccountData> listGrantAccounts(RequestListAccounts requestList) {
     LOG.debug("Retrieving a list of accounts with input request of {}", requestList);
-    return accountRepository.findAll(generateListAccountsSpecification(requestList));
+    return customerAccountRepository.findAll(generateListAccountsSpecification(requestList));
   }
 }

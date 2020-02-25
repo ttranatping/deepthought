@@ -13,4 +13,5 @@ public interface BankAccountRepository extends JpaRepository<BankAccountData, UU
   public List<BankAccountData> findAllByBranchIdAndBranchBrandId(UUID branchId, UUID brandId);
   public Optional<BankAccountData> findByIdAndBranchIdAndBranchBrandId(UUID id, UUID branchId, UUID brandId);
   public Optional<BankAccountData> findByIdAndBranchBrandId(UUID id, UUID brandId);
+  public Optional<BankAccountData> findByIdAndCustomerAccountsCustomerId(UUID id, UUID customerId);
 }

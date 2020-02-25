@@ -17,6 +17,7 @@ import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.shared.persistence.model.bank.payments.PayeeData;
+import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
 import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
 import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData;
 import io.biza.deepthought.shared.persistence.repository.PayeeRepository;
@@ -40,8 +41,8 @@ public class PayeeService {
     Specification<PayeeData> payeeSpecification = PayeeSpecifications.customerId(
         grantService.listGrantAccounts(RequestListAccounts.builder().isOwned(true).build()).stream()
             .map(GrantCustomerAccountData::customerAccount).collect(Collectors.toList()).stream()
-            .map(CustomerAccountData::bankAccount).collect(Collectors.toList()).stream()
-            .map(BankAccountData::id).collect(Collectors.toList()).toArray(UUID[]::new));
+            .map(CustomerAccountData::customer).collect(Collectors.toList()).stream()
+            .map(CustomerData::id).collect(Collectors.toList()).toArray(UUID[]::new));
 
     if (List.of(BankingPayeeTypeWithAll.DOMESTIC, BankingPayeeTypeWithAll.BILLER,
         BankingPayeeTypeWithAll.INTERNATIONAL).contains(requestList.payeeType())) {

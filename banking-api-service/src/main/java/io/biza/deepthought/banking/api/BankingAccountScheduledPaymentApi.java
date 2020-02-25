@@ -39,7 +39,7 @@ import org.springframework.web.bind.annotation.RequestParam;
     @Tag(name = Constants.TAG_BANKING_NAME, description = Constants.TAG_BANKING_DESCRIPTION),
     @Tag(name = Constants.TAG_SCHEDULED_PAYMENTS_NAME,
         description = Constants.TAG_SCHEDULED_PAYMENTS_DESCRIPTION)})
-@RequestMapping("/v1/banking/accounts")
+@RequestMapping("/v1/banking")
 public interface BankingAccountScheduledPaymentApi {
 
   default BankingAccountScheduledPaymentApiDelegate getDelegate() {
@@ -82,7 +82,7 @@ public interface BankingAccountScheduledPaymentApi {
               description = "An RFC4122 UUID used as a correlation id.", required = true)},
           description = Constants.RESPONSE_INPUT_VALIDATION_ERROR,
           content = @Content(schema = @Schema(implementation = ResponseErrorListV1.class)))})
-  @GetMapping(value = "/{accountId}/payments/scheduled",
+  @GetMapping(value = "/accounts/{accountId}/payments/scheduled",
       produces = {MediaType.APPLICATION_JSON_VALUE})
   @PreAuthorize(Constants.OAUTH2_SCOPE_BANK_REGULAR_PAYMENTS_READ)
   default ResponseEntity<ResponseBankingScheduledPaymentsListV1> listScheduledPayments(

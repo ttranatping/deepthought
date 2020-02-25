@@ -36,6 +36,7 @@ public class ScheduledPaymentService {
       RequestScheduledPaymentsByAccounts requestScheduledPayments) throws NotFoundException {
 
     GrantCustomerAccountData grantAccount = grantService.getGrantAccount(accountId);
+    LOG.debug("Received grant response for account lookup of {}", grantAccount);
     Specification<ScheduledPaymentData> filterSpecifications =
         Specification.where(ScheduledPaymentSpecifications.accountId(grantAccount.customerAccount().bankAccount().id()));
 

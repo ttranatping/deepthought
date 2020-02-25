@@ -1,5 +1,10 @@
 package io.biza.deepthought.shared.persistence.specification;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
@@ -16,11 +21,12 @@ public class PayeeSpecifications {
   public static Specification<PayeeData> customerId(UUID... customerId) {
     return (root, query, cb) -> {
       Join<PayeeData, CustomerData> customerJoin = root.join(PayeeData_.customer);
-      Predicate[] customerFilter = new Predicate[customerId.length];
-      for(int i = 0; i < customerId.length; i++) {
-        customerFilter[i] = cb.equal(customerJoin.get(CustomerData_.id), customerId[i]);
-      }
-      return cb.or(customerFilter);
+      Set<UUID> customerIds = new LinkedHashSet<UUID>(Arrays.asList(customerId));
+      List<Predicate> customerFilter = new ArrayList<Predicate>();
+      customerIds.stream().forEach(id -> {
+        customerFilter.add(cb.equal(customerJoin.get(CustomerData_.id), id));
+      });      
+      return cb.or(customerFilter.toArray(new Predicate[customerFilter.size()]));
     };
   }
   
