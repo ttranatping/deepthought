@@ -41,8 +41,18 @@ Constraints & Eligibility List | Additional Information Validation | Card Art Li
 
 ## Quick Start
 
-Deep Thought is split into a number of individual components which interact with each other. The easiest way to get started is to use the [Amazon AMI](#amazon-ami) we make available with the latest release which includes a preconfigured Keycloak authentication server and MySQL database.
+Deep Thought is split into a number of individual components which interact with each other. The easiest way to get started is to use the [Amazon AMI](#amazon-ami) we make available with the latest release which includes a preconfigured Keycloak authentication server and MySQL database. Once up and running you will need to initialise some test data, using the [Deep Thought Administration Postman Collection](https://documenter.getpostman.com/view/8730833/SzKWswP6?version=latest) the initial setup with a Branch, Customer, Savings Product and Savings account is the following functions in the following order:
+  1) Bind Subject
+  2) Create Brand
+  3) Create Bank Branch
+  4) Associated Branch to Brand
+  5) Create Product
+  6) Create Customer (Person)
+  7) Create Bank Account (Savings)
+  8) Create Customer Account Connection
+  9) Create Grant
 
+Once this is completed you can use the `subject` defined during `Bind Subject` to access the appropriate services (on port 8081) as defined in the [Consumer Data Standards Postman Collection](https://documenter.getpostman.com/view/8730833/SzKWswP4?version=latest).
 
 ## Table of Contents
 
