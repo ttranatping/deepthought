@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Validators } from '@angular/forms';
 import {
     CdrFormCheckbox,
     CdrFormDate,
@@ -38,7 +37,7 @@ export class ProductBasicDetailsFormService implements IProductFormCreator<DioPr
                 effectiveFrom,
                 effectiveTo,
                 applicationUri,
-                tailored,
+                tailored = false,
                 additionalInformation: {
                     overviewUri,
                     termsUri,
@@ -54,12 +53,12 @@ export class ProductBasicDetailsFormService implements IProductFormCreator<DioPr
 
         const form = new CdrFormGroup({
             id:             new CdrFormInput(id, 'ID'),
-            name:           new CdrFormInput(name, 'Name', [Validators.required]),
-            description:    new CdrFormTextarea(description, 'Description', [Validators.required]),
-            schemeType:     new CdrFormSelect(schemeType, 'Scheme type', [Validators.required], this.schemeTypeOptions),
+            name:           new CdrFormInput(name, 'Name'),
+            description:    new CdrFormTextarea(description, 'Description'),
+            schemeType:     new CdrFormSelect(schemeType, 'Scheme type', [], this.schemeTypeOptions),
 
             cdrBanking: new CdrFormGroup({
-                productCategory:    new CdrFormSelect(productCategory, 'Product category', [Validators.required], this.productCategoryOptions),
+                productCategory:    new CdrFormSelect(productCategory, 'Product category', [], this.productCategoryOptions),
                 effectiveFrom:      new CdrFormDate(_effectiveFrom, 'Effective from'),
                 effectiveTo:        new CdrFormDate(_effectiveTo, 'Effective to'),
                 applicationUri:     new CdrFormInput(applicationUri, 'Application URI'),

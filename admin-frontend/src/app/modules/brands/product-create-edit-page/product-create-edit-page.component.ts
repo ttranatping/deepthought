@@ -12,18 +12,18 @@ import { ProductCardArtsFormService } from '@app/core/services/product-forms/pro
 import { ProductFeatureFormCreatorService } from '@app/core/services/product-forms/product-feature-form-creator.service';
 import { ProductEligibilitysFormService } from '@app/core/services/product-forms/product-eligibilitys-form.service';
 import { ProductConstraintFormService } from '@app/core/services/product-forms/product-constraint-form.service';
-import { map, switchMap } from 'rxjs/operators';
+import { forkJoin, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { BreadcrumbService } from '@app/layout/breadcrumb.service';
-import { of } from 'rxjs';
 import { CdrFormArray, CdrFormGroup } from '@app/shared/forms/crd-form-group.class';
 import { ProductRateTierFormCreatorService } from '@app/core/services/product-forms/product-rate-tier-form-creator.service';
 import { ProductLendingRateFormCreatorService } from '@app/core/services/product-forms/product-lending-rate-form-creator.service';
 import { ProductDepositRateFormCreatorService } from '@app/core/services/product-forms/product-deposit-rate-form-creator.service';
 import { ProductFeeFormCreatorService } from '@app/core/services/product-forms/product-fee-form-creator.service';
 import { TypeManagementService } from '@app/core/services/type-management.service';
-import { FormArray } from '@angular/forms';
 import { ProductFeeDiscountCreateEditComponent } from '../product-view/product-view-fees/product-fee-discount-create-edit/product-fee-discount-create-edit.component';
 import { DialogService } from 'primeng/api';
+import { CdrFormControl, CdrFormInput } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 
 @Component({
     selector: 'app-product-create-edit-page',
@@ -54,6 +54,8 @@ export class ProductCreateEditPageComponent implements OnInit {
         { label: 'Deposit Rates' },
     ];
 
+    msgs = [];
+
     brandId: string;
     productId: string;
 
@@ -71,8 +73,6 @@ export class ProductCreateEditPageComponent implements OnInit {
         depositRates: [],
     };
 
-    // TODO: remove
-    discountsErrors = {};
     discountDetailsOptions: Array<{ key: string; label: string; }> = [
         { key: 'discountType', label: 'Discount type' },
         { key: 'description', label: 'Description' },
@@ -143,28 +143,6 @@ export class ProductCreateEditPageComponent implements OnInit {
         // TODO: fetch product data --> fillForm
     }
 
-    prevStep() {
-        if (this.activeStepIndex === 0) {
-            return;
-        }
-
-        this.activeStepIndex = this.activeStepIndex - 1;
-    }
-
-    nextStep() {
-        if (this.activeStepIndex === this.steps.length - 1) {
-            return;
-        }
-
-        this.activeStepIndex = this.activeStepIndex + 1;
-    }
-
-    goBack() {
-        !this.productId
-            ? this.router.navigate(['/brands', this.brandId, 'products'])
-            : this.router.navigate(['/brands', this.brandId, 'products', this.productId]);
-    }
-
     getDiscountType(type) {
         return this.typeManager.getLabel(FormFieldType.BANKINGPRODUCTDISCOUNTTYPE, type);
     }
@@ -198,23 +176,6 @@ export class ProductCreateEditPageComponent implements OnInit {
         const rateForm = this.productDepositRateFormCreator.createForm();
         (rateForm.get('cdrBanking.tiers') as CdrFormArray).isVisible = false;
         this.forms.depositRates.push(rateForm);
-    }
-
-    onSave() {
-        this.isSubmitted = true;
-
-        if (!this.forms.basicDetails.valid) {
-            return;
-        }
-
-        const saving$ = this.product
-            ? this.productsApi.updateProduct(this.brandId, this.productId, this.forms.basicDetails.value)
-            : this.productsApi.createProduct(this.brandId, this.forms.basicDetails.value);
-
-        saving$.subscribe(
-            (_) => this.goBack(),
-            (errors) => this.forms.basicDetails.setServerErrors(errors)
-        );
     }
 
     addRateTier(rateForm: CdrFormGroup) {
@@ -260,6 +221,214 @@ export class ProductCreateEditPageComponent implements OnInit {
 
     trackByFn(index, item) {
         return index;
+    }
+
+    goBack() {
+        !this.productId
+            ? this.router.navigate(['/brands', this.brandId, 'products'])
+            : this.router.navigate(['/brands', this.brandId, 'products', this.productId]);
+    }
+    prevStep() {
+        if (this.activeStepIndex === 0) {
+            return;
+        }
+
+        this.activeStepIndex = this.activeStepIndex - 1;
+    }
+    nextStep() {
+        if (this.activeStepIndex === this.steps.length - 1) {
+            return;
+        }
+
+        this.activeStepIndex = this.activeStepIndex + 1;
+    }
+    onSave() {
+        this.isSubmitted = true;
+
+        if (this.forms.basicDetails.invalid) {
+            return;
+        }
+
+        const savingProduct$ = this.product
+            ? this.productsApi.updateProduct(this.brandId, this.product.id, this.forms.basicDetails.value)
+            : this.productsApi.createProduct(this.brandId, this.forms.basicDetails.value);
+
+        savingProduct$
+            .pipe(
+                switchMap((product) => {
+                    this.product = product;
+
+                    const observables = [];
+
+                    // SAVE CARD ARTS **************************************************************************************
+                    for (const cardAtrForm of this.forms.cardArts) {
+                        const cardArtIdControl = cardAtrForm.get('id') as CdrFormInput;
+                        const saving$ = cardArtIdControl.value
+                            ? this.productsApi.updateProductCardArt(this.brandId, product.id, cardArtIdControl.value, cardAtrForm.value)
+                            : this.productsApi.createProductCardArt(this.brandId, product.id, cardAtrForm.value)
+                        ;
+
+                        observables.push(saving$.pipe(
+                            map((cardArt) => cardArtIdControl.setValue(cardArt.id)),
+                            catchError((errors) => {
+                                cardAtrForm.setServerErrors(errors);
+                                return throwError(errors);
+                            })
+                        ));
+                    }
+
+                    // FEATURES ********************************************************************************************
+                    for (const featureForm of this.forms.features) {
+                        const featureIdControl = featureForm.get('id') as CdrFormInput;
+                        const saving$ = featureIdControl.value
+                            ? this.productsApi.updateProductFeature(this.brandId, product.id, featureIdControl.value, featureForm.value)
+                            : this.productsApi.createProductFeature(this.brandId, product.id, featureForm.value)
+                        ;
+
+                        observables.push(saving$.pipe(
+                            map((feature) => featureIdControl.setValue(feature.id)),
+                            catchError((errors) => {
+                                featureForm.setServerErrors(errors);
+                                return throwError(errors);
+                            })
+                        ));
+                    }
+
+                    // ELIGIBILITYS ****************************************************************************************
+                    for (const eligibilityForm of this.forms.eligibilitys) {
+                        const eligibilityIdControl = eligibilityForm.get('id') as CdrFormInput;
+                        const saving$ = eligibilityIdControl.value
+                            ? this.productsApi.updateProductEligibility(this.brandId, product.id, eligibilityIdControl.value, eligibilityForm.value)
+                            : this.productsApi.createProductEligibility(this.brandId, product.id, eligibilityForm.value)
+                        ;
+
+                        observables.push(saving$.pipe(
+                            map((eligibility) => eligibilityIdControl.setValue(eligibility.id)),
+                            catchError((errors) => {
+                                eligibilityForm.setServerErrors(errors);
+                                return throwError(errors);
+                            })
+                        ));
+                    }
+
+                    // CONSTRAINTS *****************************************************************************************
+                    for (const constraintForm of this.forms.constraints) {
+                        const constraintIdControl = constraintForm.get('id') as CdrFormInput;
+                        const saving$ = constraintIdControl.value
+                            ? this.productsApi.updateProductConstraint(this.brandId, product.id, constraintIdControl.value, constraintForm.value)
+                            : this.productsApi.createProductConstraint(this.brandId, product.id, constraintForm.value)
+                        ;
+
+                        observables.push(saving$.pipe(
+                            map((constraint) => constraintIdControl.setValue(constraint.id)),
+                            catchError((errors) => {
+                                constraintForm.setServerErrors(errors);
+                                return throwError(errors);
+                            })
+                        ));
+                    }
+
+                    // FEES ************************************************************************************************
+                    for (const feeForm of this.forms.fees) {
+                        const feeIdControl = feeForm.get('id') as CdrFormInput;
+                        const saving$ = feeIdControl.value
+                            ? this.productsApi.updateProductFee(this.brandId, product.id, feeIdControl.value, feeForm.value)
+                            : this.productsApi.createProductFee(this.brandId, product.id, feeForm.value)
+                        ;
+
+                        observables.push(saving$.pipe(
+                            map((fee) => feeIdControl.setValue(fee.id)),
+                            catchError((errors) => {
+                                feeForm.setServerErrors(errors);
+                                return throwError(errors);
+                            })
+                        ));
+                    }
+
+                    // LENDING RATES ***************************************************************************************
+                    for (const lendingRateForm of this.forms.lendingRates) {
+                        const lendingRateIdControl = lendingRateForm.get('id') as CdrFormInput;
+                        const saving$ = lendingRateIdControl.value
+                            ? this.productsApi.updateProductRateLending(this.brandId, product.id, lendingRateIdControl.value, lendingRateForm.value)
+                            : this.productsApi.createProductRateLending(this.brandId, product.id, lendingRateForm.value)
+                        ;
+
+                        observables.push(saving$.pipe(
+                            map((rate) => lendingRateIdControl.setValue(rate.id)),
+                            catchError((errors) => {
+                                lendingRateForm.setServerErrors(errors);
+                                return throwError(errors);
+                            })
+                        ));
+                    }
+
+                    // DEPOSIT RATES ***************************************************************************************
+                    for (const depositRateForm of this.forms.depositRates) {
+                        const depositRateIdControl = depositRateForm.get('id') as CdrFormInput;
+                        const saving$ = depositRateIdControl.value
+                            ? this.productsApi.updateProductRateDeposit(this.brandId, product.id, depositRateIdControl.value, depositRateForm.value)
+                            : this.productsApi.createProductRateDeposit(this.brandId, product.id, depositRateForm.value)
+                        ;
+
+                        observables.push(saving$.pipe(
+                            map((rate) => depositRateIdControl.setValue(rate.id)),
+                            catchError((errors) => {
+                                depositRateForm.setServerErrors(errors);
+                                return throwError(errors);
+                            })
+                        ));
+                    }
+
+                    // RUN REQUESTS ****************************************************************************************
+
+                    return forkJoin(observables);
+                })
+            )
+            .subscribe(
+                () => this.goBack(),
+                (errors) => {
+                    this.activeStepIndex = this.BASIC_DETAILS_INDEX;
+
+                    this.msgs.push({
+                        severity: 'error',
+                        summary: 'Something wend wrong!',
+                        detail: 'Please check form fields data.'
+                    });
+
+                    setTimeout(() => {
+                        const setErrors = (errors, formsArray: CdrFormGroup[]) => {
+                            for (const formGroup of formsArray) {
+                                formGroup.setServerErrors(errors);
+                            }
+                        };
+
+                        setErrors(errors, [this.forms.basicDetails]);
+                        setErrors(errors, this.forms.cardArts);
+                        setErrors(errors, this.forms.features);
+                        setErrors(errors, this.forms.eligibilitys);
+                        setErrors(errors, this.forms.constraints);
+                        setErrors(errors, this.forms.fees);
+                        setErrors(errors, this.forms.lendingRates);
+                        setErrors(errors, this.forms.depositRates);
+                    });
+                }
+            );
+    }
+
+    getFirstError(control: CdrFormControl): string {
+        if (control && control.errors) {
+            const errors = Object.keys(control.errors);
+
+            for (const key of errors) {
+                switch (key) {
+                    case 'required': return `${control.label} is required field`;
+                    case 'uuid': return `${control.label} must have UUID format`;
+                    case 'SERVER': return control.errors[key];
+                }
+            }
+        }
+
+        return '';
     }
 
 }

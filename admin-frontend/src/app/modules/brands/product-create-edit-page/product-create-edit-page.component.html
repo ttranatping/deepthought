@@ -1,5 +1,7 @@
 <h1>{{ isNew ? 'Create product' : 'Edit product' }}</h1>
 
+<p-messages [(value)]="msgs"></p-messages>
+
 <p-steps [model]="steps" [readonly]="false" [activeIndex]="activeStepIndex"></p-steps>
 
 <ng-container [ngSwitch]="activeStepIndex">
@@ -94,8 +96,13 @@
 
                 <div class="Discount" *ngFor="let discountForm of feeForm.get('cdrBanking.discounts').controls; let j = index;">
                     <div class="Discount-content">
-                        <!--TODO-->
-                        <!--<p *ngIf="discountsErrors[j]" style="color: red; width: 100%;">{{ discountsErrors[j] }}</p>-->
+
+                        <ng-container *ngFor="let detail of discountDetailsOptions;">
+                            <p style="color: red;" *ngIf="discountForm.get(detail.key).errors">
+                                {{ getFirstError(discountForm.get(detail.key)) }}
+                            </p>
+                        </ng-container>
+
                         <ng-container *ngFor="let detail of discountDetailsOptions;">
                             <ng-container *ngIf="discountForm.get(detail.key) && discountForm.get(detail.key).value">
                                 <div class="Discount-detailName">{{ detail.label }}</div>
