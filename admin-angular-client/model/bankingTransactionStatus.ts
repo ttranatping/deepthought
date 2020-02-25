@@ -11,13 +11,11 @@
  */
 
 /**
- * Scheme Type
+ * Banking: Transaction Status
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type BankingTransactionStatus = 'PENDING' | 'POSTED';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const BankingTransactionStatus = {
+    PENDING: 'PENDING' as BankingTransactionStatus,
+    POSTED: 'POSTED' as BankingTransactionStatus
 };

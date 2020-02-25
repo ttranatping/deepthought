@@ -11,13 +11,19 @@
  */
 
 /**
- * Scheme Type
+ * Representation of a BPAY Payee
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface BankingBillerPayeeV1 { 
+    /**
+     * BPAY Biller Code of the Biller
+     */
+    billerCode: string;
+    /**
+     * BPAY CRN of the Biller. If the contents of the CRN match the format of a Credit Card PAN then it should be masked using the rules applicable for the MaskedPANString common type
+     */
+    crn: string;
+    /**
+     * Name of the Biller
+     */
+    billerName: string;
+}

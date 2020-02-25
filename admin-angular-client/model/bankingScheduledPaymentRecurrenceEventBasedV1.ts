@@ -11,13 +11,11 @@
  */
 
 /**
- * Scheme Type
+ * Indicates that the schedule of payments is defined according to an external event that cannot be predetermined. Mandatory if recurrenceUType is set to eventBased
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface BankingScheduledPaymentRecurrenceEventBasedV1 { 
+    /**
+     * Description of the event and conditions that will result in the payment. Expected to be formatted for display to a customer
+     */
+    description: string;
+}

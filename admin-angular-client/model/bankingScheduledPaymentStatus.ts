@@ -11,13 +11,12 @@
  */
 
 /**
- * Scheme Type
+ * Banking: Scheduled Payment Status
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type BankingScheduledPaymentStatus = 'ACTIVE' | 'SKIP' | 'INACTIVE';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const BankingScheduledPaymentStatus = {
+    ACTIVE: 'ACTIVE' as BankingScheduledPaymentStatus,
+    SKIP: 'SKIP' as BankingScheduledPaymentStatus,
+    INACTIVE: 'INACTIVE' as BankingScheduledPaymentStatus
 };

@@ -11,13 +11,15 @@
  */
 
 /**
- * Scheme Type
+ * Common: Organisation Type
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type CommonOrganisationType = 'SOLE_TRADER' | 'COMPANY' | 'PARTNERSHIP' | 'TRUST' | 'GOVERNMENT_ENTITY' | 'OTHER';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const CommonOrganisationType = {
+    SOLETRADER: 'SOLE_TRADER' as CommonOrganisationType,
+    COMPANY: 'COMPANY' as CommonOrganisationType,
+    PARTNERSHIP: 'PARTNERSHIP' as CommonOrganisationType,
+    TRUST: 'TRUST' as CommonOrganisationType,
+    GOVERNMENTENTITY: 'GOVERNMENT_ENTITY' as CommonOrganisationType,
+    OTHER: 'OTHER' as CommonOrganisationType
 };

@@ -11,13 +11,11 @@
  */
 
 /**
- * Scheme Type
+ * Domestic Payee Card Number Details
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface BankingDomesticPayeeCardV1 { 
+    /**
+     * Name of the account to pay to
+     */
+    cardNumber: string;
+}

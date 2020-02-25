@@ -11,13 +11,14 @@
  */
 
 /**
- * Scheme Type
+ * Purpose for the Address
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type PhysicalAddressPurpose = 'REGISTERED' | 'MAIL' | 'PHYSICAL' | 'WORK' | 'OTHER';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const PhysicalAddressPurpose = {
+    REGISTERED: 'REGISTERED' as PhysicalAddressPurpose,
+    MAIL: 'MAIL' as PhysicalAddressPurpose,
+    PHYSICAL: 'PHYSICAL' as PhysicalAddressPurpose,
+    WORK: 'WORK' as PhysicalAddressPurpose,
+    OTHER: 'OTHER' as PhysicalAddressPurpose
 };

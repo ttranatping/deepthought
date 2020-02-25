@@ -9,15 +9,26 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DioPhoneType } from './dioPhoneType';
+import { DioSchemeType } from './dioSchemeType';
 
 /**
- * Scheme Type
+ * A Deep Thought Phone Number Container
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface DioPhoneNumber { 
+    preferred?: boolean;
+    /**
+     * Deep Thought Person Identifier
+     */
+    id: string;
+    schemeType: DioSchemeType;
+    /**
+     * Preferred Number
+     */
+    isPreferred: boolean;
+    phoneType?: DioPhoneType;
+    /**
+     * Phone Number in RFC3966 Format
+     */
+    fullNumber: string;
+}

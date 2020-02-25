@@ -11,13 +11,21 @@
  */
 
 /**
- * Scheme Type
+ * A valid [ISO 3166 Alpha-3](https://www.iso.org/iso-3166-country-codes.html) country code. Australia (AUS) is assumed if country is not present.
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface DioAddressSimpleCountry { 
+    language?: string;
+    displayName?: string;
+    script?: string;
+    country?: string;
+    variant?: string;
+    extensionKeys?: Array<string>;
+    unicodeLocaleAttributes?: Array<string>;
+    unicodeLocaleKeys?: Array<string>;
+    iso3Language?: string;
+    iso3Country?: string;
+    displayLanguage?: string;
+    displayScript?: string;
+    displayCountry?: string;
+    displayVariant?: string;
+}

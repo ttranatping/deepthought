@@ -11,13 +11,16 @@
  */
 
 /**
- * Scheme Type
+ * Day of Week
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type CommonWeekDay = 'MON' | 'TUE' | 'WED' | 'THU' | 'FRI' | 'SAT' | 'SUN';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const CommonWeekDay = {
+    MON: 'MON' as CommonWeekDay,
+    TUE: 'TUE' as CommonWeekDay,
+    WED: 'WED' as CommonWeekDay,
+    THU: 'THU' as CommonWeekDay,
+    FRI: 'FRI' as CommonWeekDay,
+    SAT: 'SAT' as CommonWeekDay,
+    SUN: 'SUN' as CommonWeekDay
 };

@@ -11,13 +11,11 @@
  */
 
 /**
- * Scheme Type
+ * Customer Type
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type DioCustomerType = 'PERSON' | 'ORGANISATION';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const DioCustomerType = {
+    PERSON: 'PERSON' as DioCustomerType,
+    ORGANISATION: 'ORGANISATION' as DioCustomerType
 };

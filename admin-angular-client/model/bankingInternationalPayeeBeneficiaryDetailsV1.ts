@@ -11,13 +11,19 @@
  */
 
 /**
- * Scheme Type
+ * International Payee Beneficiary Details
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface BankingInternationalPayeeBeneficiaryDetailsV1 { 
+    /**
+     * Name of the beneficiary
+     */
+    name?: string;
+    /**
+     * Country where the beneficiary resides. A valid [ISO 3166 Alpha-3](https://www.iso.org/iso-3166-country-codes.html) country code
+     */
+    country: string;
+    /**
+     * Response message for the payment
+     */
+    message?: string;
+}

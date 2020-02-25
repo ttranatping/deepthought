@@ -9,15 +9,23 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DioSchemeType } from './dioSchemeType';
 
 /**
- * Scheme Type
+ * Card Transaction Information
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface DioBankAccountTransactionCard { 
+    /**
+     * Deep Thought Person Identifier
+     */
+    id: string;
+    schemeType: DioSchemeType;
+    /**
+     * Name of the merchant for an outgoing payment to a merchant
+     */
+    merchantName?: string;
+    /**
+     * Merchant Category Codes
+     */
+    merchantCategoryCode?: string;
+}

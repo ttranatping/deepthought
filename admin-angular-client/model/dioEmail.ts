@@ -9,15 +9,26 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DioEmailType } from './dioEmailType';
+import { DioSchemeType } from './dioSchemeType';
 
 /**
- * Scheme Type
+ * A Deep Thought Email Container
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface DioEmail { 
+    preferred?: boolean;
+    /**
+     * Deep Thought Email Identifier
+     */
+    id: string;
+    schemeType: DioSchemeType;
+    /**
+     * Preferred Number
+     */
+    isPreferred: boolean;
+    type?: DioEmailType;
+    /**
+     * Phone Number in RFC3966 Format
+     */
+    address?: string;
+}

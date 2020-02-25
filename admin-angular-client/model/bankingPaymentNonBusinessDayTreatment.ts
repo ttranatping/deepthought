@@ -11,13 +11,13 @@
  */
 
 /**
- * Scheme Type
+ * Enumerated field giving the treatment where a scheduled payment date is not a business day. If absent assumed to be ON
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type BankingPaymentNonBusinessDayTreatment = 'AFTER' | 'BEFORE' | 'ON' | 'ONLY';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const BankingPaymentNonBusinessDayTreatment = {
+    AFTER: 'AFTER' as BankingPaymentNonBusinessDayTreatment,
+    BEFORE: 'BEFORE' as BankingPaymentNonBusinessDayTreatment,
+    ON: 'ON' as BankingPaymentNonBusinessDayTreatment,
+    ONLY: 'ONLY' as BankingPaymentNonBusinessDayTreatment
 };

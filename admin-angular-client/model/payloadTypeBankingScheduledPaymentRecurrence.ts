@@ -11,13 +11,13 @@
  */
 
 /**
- * Scheme Type
+ * Payload Type: Banking Scheduled Payment Recurrence
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type PayloadTypeBankingScheduledPaymentRecurrence = 'onceOff' | 'intervalSchedule' | 'lastWeekDay' | 'eventBased';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const PayloadTypeBankingScheduledPaymentRecurrence = {
+    OnceOff: 'onceOff' as PayloadTypeBankingScheduledPaymentRecurrence,
+    IntervalSchedule: 'intervalSchedule' as PayloadTypeBankingScheduledPaymentRecurrence,
+    LastWeekDay: 'lastWeekDay' as PayloadTypeBankingScheduledPaymentRecurrence,
+    EventBased: 'eventBased' as PayloadTypeBankingScheduledPaymentRecurrence
 };

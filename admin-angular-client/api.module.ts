@@ -3,8 +3,16 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { BankAccountAdminService } from './api/bankAccountAdmin.service';
+import { BankDirectDebitsAdminService } from './api/bankDirectDebitsAdmin.service';
+import { BankPayeeAdminService } from './api/bankPayeeAdmin.service';
+import { BankScheduledPaymentAdminService } from './api/bankScheduledPaymentAdmin.service';
+import { BankTransactionAdminService } from './api/bankTransactionAdmin.service';
+import { BranchAdminService } from './api/branchAdmin.service';
 import { BrandAdminService } from './api/brandAdmin.service';
 import { BundleAdminService } from './api/bundleAdmin.service';
+import { CustomerAdminService } from './api/customerAdmin.service';
+import { GrantAdminService } from './api/grantAdmin.service';
 import { ProductAdminService } from './api/productAdmin.service';
 import { TypeService } from './api/type.service';
 
@@ -13,8 +21,16 @@ import { TypeService } from './api/type.service';
   declarations: [],
   exports:      [],
   providers: [
+    BankAccountAdminService,
+    BankDirectDebitsAdminService,
+    BankPayeeAdminService,
+    BankScheduledPaymentAdminService,
+    BankTransactionAdminService,
+    BranchAdminService,
     BrandAdminService,
     BundleAdminService,
+    CustomerAdminService,
+    GrantAdminService,
     ProductAdminService,
     TypeService ]
 })

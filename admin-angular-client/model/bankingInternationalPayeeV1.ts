@@ -9,15 +9,13 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { BankingInternationalPayeeBankDetailsV1 } from './bankingInternationalPayeeBankDetailsV1';
+import { BankingInternationalPayeeBeneficiaryDetailsV1 } from './bankingInternationalPayeeBeneficiaryDetailsV1';
 
 /**
- * Scheme Type
+ * International Payee Beneficiary and Bank Details
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface BankingInternationalPayeeV1 { 
+    beneficiaryDetails: BankingInternationalPayeeBeneficiaryDetailsV1;
+    bankDetails: BankingInternationalPayeeBankDetailsV1;
+}

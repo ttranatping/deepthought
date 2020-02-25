@@ -11,13 +11,13 @@
  */
 
 /**
- * Scheme Type
+ * Phone Number Type
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type DioPhoneType = 'MOBILE' | 'HOME' | 'WORK' | 'OTHER';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const DioPhoneType = {
+    MOBILE: 'MOBILE' as DioPhoneType,
+    HOME: 'HOME' as DioPhoneType,
+    WORK: 'WORK' as DioPhoneType,
+    OTHER: 'OTHER' as DioPhoneType
 };

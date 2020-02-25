@@ -9,15 +9,18 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DioBankAccount } from './dioBankAccount';
+import { DioCustomer } from './dioCustomer';
 
 /**
- * Scheme Type
+ * A Deep Thought Customer Bank Account
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface DioCustomerAccount { 
+    /**
+     * Deep Thought Customer Bank Account Association Identifier
+     */
+    id: string;
+    customer?: DioCustomer;
+    bankAccount?: DioBankAccount;
+    owner?: boolean;
+}

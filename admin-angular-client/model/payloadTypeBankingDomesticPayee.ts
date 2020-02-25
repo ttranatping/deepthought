@@ -11,13 +11,12 @@
  */
 
 /**
- * Scheme Type
+ * Payload Type: Domestic Payee
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type PayloadTypeBankingDomesticPayee = 'account' | 'card' | 'payId';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const PayloadTypeBankingDomesticPayee = {
+    Account: 'account' as PayloadTypeBankingDomesticPayee,
+    Card: 'card' as PayloadTypeBankingDomesticPayee,
+    PayId: 'payId' as PayloadTypeBankingDomesticPayee
 };

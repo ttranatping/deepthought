@@ -11,13 +11,19 @@
  */
 
 /**
- * Scheme Type
+ * Domestic Payment Payee Details
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface BankingDomesticPayeeAccountV1 { 
+    /**
+     * Name of the account to pay to
+     */
+    accountName?: string;
+    /**
+     * APCA Numbers (aka BSB Numbers)
+     */
+    bsb: string;
+    /**
+     * Number of the account to pay to
+     */
+    accountNumber: string;
+}

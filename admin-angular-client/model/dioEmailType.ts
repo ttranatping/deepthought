@@ -11,13 +11,12 @@
  */
 
 /**
- * Scheme Type
+ * Email Address Type
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type DioEmailType = 'HOME' | 'WORK' | 'OTHER';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const DioEmailType = {
+    HOME: 'HOME' as DioEmailType,
+    WORK: 'WORK' as DioEmailType,
+    OTHER: 'OTHER' as DioEmailType
 };

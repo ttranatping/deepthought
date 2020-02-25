@@ -17,7 +17,9 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { DioBankBranch } from '../model/dioBankBranch';
 import { DioBrand } from '../model/dioBrand';
+import { RequestBranchBrandConnection } from '../model/requestBranchBrandConnection';
 import { ValidationListException } from '../model/validationListException';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -57,6 +59,56 @@ export class BrandAdminService {
 
 
     /**
+     * Associate a Branch with a Brand
+     * Associates a Brand with a Brand
+     * @param brandId 
+     * @param body 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public associatedBrandBranch(brandId: string, body?: RequestBranchBrandConnection, observe?: 'body', reportProgress?: boolean): Observable<DioBankBranch>;
+    public associatedBrandBranch(brandId: string, body?: RequestBranchBrandConnection, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DioBankBranch>>;
+    public associatedBrandBranch(brandId: string, body?: RequestBranchBrandConnection, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DioBankBranch>>;
+    public associatedBrandBranch(brandId: string, body?: RequestBranchBrandConnection, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling associatedBrandBranch.');
+        }
+
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<DioBankBranch>('post',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/branch`,
+            {
+                body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Create a Brand
      * Creates and Returns a new Brand
      * @param body 
@@ -93,6 +145,53 @@ export class BrandAdminService {
         return this.httpClient.request<DioBrand>('post',`${this.basePath}/v1/brand`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Delete a Brand Branch Association
+     * Deletes an existing association between a Brand and a Branch
+     * @param brandId 
+     * @param branchId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteBranch1(brandId: string, branchId: string, observe?: 'body', reportProgress?: boolean): Observable<DioBankBranch>;
+    public deleteBranch1(brandId: string, branchId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DioBankBranch>>;
+    public deleteBranch1(brandId: string, branchId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DioBankBranch>>;
+    public deleteBranch1(brandId: string, branchId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling deleteBranch1.');
+        }
+
+        if (branchId === null || branchId === undefined) {
+            throw new Error('Required parameter branchId was null or undefined when calling deleteBranch1.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<DioBankBranch>('delete',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/branch/${encodeURIComponent(String(branchId))}`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -175,6 +274,48 @@ export class BrandAdminService {
         ];
 
         return this.httpClient.request<DioBrand>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * List all Brand Branches
+     * List all Branches belonging to a Brand
+     * @param brandId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public listBrandBranches(brandId: string, observe?: 'body', reportProgress?: boolean): Observable<Array<DioBankBranch>>;
+    public listBrandBranches(brandId: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<DioBankBranch>>>;
+    public listBrandBranches(brandId: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<DioBankBranch>>>;
+    public listBrandBranches(brandId: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brandId === null || brandId === undefined) {
+            throw new Error('Required parameter brandId was null or undefined when calling listBrandBranches.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // authentication (deepthought_auth) required
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Array<DioBankBranch>>('get',`${this.basePath}/v1/brand/${encodeURIComponent(String(brandId))}/branch`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

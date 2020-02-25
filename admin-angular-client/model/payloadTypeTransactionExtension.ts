@@ -11,13 +11,10 @@
  */
 
 /**
- * Scheme Type
+ * Payload Type: Transaction Extension Type
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type PayloadTypeTransactionExtension = 'x2p101Payload';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const PayloadTypeTransactionExtension = {
+    X2p101Payload: 'x2p101Payload' as PayloadTypeTransactionExtension
 };

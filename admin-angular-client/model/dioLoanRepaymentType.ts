@@ -11,13 +11,11 @@
  */
 
 /**
- * Scheme Type
+ * Loan Repayment Type
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type DioLoanRepaymentType = 'IN_ARREARS' | 'IN_ADVANCE';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const DioLoanRepaymentType = {
+    ARREARS: 'IN_ARREARS' as DioLoanRepaymentType,
+    ADVANCE: 'IN_ADVANCE' as DioLoanRepaymentType
 };

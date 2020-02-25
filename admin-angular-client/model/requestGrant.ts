@@ -9,15 +9,22 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { RequestGrantCustomerAccount } from './requestGrantCustomerAccount';
 
 /**
- * Scheme Type
+ * Request for create or update of Grant
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface RequestGrant { 
+    /**
+     * Token Subject Identifier
+     */
+    subject: string;
+    /**
+     * How long should the grant remain (in seconds), if supplied in update will extend by this length, if not supplied will default to 30 days
+     */
+    length?: number;
+    /**
+     * Customer Accounts with Permissions
+     */
+    customerAccounts: Array<RequestGrantCustomerAccount>;
+}

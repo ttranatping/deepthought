@@ -9,15 +9,24 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DioBankAccountCreditCard } from './dioBankAccountCreditCard';
+import { DioBankAccountLoanAccount } from './dioBankAccountLoanAccount';
+import { DioBankAccountTermDeposit } from './dioBankAccountTermDeposit';
 
 /**
- * Scheme Type
+ * CDR Bank Account Specifics
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface CdrBankingAccount { 
+    /**
+     * Term Deposit Details
+     */
+    termDeposits?: Array<DioBankAccountTermDeposit>;
+    /**
+     * Credit Card Details
+     */
+    creditCards?: Array<DioBankAccountCreditCard>;
+    /**
+     * Loan Account Details
+     */
+    loanAccounts?: Array<DioBankAccountLoanAccount>;
+}

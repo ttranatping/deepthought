@@ -11,13 +11,12 @@
  */
 
 /**
- * Scheme Type
+ * Account Status
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
+export type DioAccountStatus = 'OPEN' | 'CLOSED' | 'FROZEN';
 
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
+export const DioAccountStatus = {
+    OPEN: 'OPEN' as DioAccountStatus,
+    CLOSED: 'CLOSED' as DioAccountStatus,
+    FROZEN: 'FROZEN' as DioAccountStatus
 };

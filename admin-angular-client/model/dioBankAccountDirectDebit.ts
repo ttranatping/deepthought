@@ -9,15 +9,25 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DioBankAuthorisedEntity } from './dioBankAuthorisedEntity';
+import { DioSchemeType } from './dioSchemeType';
 
 /**
- * Scheme Type
+ * A Deep Thought Bank Account Container
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface DioBankAccountDirectDebit { 
+    /**
+     * Deep Thought Bank Account Identifier
+     */
+    id: string;
+    schemeType: DioSchemeType;
+    authorisedEntity: DioBankAuthorisedEntity;
+    /**
+     * The date and time of the last debit executed under this authorisation
+     */
+    lastDebitDateTime?: Date;
+    /**
+     * The amount of the last debit executed under this authorisation
+     */
+    lastDebitAmount?: number;
+}

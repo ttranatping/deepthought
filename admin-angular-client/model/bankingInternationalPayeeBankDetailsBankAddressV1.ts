@@ -11,13 +11,15 @@
  */
 
 /**
- * Scheme Type
+ * International Payee Bank Address Details
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface BankingInternationalPayeeBankDetailsBankAddressV1 { 
+    /**
+     * Name of the recipient Bank
+     */
+    name: string;
+    /**
+     * Address of the recipient Bank
+     */
+    address: string;
+}

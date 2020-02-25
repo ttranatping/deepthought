@@ -9,15 +9,31 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DioSchemeType } from './dioSchemeType';
 
 /**
- * Scheme Type
+ * A Deep Thought Bank Term Deposit Account Container
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface DioBankAccountTermDeposit { 
+    /**
+     * Term Deposit Currency
+     */
+    currency?: string;
+    /**
+     * Term Deposit Term Length
+     */
+    termLength: string;
+    /**
+     * Calculation Frequency
+     */
+    calculationFrequency: string;
+    /**
+     * Application Frequency
+     */
+    applicationFrequency: string;
+    /**
+     * Deep Thought Bank Account Identifier
+     */
+    id: string;
+    schemeType: DioSchemeType;
+}

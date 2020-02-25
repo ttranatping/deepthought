@@ -21,11 +21,11 @@ export interface BankingProductLendingRateV1 {
     /**
      * The rate to be applied
      */
-    rate: number;
+    rate: string;
     /**
      * A comparison rate equivalent for this rate
      */
-    comparisonRate?: number;
+    comparisonRate?: string;
     /**
      * The period after which the rate is applied to the balance to calculate the amount due for the period. Calculation of the amount is often daily (as balances may change) but accumulated until the total amount is 'applied' to the account (see applicationFrequency). Formatted according to [ISO 8601 Durations](https://en.wikipedia.org/wiki/ISO_8601#Durations)
      */

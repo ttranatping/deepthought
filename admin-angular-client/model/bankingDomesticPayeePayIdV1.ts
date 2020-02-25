@@ -9,15 +9,19 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { PayloadTypeBankingDomesticPayeePayId } from './payloadTypeBankingDomesticPayeePayId';
 
 /**
- * Scheme Type
+ * Domestic Payee PayID Detail
  */
-export type DioSchemeType = 'CDR_BANKING' | 'DIO_BANKING' | 'CDR_COMMON' | 'DIO_COMMON';
-
-export const DioSchemeType = {
-    CDRBANKING: 'CDR_BANKING' as DioSchemeType,
-    DIOBANKING: 'DIO_BANKING' as DioSchemeType,
-    CDRCOMMON: 'CDR_COMMON' as DioSchemeType,
-    DIOCOMMON: 'DIO_COMMON' as DioSchemeType
-};
+export interface BankingDomesticPayeePayIdV1 { 
+    /**
+     * The name assigned to the PayID by the owner of the PayID
+     */
+    name?: string;
+    /**
+     * The identifier of the PayID (dependent on type)
+     */
+    identifier: string;
+    type: PayloadTypeBankingDomesticPayeePayId;
+}
