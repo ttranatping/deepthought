@@ -13,28 +13,15 @@
  *******************************************************************************/
 package io.biza.deepthought.shared.payloads.dio.grant;
 
-import java.time.OffsetDateTime;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ForeignKey;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.biza.deepthought.shared.payloads.dio.banking.DioBankAccount;
 import io.biza.deepthought.shared.payloads.dio.common.DioCustomer;
-import io.biza.deepthought.shared.payloads.dio.common.DioCustomerAccount;
 import io.biza.deepthought.shared.payloads.dio.enumerations.DioGrantAccess;
-import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.media.Schema.AccessMode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

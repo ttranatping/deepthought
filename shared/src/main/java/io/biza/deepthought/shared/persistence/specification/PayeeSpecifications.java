@@ -25,7 +25,6 @@ import org.springframework.data.jpa.domain.Specification;
 import io.biza.babelfish.cdr.enumerations.BankingPayeeTypeWithAll;
 import io.biza.deepthought.shared.persistence.model.bank.payments.PayeeData_;
 import io.biza.deepthought.shared.persistence.model.customer.CustomerData_;
-import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData_;
 import io.biza.deepthought.shared.persistence.model.bank.payments.PayeeData;
 import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
 

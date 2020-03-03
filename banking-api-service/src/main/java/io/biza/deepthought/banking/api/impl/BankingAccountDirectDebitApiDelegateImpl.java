@@ -22,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import io.biza.babelfish.cdr.models.payloads.banking.account.directdebit.BankingDirectDebitV1;
-import io.biza.babelfish.cdr.models.payloads.banking.account.transaction.BankingTransactionV1;
 import io.biza.babelfish.cdr.models.responses.ResponseBankingDirectDebitAuthorisationListV1;
 import io.biza.babelfish.cdr.models.responses.container.ResponseBankingDirectDebitAuthorisationListDataV1;
 import io.biza.deepthought.banking.api.delegate.BankingAccountDirectDebitApiDelegate;

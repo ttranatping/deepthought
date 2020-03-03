@@ -26,14 +26,12 @@ import io.biza.babelfish.cdr.models.payloads.banking.account.BankingLoanAccountV
 import io.biza.babelfish.cdr.models.payloads.banking.account.BankingTermDepositAccountV1;
 import io.biza.babelfish.cdr.models.payloads.banking.product.BankingProductFeatureWithActivatedV1;
 import io.biza.deepthought.shared.mapper.OrikaFactoryConfigurerInterface;
-import io.biza.deepthought.shared.payloads.dio.grant.DioGrant;
 import io.biza.deepthought.shared.payloads.dio.grant.DioGrantAccount;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountCreditCardData;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountFeatureData;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountLoanAccountData;
 import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountTermDepositData;
 import io.biza.deepthought.shared.persistence.model.grant.GrantCustomerAccountData;
-import io.biza.deepthought.shared.persistence.model.grant.GrantData;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;

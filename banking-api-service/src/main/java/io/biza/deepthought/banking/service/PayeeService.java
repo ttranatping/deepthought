@@ -28,7 +28,6 @@ import io.biza.deepthought.shared.component.service.GrantService;
 import io.biza.deepthought.shared.exception.InvalidSubjectException;
 import io.biza.deepthought.shared.exception.NotFoundException;
 import io.biza.deepthought.shared.payloads.requests.RequestListAccounts;
-import io.biza.deepthought.shared.persistence.model.bank.account.BankAccountData;
 import io.biza.deepthought.shared.persistence.model.bank.payments.PayeeData;
 import io.biza.deepthought.shared.persistence.model.customer.CustomerData;
 import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;

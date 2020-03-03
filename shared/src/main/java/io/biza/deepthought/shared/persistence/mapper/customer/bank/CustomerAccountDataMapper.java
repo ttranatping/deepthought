@@ -13,7 +13,6 @@
  *******************************************************************************/
 package io.biza.deepthought.shared.persistence.mapper.customer.bank;
 
-import io.biza.babelfish.cdr.models.payloads.banking.account.BankingAccountV1;
 import io.biza.deepthought.shared.mapper.OrikaFactoryConfigurerInterface;
 import io.biza.deepthought.shared.payloads.dio.common.DioCustomerAccount;
 import io.biza.deepthought.shared.persistence.model.customer.bank.CustomerAccountData;
