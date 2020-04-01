@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService} from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { BrandAdminService, BundleAdminService, DioBrand, DioProductBundle } from '@bizaoss/deepthought-admin-angular-client';
 import { BreadcrumbService } from '@app/layout/breadcrumb.service';
 import { BundleAddProductComponent } from './bundle-add-product/bundle-add-product.component';

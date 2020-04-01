@@ -4,7 +4,7 @@ import { CdrFormGroup } from '@app/shared/forms/crd-form-group.class';
 import { CdrFormSelect } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
 import { Validators } from '@angular/forms';
 import { map, switchMap, toArray } from 'rxjs/operators';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { from } from 'rxjs';
 
 @Component({

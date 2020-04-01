@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BundleAdminService, DioProductBundle, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService} from 'primeng/api';
 import { LayoutService } from '@app/layout/layout.service';
 import { map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { BundleCreateEditComponent } from '../../bundle-create-edit/bundle-create-edit.component';
+import {DialogService} from 'primeng';
 
 @Component({
     selector: 'app-bundles-list',

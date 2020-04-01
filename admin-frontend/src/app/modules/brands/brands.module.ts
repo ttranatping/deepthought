@@ -14,7 +14,7 @@ import { ProductViewFeesComponent } from './product-view/product-view-fees/produ
 import { ProductViewRatesLendingComponent } from './product-view/rates/product-view-rates-lending/product-view-rates-lending.component';
 import { ProductViewRatesDepositComponent } from './product-view/rates/product-view-rates-deposit/product-view-rates-deposit.component';
 import { ProductCreateEditComponent } from './product-create-edit/product-create-edit.component';
-import { DialogService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { ProductFeatureCreateEditComponent } from './product-view/product-view-features/product-feature-create-edit/product-feature-create-edit.component';
 import { ProductEligibilityCreateEditComponent } from './product-view/product-view-constraints/product-eligibility-create-edit/product-eligibility-create-edit.component';
 import { ProductConstraintCreateEditComponent } from './product-view/product-view-constraints/product-constraint-create-edit/product-constraint-create-edit.component';

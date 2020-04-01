@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
 import {TypeManagementService} from '@app/core/services/type-management.service';
 import {TypeUtilityService} from '@app/core/services/type-utility.service';
-import {ConfirmationService, DialogService} from 'primeng/api';
+import {ConfirmationService} from 'primeng/api';
 import {ProductFeeCreateEditComponent} from './product-fee-create-edit/product-fee-create-edit.component';
 import {
     BankingProductFeeType,
@@ -11,6 +11,7 @@ import {
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
 import {map, switchMap} from 'rxjs/operators';
+import {DialogService} from 'primeng';
 
 @Component({
     selector: 'app-product-view-fees',

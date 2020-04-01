@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService} from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { ProductAdminService, DioProductCardArt } from '@bizaoss/deepthought-admin-angular-client';
 import { map, switchMap } from 'rxjs/operators';
 import { ProductEligibilityCreateEditComponent } from '../product-view-constraints/product-eligibility-create-edit/product-eligibility-create-edit.component';
@@ -13,11 +14,11 @@ import { ProductCardArtCreateEditComponent } from './product-card-art-create-edi
         .title p-button {
             float: right;
         }
-        
+
         .actions {
             text-align: right;
         }
-        
+
         .actions p-button {
             margin-left: 5px;
         }

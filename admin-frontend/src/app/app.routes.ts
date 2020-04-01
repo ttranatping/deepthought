@@ -22,7 +22,7 @@ const routes: Routes = [
             },
             {
                 path: 'brands',
-                loadChildren: './modules/brands/brands.module#BrandsModule'
+                loadChildren: () => import('./modules/brands/brands.module').then(m => m.BrandsModule)
             },
         ]
     },

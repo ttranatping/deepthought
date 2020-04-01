@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AbstractControl, Validators } from '@angular/forms';
 import { BrandAdminService, DioBrand } from '@bizaoss/deepthought-admin-angular-client';
 import { CdrFormInput } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';

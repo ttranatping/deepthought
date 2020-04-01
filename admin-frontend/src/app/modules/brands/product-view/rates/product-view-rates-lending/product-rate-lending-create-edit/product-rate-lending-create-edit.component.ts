@@ -15,7 +15,8 @@ import {
     DioSchemeType, FormFieldType,
     ProductAdminService, BankingProductLendingRateInterestPaymentType
 } from '@bizaoss/deepthought-admin-angular-client';
-import { DynamicDialogConfig, DynamicDialogRef, SelectItem } from 'primeng/api';
+import { SelectItem } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { CdrFormGroup } from '@app/shared/forms/crd-form-group.class';
 

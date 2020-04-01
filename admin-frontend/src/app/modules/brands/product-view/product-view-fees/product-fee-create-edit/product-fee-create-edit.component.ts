@@ -19,7 +19,8 @@ import { LayoutService } from '@app/layout/layout.service';
 import { BreadcrumbService } from '@app/layout/breadcrumb.service';
 import { ProductEligibilityCreateEditComponent } from '../../product-view-constraints/product-eligibility-create-edit/product-eligibility-create-edit.component';
 import { ProductFeeDiscountCreateEditComponent } from '../product-fee-discount-create-edit/product-fee-discount-create-edit.component';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+import {DialogService} from 'primeng';
 
 @Component({
   selector: 'app-product-fee-create-edit',

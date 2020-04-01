@@ -7,9 +7,10 @@ import {
     BankingProductDiscountV1, BankingProductFeeDiscountEligibilityV1,
     FormFieldType,
 } from '@bizaoss/deepthought-admin-angular-client';
-import { DynamicDialogConfig, DynamicDialogRef, SelectItem } from 'primeng/api';
+import { SelectItem } from 'primeng/api';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { FormArray } from '@angular/forms';
+import {DynamicDialogConfig, DynamicDialogRef} from 'primeng';
 
 @Component({
   selector: 'app-product-fee-discount-create-edit',

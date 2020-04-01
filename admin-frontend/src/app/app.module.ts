@@ -17,8 +17,9 @@ import {PageErrorComponent} from './pages/error/page.error.component';
 import {PageAccessDeniedComponent} from './pages/access-denied/page.access-denied.component';
 import {AuthLoginComponent} from './pages/auth/login/auth.login.component';
 
-import {ProgressSpinnerModule} from 'primeng/primeng';
-import {DialogService, MessageService} from 'primeng/api';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {MessageService} from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
 
 import {SharedModule} from '@app/shared/shared.module';

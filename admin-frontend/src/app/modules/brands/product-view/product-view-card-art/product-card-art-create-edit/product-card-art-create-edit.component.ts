@@ -7,7 +7,7 @@ import {
     DioSchemeType,
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-product-card-art-create-edit',

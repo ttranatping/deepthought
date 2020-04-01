@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BundleAdminService, DioProductBundle } from '@bizaoss/deepthought-admin-angular-client';
 import { AbstractControl, Validators } from '@angular/forms';
 import { CdrFormInput, CdrFormTextarea } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
-import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { CdrFormGroup } from '@app/shared/forms/crd-form-group.class';
 
 @Component({

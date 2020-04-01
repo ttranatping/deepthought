@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
 import { BreadcrumbService } from '@app/layout/breadcrumb.service';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { BrandAdminService, DioBrand } from '@bizaoss/deepthought-admin-angular-client';
 import { BrandCreateEditComponent } from '../brand-create-edit/brand-create-edit.component';
+import {DialogService} from 'primeng';
 
 @Component({
     selector: 'app-brand-view',

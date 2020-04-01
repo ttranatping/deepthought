@@ -9,8 +9,9 @@ import {
     DioProductRateLending, FormFieldType,
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
-import {ConfirmationService, DialogService} from 'primeng/api';
+import {ConfirmationService} from 'primeng/api';
 import {ProductRateLendingCreateEditComponent} from './product-rate-lending-create-edit/product-rate-lending-create-edit.component';
+import {DialogService} from 'primeng';
 
 @Component({
     selector: 'app-product-view-rates-lending',

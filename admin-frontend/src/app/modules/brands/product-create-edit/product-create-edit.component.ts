@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DynamicDialogConfig, DynamicDialogRef, SelectItem } from 'primeng/api';
+import { SelectItem } from 'primeng/api';
+import {DynamicDialogConfig, DynamicDialogRef} from 'primeng/dynamicdialog';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {
     BankingProductCategory,

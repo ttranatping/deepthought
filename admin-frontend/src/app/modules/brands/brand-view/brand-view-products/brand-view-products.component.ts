@@ -8,7 +8,7 @@ import {
 import { map, switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { LayoutService } from '@app/layout/layout.service';
-import { DialogService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 import { ProductCreateEditComponent } from '../../product-create-edit/product-create-edit.component';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { CdrFormSelect } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';

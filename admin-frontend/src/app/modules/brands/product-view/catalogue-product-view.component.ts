@@ -3,9 +3,10 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { BreadcrumbService } from '@app/layout/breadcrumb.service';
 import { LayoutService } from '@app/layout/layout.service';
 import { map, switchMap } from 'rxjs/operators';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ProductCreateEditComponent } from '../product-create-edit/product-create-edit.component';
 import { BrandAdminService, DioBrand, DioProduct, ProductAdminService } from '@bizaoss/deepthought-admin-angular-client';
+import {DialogService} from 'primeng';
 
 @Component({
     selector: 'app-catalogue-product-view',

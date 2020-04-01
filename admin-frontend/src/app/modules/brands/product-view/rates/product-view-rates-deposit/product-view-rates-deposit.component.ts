@@ -8,9 +8,10 @@ import {
     DioProductRateDeposit, DioProductRateLending, FormFieldType,
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ProductRateDepositCreateEditComponent } from './product-rate-deposit-create-edit/product-rate-deposit-create-edit.component';
 import {falseIfMissing} from 'protractor/built/util';
+import {DialogService} from 'primeng';
 
 @Component({
   selector: 'app-product-view-rates-deposit',

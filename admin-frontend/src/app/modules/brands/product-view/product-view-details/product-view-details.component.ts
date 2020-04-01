@@ -10,8 +10,10 @@ import { DateFormatPipe } from '@app/shared/pipes/date-format.pipe';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { map, switchMap } from 'rxjs/operators';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
+
 import { ProductAddBundleComponent } from './product-add-bundle/product-add-bundle.component';
+import {DialogService} from 'primeng';
 
 interface IDetailsProp {
     key: string;

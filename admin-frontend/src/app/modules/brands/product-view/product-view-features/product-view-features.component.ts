@@ -8,10 +8,11 @@ import {
 } from '@bizaoss/deepthought-admin-angular-client';
 import { from } from 'rxjs';
 import { reduce, switchMap } from 'rxjs/operators';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ProductFeatureCreateEditComponent } from './product-feature-create-edit/product-feature-create-edit.component';
 import { TypeUtilityService } from '@app/core/services/type-utility.service';
 import { TypeManagementService } from '@app/core/services/type-management.service';
+import {DialogService} from 'primeng';
 
 @Component({
     selector: 'app-product-view-features',

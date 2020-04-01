@@ -5,7 +5,9 @@ import {
     CdrFormInput,
     CdrFormSelect
 } from '@app/shared/forms/cdr-form-control/cdr-form-control.component';
-import { DynamicDialogConfig, DynamicDialogRef, SelectItem } from 'primeng/api';
+import { SelectItem } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+
 import {
     BankingProductDepositRateV1,
     BankingProductDepositRateType,

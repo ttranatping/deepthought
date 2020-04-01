@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ConfirmationService, DialogService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { TypeManagementService } from '@app/core/services/type-management.service';
 import { TypeUtilityService } from '@app/core/services/type-utility.service';
 import { ProductEligibilityCreateEditComponent } from './product-eligibility-create-edit/product-eligibility-create-edit.component';
@@ -13,6 +13,7 @@ import {
     ProductAdminService
 } from '@bizaoss/deepthought-admin-angular-client';
 import { map, switchMap } from 'rxjs/operators';
+import {DialogService} from 'primeng';
 
 @Component({
   selector: 'app-product-view-constraints',
