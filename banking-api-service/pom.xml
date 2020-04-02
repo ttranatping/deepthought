@@ -234,10 +234,11 @@
                             <goal>repackage</goal>
                         </goals>
                         <configuration>
+                            <classifier>exec</classifier>
                             <requiresUnpack>
                                 <dependency>
                                     <groupId>io.biza</groupId>
-                                    <artifactId>deepthought</artifactId>
+                                    <artifactId>deepthought-shared</artifactId>
                                 </dependency>
                             </requiresUnpack>
                         </configuration>

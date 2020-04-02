@@ -126,6 +126,7 @@
 	<module>common-api-service</module>
 	<module>discovery-api-service</module>
 	<module>banking-api-service</module>
+	<module>aio-api-service</module>
     </modules>
 
     <build>

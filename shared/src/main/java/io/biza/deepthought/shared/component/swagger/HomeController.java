@@ -11,7 +11,7 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *******************************************************************************/
-package io.biza.deepthought.banking.api.controller;
+package io.biza.deepthought.shared.component.swagger;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

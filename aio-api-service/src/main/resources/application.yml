@@ -1,9 +1,9 @@
 deepthought:
   version: 1.0.0
 server:
+  port: 8080
   servlet:
-    context-path: /dio-au
-  port: 8050
+    context-path: /cds-au
 spring:
    security:
       oauth2:
@@ -14,12 +14,11 @@ spring:
      url: jdbc:h2:file:../localdb/deepthought;AUTO_SERVER=true
      driverClassName: org.h2.Driver
    jpa:
-     open-in-view: true   
+     open-in-view: true  
      database: H2
      database-platform: org.hibernate.dialect.H2Dialect
      hibernate:
        ddl-auto: update
    jackson:
      default-property-inclusion: non_empty
-
-   
+     

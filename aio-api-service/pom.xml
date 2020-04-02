@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Copyright (C) 2020 Biza Pty Ltd
-   
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-   
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
- -->
+<!-- Copyright (C) 2020 Biza Pty Ltd This program is free software: you can 
+    redistribute it and/or modify it under the terms of the GNU General Public 
+    License as published by the Free Software Foundation, either version 3 of 
+    the License, or (at your option) any later version. This program is distributed 
+    in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even 
+    the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+    See the GNU General Public License for more details. -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -22,9 +16,9 @@
         <artifactId>deepthought</artifactId>
         <version>1.1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>deepthought-admin-service</artifactId>
-    <name>Deep Thought: Administration Service</name>
-    <description>Deep Thought: Administration Service</description>
+    <artifactId>deepthought-aio-api-service</artifactId>
+    <name>Deep Thought: All in One API Service</name>
+    <description>Deep Thought: An All in One of the CDR API Services</description>
 
     <dependencies>
         <dependency>
@@ -37,7 +31,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -54,6 +47,41 @@
         </dependency>
 
         <dependency>
+            <groupId>io.biza</groupId>
+            <artifactId>deepthought-shared</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.biza</groupId>
+            <artifactId>deepthought-common-api-service</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.biza</groupId>
+            <artifactId>deepthought-banking-api-service</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.biza</groupId>
+            <artifactId>deepthought-discovery-api-service</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.biza</groupId>
+            <artifactId>deepthought-product-api-service</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -62,7 +90,6 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.security.oauth</groupId>
             <artifactId>spring-security-oauth2</artifactId>
@@ -124,16 +151,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>io.biza</groupId>
-            <artifactId>babelfish-cdr</artifactId>
-            <version>${babelfish-cdr.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.biza</groupId>
-            <artifactId>deepthought-shared</artifactId>
-            <version>${project.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -242,7 +259,23 @@
                             <requiresUnpack>
                                 <dependency>
                                     <groupId>io.biza</groupId>
-                                    <artifactId>deepthought</artifactId>
+                                    <artifactId>deepthought-shared</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>io.biza</groupId>
+                                    <artifactId>deepthought-banking-api-service</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>io.biza</groupId>
+                                    <artifactId>deepthought-common-api-service</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>io.biza</groupId>
+                                    <artifactId>deepthought-discovery-api-service</artifactId>
+                                </dependency>
+                                <dependency>
+                                    <groupId>io.biza</groupId>
+                                    <artifactId>deepthought-product-api-service</artifactId>
                                 </dependency>
                             </requiresUnpack>
                         </configuration>
@@ -254,7 +287,7 @@
                 <artifactId>springdoc-openapi-maven-plugin</artifactId>
                 <version>${springdoc-openapi-maven-plugin.version}</version>
                 <configuration>
-                    <apiDocsUrl>http://localhost:8050/dio-au/v3/api-docs</apiDocsUrl>
+                    <apiDocsUrl>http://localhost:8080/cds-au/v3/api-docs</apiDocsUrl>
                 </configuration>
                 <executions>
                     <execution>
@@ -286,59 +319,5 @@
             </plugin>
         </plugins>
     </build>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-    </distributionManagement>
-    <profiles>
-        <profile>
-            <id>release</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${maven-gpg-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>${maven-javadoc-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-javadocs</id>
-                                <goals>
-                                    <goal>jar</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-source-plugin</artifactId>
-                        <version>${maven-source-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>attach-sources</id>
-                                <goals>
-                                    <goal>jar-no-fork</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+
 </project>

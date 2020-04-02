@@ -23,7 +23,7 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 
 @SpringBootApplication
-@ComponentScan({"io.biza.deepthought.shared.component.persistence",
+@ComponentScan({"io.biza.deepthought.shared.component.swagger", "io.biza.deepthought.shared.component.persistence",
   "io.biza.deepthought.shared.component.mapper", "io.biza.deepthought.discovery"})
 public class DeepThoughtDiscoveryApiApplication {
 
