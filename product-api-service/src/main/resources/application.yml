@@ -15,4 +15,8 @@ spring:
      hibernate:
        ddl-auto: update
    jackson:
-     default-property-inclusion: non_empty
+     default-property-inclusion: NON_EMPTY
+   devtools:
+     livereload:
+       enabled: false
+
