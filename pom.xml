@@ -102,6 +102,7 @@
         <spring-shell.version>2.0.1.RELEASE</spring-shell.version>
         <classgraph.version>4.8.60</classgraph.version>
         <dockerfile.skip>true</dockerfile.skip>
+        <bcprov-jdk.version>1.64</bcprov-jdk.version>
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
         <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>

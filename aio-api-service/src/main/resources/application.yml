@@ -9,6 +9,7 @@ spring:
       oauth2:
          resourceserver:
             jwt:
+               jws-algorithm: PS256
                jwk-set-uri: https://id.dev.lab.dataright.io/auth/realms/deepthought/protocol/openid-connect/certs
    datasource:
      url: jdbc:h2:file:../localdb/deepthought;AUTO_SERVER=true
