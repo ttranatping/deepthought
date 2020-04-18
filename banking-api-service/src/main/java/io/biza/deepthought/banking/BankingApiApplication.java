@@ -27,6 +27,17 @@ import io.swagger.v3.oas.models.info.License;
 @EnableOAuth2Client
 @ComponentScan({"io.biza.deepthought.shared.component.swagger", "io.biza.deepthought.shared.component", "io.biza.deepthought.banking"})
 public class BankingApiApplication {
+  static {
+     //for localhost testing only
+     javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier(
+     new javax.net.ssl.HostnameVerifier(){
+
+     public boolean verify(String hostname,
+         javax.net.ssl.SSLSession sslSession) {
+                    return true;
+          }
+     });
+  }
 
   public static void main(String[] args) {
     SpringApplication.run(BankingApiApplication.class, args);
