@@ -36,6 +36,13 @@ import io.biza.deepthought.shared.persistence.model.product.banking.ProductBankD
 
 public class GrantCustomerAccountSpecifications {
 
+  public static Specification<GrantCustomerAccountData> grantId(String grantId) {
+    return (root, query, cb) -> {
+      Join<GrantCustomerAccountData, GrantData> grantJoin = root.join(GrantCustomerAccountData_.grant);
+      return cb.equal(grantJoin.get(GrantData_.id), grantId);
+    };
+  }
+
   public static Specification<GrantCustomerAccountData> subject(String subject) {
     return (root, query, cb) -> {
       Join<GrantCustomerAccountData, GrantData> grantJoin = root.join(GrantCustomerAccountData_.grant);

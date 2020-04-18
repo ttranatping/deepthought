@@ -145,6 +145,9 @@ public class GrantService {
       RequestListAccounts requestList) {
     Specification<GrantCustomerAccountData> filterSpecifications = Specification.where(null);
 
+	if(UserPrincipalUtil.getConsentId() != null)
+		filterSpecifications = filterSpecifications
+          .and(GrantCustomerAccountSpecifications.grantId(UserPrincipalUtil.getConsentId()));
     /**
      * Subject and optionally ownership status
      */
